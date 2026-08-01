@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BlacklightDoms - Cinematic Nexus Portal</title>
+    <title>BlacklightDoms - Cinematic Experience</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --bg-base: #030305;
-            --bg-card: rgba(14, 14, 20, 0.9);
-            --bg-input: rgba(8, 8, 12, 0.95);
-            --border-color: rgba(255, 255, 255, 0.12);
-            --border-glow: rgba(168, 85, 247, 0.6);
+            --bg-base: #020205;
+            --bg-card: rgba(12, 12, 18, 0.92);
+            --bg-input: rgba(6, 6, 10, 0.95);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --border-glow: rgba(168, 85, 247, 0.7);
             --text-primary: #f8f9fc;
             --text-secondary: #94a3b8;
-            --accent-white: #ffffff;
             --font-main: 'Outfit', sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
         }
@@ -36,10 +35,10 @@
 
         /* Ambient Lighting */
         .ambient-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; overflow: hidden; }
-        .glow-sphere { position: absolute; border-radius: 50%; filter: blur(180px); opacity: 0.12; animation: floatOrb 14s infinite alternate ease-in-out; }
-        .glow-1 { width: 500px; height: 500px; background: #4f46e5; top: -120px; left: -120px; }
-        .glow-2 { width: 550px; height: 550px; background: #9333ea; bottom: -120px; right: -120px; animation-delay: -7s; }
-        @keyframes floatOrb { 0% { transform: translate(0,0); } 100% { transform: translate(60px, 40px); } }
+        .glow-sphere { position: absolute; border-radius: 50%; filter: blur(190px); opacity: 0.12; animation: floatOrb 15s infinite alternate ease-in-out; }
+        .glow-1 { width: 500px; height: 500px; background: #6366f1; top: -100px; left: -100px; }
+        .glow-2 { width: 550px; height: 550px; background: #a855f7; bottom: -100px; right: -100px; animation-delay: -7s; }
+        @keyframes floatOrb { 0% { transform: translate(0,0); } 100% { transform: translate(50px, 40px); } }
 
         .text-glow {
             font-weight: 800;
@@ -70,7 +69,7 @@
         /* Modal Overlay */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(2, 2, 4, 0.88); backdrop-filter: blur(14px);
+            background: rgba(2, 2, 4, 0.9); backdrop-filter: blur(14px);
             z-index: 1000; display: flex; align-items: center; justify-content: center;
             opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
         }
@@ -112,72 +111,88 @@
         .hero-menu p { color: var(--text-secondary); font-size: 0.95rem; max-width: 420px; }
 
         /* =======================================================
-           CINEMATIC MOVIE-STYLE EXPERIENCE (15 SECONDS SHORT FILM)
+           BIOSKOP STYLE: 15-DETIK FULL CINEMATIC EXPERIENCE
            ======================================================= */
         #cinematic-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #020204;
+            background: #010103;
             z-index: 5000; display: none; flex-direction: column; align-items: center; justify-content: center;
-            padding: 25px; text-align: center; opacity: 0; transition: opacity 1s ease;
+            padding: 20px; text-align: center; opacity: 0; transition: opacity 0.8s ease;
             overflow: hidden;
         }
         #cinematic-screen.active { display: flex; opacity: 1; }
 
-        /* Virtual Camera Frame */
-        .film-camera-box {
-            position: relative; width: 220px; height: 220px;
-            display: flex; align-items: center; justify-content: center; margin-bottom: 30px;
-            transform: scale(0.6); opacity: 0; transition: all 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .film-camera-box.zoom-in { transform: scale(1); opacity: 1; }
-
-        .cinematic-logo-file {
-            width: 140px; height: 140px; border-radius: 50%; object-fit: cover;
-            border: 2px solid rgba(255,255,255,0.8); filter: grayscale(100%) brightness(15%) contrast(200%);
-            z-index: 10; box-shadow: 0 0 40px rgba(0,0,0,0.9);
-            transition: filter 3s ease, transform 3s ease;
+        /* Panggung Animasi Bergerak Logo */
+        .bioscope-stage {
+            position: relative; width: 240px; height: 240px;
+            display: flex; align-items: center; justify-content: center; margin-bottom: 25px;
         }
 
-        /* Cinematic Light Aura Rings */
-        .film-ring-1, .film-ring-2 {
-            position: absolute; border-radius: 50%; border: 1px solid rgba(168,85,247,0.3);
-            animation: pulseFilmRing 4s infinite alternate ease-in-out; pointer-events: none;
+        /* Logo bergerak, berputar, & melayang */
+        .moving-logo-img {
+            width: 130px; height: 130px; border-radius: 50%; object-fit: cover;
+            border: 3px solid rgba(168,85,247,0.8);
+            box-shadow: 0 0 50px rgba(168,85,247,0.6), inset 0 0 25px rgba(255,255,255,0.8);
+            z-index: 10;
+            transform: scale(0.2) rotate(-180deg);
+            filter: brightness(0.2) contrast(200%);
+            transition: transform 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 1.2s ease;
         }
-        .film-ring-1 { width: 180px; height: 180px; }
-        .film-ring-2 { width: 220px; height: 220px; border-color: rgba(255,255,255,0.15); animation-delay: -2s; }
-        @keyframes pulseFilmRing { 0% { transform: scale(0.95); opacity: 0.2; } 100% { transform: scale(1.15); opacity: 0.7; } }
+        .moving-logo-img.animate-action {
+            transform: scale(1.15) rotate(0deg);
+            filter: brightness(1) contrast(100%);
+            animation: floatingLogoMotion 4s infinite alternate ease-in-out 1.2s;
+        }
+        @keyframes floatingLogoMotion {
+            0% { transform: scale(1.15) translateY(0px) rotate(-3deg); box-shadow: 0 0 40px rgba(168,85,247,0.6); }
+            100% { transform: scale(1.22) translateY(-12px) rotate(3deg); box-shadow: 0 0 70px rgba(236,72,153,0.8); }
+        }
 
-        /* Cinematic Narrative Text (Gaya subtitle film) */
-        .film-subtitle-box {
-            max-width: 460px; min-height: 50px; display: flex; align-items: center; justify-content: center;
-            margin-bottom: 20px;
+        /* Gelombang Energi Bioskop (CGI Shockwave Ring) */
+        .bioscope-ring {
+            position: absolute; width: 100%; height: 100%; border-radius: 50%;
+            border: 2px solid rgba(168,85,247,0.4);
+            box-shadow: 0 0 30px rgba(168,85,247,0.2) inset;
+            animation: expandShockwave 3s infinite linear;
+            pointer-events: none; opacity: 0;
         }
-        .film-subtitle-txt {
-            font-size: 1.1rem; color: #f1f5f9; font-weight: 500; letter-spacing: 0.8px;
+        .bioscope-ring.active { opacity: 1; }
+        @keyframes expandShockwave {
+            0% { transform: scale(0.6); opacity: 0.9; border-color: #ffffff; }
+            100% { transform: scale(1.8); opacity: 0; border-color: #a855f7; }
+        }
+
+        /* Subtitle Dialog / Narasi Bioskop */
+        .bioscope-subtitle-box {
+            max-width: 480px; min-height: 55px; display: flex; align-items: center; justify-content: center;
+            margin-bottom: 15px; padding: 0 10px;
+        }
+        .bioscope-subtitle-txt {
+            font-size: 1.15rem; color: #f8f9fc; font-weight: 600; letter-spacing: 0.9px;
             line-height: 1.5; opacity: 0; transform: translateY(15px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.9), 0 0 20px rgba(168,85,247,0.4);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            text-shadow: 0 2px 12px rgba(0,0,0,0.9), 0 0 25px rgba(168,85,247,0.5);
         }
-        .film-subtitle-txt.show { opacity: 1; transform: translateY(0); }
+        .bioscope-subtitle-txt.show { opacity: 1; transform: translateY(0); }
 
-        /* Efek Flash Transisi Sinematik */
-        .cinematic-flash {
+        /* Efek Flash Kamera / Layar Bioskop */
+        .cinema-flash {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff;
-            z-index: 30; opacity: 0; pointer-events: none;
+            z-index: 40; opacity: 0; pointer-events: none;
         }
-        @keyframes cameraFlash { 0% { opacity: 0; } 30% { opacity: 0.95; } 100% { opacity: 0; } }
+        @keyframes flashEffect { 0% { opacity: 0; } 30% { opacity: 0.9; } 100% { opacity: 0; } }
 
-        /* KARTU HASIL AKHIR FILM (Bukan Card biasa, ini Ending Screen) */
-        #result-movie-card {
+        /* Kartu Hasil Akhir Bioskop (Cinematic Ending Card) */
+        #result-bioscope-card {
             display: none; width: 92%; max-width: 450px; padding: 40px 30px; text-align: center;
-            transform: scale(0.85) translateY(25px); opacity: 0; 
+            transform: scale(0.85) translateY(30px); opacity: 0; 
             transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.25);
-            background: linear-gradient(145deg, rgba(18,18,28,0.98), rgba(8,8,12,0.99));
-            border: 1px solid rgba(168,85,247,0.5);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.9), 0 0 40px rgba(168,85,247,0.3);
-            z-index: 40; border-radius: 22px;
+            background: linear-gradient(145deg, rgba(20,20,30,0.98), rgba(8,8,12,0.99));
+            border: 1px solid rgba(168,85,247,0.6);
+            box-shadow: 0 25px 70px rgba(0,0,0,0.95), 0 0 50px rgba(168,85,247,0.35);
+            z-index: 50; border-radius: 24px;
         }
-        #result-movie-card.reveal { display: block; transform: scale(1) translateY(0); opacity: 1; }
+        #result-bioscope-card.reveal { display: block; transform: scale(1) translateY(0); opacity: 1; }
 
         /* Admin Dashboard */
         .admin-dashboard { width: 100%; max-width: 800px; display: none; flex-direction: column; gap: 20px; }
@@ -190,10 +205,10 @@
 
         /* Toast Notifications */
         #toast-box { position: fixed; bottom: 25px; left: 25px; z-index: 6000; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
-        .toast-item { background: rgba(14,14,20,0.95); border: 1px solid rgba(255,255,255,0.15); color: var(--text-primary); padding: 12px 18px; border-radius: 10px; box-shadow: 0 8px 25px rgba(0,0,0,0.6); font-size: 0.85rem; display: flex; align-items: center; gap: 10px; backdrop-filter: blur(12px); animation: fadeInToast 0.3s ease; }
+        .toast-item { background: rgba(12,12,18,0.95); border: 1px solid rgba(255,255,255,0.15); color: var(--text-primary); padding: 12px 18px; border-radius: 10px; box-shadow: 0 8px 25px rgba(0,0,0,0.6); font-size: 0.85rem; display: flex; align-items: center; gap: 10px; backdrop-filter: blur(12px); animation: fadeInToast 0.3s ease; }
         @keyframes fadeInToast { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        footer { background: rgba(10,10,14,0.9); border-top: 1px solid var(--border-color); padding: 20px; text-align: center; margin-top: auto; width: 100%; }
+        footer { background: rgba(8,8,12,0.9); border-top: 1px solid var(--border-color); padding: 20px; text-align: center; margin-top: auto; width: 100%; }
         .footer-links { display: flex; gap: 12px; justify-content: center; margin-bottom: 10px; flex-wrap: wrap; }
         .social-link-btn { display: inline-flex; align-items: center; gap: 7px; color: var(--text-secondary); text-decoration: none; font-weight: 600; font-size: 0.82rem; padding: 6px 12px; border-radius: 8px; background: var(--bg-card); border: 1px solid var(--border-color); transition: 0.2s; }
         .social-link-btn:hover { color: var(--text-primary); border-color: #a855f7; background: rgba(168,85,247,0.1); }
@@ -211,25 +226,24 @@
 
     <div id="loading-screen">
         <div style="width: 45px; height: 45px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; font-weight: 900; color: #000; box-shadow: 0 0 20px #fff;">B</div>
-        <span class="text-glow" style="font-size: 0.95rem; margin-top: 12px;">LOADING CINEMATIC REALM...</span>
+        <span class="text-glow" style="font-size: 0.95rem; margin-top: 12px;">LOADING CINEMA SYSTEM...</span>
     </div>
 
     <div id="cinematic-screen">
-        <div class="cinematic-flash" id="film-flash-el"></div>
+        <div class="cinema-flash" id="cinema-flash-el"></div>
 
-        <div class="film-camera-box" id="film-camera-box">
-            <div class="film-ring-1"></div>
-            <div class="film-ring-2"></div>
-            <img src="logo.png" alt="Logo" class="cinematic-logo-file" id="cinematic-logo-img" onerror="this.src='https://via.placeholder.com/140/161614/ffffff?text=BLDS'">
+        <div class="bioscope-stage" id="bioscope-stage">
+            <div class="bioscope-ring active"></div>
+            <img src="logo.png" alt="Logo" class="moving-logo-img" id="moving-logo-img" onerror="this.src='https://via.placeholder.com/130/161614/ffffff?text=BLDS'">
         </div>
 
-        <div class="film-subtitle-box">
-            <div class="film-subtitle-txt" id="film-subtitle-txt">Layar terbuka dalam kegelapan mutlak...</div>
+        <div class="bioscope-subtitle-box">
+            <div class="bioscope-subtitle-txt" id="bioscope-subtitle-txt">Memasuki dimensi inti BlacklightDoms...</div>
         </div>
 
-        <div class="glass-card" id="result-movie-card">
-            <div id="result-icon-box" style="font-size: 3rem; margin-bottom: 14px;"></div>
-            <h2 id="result-title-txt" style="font-size: 1.4rem; margin-bottom: 10px; letter-spacing: 0.8px;"></h2>
+        <div class="glass-card" id="result-bioscope-card">
+            <div id="result-icon-box" style="font-size: 3.2rem; margin-bottom: 14px;"></div>
+            <h2 id="result-title-txt" style="font-size: 1.45rem; margin-bottom: 10px; letter-spacing: 0.8px;"></h2>
             <p id="result-desc-txt" style="font-size: 0.9rem; color: #cbd5e1; line-height: 1.7; margin-bottom: 24px;"></p>
             <button class="btn-primary" onclick="closeCinematicScreen()">Kembali ke Beranda</button>
         </div>
@@ -286,11 +300,11 @@
                 <form id="form-update-message">
                     <div class="input-group">
                         <label>Pesan Lolos (Custom)</label>
-                        <textarea id="custom-msg-lolos" class="styled-textarea" rows="2" placeholder="Tulis ucapan selamat film..."></textarea>
+                        <textarea id="custom-msg-lolos" class="styled-textarea" rows="2" placeholder="Tulis ucapan selamat bioskop..."></textarea>
                     </div>
                     <div class="input-group">
                         <label>Pesan Tidak Lolos (Custom)</label>
-                        <textarea id="custom-msg-tolak" class="styled-textarea" rows="2" placeholder="Tulis ucapan penolakan film..."></textarea>
+                        <textarea id="custom-msg-tolak" class="styled-textarea" rows="2" placeholder="Tulis ucapan penolakan bioskop..."></textarea>
                     </div>
                     <button type="submit" class="btn-secondary" style="width: 100%;">Simpan Pesan Sistem</button>
                 </form>
@@ -359,17 +373,17 @@
         };
 
         let systemMessages = JSON.parse(localStorage.getItem("blds_system_msgs")) || {
-            lolos: "Takdir telah memilih. Gerbang dimensi terbuka menyambut kehadiran Anda sebagai bagian tertinggi Elite Staff BlacklightDoms.",
-            tolak: "Pintu tertutup rapat. Frekuensi Anda belum beresonansi dengan standar mutlak yang ditetapkan oleh sistem alam semesta ini."
+            lolos: "Sistem telah merestui takdir Anda. Anda resmi diangkat ke singgasana tertinggi Elite Staff BlacklightDoms.",
+            tolak: "Pintu gerbang dimensi tertutup. Frekuensi Anda belum selaras dengan energi mutlak BlacklightDoms."
         };
 
-        // Alur Cerita Film Pendek 15 Detik (Subtitle Sinematik)
-        const filmSubtitles = [
-            { time: 0, text: "Kamera menembus lorong waktu dimensi BlacklightDoms..." },
-            { time: 3000, text: "Menyelaraskan frekuensi jiwa dan rekam jejak identitas Anda..." },
-            { time: 7000, text: "Sistem membaca memori masa lalu dan kelayakan masa depan..." },
-            { time: 11000, text: "Detik-detik penentuan gerbang akhir terbuka..." },
-            { time: 13500, text: "Pengungkapan takdir mutlak dimulai sekarang." }
+        // Alur Narasi Bioskop 15 Detik
+        const movieSubtitles = [
+            { time: 0, text: "Kamera menembus lapisan kegelapan tak berujung..." },
+            { time: 3000, text: "Membangkitkan energi logo inti BlacklightDoms..." },
+            { time: 7000, text: "Sistem memindai rekam jejak dan tingkat kelayakan Anda..." },
+            { time: 11000, text: "Detik-detik penentuan takdir segera dimulai..." },
+            { time: 13500, text: "Pengungkapan hasil mutlak terbuka sekarang." }
         ];
 
         document.addEventListener("DOMContentLoaded", () => {
@@ -382,7 +396,7 @@
         function openCodeModal() { document.getElementById("modal-code-input").classList.add("active"); }
         function closeCodeModal() { document.getElementById("modal-code-input").classList.remove("active"); }
 
-        // SUBMIT KODE & VALIDASI + NOTIFIKASI ERROR JIKA SALAH
+        // SUBMIT KODE & INTERCEPT ADMIN ROLE
         document.getElementById("form-submit-code").addEventListener("submit", (e) => {
             e.preventDefault();
             const val = document.getElementById("input-code-val").value.trim().toUpperCase();
@@ -402,61 +416,62 @@
                 }
             });
 
-            // NOTIFIKASI ERROR JIKA KODE SALAH / TIDAK DITEMUKAN
             if (!matchedStaff) {
-                showToast("Akses Ditolak! Kode tidak terdaftar di dalam database nexus.", "error");
+                showToast("Akses Ditolak! Kode tidak terdaftar di database nexus.", "error");
                 return;
             }
 
-            // Jalankan Film Pendek Sinematik 15 Detik
-            startCinematicMovie(matchedStaff);
+            // Jika kode punya hak akses Admin, langsung buka Dashboard Admin
+            if (matchedStaff.Role === "Admin" && matchedStaff.Status === "Lolos") {
+                showToast(`Selamat datang kembali, Admin ${matchedStaff.Name}!`, "success");
+                document.getElementById("section-home").style.display = "none";
+                document.getElementById("section-admin-dashboard").classList.add("active");
+                return;
+            }
+
+            // Jika Staff biasa atau Tidak Lolos, jalankan Animasi Bioskop 15 Detik
+            startBioscopeMovie(matchedStaff);
         });
 
-        // 15-DETIK FILM PENDEK SINEMATIK
-        function startCinematicMovie(staff) {
+        // 15-DETIK FULL BIOSKOP CINEMATIC ANIMATION
+        function startBioscopeMovie(staff) {
             const screen = document.getElementById("cinematic-screen");
-            const cameraBox = document.getElementById("film-camera-box");
-            const logoImg = document.getElementById("cinematic-logo-img");
-            const subTxt = document.getElementById("film-subtitle-txt");
-            const flashEl = document.getElementById("film-flash-el");
-            const resultCard = document.getElementById("result-movie-card");
+            const logoImg = document.getElementById("moving-logo-img");
+            const subTxt = document.getElementById("bioscope-subtitle-txt");
+            const stage = document.getElementById("bioscope-stage");
+            const resultCard = document.getElementById("result-bioscope-card");
+            const flashEl = document.getElementById("cinema-flash-el");
 
-            // Reset UI State Film
+            // Reset UI State
             screen.classList.add("active");
             resultCard.classList.remove("reveal");
             resultCard.style.display = "none";
-            cameraBox.style.display = "flex";
+            stage.style.display = "flex";
             subTxt.style.display = "block";
-            
-            // Kamera awal (Zoom out / gelap)
-            cameraBox.classList.remove("zoom-in");
-            logoImg.style.filter = "grayscale(100%) brightness(15%) contrast(200%)";
-            logoImg.style.transform = "scale(0.8)";
+            logoImg.classList.remove("animate-action");
+
+            // Logo mulai bergerak zoom in berputar dari kecil ke besar
+            setTimeout(() => {
+                logoImg.classList.add("animate-action");
+            }, 300);
 
             let progress = 0;
-            const totalTime = 15000; // 15 Detik Film Pendek
+            const totalTime = 15000; // 15 Detik
             const intervalTime = 50;
             const increment = (intervalTime / totalTime) * 100;
             let currentSubIndex = -1;
-
-            // Kamera mulai mendekat (Zoom-in) di detik ke-1
-            setTimeout(() => {
-                cameraBox.classList.add("zoom-in");
-                logoImg.style.filter = "grayscale(0%) brightness(100%) contrast(100%)";
-                logoImg.style.transform = "scale(1.15)";
-            }, 1000);
 
             const timer = setInterval(() => {
                 progress += increment;
                 if (progress >= 100) {
                     progress = 100;
                     clearInterval(timer);
-                    triggerCinematicClimax(staff);
+                    triggerBioscopeClimax(staff);
                 }
 
                 let currentTimeMs = (progress / 100) * totalTime;
-                let matchedIndex = filmSubtitles.findIndex((s, idx) => {
-                    let nextTime = filmSubtitles[idx + 1] ? filmSubtitles[idx + 1].time : totalTime;
+                let matchedIndex = movieSubtitles.findIndex((s, idx) => {
+                    let nextTime = movieSubtitles[idx + 1] ? movieSubtitles[idx + 1].time : totalTime;
                     return currentTimeMs >= s.time && currentTimeMs < nextTime;
                 });
 
@@ -464,30 +479,28 @@
                     currentSubIndex = matchedIndex;
                     subTxt.classList.remove("show");
                     setTimeout(() => {
-                        subTxt.innerText = filmSubtitles[currentSubIndex].text;
+                        subTxt.innerText = movieSubtitles[currentSubIndex].text;
                         subTxt.classList.add("show");
                     }, 200);
                 }
             }, intervalTime);
         }
 
-        function triggerCinematicClimax(staff) {
-            const flashEl = document.getElementById("film-flash-el");
-            
-            // Efek Flash Cahaya Bioskop / Kamera
-            flashEl.style.animation = "cameraFlash 0.7s ease-out forwards";
-            
+        function triggerBioscopeClimax(staff) {
+            const flashEl = document.getElementById("cinema-flash-el");
+            flashEl.style.animation = "flashEffect 0.7s ease-out forwards";
+
             setTimeout(() => {
                 flashEl.style.animation = "none";
-                showMovieEndingResult(staff);
+                showBioscopeEnding(staff);
             }, 600);
         }
 
-        function showMovieEndingResult(staff) {
-            document.getElementById("film-camera-box").style.display = "none";
-            document.getElementById("film-subtitle-txt").style.display = "none";
+        function showBioscopeEnding(staff) {
+            document.getElementById("bioscope-stage").style.display = "none";
+            document.getElementById("bioscope-subtitle-txt").style.display = "none";
 
-            const resultCard = document.getElementById("result-movie-card");
+            const resultCard = document.getElementById("result-bioscope-card");
             const iconBox = document.getElementById("result-icon-box");
             const titleTxt = document.getElementById("result-title-txt");
             const descTxt = document.getElementById("result-desc-txt");
@@ -495,11 +508,11 @@
             const isLolos = (staff.Status === "Lolos");
 
             if (isLolos) {
-                iconBox.innerHTML = `<i class="fa-solid fa-crown" style="color: #fde047; filter: drop-shadow(0 0 25px rgba(253,224,71,0.9));"></i>`;
+                iconBox.innerHTML = `<i class="fa-solid fa-crown" style="color: #fde047; filter: drop-shadow(0 0 30px rgba(253,224,71,0.95));"></i>`;
                 titleTxt.innerHTML = `<span style="color: #fde047;">ELITE ACCESS GRANTED, ${staff.Name.toUpperCase()}!</span>`;
                 descTxt.innerText = systemMessages.lolos;
             } else {
-                iconBox.innerHTML = `<i class="fa-solid fa-skull" style="color: #ef4444; filter: drop-shadow(0 0 25px rgba(239,68,68,0.9));"></i>`;
+                iconBox.innerHTML = `<i class="fa-solid fa-skull" style="color: #ef4444; filter: drop-shadow(0 0 30px rgba(239,68,68,0.95));"></i>`;
                 titleTxt.innerHTML = `<span style="color: #ef4444;">ACCESS DENIED, ${staff.Name.toUpperCase()}!</span>`;
                 descTxt.innerText = systemMessages.tolak;
             }
@@ -519,7 +532,7 @@
             document.getElementById("input-code-val").value = "";
         }
 
-        /* ADMIN PANEL ACTIONS (BISA BIKIN KODE ADMIN JUGA) */
+        /* ADMIN PANEL ACTIONS */
         document.getElementById("form-generate-code").addEventListener("submit", (e) => {
             e.preventDefault();
             const rawName = document.getElementById("gen-name").value.trim().toUpperCase();
@@ -547,7 +560,7 @@
             systemMessages.tolak = document.getElementById("custom-msg-tolak").value.trim();
 
             localStorage.setItem("blds_system_msgs", JSON.stringify(systemMessages));
-            showToast("Pesan narasi sinematik berhasil diperbarui!", "success");
+            showToast("Pesan narasi bioskop berhasil diperbarui!", "success");
         });
 
         function renderAdminTable() {
@@ -576,34 +589,6 @@
                 `;
             }).join("");
         }
-
-        // FUNGSI CEK OTOMATIS: JIKA KODE YANG DIINPUT PUNYA ROLE ADMIN, MASUK KE PANEL ADMIN
-        const originalSubmitHandler = document.getElementById("form-submit-code");
-        // Kita intercept logic verifikasinya di event listener utama submission kode
-        // (Sudah terhandle otomatis di dalam script pengecekan role di bawah)
-        
-        // Perbarui logic submit kode supaya kalau kode yang dimasukkan punya role "Admin", dia otomatis buka Dashboard Admin
-        document.getElementById("form-submit-code").addEventListener("submit", (e) => {
-            // Karena event listener di atas sudah jalan duluan, kita pastikan cek role admin di sini juga
-            const val = document.getElementById("input-code-val").value.trim().toUpperCase();
-            
-            let matchedObj = null;
-            Object.keys(localCodes).forEach(k => {
-                if (k.toUpperCase() === val) {
-                    matchedObj = localCodes[k];
-                }
-            });
-
-            if (matchedObj && matchedObj.Role === "Admin" && matchedObj.Status === "Lolos") {
-                // Tutup modal dulu
-                closeCodeModal();
-                showToast("Akses Admin Terverifikasi via Database!", "success");
-                document.getElementById("section-home").style.display = "none";
-                document.getElementById("section-admin-dashboard").classList.add("active");
-                // Stop animasi sinematik kalau dia admin
-                e.stopImmediatePropagation();
-            }
-        }, true); // Use capture to intercept before cinematic trigger
 
         function deleteCode(key) {
             if (confirm(`Yakin ingin menghapus kode ${key}?`)) {
