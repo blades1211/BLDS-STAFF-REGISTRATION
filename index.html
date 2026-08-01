@@ -36,7 +36,7 @@
         #cinematic-audio { display: none; }
 
         /* =======================================================
-           20-DETIK CINEMATIC EXPERIENCE SCREEN (AAA GAME INTRO)
+           CINEMATIC EXPERIENCE SCREEN (AAA GAME INTRO)
            ======================================================= */
         #cinematic-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -66,8 +66,8 @@
         }
 
         .cinematic-stage {
-            position: relative; width: 300px; height: 300px;
-            display: flex; align-items: center; justify-content: center; margin-bottom: 30px;
+            position: relative; width: 300px; height: 180px;
+            display: flex; align-items: center; justify-content: center; margin-bottom: 10px;
             transition: transform 3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -78,7 +78,7 @@
         }
 
         .cinematic-logo-img {
-            width: 120px; height: 120px; border-radius: 50%; object-fit: cover;
+            width: 90px; height: 90px; border-radius: 50%; object-fit: cover;
             border: 1px solid rgba(255,255,255,0.4);
             box-shadow: 0 0 15px rgba(255,255,255,0.1);
             z-index: 10;
@@ -88,20 +88,20 @@
         }
 
         .cinematic-textbox {
-            max-width: 580px; min-height: 55px; display: flex; align-items: center; justify-content: center;
-            padding: 0 20px; z-index: 20;
+            max-width: 620px; min-height: 80px; display: flex; align-items: center; justify-content: center;
+            padding: 0 20px; z-index: 20; margin-bottom: 20px;
         }
         .cinematic-text {
-            font-size: 1.15rem; color: #f3f4f6; font-weight: 300; letter-spacing: 1.2px;
-            line-height: 1.6; opacity: 0; transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1);
+            font-size: 1.05rem; color: #f3f4f6; font-weight: 300; letter-spacing: 1.1px;
+            line-height: 1.7; opacity: 0; transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
             text-shadow: 0 2px 12px rgba(0,0,0,0.9);
             text-align: center;
         }
         .cinematic-text.show { opacity: 1; }
 
-        /* Kartu Ending (Hasil Lolos / Ditolak) */
+        /* Kartu Ending (Hasil Lolos / Ditolak) - Diperbesar agar pas dengan teks panjang */
         #cinematic-ending-card {
-            display: none; width: 90%; max-width: 480px; padding: 40px 30px; text-align: center;
+            display: none; width: 92%; max-width: 560px; max-height: 85vh; overflow-y: auto; padding: 30px 25px; text-align: center;
             opacity: 0; transform: scale(0.96); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: 5000; border-radius: 20px;
         }
@@ -220,17 +220,17 @@
             <img src="logo.png" alt="Logo" class="cinematic-logo-img" id="cinematic-logo-img" onerror="this.src='https://via.placeholder.com/120/000000/ffffff?text=BLDS'">
         </div>
 
-        <div class="cinematic-textbox">
+        <div class="cinematic-textbox" id="cinematic-textbox-wrapper">
             <div class="cinematic-text" id="cinematic-text-el"></div>
         </div>
 
         <div class="glass-card" id="cinematic-ending-card">
-            <h2 id="ending-title-txt" style="font-size: 1.3rem; margin-bottom: 10px; font-weight: 400; letter-spacing: 1px;"></h2>
-            <div id="ending-task-box" style="margin: 12px 0; padding: 12px; background: rgba(255,255,255,0.05); border-radius: 8px; font-size: 0.85rem; border-left: 2px solid rgba(255,255,255,0.5); text-align: left; display: none;">
-                <strong style="display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); margin-bottom: 4px;">Role & Penugasan Anda:</strong>
-                <span id="ending-task-txt" style="font-family: var(--font-mono); color: #fff;"></span>
+            <h2 id="ending-title-txt" style="font-size: 1.2rem; margin-bottom: 8px; font-weight: 400; letter-spacing: 1px;"></h2>
+            <div id="ending-task-box" style="margin: 10px 0; padding: 10px 14px; background: rgba(255,255,255,0.05); border-radius: 8px; font-size: 0.85rem; border-left: 2px solid rgba(255,255,255,0.5); text-align: left; display: none;">
+                <strong style="display: block; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); margin-bottom: 3px;">Role & Penugasan Anda:</strong>
+                <span id="ending-task-txt" style="font-family: var(--font-mono); color: #fff; font-weight: 500;"></span>
             </div>
-            <p id="ending-desc-txt" style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 20px; opacity: 0.85;"></p>
+            <p id="ending-desc-txt" style="font-size: 0.84rem; line-height: 1.6; margin-bottom: 16px; opacity: 0.9; white-space: pre-line;"></p>
             <button class="btn-primary" onclick="closeCinematicScreen()" id="ending-btn-action" style="max-width: 180px; margin: 0 auto;"></button>
         </div>
     </div>
@@ -276,7 +276,15 @@
                     </div>
                     <div class="input-group" style="margin-top: 14px;">
                         <label>Role / Task Penugasan</label>
-                        <input type="text" id="gen-task" class="styled-input" placeholder="Contoh: staff / moderator" required autocomplete="off">
+                        <select id="gen-task" class="styled-select" required>
+                            <option value="Event Hoster">Event Hoster</option>
+                            <option value="Admin">Admin</option>
+                            <option value="Content Creator">Content Creator</option>
+                            <option value="owner">owner</option>
+                            <option value="owner friend">owner friend</option>
+                            <option value="headstaff">headstaff</option>
+                            <option value="staff">staff</option>
+                        </select>
                     </div>
                     <button type="submit" class="btn-primary" style="margin-top: 16px;">Simpan & Buat Kode Akses</button>
                 </form>
@@ -307,29 +315,13 @@
     <div class="modal-overlay" id="modal-code-input">
         <div class="modal-box glass-card">
             <h3 style="margin-bottom: 8px; font-weight: 400; letter-spacing: 1px;">VERIFIKASI KODE</h3>
-            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 18px;">Masukkan kode lengkap Anda (Contoh: BLDS-MICHAEL-001)</p>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 18px;">Masukkan kode lengkap (cth: BLDS-MICHAEL-001) atau nomor staff (001-007) untuk akses Admin.</p>
             <form id="form-submit-code">
                 <div class="input-group">
-                    <input type="text" id="input-code-val" class="styled-input" style="text-align: center; letter-spacing: 1px; font-family: var(--font-mono);" placeholder="BLDS-NAMA-000" required autocomplete="off">
+                    <input type="text" id="input-code-val" class="styled-input" style="text-align: center; letter-spacing: 1px; font-family: var(--font-mono);" placeholder="BLDS-NAMA-000 atau 001" required autocomplete="off">
                 </div>
                 <div style="display: flex; gap: 10px; margin-top: 18px;">
                     <button type="button" class="btn-secondary" onclick="closeCodeModal()" style="flex:1;">Batal</button>
-                    <button type="submit" class="btn-primary" style="flex:1;">Verifikasi</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="modal-staff-number">
-        <div class="modal-box glass-card">
-            <h3 style="margin-bottom: 8px; font-weight: 400; letter-spacing: 1px; color: #fff;">PORTAL STAFF ONLY</h3>
-            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 18px;">Masukkan 3 digit nomor staff Anda (001 s.d 007) untuk verifikasi akses Admin Panel.</p>
-            <form id="form-submit-staff-number">
-                <div class="input-group">
-                    <input type="text" id="input-staff-num-val" class="styled-input" style="text-align: center; font-family: var(--font-mono); font-size: 1.1rem; letter-spacing: 2px;" placeholder="001" maxlength="3" required autocomplete="off">
-                </div>
-                <div style="display: flex; gap: 10px; margin-top: 18px;">
-                    <button type="button" class="btn-secondary" onclick="closeStaffNumberModal()" style="flex:1;">Batal</button>
                     <button type="submit" class="btn-primary" style="flex:1;">Verifikasi</button>
                 </div>
             </form>
@@ -358,12 +350,12 @@
 
         let localCodes;
         try {
-            const saved = localStorage.getItem("blds_staff_codes_v3");
+            const saved = localStorage.getItem("blds_staff_codes_v4");
             if (saved) {
                 localCodes = JSON.parse(saved);
             } else {
                 localCodes = defaultCodes;
-                localStorage.setItem("blds_staff_codes_v3", JSON.stringify(localCodes));
+                localStorage.setItem("blds_staff_codes_v4", JSON.stringify(localCodes));
             }
         } catch (err) {
             localCodes = defaultCodes;
@@ -377,8 +369,6 @@
 
         function openCodeModal() { document.getElementById("modal-code-input").classList.add("active"); }
         function closeCodeModal() { document.getElementById("modal-code-input").classList.remove("active"); }
-        function openStaffNumberModal() { document.getElementById("modal-staff-number").classList.add("active"); }
-        function closeStaffNumberModal() { document.getElementById("modal-staff-number").classList.remove("active"); }
 
         // Canvas Particle Management
         let particleCtx, particleAnimId;
@@ -447,44 +437,39 @@
             if(particleCtx) particleCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
         }
 
-        // Handle Submit Kode Utama (Format: BLDS-NAMA-ANGKA)
+        // Handle Submit Kode Utama / Nomor Staff (001-007)
         document.getElementById("form-submit-code").addEventListener("submit", (e) => {
             e.preventDefault();
             const val = document.getElementById("input-code-val").value.trim().toUpperCase();
             closeCodeModal();
 
             if (val === MASTER_ADMIN_CODE) {
-                openStaffNumberModal();
+                showToast("Master Admin Berhasil Diverifikasi!", "success");
+                document.getElementById("section-home").style.display = "none";
+                document.getElementById("section-admin-dashboard").classList.add("active");
                 return;
             }
 
+            // Cek apakah input berupa nomor staff 001 - 007 untuk akses Admin Panel langsung
+            let matchedStaffByNum = null;
+            Object.keys(localCodes).forEach(k => {
+                if (localCodes[k].Num === val && parseInt(val) >= 1 && parseInt(val) <= 7) {
+                    matchedStaffByNum = localCodes[k];
+                }
+            });
+
+            if (matchedStaffByNum) {
+                showToast(`Akses Staff ${matchedStaffByNum.Name} Dikonfirmasi. Membuka Admin Panel...`, "success");
+                document.getElementById("section-home").style.display = "none";
+                document.getElementById("section-admin-dashboard").classList.add("active");
+                return;
+            }
+
+            // Jika bukan nomor staff admin, jalankan cinematic untuk pendaftar
             if (localCodes[val]) {
                 start20SecondCinematicExperience(localCodes[val]);
             } else {
                 showToast("Akses Ditolak! Kode tidak terdaftar.", "error");
-            }
-        });
-
-        // Handle Submit Angka Staff (001 s.d 007) Sebelum Masuk Admin Panel
-        document.getElementById("form-submit-staff-number").addEventListener("submit", (e) => {
-            e.preventDefault();
-            const numVal = document.getElementById("input-staff-num-val").value.trim().padStart(3, '0');
-            closeStaffNumberModal();
-
-            // Cek apakah nomor ada di range 001 - 007 dan statusnya Lolos/Owner/Staff yang valid
-            let validStaff = null;
-            Object.keys(localCodes).forEach(k => {
-                if (localCodes[k].Num === numVal) {
-                    validStaff = localCodes[k];
-                }
-            });
-
-            if (validStaff && parseInt(numVal) >= 1 && parseInt(numVal) <= 7) {
-                showToast(`Akses Staff ${validStaff.Name} Dikonfirmasi. Membuka Admin Panel...`, "success");
-                document.getElementById("section-home").style.display = "none";
-                document.getElementById("section-admin-dashboard").classList.add("active");
-            } else {
-                showToast("Nomor staff (001-007) tidak valid atau tidak memiliki hak akses.", "error");
             }
         });
 
@@ -501,11 +486,14 @@
             const radialBack = document.getElementById("radial-glow-back");
             const stage = document.getElementById("cinematic-stage");
             const endingCard = document.getElementById("cinematic-ending-card");
+            const textboxWrapper = document.getElementById("cinematic-textbox-wrapper");
 
             screen.className = "";
             screen.classList.add("active");
             endingCard.classList.remove("reveal");
             endingCard.style.display = "none";
+            stage.style.display = "flex";
+            textboxWrapper.style.display = "flex";
             textEl.innerText = "";
             textEl.classList.remove("show");
             fogBox.classList.remove("active");
@@ -586,8 +574,8 @@
             const taskTxt = document.getElementById("ending-task-txt");
             const btnAction = document.getElementById("ending-btn-action");
 
-            document.getElementById("cinematic-stage").style.display = "flex";
-            document.getElementById("cinematic-text-el").style.display = "none";
+            document.getElementById("cinematic-stage").style.display = "none";
+            document.getElementById("cinematic-textbox-wrapper").style.display = "none";
 
             const isLolos = (staff.Status === "Lolos");
 
@@ -596,8 +584,17 @@
                 audio.volume = 0;
                 audio.pause();
 
-                titleTxt.innerText = "WELCOME TO THE NEXT CHAPTER";
-                descTxt.innerHTML = `Congratulations, ${staff.Name}.<br>Your application has been accepted.`;
+                titleTxt.innerText = "WELCOME DOMINIONERS!";
+                descTxt.innerText = `Congratulations!
+After careful consideration, your registration has been approved.
+Today marks the beginning of a greater responsibility within BlackLightDoms.
+You have been selected to join the BLDS Staff Team and contribute your skills, dedication, and commitment to the community.
+Whatever your role may be, remember that every contribution matters.
+Serve with integrity.
+Support with respect.
+Lead by example.
+Welcome to the BLDS Staff Team.
+"Together, we build something greater."`;
                 
                 if (staff.Task) {
                     taskTxt.innerText = staff.Task;
@@ -617,8 +614,14 @@
                 audio.volume = 0;
                 audio.pause();
 
-                titleTxt.innerText = "THIS IS NOT THE END.";
-                descTxt.innerHTML = `Thank you for your effort, ${staff.Name}.<br>We hope to see you again.`;
+                titleTxt.innerText = "THE PATH REMAINS OPEN, DOMINIONER.";
+                descTxt.innerText = `Thank you for taking the time to register as a BLDS Staff candidate.
+After careful review, your registration has not been approved at this time.
+This decision is only part of your journey, not the end of it.
+Continue growing, supporting the community, and improving yourself.
+We sincerely hope to welcome you in a future staff recruitment.
+Keep moving forward, Dominioner.
+"Every journey begins with the courage to try."`;
                 taskBox.style.display = "none";
                 
                 btnAction.innerText = "Return";
@@ -632,7 +635,6 @@
         function closeCinematicScreen() {
             document.getElementById("cinematic-screen").classList.remove("active");
             document.getElementById("input-code-val").value = "";
-            document.getElementById("input-staff-num-val").value = "";
             try { document.getElementById("cinematic-audio").pause(); } catch(e){}
         }
 
@@ -642,7 +644,7 @@
             const name = document.getElementById("gen-name").value.trim();
             const num = document.getElementById("gen-num").value.trim().padStart(3, '0');
             const status = document.getElementById("gen-status").value;
-            const task = document.getElementById("gen-task").value.trim();
+            const task = document.getElementById("gen-task").value;
 
             const generatedCode = `BLDS-${name.toUpperCase()}-${num}`;
 
@@ -660,14 +662,13 @@
             }
 
             localCodes[generatedCode] = { Code: generatedCode, Name: name, Num: num, Status: status, Task: task };
-            localStorage.setItem("blds_staff_codes_v3", JSON.stringify(localCodes));
+            localStorage.setItem("blds_staff_codes_v4", JSON.stringify(localCodes));
 
             renderAdminTable();
             showToast(`Kode ${generatedCode} berhasil dibuat!`, "success");
 
             document.getElementById("gen-name").value = "";
             document.getElementById("gen-num").value = "";
-            document.getElementById("gen-task").value = "";
         });
 
         function renderAdminTable() {
@@ -699,7 +700,7 @@
         function deleteCode(key) {
             if (confirm(`Yakin ingin menghapus kode ${key}?`)) {
                 delete localCodes[key];
-                localStorage.setItem("blds_staff_codes_v3", JSON.stringify(localCodes));
+                localStorage.setItem("blds_staff_codes_v4", JSON.stringify(localCodes));
                 renderAdminTable();
                 showToast("Kode berhasil dihapus dari sistem.", "info");
             }
