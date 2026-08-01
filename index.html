@@ -125,8 +125,8 @@
             color: #ffffff !important;
         }
         #cinematic-screen.failed-theme #cinematic-ending-card {
-            background: rgba(10, 10, 10, 0.96);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(15, 15, 15, 0.96);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             color: #ffffff;
             box-shadow: 0 25px 60px rgba(0,0,0,0.9);
         }
@@ -260,11 +260,11 @@
                     <div style="display: flex; gap: 12px; flex-wrap: wrap;">
                         <div class="input-group" style="flex: 1; min-width: 160px; margin: 0;">
                             <label>Nama Pendaftar</label>
-                            <input type="text" id="gen-name" class="styled-input" placeholder="Contoh: Michael" required autocomplete="off">
+                            <input type="text" id="gen-name" class="styled-input" placeholder="Contoh: Zian" required autocomplete="off">
                         </div>
                         <div class="input-group" style="width: 140px; margin: 0;">
                             <label>Nomor Urut</label>
-                            <input type="text" id="gen-num" class="styled-input" placeholder="001" maxlength="3" required autocomplete="off">
+                            <input type="text" id="gen-num" class="styled-input" placeholder="008" maxlength="3" required autocomplete="off">
                         </div>
                         <div class="input-group" style="width: 150px; margin: 0;">
                             <label>Status Seleksi</label>
@@ -276,7 +276,7 @@
                     </div>
                     <div class="input-group" style="margin-top: 14px;">
                         <label>Role / Task Penugasan</label>
-                        <input type="text" id="gen-task" class="styled-input" placeholder="Contoh: owner / headstaff / staff" required autocomplete="off">
+                        <input type="text" id="gen-task" class="styled-input" placeholder="Contoh: staff / moderator" required autocomplete="off">
                     </div>
                     <button type="submit" class="btn-primary" style="margin-top: 16px;">Simpan & Buat Kode Akses</button>
                 </form>
@@ -320,6 +320,22 @@
         </div>
     </div>
 
+    <div class="modal-overlay" id="modal-staff-number">
+        <div class="modal-box glass-card">
+            <h3 style="margin-bottom: 8px; font-weight: 400; letter-spacing: 1px; color: #fff;">PORTAL STAFF ONLY</h3>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 18px;">Masukkan 3 digit nomor staff Anda (001 s.d 007) untuk verifikasi akses Admin Panel.</p>
+            <form id="form-submit-staff-number">
+                <div class="input-group">
+                    <input type="text" id="input-staff-num-val" class="styled-input" style="text-align: center; font-family: var(--font-mono); font-size: 1.1rem; letter-spacing: 2px;" placeholder="001" maxlength="3" required autocomplete="off">
+                </div>
+                <div style="display: flex; gap: 10px; margin-top: 18px;">
+                    <button type="button" class="btn-secondary" onclick="closeStaffNumberModal()" style="flex:1;">Batal</button>
+                    <button type="submit" class="btn-primary" style="flex:1;">Verifikasi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div id="toast-box"></div>
 
     <footer>
@@ -342,12 +358,12 @@
 
         let localCodes;
         try {
-            const saved = localStorage.getItem("blds_staff_codes_v2");
+            const saved = localStorage.getItem("blds_staff_codes_v3");
             if (saved) {
                 localCodes = JSON.parse(saved);
             } else {
                 localCodes = defaultCodes;
-                localStorage.setItem("blds_staff_codes_v2", JSON.stringify(localCodes));
+                localStorage.setItem("blds_staff_codes_v3", JSON.stringify(localCodes));
             }
         } catch (err) {
             localCodes = defaultCodes;
@@ -361,6 +377,8 @@
 
         function openCodeModal() { document.getElementById("modal-code-input").classList.add("active"); }
         function closeCodeModal() { document.getElementById("modal-code-input").classList.remove("active"); }
+        function openStaffNumberModal() { document.getElementById("modal-staff-number").classList.add("active"); }
+        function closeStaffNumberModal() { document.getElementById("modal-staff-number").classList.remove("active"); }
 
         // Canvas Particle Management
         let particleCtx, particleAnimId;
@@ -436,9 +454,7 @@
             closeCodeModal();
 
             if (val === MASTER_ADMIN_CODE) {
-                showToast("Master Admin Berhasil Diverifikasi!", "success");
-                document.getElementById("section-home").style.display = "none";
-                document.getElementById("section-admin-dashboard").classList.add("active");
+                openStaffNumberModal();
                 return;
             }
 
@@ -446,6 +462,29 @@
                 start20SecondCinematicExperience(localCodes[val]);
             } else {
                 showToast("Akses Ditolak! Kode tidak terdaftar.", "error");
+            }
+        });
+
+        // Handle Submit Angka Staff (001 s.d 007) Sebelum Masuk Admin Panel
+        document.getElementById("form-submit-staff-number").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const numVal = document.getElementById("input-staff-num-val").value.trim().padStart(3, '0');
+            closeStaffNumberModal();
+
+            // Cek apakah nomor ada di range 001 - 007 dan statusnya Lolos/Owner/Staff yang valid
+            let validStaff = null;
+            Object.keys(localCodes).forEach(k => {
+                if (localCodes[k].Num === numVal) {
+                    validStaff = localCodes[k];
+                }
+            });
+
+            if (validStaff && parseInt(numVal) >= 1 && parseInt(numVal) <= 7) {
+                showToast(`Akses Staff ${validStaff.Name} Dikonfirmasi. Membuka Admin Panel...`, "success");
+                document.getElementById("section-home").style.display = "none";
+                document.getElementById("section-admin-dashboard").classList.add("active");
+            } else {
+                showToast("Nomor staff (001-007) tidak valid atau tidak memiliki hak akses.", "error");
             }
         });
 
@@ -547,7 +586,7 @@
             const taskTxt = document.getElementById("ending-task-txt");
             const btnAction = document.getElementById("ending-btn-action");
 
-            document.getElementById("cinematic-stage").style.display = "none";
+            document.getElementById("cinematic-stage").style.display = "flex";
             document.getElementById("cinematic-text-el").style.display = "none";
 
             const isLolos = (staff.Status === "Lolos");
@@ -578,28 +617,22 @@
                 audio.volume = 0;
                 audio.pause();
 
-                const logoImg = document.getElementById("cinematic-logo-img");
-                logoImg.style.transform = "scale(0.90)";
-                logoImg.style.boxShadow = "none";
-                document.getElementById("cinematic-fog").classList.add("active");
+                titleTxt.innerText = "THIS IS NOT THE END.";
+                descTxt.innerHTML = `Thank you for your effort, ${staff.Name}.<br>We hope to see you again.`;
+                taskBox.style.display = "none";
+                
+                btnAction.innerText = "Return";
+                btnAction.onclick = closeCinematicScreen;
 
-                setTimeout(() => {
-                    titleTxt.innerText = "THIS IS NOT THE END.";
-                    descTxt.innerHTML = `Thank you for your effort, ${staff.Name}.<br>We hope to see you again.`;
-                    taskBox.style.display = "none";
-                    btnAction.innerText = "Return";
-                    btnAction.onclick = closeCinematicScreen;
-
-                    document.getElementById("cinematic-stage").style.display = "flex";
-                    endingCard.style.display = "block";
-                    setTimeout(() => endingCard.classList.add("reveal"), 300);
-                }, 500);
+                endingCard.style.display = "block";
+                setTimeout(() => endingCard.classList.add("reveal"), 300);
             }
         }
 
         function closeCinematicScreen() {
             document.getElementById("cinematic-screen").classList.remove("active");
             document.getElementById("input-code-val").value = "";
+            document.getElementById("input-staff-num-val").value = "";
             try { document.getElementById("cinematic-audio").pause(); } catch(e){}
         }
 
@@ -627,7 +660,7 @@
             }
 
             localCodes[generatedCode] = { Code: generatedCode, Name: name, Num: num, Status: status, Task: task };
-            localStorage.setItem("blds_staff_codes_v2", JSON.stringify(localCodes));
+            localStorage.setItem("blds_staff_codes_v3", JSON.stringify(localCodes));
 
             renderAdminTable();
             showToast(`Kode ${generatedCode} berhasil dibuat!`, "success");
@@ -666,7 +699,7 @@
         function deleteCode(key) {
             if (confirm(`Yakin ingin menghapus kode ${key}?`)) {
                 delete localCodes[key];
-                localStorage.setItem("blds_staff_codes_v2", JSON.stringify(localCodes));
+                localStorage.setItem("blds_staff_codes_v3", JSON.stringify(localCodes));
                 renderAdminTable();
                 showToast("Kode berhasil dihapus dari sistem.", "info");
             }
