@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BlacklightDoms - Cinematic Masterpiece Portal</title>
+    <title>BlacklightDoms - Masterpiece Cinematic Experience</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 
@@ -13,7 +13,7 @@
             --bg-card: rgba(12, 12, 18, 0.92);
             --bg-input: rgba(6, 6, 10, 0.95);
             --border-color: rgba(255, 255, 255, 0.1);
-            --border-glow: rgba(168, 85, 247, 0.7);
+            --border-glow: rgba(255, 255, 255, 0.4);
             --text-primary: #f8f9fc;
             --text-secondary: #94a3b8;
             --font-main: 'Outfit', sans-serif;
@@ -33,28 +33,21 @@
             font-size: 0.9rem;
         }
 
-        /* Ambient Lighting */
-        .ambient-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; overflow: hidden; }
-        .glow-sphere { position: absolute; border-radius: 50%; filter: blur(190px); opacity: 0.12; animation: floatOrb 15s infinite alternate ease-in-out; }
-        .glow-1 { width: 500px; height: 500px; background: #6366f1; top: -100px; left: -100px; }
-        .glow-2 { width: 550px; height: 550px; background: #a855f7; bottom: -100px; right: -100px; animation-delay: -7s; }
-        @keyframes floatOrb { 0% { transform: translate(0,0); } 100% { transform: translate(50px, 40px); } }
-
         .text-glow {
             font-weight: 800;
             letter-spacing: 1.5px;
-            text-shadow: 0 0 20px rgba(255,255,255,0.5), 0 0 40px rgba(168,85,247,0.5);
+            text-shadow: 0 0 20px rgba(255,255,255,0.5), 0 0 40px rgba(255,255,255,0.3);
         }
 
         .logo-glow-img {
             width: 110px; height: 110px; border-radius: 50%; object-fit: cover;
             border: 2px solid var(--border-glow);
-            box-shadow: 0 0 35px rgba(168,85,247,0.4), inset 0 0 20px rgba(255,255,255,0.5);
+            box-shadow: 0 0 35px rgba(255,255,255,0.2), inset 0 0 20px rgba(255,255,255,0.5);
             animation: pulseLogo 3s infinite alternate ease-in-out;
         }
         @keyframes pulseLogo {
-            0% { transform: scale(1); box-shadow: 0 0 20px rgba(168,85,247,0.3); }
-            100% { transform: scale(1.06); box-shadow: 0 0 45px rgba(168,85,247,0.7); }
+            0% { transform: scale(1); box-shadow: 0 0 20px rgba(255,255,255,0.2); }
+            100% { transform: scale(1.06); box-shadow: 0 0 45px rgba(255,255,255,0.5); }
         }
 
         .glass-card {
@@ -83,7 +76,7 @@
             width: 100%; padding: 12px 16px; background: var(--bg-input); border: 1px solid var(--border-color);
             border-radius: 10px; color: var(--text-primary); font-family: var(--font-main); font-size: 0.9rem; outline: none; transition: border-color 0.2s, box-shadow 0.2s;
         }
-        .styled-input:focus, .styled-textarea:focus { border-color: #a855f7; box-shadow: 0 0 12px rgba(168,85,247,0.4); }
+        .styled-input:focus, .styled-textarea:focus { border-color: #ffffff; box-shadow: 0 0 12px rgba(255,255,255,0.3); }
 
         .btn-primary {
             width: 100%; padding: 13px; background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%); color: var(--bg-base); border: none; border-radius: 10px;
@@ -96,7 +89,7 @@
             background: transparent; color: var(--text-primary); border: 1px solid var(--border-color); padding: 9px 16px;
             border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 0.82rem; transition: all 0.2s;
         }
-        .btn-secondary:hover { border-color: #a855f7; background: rgba(168,85,247,0.1); }
+        .btn-secondary:hover { border-color: #ffffff; background: rgba(255,255,255,0.1); }
 
         #loading-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-base); z-index: 9999;
@@ -111,109 +104,117 @@
         .hero-menu p { color: var(--text-secondary); font-size: 0.95rem; max-width: 420px; }
 
         /* =======================================================
-           STRICT STORYBOARD CINEMATIC SCREEN (0 - 15 DETIK)
+           15-DETIK CINEMATIC SCREEN (PURE PITCH BLACK & CLEAN WHITE)
            ======================================================= */
         #cinematic-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #010103;
+            background: #000000;
             z-index: 5000; display: none; flex-direction: column; align-items: center; justify-content: center;
-            padding: 20px; text-align: center; opacity: 0; transition: opacity 0.6s ease;
+            padding: 20px; text-align: center; opacity: 0; transition: opacity 0.8s ease;
             overflow: hidden;
         }
         #cinematic-screen.active { display: flex; opacity: 1; }
 
-        /* Stage Area */
-        .story-stage {
-            position: relative; width: 240px; height: 240px;
+        /* Stage Logo & Garis Sun Rays Proyektor Bioskop */
+        .cinematic-stage {
+            position: relative; width: 260px; height: 260px;
             display: flex; align-items: center; justify-content: center; margin-bottom: 25px;
-            transition: transform 1s ease;
         }
-        .story-stage.shake { animation: stageShake 0.4s infinite ease-in-out; }
+        .cinematic-stage.shake { animation: stageShake 0.5s infinite ease-in-out; }
         @keyframes stageShake {
             0% { transform: translate(1px, 1px) rotate(0deg); }
-            20% { transform: translate(-2px, -1px) rotate(-1deg); }
-            40% { transform: translate(-1px, 2px) rotate(1deg); }
-            60% { transform: translate(2px, 1px) rotate(0deg); }
-            80% { transform: translate(1px, -2px) rotate(-1deg); }
-            100% { transform: translate(-1px, -1px) rotate(1deg); }
+            25% { transform: translate(-2px, -1px) rotate(-0.5deg); }
+            50% { transform: translate(1px, 2px) rotate(0.5deg); }
+            75% { transform: translate(-1px, -2px) rotate(-0.5deg); }
+            100% { transform: translate(1px, 1px) rotate(0deg); }
         }
 
-        /* Partikel Putih Kecil (Background Bergerak) */
-        .story-particles {
+        /* Pure White Logo */
+        .cinematic-logo-img {
+            width: 125px; height: 125px; border-radius: 50%; object-fit: cover;
+            border: 2px solid rgba(255,255,255,0.8);
+            box-shadow: 0 0 40px rgba(255,255,255,0.3);
+            z-index: 10;
+            transition: transform 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 1.2s ease, filter 1.2s ease;
+            filter: brightness(0.9);
+        }
+
+        /* Sinar Proyektor Bioskop (Volumetric Sun Rays - Garis Pancaran Cahaya Murni) */
+        .sun-ray-beams {
+            position: absolute; width: 240px; height: 240px; border-radius: 50%;
+            background: conic-gradient(
+                from 0deg at 50% 50%,
+                rgba(255,255,255,0.03) 0deg, rgba(255,255,255,0.3) 30deg, rgba(255,255,255,0.03) 60deg,
+                rgba(255,255,255,0.3) 120deg, rgba(255,255,255,0.03) 180deg, rgba(255,255,255,0.3) 240deg,
+                rgba(255,255,255,0.03) 300deg, rgba(255,255,255,0.3) 330deg, rgba(255,255,255,0.03) 360deg
+            );
+            animation: rotateSunBeams 12s infinite linear;
+            pointer-events: none; opacity: 0; transition: opacity 1.5s ease; z-index: 2;
+        }
+        .sun-ray-beams.active { opacity: 1; }
+        @keyframes rotateSunBeams { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* Debu Kosmik Halus (Partikel Putih Background) */
+        .cinematic-dust {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; z-index: 1;
         }
-        .particle-dot {
-            position: absolute; width: 3px; height: 3px; background: #ffffff; border-radius: 50%;
-            opacity: 0.6; animation: floatParticle 5s infinite linear;
+        .dust-speck {
+            position: absolute; width: 2px; height: 2px; background: #ffffff; border-radius: 50%;
+            opacity: 0.4; animation: floatDust 6s infinite linear;
         }
-        @keyframes floatParticle {
-            0% { transform: translateY(0px) scale(1); opacity: 0.2; }
-            50% { opacity: 0.9; }
-            100% { transform: translateY(-120px) scale(0.4); opacity: 0; }
-        }
-
-        /* Logo Utama di Storyboard */
-        .story-logo {
-            width: 120px; height: 120px; border-radius: 50%; object-fit: cover;
-            border: 2px solid rgba(168,85,247,0.3);
-            box-shadow: 0 0 20px rgba(168,85,247,0.2);
-            z-index: 5; transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        @keyframes floatDust {
+            0% { transform: translateY(0px) scale(0.8); opacity: 0.1; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-140px) scale(0.3); opacity: 0; }
         }
 
-        /* Sun Rays Efek Keliling Logo */
-        .sun-ray-ring {
-            position: absolute; width: 170px; height: 170px; border-radius: 50%;
-            border: 2px dashed rgba(253, 224, 71, 0.15);
-            animation: rotateRays 10s infinite linear; pointer-events: none; z-index: 2;
-            opacity: 0; transition: opacity 0.8s ease;
+        /* KOTAK TEKS DENGAN EFEK CINEMATIC REVEAL (BUKAN FADE IN BIASA) */
+        .cinematic-textbox {
+            max-width: 520px; min-height: 65px; display: flex; align-items: center; justify-content: center;
+            padding: 0 15px; z-index: 20; perspective: 1000px;
         }
-        .sun-ray-ring.lit { opacity: 1; border-color: rgba(253, 224, 71, 0.8); box-shadow: 0 0 30px rgba(253,224,71,0.4); }
-        @keyframes rotateRays { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .cinematic-text {
+            font-size: 1.2rem; color: #f8f9fc; font-weight: 600; letter-spacing: 1.2px;
+            line-height: 1.5; opacity: 0; transform: translateY(20px) rotateX(15deg); filter: blur(6px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            text-shadow: 0 4px 15px rgba(0,0,0,0.9), 0 0 25px rgba(255,255,255,0.4);
+            text-align: center;
+        }
+        .cinematic-text.show {
+            opacity: 1; transform: translateY(0) rotateX(0deg); filter: blur(0px);
+        }
 
-        /* Kotak Teks Sesuai Storyboard */
-        .story-textbox {
-            max-width: 500px; min-height: 60px; display: flex; align-items: center; justify-content: center;
-            padding: 0 15px; z-index: 10;
+        /* Kartu Ending Menyesuaikan Status Takdir (Lolos / Gagal) */
+        #cinematic-ending-card {
+            display: none; width: 92%; max-width: 450px; padding: 45px 30px; text-align: center;
+            transform: scale(0.85) translateY(30px); opacity: 0; 
+            transition: all 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.25);
+            z-index: 100; border-radius: 24px;
         }
-        .story-text {
-            font-size: 1.15rem; color: #f8f9fc; font-weight: 600; letter-spacing: 0.8px;
-            line-height: 1.5; opacity: 0; transform: translateY(10px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.9), 0 0 20px rgba(168,85,247,0.5);
-        }
-        .story-text.show { opacity: 1; transform: translateY(0); }
+        #cinematic-ending-card.reveal { display: block; transform: scale(1) translateY(0); opacity: 1; }
 
-        /* Layar Ending (Detik ke-15) */
-        #story-ending-container {
-            display: none; width: 90%; max-width: 480px; padding: 40px 30px; text-align: center;
-            border-radius: 22px; z-index: 100; opacity: 0; transform: scale(0.9);
-            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.25);
-        }
-        #story-ending-container.reveal { display: block; opacity: 1; transform: scale(1); }
-
-        /* Styling Ending Lolos (Background Putih Masuk dari Tengah) */
-        #cinematic-screen.success-theme {
-            background: radial-gradient(circle, #ffffff 0%, #f1f5f9 65%, #cbd5e1 100%) !important;
+        /* Tema Lolos: Kilatan Putih Menyapu & Tampilan Elegan Terang */
+        #cinematic-screen.success-ending {
+            background: radial-gradient(circle, #ffffff 0%, #f1f5f9 60%, #cbd5e1 100%) !important;
             color: #010103 !important;
         }
-        #cinematic-screen.success-theme .story-text { color: #010103 !important; text-shadow: none; }
-        #cinematic-screen.success-theme #story-ending-container {
-            background: rgba(255, 255, 255, 0.95);
-            border: 1px solid rgba(0,0,0,0.1);
+        #cinematic-screen.success-ending #cinematic-ending-card {
+            background: rgba(255, 255, 255, 0.96);
+            border: 1px solid rgba(0,0,0,0.12);
             color: #010103;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            box-shadow: 0 25px 70px rgba(0,0,0,0.25), 0 0 40px rgba(255,255,255,0.9);
         }
 
-        /* Styling Ending Gagal (Background Tetap Hitam, Glow Redup) */
-        #cinematic-screen.failed-theme {
-            background: #010103 !important;
+        /* Tema Gagal: Tetap Hitam Pekat, Redup Misterius */
+        #cinematic-screen.failed-ending {
+            background: #000000 !important;
             color: #f8f9fc !important;
         }
-        #cinematic-screen.failed-theme #story-ending-container {
-            background: rgba(10, 10, 15, 0.95);
-            border: 1px solid rgba(239, 68, 68, 0.4);
+        #cinematic-screen.failed-ending #cinematic-ending-card {
+            background: rgba(10, 10, 15, 0.96);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             color: #f8f9fc;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.9), 0 0 30px rgba(239,68,68,0.2);
+            box-shadow: 0 25px 70px rgba(0,0,0,0.95), 0 0 40px rgba(255,255,255,0.05);
         }
 
         /* Admin Dashboard */
@@ -233,40 +234,35 @@
         footer { background: rgba(8,8,12,0.9); border-top: 1px solid var(--border-color); padding: 20px; text-align: center; margin-top: auto; width: 100%; }
         .footer-links { display: flex; gap: 12px; justify-content: center; margin-bottom: 10px; flex-wrap: wrap; }
         .social-link-btn { display: inline-flex; align-items: center; gap: 7px; color: var(--text-secondary); text-decoration: none; font-weight: 600; font-size: 0.82rem; padding: 6px 12px; border-radius: 8px; background: var(--bg-card); border: 1px solid var(--border-color); transition: 0.2s; }
-        .social-link-btn:hover { color: var(--text-primary); border-color: #a855f7; background: rgba(168,85,247,0.1); }
+        .social-link-btn:hover { color: var(--text-primary); border-color: #ffffff; background: rgba(255,255,255,0.1); }
         .copyright { font-size: 0.75rem; color: #52525b; }
     </style>
 </head>
 <body>
-
-    <div class="ambient-bg">
-        <div class="glow-sphere glow-1"></div>
-        <div class="glow-sphere glow-2"></div>
-    </div>
-
-    <audio id="success-sound" src="https://raw.githubusercontent.com/github/audio/master/success.ogg" preload="auto"></audio>
 
     <div id="loading-screen">
         <div style="width: 45px; height: 45px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; font-weight: 900; color: #000; box-shadow: 0 0 20px #fff;">B</div>
         <span class="text-glow" style="font-size: 0.95rem; margin-top: 12px;">LOADING CINEMA SYSTEM...</span>
     </div>
 
+    <audio id="success-sound" src="https://raw.githubusercontent.com/github/audio/master/success.ogg" preload="auto"></audio>
+
     <div id="cinematic-screen">
-        <div class="story-particles" id="story-particles-box"></div>
+        <div class="cinematic-dust" id="cinematic-dust-box"></div>
 
-        <div class="story-stage" id="story-stage">
-            <div class="sun-ray-ring" id="sun-ray-ring"></div>
-            <img src="logo.png" alt="Logo" class="story-logo" id="story-logo-img" onerror="this.src='https://via.placeholder.com/120/161614/ffffff?text=BLDS'">
+        <div class="cinematic-stage" id="cinematic-stage">
+            <div class="sun-ray-beams" id="sun-ray-beams"></div>
+            <img src="logo.png" alt="Logo" class="cinematic-logo-img" id="cinematic-logo-img" onerror="this.src='https://via.placeholder.com/125/161614/ffffff?text=BLDS'">
         </div>
 
-        <div class="story-textbox">
-            <div class="story-text" id="story-text-el"></div>
+        <div class="cinematic-textbox">
+            <div class="cinematic-text" id="cinematic-text-el"></div>
         </div>
 
-        <div id="story-ending-container">
-            <div id="ending-icon-box" style="font-size: 3rem; margin-bottom: 12px;"></div>
-            <h2 id="ending-title-txt" style="font-size: 1.35rem; margin-bottom: 8px; font-weight: 800;"></h2>
-            <p id="ending-desc-txt" style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 22px; opacity: 0.85;"></p>
+        <div class="glass-card" id="cinematic-ending-card">
+            <div id="ending-icon-box" style="font-size: 3rem; margin-bottom: 14px;"></div>
+            <h2 id="ending-title-txt" style="font-size: 1.4rem; margin-bottom: 10px; font-weight: 800; letter-spacing: 0.5px;"></h2>
+            <p id="ending-desc-txt" style="font-size: 0.92rem; line-height: 1.7; margin-bottom: 24px; opacity: 0.85;"></p>
             <button class="btn-primary" onclick="closeCinematicScreen()" id="ending-btn-close">Kembali ke Beranda</button>
         </div>
     </div>
@@ -382,26 +378,25 @@
         document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => document.getElementById("loading-screen").classList.add("hidden"), 350);
             renderAdminTable();
-            generateParticleDots();
+            generateDustSpecks();
         });
 
         function openCodeModal() { document.getElementById("modal-code-input").classList.add("active"); }
         function closeCodeModal() { document.getElementById("modal-code-input").classList.remove("active"); }
 
-        function generateParticleDots() {
-            const box = document.getElementById("story-particles-box");
+        function generateDustSpecks() {
+            const box = document.getElementById("cinematic-dust-box");
             box.innerHTML = "";
-            for(let i=0; i<18; i++) {
+            for(let i=0; i<20; i++) {
                 const dot = document.createElement("div");
-                dot.className = "particle-dot";
+                dot.className = "dust-speck";
                 dot.style.left = `${Math.random() * 100}%`;
                 dot.style.top = `${Math.random() * 100}%`;
-                dot.style.animationDelay = `${Math.random() * 5}s`;
+                dot.style.animationDelay = `${Math.random() * 6}s`;
                 box.appendChild(dot);
             }
         }
 
-        // SUBMIT KODE & INTERCEPT ADMIN ROLE
         document.getElementById("form-submit-code").addEventListener("submit", (e) => {
             e.preventDefault();
             const val = document.getElementById("input-code-val").value.trim().toUpperCase();
@@ -433,98 +428,90 @@
                 return;
             }
 
-            // Jalankan Storyboard Sinematik 15 Detik
-            startStoryboardCinematic(matchedStaff);
+            // Jalankan Cinematic Masterpiece 15 Detik
+            startTrueCinematicMovie(matchedStaff);
         });
 
-        // ==========================================
-        // EKSEKUSI STORYBOARD 15 DETIK PER DETIK
-        // ==========================================
-        function startStoryboardCinematic(staff) {
+        // ========================================================
+        // STORYBOARD 15 DETIK (PITCH BLACK, WHITE LOGO, SUN BEAMS)
+        // ========================================================
+        function startTrueCinematicMovie(staff) {
             const screen = document.getElementById("cinematic-screen");
-            const logoImg = document.getElementById("story-logo-img");
-            const textEl = document.getElementById("story-text-el");
-            const stage = document.getElementById("story-stage");
-            const sunRing = document.getElementById("sun-ray-ring");
-            const endingCard = document.getElementById("story-ending-container");
+            const logoImg = document.getElementById("cinematic-logo-img");
+            const textEl = document.getElementById("cinematic-text-el");
+            const stage = document.getElementById("cinematic-stage");
+            const sunBeams = document.getElementById("sun-ray-beams");
+            const endingCard = document.getElementById("cinematic-ending-card");
 
-            // Reset UI
+            // Reset State
             screen.className = "";
             screen.classList.add("active");
             endingCard.classList.remove("reveal");
             endingCard.style.display = "none";
             stage.style.display = "flex";
             textEl.style.display = "block";
-            sunRing.classList.remove("lit");
+            sunBeams.classList.remove("active");
             stage.classList.remove("shake");
 
-            // 0 - 2 DETIK: Logo muncul dari kegelapan (opacity naik, glow perlahan)
+            // 0 - 2 DETIK: Logo muncul dari kegelapan mutlak, soft glow putih
             logoImg.style.opacity = "0";
-            logoImg.style.transform = "scale(0.8)";
-            logoImg.style.boxShadow = "0 0 5px rgba(168,85,247,0.1)";
+            logoImg.style.transform = "scale(0.75)";
+            logoImg.style.filter = "brightness(0.2) blur(10px)";
             
             setTimeout(() => {
                 logoImg.style.opacity = "1";
                 logoImg.style.transform = "scale(1)";
-                logoImg.style.boxShadow = "0 0 35px rgba(168,85,247,0.5)";
-                setStoryboardText("Every journey begins with a single decision.");
-            }, 200);
+                logoImg.style.filter = "brightness(1) blur(0px)";
+                setCinematicText("Every journey begins with a single decision.");
+            }, 250);
 
-            // 2 - 5 DETIK: Logo mengecil, background partikel bergerak, kalimat berganti
+            // 2 - 5 DETIK: Logo mengecil perlahan, kalimat berganti
             setTimeout(() => {
-                logoImg.style.transform = "scale(0.85)";
-                setStoryboardText("Not every path leads to the same destination.");
-            }, 3500);
+                logoImg.style.transform = "scale(0.88)";
+                setCinematicText("Not every path leads to the same destination.");
+            }, 4000);
 
-            // 5 - 8 DETIK: Partikel aktif mengelilingi, glow makin terang, efek mengetik teks
+            // 5 - 8 DETIK: Glow makin terang, kalimat ketiga
             setTimeout(() => {
-                logoImg.style.boxShadow = "0 0 55px rgba(168,85,247,0.9)";
-                typewriterEffect("Character outweighs potential.", textEl);
-            }, 6000);
+                logoImg.style.boxShadow = "0 0 60px rgba(255,255,255,0.5)";
+                setCinematicText("Character outweighs potential.");
+            }, 7500);
 
-            // 8 - 11 DETIK: Partikel berhenti, Sun Rays menyala satu per satu, background sedikit bergetar
+            // 8 - 11 DETIK: Sun Ray Beams proyektor menyala, background bergetar halus
             setTimeout(() => {
                 stage.classList.add("shake");
-                sunRing.classList.add("lit");
-                setStoryboardText("Every choice shapes the path ahead.");
-            }, 9000);
+                sunBeams.classList.add("active");
+                setCinematicText("Every choice shapes the path ahead.");
+            }, 11000);
 
-            // 11 - 14 DETIK: Semua teks menghilang, Sun Rays menyala penuh, logo jadi objek tunggal, hening
+            // 11 - 14 DETIK: Teks hilang, Sun Rays penuh, logo jadi objek tunggal, hening mutlak
             setTimeout(() => {
                 textEl.style.opacity = "0";
                 stage.classList.remove("shake");
-                sunRing.style.boxShadow = "0 0 60px rgba(253,224,71,0.8)";
-            }, 12000);
+                sunBeams.style.filter = "brightness(1.4)";
+            }, 14000);
 
-            // DETIK KE-15: Ending (Lolos atau Gagal Sesuai Storyboard)
+            // DETIK KE-15: Pengungkapan Takdir Sesuai Status Lolos / Gagal
             setTimeout(() => {
-                showStoryboardEnding(staff);
-            }, 15000);
+                showTrueCinematicEnding(staff);
+            }, 15500);
         }
 
-        function typewriterEffect(text, element) {
-            element.classList.remove("show");
-            setTimeout(() => {
-                element.innerText = text;
-                element.classList.add("show");
-            }, 200);
-        }
-
-        function setStoryboardText(text) {
-            const el = document.getElementById("story-text-el");
+        function setCinematicText(text) {
+            const el = document.getElementById("cinematic-text-el");
             el.classList.remove("show");
             setTimeout(() => {
                 el.innerText = text;
                 el.classList.add("show");
-            }, 250);
+            }, 300);
         }
 
-        function showStoryboardEnding(staff) {
+        function showTrueCinematicEnding(staff) {
             const screen = document.getElementById("cinematic-screen");
-            document.getElementById("story-stage").style.display = "none";
-            document.getElementById("story-text-el").style.display = "none";
+            document.getElementById("cinematic-stage").style.display = "none";
+            document.getElementById("cinematic-text-el").style.display = "none";
 
-            const endingCard = document.getElementById("story-ending-container");
+            const endingCard = document.getElementById("cinematic-ending-card");
             const iconBox = document.getElementById("ending-icon-box");
             const titleTxt = document.getElementById("ending-title-txt");
             const descTxt = document.getElementById("ending-desc-txt");
@@ -532,21 +519,21 @@
             const isLolos = (staff.Status === "Lolos");
 
             if (isLolos) {
-                // Kalau Lolos: Background putih masuk dari tengah
-                screen.classList.add("success-theme");
-                iconBox.innerHTML = `<i class="fa-solid fa-award" style="color: #2563eb;"></i>`;
+                // Lolos: Background putih menyapu masuk dari tengah, teks elegan
+                screen.classList.add("success-ending");
+                iconBox.innerHTML = `<i class="fa-solid fa-award" style="color: #0284c7;"></i>`;
                 titleTxt.innerHTML = `WELCOME TO THE NEXT CHAPTER`;
                 descTxt.innerHTML = `<b>Congratulations, ${staff.Name}.</b><br>Your application has been accepted.`;
             } else {
-                // Kalau Gagal: Background tetap hitam, glow redup
-                screen.classList.add("failed-theme");
+                // Gagal: Tetap hitam pekat, glow redup, misterius
+                screen.classList.add("failed-ending");
                 iconBox.innerHTML = `<i class="fa-solid fa-moon" style="color: #94a3b8;"></i>`;
                 titleTxt.innerHTML = `THIS IS NOT THE END.`;
                 descTxt.innerHTML = `<b>Thank you for your effort, ${staff.Name}.</b><br>We hope to see you again.`;
             }
 
             endingCard.style.display = "block";
-            setTimeout(() => endingCard.classList.add("reveal"), 50);
+            setTimeout(() => endingCard.classList.add("reveal"), 60);
 
             if (isLolos) {
                 try {
@@ -596,7 +583,7 @@
             tbody.innerHTML = keys.map(k => {
                 const item = localCodes[k];
                 const badgeColor = item.Status === 'Lolos' ? '#34d399' : '#f87171';
-                const roleBadge = item.Role === 'Admin' ? 'color: #a855f7; font-weight:800;' : 'color: #94a3b8;';
+                const roleBadge = item.Role === 'Admin' ? 'color: #ffffff; font-weight:800;' : 'color: #94a3b8;';
                 return `
                     <tr>
                         <td><code style="font-family: var(--font-mono); color: #38bdf8;">${item.Code}</code></td>
