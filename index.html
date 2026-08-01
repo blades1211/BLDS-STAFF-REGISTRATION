@@ -1,842 +1,561 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BlacklightDoms - Ultra Cinematic Staff Portal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-
+    <title>BLDS | Official Staff Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+    
     <style>
+        /* =========================================
+           CORE VARIABLES & RESET
+           ========================================= */
         :root {
-            --bg-base: #030305;
-            --text-primary: #ffffff;
-            --text-secondary: #a1a1aa;
-            --accent-gold: #fbbf24;
-            --accent-neon: #38bdf8;
-            --font-main: 'Outfit', sans-serif;
+            --bg-base: #030303;
+            --text-main: #f5f5f5;
+            --text-muted: #888888;
+            --glass-bg: rgba(20, 20, 20, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glow-white: rgba(255, 255, 255, 0.15);
+            --font-sans: 'Outfit', sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
         }
 
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; /* Custom cursor */ }
 
         body {
-            font-family: var(--font-main);
             background-color: var(--bg-base);
-            color: var(--text-primary);
-            min-height: 100vh;
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            overflow: hidden; /* Prevent scroll during intro */
+            height: 100vh;
+            width: 100vw;
             display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
+            justify-content: center;
+            align-items: center;
+            user-select: none;
         }
 
-        /* Loading Screen */
-        #loading-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000000; z-index: 9999;
-            display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        /* =========================================
+           CUSTOM CURSOR
+           ========================================= */
+        #cursor-dot {
+            width: 6px; height: 6px; background: white; border-radius: 50%;
+            position: fixed; pointer-events: none; z-index: 9999;
+            transform: translate(-50%, -50%); transition: width 0.2s, height 0.2s;
         }
-        #loading-screen.hidden { opacity: 0; visibility: hidden; }
-
-        .loader-ring {
-            width: 60px; height: 60px; border: 2px solid rgba(255,255,255,0.1); border-top: 2px solid #fff; border-radius: 50%;
-            animation: spinRing 1s linear infinite; margin-bottom: 15px;
+        #cursor-ring {
+            width: 30px; height: 30px; border: 1px solid rgba(255,255,255,0.4); border-radius: 50%;
+            position: fixed; pointer-events: none; z-index: 9998;
+            transform: translate(-50%, -50%); transition: transform 0.1s ease-out;
         }
-        @keyframes spinRing { 100% { transform: rotate(360deg); } }
+        .clicking #cursor-ring { transform: translate(-50%, -50%) scale(0.5); border-color: white; }
+        .hovering #cursor-dot { width: 10px; height: 10px; background: rgba(255,255,255,0.8); box-shadow: 0 0 10px white; }
 
-        #cinematic-audio { display: none; }
-
-        /* =======================================================
-           ULTRA EPIC CINEMATIC CUTSCENE SCREEN
-           ======================================================= */
-        #cinematic-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000000;
-            z-index: 5000; display: none; flex-direction: column; align-items: center; justify-content: center;
-            padding: 20px; text-align: center; opacity: 0; transition: opacity 0.8s ease;
-            overflow: hidden;
-        }
-        #cinematic-screen.active { display: flex; opacity: 1; }
-
-        /* Flash Flash Transisi */
-        .cinematic-flash {
-            position: absolute; top:0; left:0; width:100%; height:100%; background:#ffffff; z-index: 6000;
-            pointer-events: none; opacity: 0; transition: opacity 0.15s ease-out;
-        }
-        .cinematic-flash.active { opacity: 1; }
-
-        .cinematic-vignette {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2;
-            background: radial-gradient(circle, rgba(0,0,0,0.2) 30%, rgba(0,0,0,0.95) 100%);
-            opacity: 0; transition: opacity 2s ease;
-        }
-        .cinematic-vignette.active { opacity: 1; }
-
-        .cinematic-fog {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1;
-            background: radial-gradient(circle at center, rgba(56, 189, 248, 0.08) 0%, rgba(0,0,0,0) 75%);
-            opacity: 0; transition: opacity 2s ease; filter: blur(50px);
-        }
-        .cinematic-fog.active { opacity: 1; }
-
-        #particle-canvas {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3;
+        /* =========================================
+           UI COMPONENTS (GLASSMORPHISM)
+           ========================================= */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px) saturate(150%);
+            -webkit-backdrop-filter: blur(20px) saturate(150%);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Equalizer Bars Simulasi Musik */
-        .audio-visualizer {
-            position: absolute; bottom: 30px; display: flex; gap: 4px; z-index: 10; opacity: 0; transition: opacity 1s ease;
-        }
-        .audio-visualizer.active { opacity: 0.7; }
-        .vis-bar {
-            width: 3px; height: 15px; background: rgba(255,255,255,0.6); border-radius: 3px;
-            animation: barPulse 1.2s ease-in-out infinite alternate;
-        }
-        @keyframes barPulse {
-            0% { height: 4px; opacity: 0.3; }
-            100% { height: 28px; opacity: 1; }
-        }
+        h1, h2, h3 { font-weight: 300; letter-spacing: 2px; }
+        p { color: var(--text-muted); font-weight: 300; line-height: 1.6; }
 
-        .cinematic-stage {
-            position: relative; width: 320px; height: 200px;
-            display: flex; align-items: center; justify-content: center; margin-bottom: 20px;
-            transition: transform 3s cubic-bezier(0.16, 1, 0.3, 1);
+        .input-group { position: relative; margin-bottom: 24px; }
+        .input-group input {
+            width: 100%; min-width: 300px;
+            background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border);
+            color: white; font-family: var(--font-mono); font-size: 14px;
+            padding: 16px 20px; border-radius: 8px; outline: none;
+            transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1.5px;
         }
+        .input-group input:focus { border-color: rgba(255,255,255,0.5); box-shadow: 0 0 15px var(--glow-white); }
 
-        /* Shockwave Energy Pulse Ring */
-        .shockwave-ring {
-            position: absolute; width: 110px; height: 110px; border-radius: 50%;
-            border: 2px solid rgba(255,255,255,0.8);
-            opacity: 0; pointer-events: none; z-index: 5;
+        .btn {
+            background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border);
+            color: white; font-family: var(--font-sans); font-size: 12px; text-transform: uppercase;
+            letter-spacing: 3px; padding: 16px 32px; border-radius: 8px;
+            position: relative; overflow: hidden; transition: all 0.4s ease;
+            width: 100%;
         }
-        .shockwave-ring.pulse {
-            animation: ringExpand 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        .btn::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s ease;
         }
-        @keyframes ringExpand {
-            0% { transform: scale(0.8); opacity: 1; border-color: rgba(255,255,255,0.9); }
-            100% { transform: scale(3.5); opacity: 0; border-color: rgba(255,255,255,0); }
-        }
+        .btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.3); box-shadow: 0 0 20px rgba(255,255,255,0.05); }
+        .btn:hover::before { left: 100%; }
+        .btn-primary { background: white; color: black; font-weight: 500; }
+        .btn-primary:hover { background: #e0e0e0; box-shadow: 0 0 30px rgba(255,255,255,0.2); }
 
-        .radial-glow-back {
-            position: absolute; width: 120px; height: 120px; border-radius: 50%;
-            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
-            opacity: 0; transform: scale(0.5); transition: all 1.8s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: none; z-index: 4;
+        /* =========================================
+           SCREENS & STATES
+           ========================================= */
+        .screen {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; transition: opacity 1s ease;
         }
+        .screen.active { opacity: 1; pointer-events: auto; }
 
-        .cinematic-logo-img {
-            width: 105px; height: 105px; border-radius: 50%; object-fit: cover;
-            border: 2px solid rgba(255,255,255,0.4);
-            box-shadow: 0 0 25px rgba(255,255,255,0.15);
-            z-index: 10;
-            opacity: 0;
-            transform: scale(0.85);
-            transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 1.5s ease, opacity 1s ease;
+        /* Home Screen */
+        #screen-home .logo-container { text-align: center; margin-bottom: 40px; }
+        #screen-home h1 { font-size: 24px; margin-bottom: 8px; }
+
+        /* Cinematic Overlay (AAA Game Intro) */
+        #screen-cinematic {
+            background: #000; z-index: 100;
         }
+        #particles-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.6; }
+        .vignette {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.95) 100%);
+            z-index: 2; pointer-events: none;
+        }
+        .ambient-glow {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 40vw; height: 40vw; border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
+            filter: blur(40px); z-index: 1; pointer-events: none;
+            animation: pulseGlow 8s infinite alternate;
+        }
+        @keyframes pulseGlow { 0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; } 100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; } }
 
-        .cinematic-textbox {
-            max-width: 680px; min-height: 90px; display: flex; align-items: center; justify-content: center;
-            padding: 0 25px; z-index: 20; margin-bottom: 25px;
+        .cinematic-text-container {
+            position: absolute; z-index: 10; text-align: center; width: 80%; max-width: 800px;
         }
         .cinematic-text {
-            font-size: 1.15rem; color: #f4f4f5; font-weight: 300; letter-spacing: 1.5px;
-            line-height: 1.8; opacity: 0; transform: translateY(12px);
-            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-            text-shadow: 0 4px 20px rgba(0,0,0,0.95);
-            text-align: center;
+            font-size: 28px; font-weight: 200; letter-spacing: 4px; color: white;
+            opacity: 0; transform: scale(0.95) translateY(10px); filter: blur(5px);
+            transition: all 3s cubic-bezier(0.25, 1, 0.5, 1); position: absolute; width: 100%; text-shadow: 0 0 20px rgba(255,255,255,0.3);
         }
-        .cinematic-text.show { opacity: 1; transform: translateY(0); }
+        .cinematic-text.show { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
 
-        /* KARTU HASIL CINEMATIC ENDING */
-        #cinematic-ending-card {
-            display: none; width: 92%; max-width: 580px; max-height: 85vh; overflow-y: auto; padding: 35px 28px; text-align: center;
-            opacity: 0; transform: scale(0.92); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
-            z-index: 5000; border-radius: 24px;
+        /* Result Screen */
+        #screen-result .status-title { font-size: 32px; margin-bottom: 16px; font-weight: 400; }
+        #screen-result .status-message { font-size: 16px; margin-bottom: 40px; }
+
+        /* Admin Dashboard */
+        #screen-admin { background: #050505; align-items: flex-start; padding: 50px; }
+        .admin-layout { display: flex; gap: 40px; width: 100%; max-width: 1400px; height: 100%; }
+        .sidebar { width: 250px; display: flex; flex-direction: column; gap: 20px; }
+        .main-content { flex: 1; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 16px; padding: 30px; overflow-y: auto; }
+        
+        /* Toast Notification (Elegant) */
+        #toast {
+            position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%) translateY(20px);
+            background: rgba(255,255,255,0.9); color: black; padding: 12px 24px; border-radius: 30px;
+            font-size: 12px; letter-spacing: 1px; font-weight: 500; opacity: 0; pointer-events: none;
+            transition: all 0.4s ease; box-shadow: 0 10px 30px rgba(255,255,255,0.2); z-index: 9999;
         }
-        #cinematic-ending-card.reveal { display: block; opacity: 1; transform: scale(1); }
+        #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-        #cinematic-screen.success-theme {
-            background: #ffffff !important;
-            color: #000000 !important;
-            transition: background 1.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        #cinematic-screen.success-theme .cinematic-text { color: #000000 !important; }
-        #cinematic-screen.success-theme #cinematic-ending-card {
-            background: rgba(255, 255, 255, 0.98);
-            border: 1px solid rgba(0,0,0,0.12);
-            color: #000000;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.18);
-        }
-
-        #cinematic-screen.failed-theme {
-            background: #000000 !important;
-            color: #ffffff !important;
-        }
-        #cinematic-screen.failed-theme #cinematic-ending-card {
-            background: rgba(12, 12, 14, 0.96);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #ffffff;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.95);
-        }
-
-        /* Tombol WA Contact Headstaff */
-        .btn-wa-contact {
-            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-            width: 100%; max-width: 320px; padding: 14px 20px; margin-top: 20px;
-            background: #25D366; color: #ffffff; text-decoration: none; border-radius: 12px;
-            font-weight: 600; font-size: 0.9rem; letter-spacing: 0.8px; text-transform: uppercase;
-            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.35); transition: all 0.3s ease;
-        }
-        .btn-wa-contact:hover {
-            transform: translateY(-2px); box-shadow: 0 12px 30px rgba(37, 211, 102, 0.5); background: #22bf5b;
-        }
-
-        /* Tampilan Website Utama */
-        main { max-width: 650px; width: 100%; margin: 0 auto; padding: 40px 18px; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .hero-menu { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; }
-        .hero-menu h1 { font-size: 2.4rem; font-weight: 300; letter-spacing: 3px; }
-        .hero-menu p { color: var(--text-secondary); font-size: 0.92rem; max-width: 440px; line-height: 1.6; }
-
-        .logo-glow-img {
-            width: 120px; height: 120px; border-radius: 50%; object-fit: cover;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 0 35px rgba(255, 255, 255, 0.18);
-        }
-
-        .glass-card {
-            background: rgba(10, 10, 12, 0.92);
-            backdrop-filter: blur(30px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 20px;
-            box-shadow: 0 25px 70px rgba(0,0,0,0.85);
-        }
-
-        /* Modal Universal */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.94); backdrop-filter: blur(18px);
-            z-index: 1000; display: flex; align-items: center; justify-content: center;
-            opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
-        }
-        .modal-overlay.active { opacity: 1; pointer-events: all; }
-        .modal-box { width: 90%; max-width: 420px; padding: 38px 32px; text-align: center; transform: scale(0.95); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-        .modal-overlay.active .modal-box { transform: scale(1); }
-
-        .input-group { margin: 18px 0; text-align: left; }
-        .input-group label { display: block; font-size: 0.74rem; color: var(--text-secondary); margin-bottom: 8px; text-transform: uppercase; font-weight: 600; letter-spacing: 1.2px; }
-        .styled-input, .styled-select {
-            width: 100%; padding: 14px 18px; background: rgba(5,5,6,0.98); border: 1px solid rgba(255,255,255,0.14);
-            border-radius: 12px; color: var(--text-primary); font-family: var(--font-main); font-size: 0.92rem; outline: none; transition: border-color 0.3s;
-        }
-        .styled-input:focus, .styled-select:focus { border-color: rgba(255,255,255,0.7); }
-
-        .btn-primary {
-            width: 100%; padding: 15px; background: #ffffff; color: #000000; border: none; border-radius: 12px;
-            font-weight: 600; font-size: 0.88rem; cursor: pointer; text-transform: uppercase; letter-spacing: 1.8px;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255,255,255,0.3); }
-
-        .btn-secondary {
-            background: transparent; color: var(--text-primary); border: 1px solid rgba(255,255,255,0.14); padding: 12px 20px;
-            border-radius: 12px; cursor: pointer; font-weight: 500; font-size: 0.84rem; transition: all 0.3s;
-        }
-        .btn-secondary:hover { border-color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.06); }
-
-        /* Admin Dashboard UI */
-        .admin-dashboard { width: 100%; max-width: 880px; display: none; flex-direction: column; gap: 22px; }
-        .admin-dashboard.active { display: flex; }
-        .admin-card { padding: 28px; text-align: left; }
-        .codes-table-box { width: 100%; overflow-x: auto; margin-top: 15px; max-height: 350px; overflow-y: auto; }
-        table { width: 100%; border-collapse: collapse; font-size: 0.86rem; text-align: left; }
-        th, td { padding: 14px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        th { color: var(--text-secondary); text-transform: uppercase; font-size: 0.72rem; letter-spacing: 1px; }
-
-        /* Toast Notification */
-        #toast-box { position: fixed; bottom: 25px; left: 25px; z-index: 7000; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
-        .toast-item { background: rgba(12,12,14,0.96); border: 1px solid rgba(255,255,255,0.18); color: var(--text-primary); padding: 13px 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.7); font-size: 0.86rem; backdrop-filter: blur(14px); animation: fadeInToast 0.3s ease; }
-        @keyframes fadeInToast { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        footer { background: rgba(5,5,5,0.95); border-top: 1px solid rgba(255,255,255,0.08); padding: 22px; text-align: center; margin-top: auto; width: 100%; }
-        .copyright { font-size: 0.78rem; color: #52525b; letter-spacing: 1px; }
     </style>
 </head>
 <body>
 
-    <div id="loading-screen">
-        <div class="loader-ring"></div>
-        <span style="font-size: 0.85rem; letter-spacing: 3px; color: var(--text-secondary); text-transform: uppercase;">Initializing System...</span>
-    </div>
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
 
-    <audio id="cinematic-audio" src="idoberg-relaxing-cinematic-pads-303218.mp3" loop preload="auto"></audio>
+    <audio id="bgm" src="bgm.mp3" loop></audio>
+    <audio id="sfx-click" src="sfx-click.mp3"></audio>
+    <audio id="sfx-whoosh" src="sfx-whoosh.mp3"></audio>
+    <audio id="sfx-reveal" src="sfx-reveal.mp3"></audio>
 
-    <div id="cinematic-screen">
-        <div class="cinematic-flash" id="cinematic-flash"></div>
-        <div class="cinematic-vignette" id="cinematic-vignette"></div>
-        <div class="cinematic-fog" id="cinematic-fog"></div>
-        <canvas id="particle-canvas"></canvas>
+    <div id="toast">Message goes here</div>
 
-        <div class="audio-visualizer" id="audio-visualizer">
-            <div class="vis-bar" style="animation-delay: 0.1s;"></div>
-            <div class="vis-bar" style="animation-delay: 0.3s;"></div>
-            <div class="vis-bar" style="animation-delay: 0.2s;"></div>
-            <div class="vis-bar" style="animation-delay: 0.5s;"></div>
-            <div class="vis-bar" style="animation-delay: 0.4s;"></div>
-        </div>
-
-        <div class="cinematic-stage" id="cinematic-stage">
-            <div class="shockwave-ring" id="shockwave-ring"></div>
-            <div class="radial-glow-back" id="radial-glow-back"></div>
-            <img src="logo.png" alt="Logo" class="cinematic-logo-img" id="cinematic-logo-img" onerror="this.src='https://via.placeholder.com/120/000000/ffffff?text=BLDS'">
-        </div>
-
-        <div class="cinematic-textbox" id="cinematic-textbox-wrapper">
-            <div class="cinematic-text" id="cinematic-text-el"></div>
-        </div>
-
-        <div class="glass-card" id="cinematic-ending-card">
-            <h2 id="ending-title-txt" style="font-size: 1.3rem; margin-bottom: 12px; font-weight: 500; letter-spacing: 1.5px;"></h2>
-            
-            <div id="ending-task-box" style="margin: 12px 0 18px 0; padding: 12px 16px; background: rgba(255,255,255,0.06); border-radius: 12px; font-size: 0.88rem; border-left: 3px solid rgba(255,255,255,0.7); text-align: left; display: none;">
-                <strong style="display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-secondary); margin-bottom: 4px;">Role & Penugasan Anda:</strong>
-                <span id="ending-task-txt" style="font-family: var(--font-mono); color: #fff; font-weight: 600; font-size: 0.95rem;"></span>
+    <div id="screen-home" class="screen active">
+        <div class="glass-panel">
+            <div class="logo-container">
+                <h1>BLACKLIGHTDOMS</h1>
+                <p>Official Staff Verification Portal</p>
             </div>
-
-            <p id="ending-desc-txt" style="font-size: 0.86rem; line-height: 1.7; margin-bottom: 20px; opacity: 0.9; white-space: pre-line;"></p>
-
-            <div id="ending-action-container" style="display: flex; flex-direction: column; align-items: center; gap: 12px;">
-                <button class="btn-primary" onclick="closeCinematicScreen()" id="ending-btn-action" style="max-width: 200px; margin: 0 auto;"></button>
-                <div id="wa-contact-wrapper" style="width: 100%; display: none;">
-                    <a href="https://wa.me/6281389632241" target="_blank" class="btn-wa-contact">
-                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-                        Hubungi Headstaff (Anindya)
-                    </a>
-                </div>
+            <div class="input-group">
+                <input type="text" id="reg-code" placeholder="BLDS-XXXX-XXXX" autocomplete="off" spellcheck="false">
             </div>
+            <button class="btn hover-target" id="btn-verify">Initialize Verification</button>
         </div>
     </div>
 
-    <main>
-        <div class="hero-menu" id="section-home">
-            <img src="logo.png" alt="Logo" class="logo-glow-img" onerror="this.src='https://via.placeholder.com/120/000000/ffffff?text=BLDS'">
-            <h1>BLACKLIGHTDOMS</h1>
-            <p>Portal Resmi Pendaftaran Staff & Verifikasi Akses Keamanan Eksklusif.</p>
-            
-            <div style="display: flex; gap: 10px; width: 100%; max-width: 320px; margin-top: 10px;">
-                <button class="btn-primary" onclick="openCodeModal()">
-                    Masukkan Kode Akses
-                </button>
+    <div id="screen-admin-auth" class="screen">
+        <div class="glass-panel">
+            <h2>System Override</h2>
+            <p style="margin-bottom: 24px;">Enter Authorization ID</p>
+            <div class="input-group">
+                <input type="password" id="admin-id" placeholder="ID (e.g., 001)" autocomplete="off">
             </div>
-        </div>
-
-        <div class="admin-dashboard" id="section-admin-dashboard">
-            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                <h2 style="font-weight: 400; letter-spacing: 1px;">Admin Control Panel ⚡</h2>
-                <button class="btn-secondary" onclick="logoutAdmin()">Logout</button>
-            </div>
-
-            <div class="glass-card admin-card">
-                <h3 style="margin-bottom: 16px; font-size: 1.05rem; font-weight: 400;">Buat / Tambah Kode Akses Baru</h3>
-                <form id="form-generate-code">
-                    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                        <div class="input-group" style="flex: 1; min-width: 160px; margin: 0;">
-                            <label>Nama Pendaftar</label>
-                            <input type="text" id="gen-name" class="styled-input" placeholder="Contoh: Zian" required autocomplete="off">
-                        </div>
-                        <div class="input-group" style="width: 140px; margin: 0;">
-                            <label>Nomor Urut</label>
-                            <input type="text" id="gen-num" class="styled-input" placeholder="008" maxlength="3" required autocomplete="off">
-                        </div>
-                        <div class="input-group" style="width: 150px; margin: 0;">
-                            <label>Status Seleksi</label>
-                            <select id="gen-status" class="styled-select">
-                                <option value="Lolos">Lolos (Diterima)</option>
-                                <option value="Tidak Lolos">Tidak Lolos</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="input-group" style="margin-top: 16px;">
-                        <label>Role / Task Penugasan</label>
-                        <select id="gen-task" class="styled-select" required>
-                            <option value="Event Hoster">Event Hoster</option>
-                            <option value="Admin">Admin</option>
-                            <option value="Content Creator">Content Creator</option>
-                            <option value="owner">owner</option>
-                            <option value="owner friend">owner friend</option>
-                            <option value="headstaff">headstaff</option>
-                            <option value="staff">staff</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn-primary" style="margin-top: 18px;">Simpan & Buat Kode Akses</button>
-                </form>
-            </div>
-
-            <div class="glass-card admin-card">
-                <h3 style="font-size: 1.05rem; font-weight: 400; margin-bottom: 10px;">Database Kode Pendaftar</h3>
-                <div class="codes-table-box">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Kode Akses (BLDS-NAMA-ANGKA)</th>
-                                <th>Nama</th>
-                                <th>Status</th>
-                                <th>Role / Task</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody id="codes-table-body">
-                            <tr><td colspan="5" style="text-align:center; color: var(--text-secondary);">Memuat data...</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <div class="modal-overlay" id="modal-code-input">
-        <div class="modal-box glass-card">
-            <h3 style="margin-bottom: 8px; font-weight: 400; letter-spacing: 1.5px;">VERIFIKASI KODE ACCESS</h3>
-            <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 20px;">Masukkan Kode Pendaftar (cth: <code>BLDS-MICHAEL-001</code>) atau Nomor Akses Admin Staff (<code>001</code> s/d <code>007</code>).</p>
-            <form id="form-submit-code">
-                <div class="input-group">
-                    <input type="text" id="input-code-val" class="styled-input" style="text-align: center; letter-spacing: 2px; font-family: var(--font-mono); font-size: 1.05rem;" placeholder="BLDS-NAMA-000 atau 001" required autocomplete="off">
-                </div>
-                <div style="display: flex; gap: 12px; margin-top: 22px;">
-                    <button type="button" class="btn-secondary" onclick="closeCodeModal()" style="flex:1;">Batal</button>
-                    <button type="submit" class="btn-primary" style="flex:1;">Verifikasi</button>
-                </div>
-            </form>
+            <button class="btn hover-target" id="btn-admin-login">Authenticate</button>
         </div>
     </div>
 
-    <div id="toast-box"></div>
+    <div id="screen-cinematic" class="screen">
+        <canvas id="particles-canvas"></canvas>
+        <div class="ambient-glow"></div>
+        <div class="vignette"></div>
+        <div class="cinematic-text-container">
+            <div class="cinematic-text" id="cine-text-1">Every journey begins with a single decision.</div>
+            <div class="cinematic-text" id="cine-text-2">Not every path leads to the same destination.</div>
+            <div class="cinematic-text" id="cine-text-3">Character outweighs potential.</div>
+            <div class="cinematic-text" id="cine-text-4">Every choice shapes the path ahead.</div>
+        </div>
+    </div>
 
-    <footer>
-        <div class="copyright">BLACKLIGHTDOMS OFFICIAL PORTAL © 2026</div>
-    </footer>
+    <div id="screen-result" class="screen">
+        <div class="glass-panel" style="text-align: center;">
+            <p id="result-subtitle" style="text-transform: uppercase; letter-spacing: 4px; margin-bottom: 10px;"></p>
+            <h2 id="result-title" class="status-title"></h2>
+            <p id="result-message" class="status-message"></p>
+            <button class="btn btn-primary hover-target" id="btn-result-action">Return</button>
+        </div>
+    </div>
 
-    <script>
-        const MASTER_ADMIN_CODE = "BLDS-STAFF-ONLY-000";
+    <div id="screen-admin" class="screen">
+        <div class="admin-layout">
+            <div class="sidebar">
+                <h3 style="margin-bottom: 20px;">BLDS Core</h3>
+                <p id="admin-welcome" style="font-size: 12px; margin-bottom: 30px;"></p>
+                <button class="btn hover-target" id="tab-candidates">Candidates</button>
+                <button class="btn hover-target" id="tab-settings" style="display:none;">System Settings</button>
+                <button class="btn hover-target" id="btn-logout" style="border-color: rgba(255,255,255,0.2); margin-top: auto;">Log Out</button>
+            </div>
+            <div class="main-content" id="admin-content">
+                <h2>Database Management</h2>
+                <p>Firebase connection required to view dynamic data.</p>
+            </div>
+        </div>
+    </div>
 
-        // Default Data Staff & Admin (Nomor 001 s/d 007 dapat membuka Admin Panel secara langsung)
-        const defaultCodes = {
-            "BLDS-MICHAEL-001": { Code: "BLDS-MICHAEL-001", Name: "Michael", Num: "001", Status: "Lolos", Task: "owner" },
-            "BLDS-WILLIAM-002": { Code: "BLDS-WILLIAM-002", Name: "William", Num: "002", Status: "Lolos", Task: "owner friend" },
-            "BLDS-FELIX-003": { Code: "BLDS-FELIX-003", Name: "Felix", Num: "003", Status: "Lolos", Task: "owner friend" },
-            "BLDS-ANINDYA-004": { Code: "BLDS-ANINDYA-004", Name: "Anindya", Num: "004", Status: "Lolos", Task: "headstaff" },
-            "BLDS-KENYA-005": { Code: "BLDS-KENYA-005", Name: "Kenya", Num: "005", Status: "Lolos", Task: "staff" },
-            "BLDS-ZAVINO-006": { Code: "BLDS-ZAVINO-006", Name: "Zavino", Num: "006", Status: "Lolos", Task: "staff" },
-            "BLDS-REHAN-007": { Code: "BLDS-REHAN-007", Name: "Rehan", Num: "007", Status: "Lolos", Task: "staff" }
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, get, set, update, remove, child } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        // ==========================================
+        // ⚠️ FIREBASE CONFIGURATION
+        // Ganti dengan Config dari Firebase Project Anda
+        // ==========================================
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
         };
 
-        let localCodes;
+        // Inisialisasi Firebase
+        let db = null;
         try {
-            const saved = localStorage.getItem("blds_staff_codes_v5");
-            if (saved) {
-                localCodes = JSON.parse(saved);
-            } else {
-                localCodes = defaultCodes;
-                localStorage.setItem("blds_staff_codes_v5", JSON.stringify(localCodes));
-            }
-        } catch (err) {
-            localCodes = defaultCodes;
+            const app = initializeApp(firebaseConfig);
+            db = getDatabase(app);
+            console.log("Firebase Initialized.");
+        } catch (e) {
+            console.warn("Firebase config not set properly. Running in UI-Only Demo Mode.");
         }
 
-        document.addEventListener("DOMContentLoaded", () => {
-            setTimeout(() => document.getElementById("loading-screen").classList.add("hidden"), 400);
-            renderAdminTable();
-            initParticleCanvas();
+        // ==========================================
+        // CUSTOM CURSOR LOGIC
+        // ==========================================
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorRing = document.getElementById('cursor-ring');
+        
+        window.addEventListener('mousemove', (e) => {
+            cursorDot.style.left = e.clientX + 'px';
+            cursorDot.style.top = e.clientY + 'px';
+            cursorRing.style.left = e.clientX + 'px';
+            cursorRing.style.top = e.clientY + 'px';
         });
 
-        function openCodeModal() { document.getElementById("modal-code-input").classList.add("active"); }
-        function closeCodeModal() { document.getElementById("modal-code-input").classList.remove("active"); }
+        window.addEventListener('mousedown', () => document.body.classList.add('clicking'));
+        window.addEventListener('mouseup', () => document.body.classList.remove('clicking'));
 
-        // Particles Animation Manager
-        let particleCtx, particleAnimId;
-        const particles = [];
-        function initParticleCanvas() {
-            const canvas = document.getElementById("particle-canvas");
-            if (!canvas) return;
-            particleCtx = canvas.getContext("2d");
-            resizeCanvas();
-            window.addEventListener("resize", resizeCanvas);
+        document.querySelectorAll('.hover-target, input').forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+        });
 
-            for (let i = 0; i < 45; i++) {
-                particles.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    size: Math.random() * 2.2 + 0.8,
-                    vx: (Math.random() - 0.5) * 0.25,
-                    vy: (Math.random() - 0.5) * 0.25,
-                    alpha: Math.random() * 0.5 + 0.2
-                });
-            }
-        }
+        // ==========================================
+        // AUDIO & UTILS
+        // ==========================================
+        const audioBGM = document.getElementById('bgm');
+        const sfxClick = document.getElementById('sfx-click');
+        const sfxWhoosh = document.getElementById('sfx-whoosh');
+        const sfxReveal = document.getElementById('sfx-reveal');
 
-        function resizeCanvas() {
-            const canvas = document.getElementById("particle-canvas");
-            if (!canvas) return;
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
+        audioBGM.volume = 0;
+        sfxClick.volume = 0.5;
+        sfxWhoosh.volume = 0.4;
+        sfxReveal.volume = 0.7;
 
-        function startParticleLoop() {
-            const canvas = document.getElementById("particle-canvas");
-            if (!canvas || !particleCtx) return;
-            function render() {
-                particleCtx.clearRect(0, 0, canvas.width, canvas.height);
-                particles.forEach(p => {
-                    p.x += p.vx;
-                    p.y += p.vy;
-                    if (p.x < 0) p.x = canvas.width;
-                    if (p.x > canvas.width) p.x = 0;
-                    if (p.y < 0) p.y = canvas.height;
-                    if (p.y > canvas.height) p.y = 0;
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', () => { sfxClick.currentTime = 0; sfxClick.play(); });
+        });
 
-                    particleCtx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`;
-                    particleCtx.beginPath();
-                    particleCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                    particleCtx.fill();
-                });
-                particleAnimId = requestAnimationFrame(render);
-            }
-            render();
-        }
-
-        function stopParticleLoop() {
-            cancelAnimationFrame(particleAnimId);
-            if(particleCtx) particleCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-        }
-
-        // Trigger Efek Flash Transisi Sinematik
-        function triggerFlash() {
-            const flash = document.getElementById("cinematic-flash");
-            flash.classList.add("active");
-            setTimeout(() => flash.classList.remove("active"), 180);
-        }
-
-        // TRIGGER SHOCKWAVE PULSE
-        function triggerShockwave() {
-            const ring = document.getElementById("shockwave-ring");
-            ring.classList.remove("pulse");
-            void ring.offsetWidth; // Reflow
-            ring.classList.add("pulse");
-        }
-
-        // VERIFIKASI KODE & AKSES ADMIN PANEL (001 s/d 007)
-        document.getElementById("form-submit-code").addEventListener("submit", (e) => {
-            e.preventDefault();
-            const inputVal = document.getElementById("input-code-val").value.trim().toUpperCase();
-            closeCodeModal();
-
-            // Cek jika master code
-            if (inputVal === MASTER_ADMIN_CODE) {
-                showToast("Master Security Access Granted!", "success");
-                openAdminPanel();
-                return;
-            }
-
-            // Normalisasi Format Angka (Contoh: "1" menjadi "001", "7" menjadi "007")
-            let numFormatted = inputVal.padStart(3, '0');
-            let matchedStaff = null;
-
-            // Cek apakah angka yang dimasukkan adalah 001 s/d 007
-            const isNumberCode = parseInt(inputVal, 10) >= 1 && parseInt(inputVal, 10) <= 7;
-
-            Object.keys(localCodes).forEach(k => {
-                const item = localCodes[k];
-                if (item.Code === inputVal || item.Num === numFormatted || (isNumberCode && item.Num === numFormatted)) {
-                    matchedStaff = item;
+        const fadeAudio = (audio, targetVolume, duration) => {
+            const step = 0.05;
+            const delay = duration / Math.abs(targetVolume - audio.volume) / step;
+            const interval = setInterval(() => {
+                if (audio.volume < targetVolume) {
+                    audio.volume = Math.min(1, audio.volume + step);
+                } else if (audio.volume > targetVolume) {
+                    audio.volume = Math.max(0, audio.volume - step);
                 }
-            });
+                if (Math.abs(audio.volume - targetVolume) < 0.01) {
+                    audio.volume = targetVolume;
+                    clearInterval(interval);
+                }
+            }, delay);
+        };
 
-            // Jika memasukkan angka 001 - 007 -> LANGSUNG MASUK ADMIN DASHBOARD!
-            if (isNumberCode && matchedStaff) {
-                showToast(`[00${parseInt(inputVal, 10)}] Security Code Confirmed. Opening Admin Panel...`, "success");
-                openAdminPanel();
+        const showToast = (msg) => {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        };
+
+        const switchScreen = (screenId) => {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        };
+
+        const sleep = ms => new Promise(res => setTimeout(res, ms));
+
+        // ==========================================
+        // PARTICLE SYSTEM (CANVAS)
+        // ==========================================
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        let particlesArray = [];
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 1.5 + 0.5;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * 0.5 - 0.25;
+                this.opacity = Math.random() * 0.5;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+            draw() {
+                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+        function initParticles() {
+            particlesArray = [];
+            for (let i = 0; i < 150; i++) particlesArray.push(new Particle());
+        }
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particlesArray.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animateParticles);
+        }
+        initParticles();
+        animateParticles();
+        window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; initParticles(); });
+
+        // ==========================================
+        // CINEMATIC ENGINE (20 SECONDS)
+        // ==========================================
+        async function runCinematicCutscene(resultData) {
+            switchScreen('screen-cinematic');
+            sfxWhoosh.play();
+            
+            // Audio buildup
+            audioBGM.play();
+            fadeAudio(audioBGM, 0.6, 3000);
+
+            // Sequence Timeline
+            await sleep(2000);
+            document.getElementById('cine-text-1').classList.add('show');
+            
+            await sleep(4000);
+            document.getElementById('cine-text-1').classList.remove('show');
+            await sleep(1500);
+            
+            document.getElementById('cine-text-2').classList.add('show');
+            fadeAudio(audioBGM, 0.8, 2000); // Tense builds up
+            
+            await sleep(4000);
+            document.getElementById('cine-text-2').classList.remove('show');
+            await sleep(1500);
+            
+            document.getElementById('cine-text-3').classList.add('show');
+            
+            await sleep(3000);
+            document.getElementById('cine-text-3').classList.remove('show');
+            await sleep(1000);
+
+            document.getElementById('cine-text-4').classList.add('show');
+            fadeAudio(audioBGM, 0.2, 3000); // Drops to silence
+            
+            await sleep(3500);
+            document.getElementById('cine-text-4').classList.remove('show');
+            
+            await sleep(1500); // Final silent tension
+
+            // Transition to Result
+            showResult(resultData);
+        }
+
+        // ==========================================
+        // REGISTRATION LOGIC
+        // ==========================================
+        const btnVerify = document.getElementById('btn-verify');
+        const inputCode = document.getElementById('reg-code');
+
+        btnVerify.addEventListener('click', async () => {
+            const code = inputCode.value.trim().toUpperCase();
+            if (!code) { showToast("Enter a valid verification code."); return; }
+
+            // Admin Gateway
+            if (code === "BLDS-STAFF-ONLY") {
+                switchScreen('screen-admin-auth');
                 return;
             }
 
-            // Jika kode ditemukan (misal pendaftar umum / kode lengkap), jalankan Cutscene 20+ Detik
-            if (matchedStaff) {
-                startUltraEpicCutscene(matchedStaff);
+            btnVerify.innerText = "VERIFYING...";
+            btnVerify.style.pointerEvents = "none";
+
+            // FIREBASE CHECK (MOCK FALLBACK IF NO DB)
+            let resultData = null;
+            if (db) {
+                try {
+                    const snapshot = await get(child(ref(db), `codes/${code}`));
+                    if (snapshot.exists()) {
+                        resultData = snapshot.val();
+                    } else {
+                        resultData = { status: "not_found" };
+                    }
+                } catch (e) {
+                    showToast("Database Connection Error.");
+                    resetBtn(); return;
+                }
             } else {
-                showToast("Akses Ditolak! Kode tidak terdaftar dalam database.", "error");
+                // Mock logic for presentation before DB setup
+                if (code === "BLDS-TEST-PASS") resultData = { status: "Approved", name: "Guest" };
+                else resultData = { status: "not_found" };
+            }
+
+            if (resultData.status === "not_found") {
+                showToast("Data not found. Invalid registration code.");
+                // Elegant Error: Not red, just a subtle shake or toast.
+                inputCode.style.borderColor = "rgba(255,255,255,0.1)";
+                resetBtn();
+            } else {
+                // START CINEMATIC
+                runCinematicCutscene(resultData);
             }
         });
 
-        function openAdminPanel() {
-            document.getElementById("section-home").style.display = "none";
-            document.getElementById("section-admin-dashboard").classList.add("active");
+        function resetBtn() {
+            btnVerify.innerText = "Initialize Verification";
+            btnVerify.style.pointerEvents = "auto";
         }
 
-        // ========================================================
-        // ULTRA EPIC 20+ SECONDS CINEMATIC CUTSCENE EXPERIENCE
-        // ========================================================
-        function startUltraEpicCutscene(staff) {
-            const screen = document.getElementById("cinematic-screen");
-            const audio = document.getElementById("cinematic-audio");
-            const logoImg = document.getElementById("cinematic-logo-img");
-            const textEl = document.getElementById("cinematic-text-el");
-            const fogBox = document.getElementById("cinematic-fog");
-            const vignette = document.getElementById("cinematic-vignette");
-            const radialBack = document.getElementById("radial-glow-back");
-            const stage = document.getElementById("cinematic-stage");
-            const endingCard = document.getElementById("cinematic-ending-card");
-            const textboxWrapper = document.getElementById("cinematic-textbox-wrapper");
-            const visualizer = document.getElementById("audio-visualizer");
+        // ==========================================
+        // RESULT SCREEN LOGIC
+        // ==========================================
+        function showResult(data) {
+            sfxReveal.play();
+            switchScreen('screen-result');
+            fadeAudio(audioBGM, 0.4, 2000);
 
-            screen.className = "";
-            screen.classList.add("active");
-            endingCard.classList.remove("reveal");
-            endingCard.style.display = "none";
-            stage.style.display = "flex";
-            textboxWrapper.style.display = "flex";
-            textEl.innerText = "";
-            textEl.classList.remove("show");
-            fogBox.classList.remove("active");
-            vignette.classList.remove("active");
-            visualizer.classList.remove("active");
-            radialBack.style.opacity = "0";
-            radialBack.style.transform = "scale(0.5)";
-            stage.style.transform = "scale(1)";
+            const title = document.getElementById('result-title');
+            const sub = document.getElementById('result-subtitle');
+            const msg = document.getElementById('result-message');
+            const btn = document.getElementById('btn-result-action');
 
-            audio.currentTime = 0;
-            audio.volume = 0.15;
-            audio.play().catch(err => {});
-            startParticleLoop();
-
-            // SCENE 1 (0.5s): INITIAL GLOW & FOG
-            setTimeout(() => {
-                triggerFlash();
-                logoImg.style.opacity = "1";
-                logoImg.style.transform = "scale(1)";
-                logoImg.style.boxShadow = "0 0 35px rgba(255,255,255,0.3)";
-                fogBox.classList.add("active");
-                visualizer.classList.add("active");
-            }, 600);
-
-            // SCENE 2 (2.5s): SUBTITLE 1
-            setTimeout(() => {
-                setCinematicText("⚡ Every journey starts with a single step into the unknown.");
-            }, 2500);
-
-            // SCENE 3 (6.0s): SUBTITLE 2 + SHOCKWAVE PULSE
-            setTimeout(() => {
-                audio.volume = 0.45;
-                triggerShockwave();
-                stage.style.transform = "scale(1.05)";
-                setTimeout(() => stage.style.transform = "scale(1)", 1200);
-                setCinematicText("⚔️ Greatness is not given. It is forged through dedication.");
-            }, 6000);
-
-            // SCENE 4 (10.0s): SUBTITLE 3 + RADIAL BURST
-            setTimeout(() => {
-                audio.volume = 0.70;
-                radialBack.style.opacity = "1";
-                radialBack.style.transform = "scale(2.2)";
-                setCinematicText("👑 Character & Integrity outweigh raw potential.");
-            }, 10000);
-
-            // SCENE 5 (14.0s): SUBTITLE 4 + VIGNETTE INTENSIFY
-            setTimeout(() => {
-                audio.volume = 0.85;
-                vignette.classList.add("active");
-                setCinematicText("✨ Evaluating credentials against BlackLightDoms standards...");
-            }, 14000);
-
-            // SCENE 6 (17.5s): FINAL SUSPENSE CLIMAX
-            setTimeout(() => {
-                textEl.classList.remove("show");
-                triggerShockwave();
-                audio.volume = 1.0;
-                logoImg.style.transform = "scale(1.12)";
-                logoImg.style.boxShadow = "0 0 55px rgba(255,255,255,0.6)";
-            }, 17500);
-
-            // SCENE 7 (20.5s): TRANSITION TO FINAL RESULT BRANCH
-            setTimeout(() => {
-                triggerFlash();
-                stopParticleLoop();
-                audio.volume = 0.2;
-                setTimeout(() => executeEndingBranch(staff), 400);
-            }, 20500);
-        }
-
-        function setCinematicText(text) {
-            const el = document.getElementById("cinematic-text-el");
-            el.classList.remove("show");
-            setTimeout(() => {
-                el.innerText = text;
-                el.classList.add("show");
-            }, 300);
-        }
-
-        // BRANCH HASIL seleksi (LOLOS VS TIDAK LOLOS)
-        function executeEndingBranch(staff) {
-            const screen = document.getElementById("cinematic-screen");
-            const audio = document.getElementById("cinematic-audio");
-            const endingCard = document.getElementById("cinematic-ending-card");
-            const titleTxt = document.getElementById("ending-title-txt");
-            const descTxt = document.getElementById("ending-desc-txt");
-            const taskBox = document.getElementById("ending-task-box");
-            const taskTxt = document.getElementById("ending-task-txt");
-            const btnAction = document.getElementById("ending-btn-action");
-            const waWrapper = document.getElementById("wa-contact-wrapper");
-
-            document.getElementById("cinematic-stage").style.display = "none";
-            document.getElementById("cinematic-textbox-wrapper").style.display = "none";
-            document.getElementById("audio-visualizer").classList.remove("active");
-
-            const isLolos = (staff.Status === "Lolos");
-
-            if (isLolos) {
-                screen.classList.add("success-theme");
-                try { audio.pause(); } catch(e){}
-
-                titleTxt.innerHTML = "🎉 WELCOME DOMINIONERS!";
-                descTxt.innerText = `Congratulations!
-After careful consideration, your registration has been approved.
-Today marks the beginning of a greater responsibility within BlackLightDoms.
-You have been selected to join the BLDS Staff Team and contribute your skills, dedication, and commitment to the community.
-Whatever your role may be, remember that every contribution matters.
-Serve with integrity.
-Support with respect.
-Lead by example.
-Welcome to the BLDS Staff Team.
-"Together, we build something greater."`;
-                
-                if (staff.Task) {
-                    taskTxt.innerText = staff.Task;
-                    taskBox.style.display = "block";
-                } else {
-                    taskBox.style.display = "none";
-                }
-
-                // TAMPILKAN TOMBOL CONTACT HEADSTAFF (ANINDYA) HANYA UNTUK YANG LOLOS
-                waWrapper.style.display = "block";
-
-                btnAction.innerText = "Lanjutkan";
-                btnAction.onclick = closeCinematicScreen;
-
-                endingCard.style.display = "block";
-                setTimeout(() => endingCard.classList.add("reveal"), 150);
-
+            if (data.status === "Approved") {
+                sub.innerText = "Evaluation Complete";
+                sub.style.color = "var(--text-muted)";
+                title.innerText = "ACCESS GRANTED";
+                title.style.color = "#ffffff";
+                title.style.textShadow = "0 0 20px rgba(255,255,255,0.5)";
+                msg.innerText = `Welcome to the team, ${data.name}. Your journey starts here.`;
+                btn.innerText = "Contact Us";
+                btn.onclick = () => window.location.href = "mailto:founder@blacklightdoms.com"; // Ganti URL
             } else {
-                screen.classList.add("failed-theme");
-                try { audio.pause(); } catch(e){}
-
-                titleTxt.innerHTML = "✨ THE PATH REMAINS OPEN, DOMINIONER.";
-                descTxt.innerText = `Thank you for taking the time to register as a BLDS Staff candidate.
-After careful review, your registration has not been approved at this time.
-This decision is only part of your journey, not the end of it.
-Continue growing, supporting the community, and improving yourself.
-We sincerely hope to welcome you in a future staff recruitment.
-Keep moving forward, Dominioner.
-"Every journey begins with the courage to try."`;
-                
-                taskBox.style.display = "none";
-                waWrapper.style.display = "none"; // Sembunyikan untuk yang tidak lolos
-                
-                btnAction.innerText = "Kembali";
-                btnAction.onclick = closeCinematicScreen;
-
-                endingCard.style.display = "block";
-                setTimeout(() => endingCard.classList.add("reveal"), 300);
+                sub.innerText = "Evaluation Complete";
+                title.innerText = "ACCESS DENIED";
+                title.style.color = "#a0a0a0";
+                msg.innerText = "Your registration has not been approved at this time. Keep forging your path.";
+                btn.innerText = "Return Home";
+                btn.onclick = () => {
+                    inputCode.value = '';
+                    resetBtn();
+                    switchScreen('screen-home');
+                    fadeAudio(audioBGM, 0, 2000);
+                };
             }
         }
 
-        function closeCinematicScreen() {
-            document.getElementById("cinematic-screen").classList.remove("active");
-            document.getElementById("input-code-val").value = "";
-            try { document.getElementById("cinematic-audio").pause(); } catch(e){}
-        }
+        // ==========================================
+        // ADMIN AUTHENTICATION LOGIC
+        // ==========================================
+        const adminIDs = {
+            "001": { name: "Michael", role: "Full Access" },
+            "002": { name: "William", role: "Admin Access" },
+            "003": { name: "Felix", role: "Admin Access" },
+            "004": { name: "Anindya", role: "Admin Access" },
+            "005": { name: "Kenya", role: "Admin Access" },
+            "006": { name: "Zavino", role: "Admin Access" },
+            "007": { name: "Rehan", role: "Admin Access" }
+        };
 
-        /* ADMIN PANEL MANAGEMENT */
-        document.getElementById("form-generate-code").addEventListener("submit", (e) => {
-            e.preventDefault();
-            const name = document.getElementById("gen-name").value.trim();
-            const num = document.getElementById("gen-num").value.trim().padStart(3, '0');
-            const status = document.getElementById("gen-status").value;
-            const task = document.getElementById("gen-task").value;
+        let currentAdmin = null;
 
-            const generatedCode = `BLDS-${name.toUpperCase()}-${num}`;
-
-            // Validasi Nomor Tidak Boleh Sama
-            let numberExists = false;
-            Object.keys(localCodes).forEach(k => {
-                if (localCodes[k].Num === num) {
-                    numberExists = true;
-                }
-            });
-
-            if (numberExists) {
-                showToast(`Nomor urut ${num} sudah terdaftar! Gunakan nomor lain.`, "error");
-                return;
+        document.getElementById('btn-admin-login').addEventListener('click', () => {
+            const id = document.getElementById('admin-id').value.trim();
+            if (adminIDs[id]) {
+                currentAdmin = adminIDs[id];
+                showToast(`Welcome back, ${currentAdmin.name}`);
+                initAdminDashboard();
+            } else {
+                showToast("Unauthorized ID. Access Denied.");
             }
-
-            localCodes[generatedCode] = { Code: generatedCode, Name: name, Num: num, Status: status, Task: task };
-            localStorage.setItem("blds_staff_codes_v5", JSON.stringify(localCodes));
-
-            renderAdminTable();
-            showToast(`Kode Akses ${generatedCode} Berhasil Dibuat!`, "success");
-
-            document.getElementById("gen-name").value = "";
-            document.getElementById("gen-num").value = "";
         });
 
-        function renderAdminTable() {
-            const tbody = document.getElementById("codes-table-body");
-            const keys = Object.keys(localCodes);
-
-            if (keys.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color: var(--text-secondary);">Belum ada data tersimpan.</td></tr>`;
-                return;
-            }
-
-            tbody.innerHTML = keys.map(k => {
-                const item = localCodes[k];
-                const badgeColor = item.Status === 'Lolos' ? '#ffffff' : '#9ca3af';
-                return `
-                    <tr>
-                        <td><code style="font-family: var(--font-mono); color: #fff;">${item.Code}</code></td>
-                        <td>${sanitizeHtml(item.Name)}</td>
-                        <td><span style="color: ${badgeColor}; font-weight: 500;">${item.Status}</span></td>
-                        <td><span style="font-family: var(--font-mono); font-size: 0.8rem; color: #d1d5db;">${sanitizeHtml(item.Task || '-')}</span></td>
-                        <td>
-                            <button type="button" class="btn-secondary" style="font-size: 0.74rem; padding: 5px 10px;" onclick="deleteCode('${k}')">Hapus</button>
-                        </td>
-                    </tr>
-                `;
-            }).join("");
-        }
-
-        function deleteCode(key) {
-            if (confirm(`Yakin ingin menghapus kode ${key}?`)) {
-                delete localCodes[key];
-                localStorage.setItem("blds_staff_codes_v5", JSON.stringify(localCodes));
-                renderAdminTable();
-                showToast("Kode berhasil dihapus dari sistem.", "info");
+        function initAdminDashboard() {
+            switchScreen('screen-admin');
+            document.getElementById('admin-welcome').innerText = `Authorized as: ${currentAdmin.name} [${currentAdmin.role}]`;
+            
+            const btnSettings = document.getElementById('tab-settings');
+            if (currentAdmin.role === "Full Access") {
+                btnSettings.style.display = "block";
+            } else {
+                btnSettings.style.display = "none";
             }
         }
 
-        function logoutAdmin() {
-            document.getElementById("section-admin-dashboard").classList.remove("active");
-            document.getElementById("section-home").style.display = "flex";
-            showToast("Logout dari Admin Panel Berhasil.", "info");
-        }
+        document.getElementById('btn-logout').addEventListener('click', () => {
+            currentAdmin = null;
+            document.getElementById('admin-id').value = '';
+            document.getElementById('reg-code').value = '';
+            switchScreen('screen-home');
+        });
 
-        function showToast(msg, type = "info") {
-            const box = document.getElementById("toast-box");
-            if (!box) return;
-            const item = document.createElement("div");
-            item.className = "toast-item";
-            item.innerHTML = `<span>${sanitizeHtml(msg)}</span>`;
-            box.appendChild(item);
-            setTimeout(() => item.remove(), 3200);
-        }
-
-        function sanitizeHtml(str) {
-            if (!str) return "";
-            return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/&#039;/g, "'");
-        }
     </script>
 </body>
 </html>
