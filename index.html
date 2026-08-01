@@ -21,13 +21,13 @@
             --font-mono: 'JetBrains Mono', monospace;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; /* Custom cursor */ }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             background-color: var(--bg-base);
             color: var(--text-main);
             font-family: var(--font-sans);
-            overflow: hidden; /* Prevent scroll during intro */
+            overflow: hidden; 
             height: 100vh;
             width: 100vw;
             display: flex;
@@ -35,22 +35,6 @@
             align-items: center;
             user-select: none;
         }
-
-        /* =========================================
-           CUSTOM CURSOR
-           ========================================= */
-        #cursor-dot {
-            width: 6px; height: 6px; background: white; border-radius: 50%;
-            position: fixed; pointer-events: none; z-index: 9999;
-            transform: translate(-50%, -50%); transition: width 0.2s, height 0.2s;
-        }
-        #cursor-ring {
-            width: 30px; height: 30px; border: 1px solid rgba(255,255,255,0.4); border-radius: 50%;
-            position: fixed; pointer-events: none; z-index: 9998;
-            transform: translate(-50%, -50%); transition: transform 0.1s ease-out;
-        }
-        .clicking #cursor-ring { transform: translate(-50%, -50%) scale(0.5); border-color: white; }
-        .hovering #cursor-dot { width: 10px; height: 10px; background: rgba(255,255,255,0.8); box-shadow: 0 0 10px white; }
 
         /* =========================================
            UI COMPONENTS (GLASSMORPHISM)
@@ -84,7 +68,7 @@
             color: white; font-family: var(--font-sans); font-size: 12px; text-transform: uppercase;
             letter-spacing: 3px; padding: 16px 32px; border-radius: 8px;
             position: relative; overflow: hidden; transition: all 0.4s ease;
-            width: 100%;
+            width: 100%; cursor: pointer;
         }
         .btn::before {
             content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
@@ -106,14 +90,11 @@
         }
         .screen.active { opacity: 1; pointer-events: auto; }
 
-        /* Home Screen */
         #screen-home .logo-container { text-align: center; margin-bottom: 40px; }
         #screen-home h1 { font-size: 24px; margin-bottom: 8px; }
 
-        /* Cinematic Overlay (AAA Game Intro) */
-        #screen-cinematic {
-            background: #000; z-index: 100;
-        }
+        /* Cinematic Overlay */
+        #screen-cinematic { background: #000; z-index: 100; }
         #particles-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.6; }
         .vignette {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -129,9 +110,7 @@
         }
         @keyframes pulseGlow { 0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; } 100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; } }
 
-        .cinematic-text-container {
-            position: absolute; z-index: 10; text-align: center; width: 80%; max-width: 800px;
-        }
+        .cinematic-text-container { position: absolute; z-index: 10; text-align: center; width: 80%; max-width: 800px; }
         .cinematic-text {
             font-size: 28px; font-weight: 200; letter-spacing: 4px; color: white;
             opacity: 0; transform: scale(0.95) translateY(10px); filter: blur(5px);
@@ -149,7 +128,7 @@
         .sidebar { width: 250px; display: flex; flex-direction: column; gap: 20px; }
         .main-content { flex: 1; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 16px; padding: 30px; overflow-y: auto; }
         
-        /* Toast Notification (Elegant) */
+        /* Toast Notification */
         #toast {
             position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%) translateY(20px);
             background: rgba(255,255,255,0.9); color: black; padding: 12px 24px; border-radius: 30px;
@@ -161,9 +140,6 @@
     </style>
 </head>
 <body>
-
-    <div id="cursor-dot"></div>
-    <div id="cursor-ring"></div>
 
     <audio id="bgm" src="bgm.mp3" loop></audio>
     <audio id="sfx-click" src="sfx-click.mp3"></audio>
@@ -238,8 +214,7 @@
         import { getDatabase, ref, get, set, update, remove, child } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
         // ==========================================
-        // ⚠️ FIREBASE CONFIGURATION
-        // Ganti dengan Config dari Firebase Project Anda
+        // FIREBASE CONFIGURATION
         // ==========================================
         const firebaseConfig = {
             apiKey: "YOUR_API_KEY",
@@ -251,36 +226,21 @@
             appId: "YOUR_APP_ID"
         };
 
-        // Inisialisasi Firebase
+        // Deteksi apakah user masih pakai config dummy (mencegah loading stuck)
+        const isDemoMode = firebaseConfig.apiKey === "YOUR_API_KEY";
+
         let db = null;
-        try {
-            const app = initializeApp(firebaseConfig);
-            db = getDatabase(app);
-            console.log("Firebase Initialized.");
-        } catch (e) {
-            console.warn("Firebase config not set properly. Running in UI-Only Demo Mode.");
+        if (!isDemoMode) {
+            try {
+                const app = initializeApp(firebaseConfig);
+                db = getDatabase(app);
+                console.log("Firebase Initialized.");
+            } catch (e) {
+                console.warn("Firebase Init Error:", e);
+            }
+        } else {
+            console.warn("Running in UI-Only Demo Mode. Please insert real Firebase Config to connect DB.");
         }
-
-        // ==========================================
-        // CUSTOM CURSOR LOGIC
-        // ==========================================
-        const cursorDot = document.getElementById('cursor-dot');
-        const cursorRing = document.getElementById('cursor-ring');
-        
-        window.addEventListener('mousemove', (e) => {
-            cursorDot.style.left = e.clientX + 'px';
-            cursorDot.style.top = e.clientY + 'px';
-            cursorRing.style.left = e.clientX + 'px';
-            cursorRing.style.top = e.clientY + 'px';
-        });
-
-        window.addEventListener('mousedown', () => document.body.classList.add('clicking'));
-        window.addEventListener('mouseup', () => document.body.classList.remove('clicking'));
-
-        document.querySelectorAll('.hover-target, input').forEach(el => {
-            el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
-            el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
-        });
 
         // ==========================================
         // AUDIO & UTILS
@@ -295,11 +255,17 @@
         sfxWhoosh.volume = 0.4;
         sfxReveal.volume = 0.7;
 
+        // Auto play sound on button click (menghindari error DOM)
         document.querySelectorAll('button').forEach(btn => {
-            btn.addEventListener('click', () => { sfxClick.currentTime = 0; sfxClick.play(); });
+            btn.addEventListener('click', () => { 
+                if (sfxClick.readyState >= 2) {
+                    sfxClick.currentTime = 0; sfxClick.play().catch(e => console.log('Audio error:', e)); 
+                }
+            });
         });
 
         const fadeAudio = (audio, targetVolume, duration) => {
+            if (audio.readyState < 2) return; // Skip if audio not loaded
             const step = 0.05;
             const delay = duration / Math.abs(targetVolume - audio.volume) / step;
             const interval = setInterval(() => {
@@ -376,17 +342,17 @@
         window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; initParticles(); });
 
         // ==========================================
-        // CINEMATIC ENGINE (20 SECONDS)
+        // CINEMATIC ENGINE
         // ==========================================
         async function runCinematicCutscene(resultData) {
             switchScreen('screen-cinematic');
-            sfxWhoosh.play();
+            if (sfxWhoosh.readyState >= 2) sfxWhoosh.play().catch(e => console.log('Audio error:', e));
             
-            // Audio buildup
-            audioBGM.play();
-            fadeAudio(audioBGM, 0.6, 3000);
+            if (audioBGM.readyState >= 2) {
+                audioBGM.play().catch(e => console.log('Audio error:', e));
+                fadeAudio(audioBGM, 0.6, 3000);
+            }
 
-            // Sequence Timeline
             await sleep(2000);
             document.getElementById('cine-text-1').classList.add('show');
             
@@ -395,7 +361,7 @@
             await sleep(1500);
             
             document.getElementById('cine-text-2').classList.add('show');
-            fadeAudio(audioBGM, 0.8, 2000); // Tense builds up
+            fadeAudio(audioBGM, 0.8, 2000); 
             
             await sleep(4000);
             document.getElementById('cine-text-2').classList.remove('show');
@@ -408,14 +374,13 @@
             await sleep(1000);
 
             document.getElementById('cine-text-4').classList.add('show');
-            fadeAudio(audioBGM, 0.2, 3000); // Drops to silence
+            fadeAudio(audioBGM, 0.2, 3000); 
             
             await sleep(3500);
             document.getElementById('cine-text-4').classList.remove('show');
             
-            await sleep(1500); // Final silent tension
+            await sleep(1500);
 
-            // Transition to Result
             showResult(resultData);
         }
 
@@ -429,7 +394,6 @@
             const code = inputCode.value.trim().toUpperCase();
             if (!code) { showToast("Enter a valid verification code."); return; }
 
-            // Admin Gateway
             if (code === "BLDS-STAFF-ONLY") {
                 switchScreen('screen-admin-auth');
                 return;
@@ -438,9 +402,10 @@
             btnVerify.innerText = "VERIFYING...";
             btnVerify.style.pointerEvents = "none";
 
-            // FIREBASE CHECK (MOCK FALLBACK IF NO DB)
             let resultData = null;
-            if (db) {
+
+            // Jika config firebase asli sudah dimasukkan
+            if (db && !isDemoMode) {
                 try {
                     const snapshot = await get(child(ref(db), `codes/${code}`));
                     if (snapshot.exists()) {
@@ -453,18 +418,18 @@
                     resetBtn(); return;
                 }
             } else {
-                // Mock logic for presentation before DB setup
-                if (code === "BLDS-TEST-PASS") resultData = { status: "Approved", name: "Guest" };
+                // FALLBACK MOCK LOGIC (Supaya tidak stuck saat demo/belum ada DB)
+                // Mensimulasikan jeda loading 1 detik
+                await sleep(1000); 
+                if (code === "BLDS-TEST-PASS") resultData = { status: "Approved", name: "Guest Developer" };
                 else resultData = { status: "not_found" };
             }
 
             if (resultData.status === "not_found") {
                 showToast("Data not found. Invalid registration code.");
-                // Elegant Error: Not red, just a subtle shake or toast.
                 inputCode.style.borderColor = "rgba(255,255,255,0.1)";
                 resetBtn();
             } else {
-                // START CINEMATIC
                 runCinematicCutscene(resultData);
             }
         });
@@ -478,7 +443,7 @@
         // RESULT SCREEN LOGIC
         // ==========================================
         function showResult(data) {
-            sfxReveal.play();
+            if (sfxReveal.readyState >= 2) sfxReveal.play().catch(e => console.log('Audio error:', e));
             switchScreen('screen-result');
             fadeAudio(audioBGM, 0.4, 2000);
 
@@ -495,7 +460,7 @@
                 title.style.textShadow = "0 0 20px rgba(255,255,255,0.5)";
                 msg.innerText = `Welcome to the team, ${data.name}. Your journey starts here.`;
                 btn.innerText = "Contact Us";
-                btn.onclick = () => window.location.href = "mailto:founder@blacklightdoms.com"; // Ganti URL
+                btn.onclick = () => window.location.href = "mailto:founder@blacklightdoms.com";
             } else {
                 sub.innerText = "Evaluation Complete";
                 title.innerText = "ACCESS DENIED";
