@@ -27,7 +27,6 @@
             overflow-x: hidden;
         }
 
-        /* Loading Screen Awal */
         #loading-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000000; z-index: 9999;
             display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.6s ease;
@@ -255,7 +254,7 @@
             </div>
 
             <div class="glass-card admin-card">
-                <h3 style="margin-bottom: 14px; font-size: 1rem; font-weight: 400;"><i class="fa-solid fa-plus-circle"></i> Tambah / Generate Kode Staff Baru</h3>
+                <h3 style="margin-bottom: 14px; font-size: 1rem; font-weight: 400;">Tambah / Generate Kode Staff Baru</h3>
                 <form id="form-generate-code">
                     <div style="display: flex; gap: 12px; flex-wrap: wrap;">
                         <div class="input-group" style="width: 130px; margin: 0;">
@@ -345,7 +344,7 @@
     <script>
         const MASTER_ADMIN_CODE = "BLDS-STAFF-ONLY-000";
 
-        // Default Data Pendaftar Sesuai Permintaan
+        // Default Data Pendaftar
         const defaultCodes = {
             "001": { Num: "001", Name: "Michael", Status: "Lolos", Task: "Lead Moderator & Community Manager" },
             "002": { Num: "002", Name: "William", Status: "Lolos", Task: "UI/UX Assistant & Asset Organizer" },
@@ -356,7 +355,19 @@
             "007": { Num: "007", Name: "Rehan", Status: "Lolos", Task: "Back-End Assistant & Database Log" }
         };
 
-        let localCodes = JSON.parse(localStorage.getItem("blds_staff_codes")) || defaultCodes;
+        // Inisialisasi localStorage dengan data default jika belum ada
+        let localCodes;
+        try {
+            const saved = localStorage.getItem("blds_staff_codes");
+            if (saved) {
+                localCodes = JSON.parse(saved);
+            } else {
+                localCodes = defaultCodes;
+                localStorage.setItem("blds_staff_codes", JSON.stringify(localCodes));
+            }
+        } catch (err) {
+            localCodes = defaultCodes;
+        }
 
         document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => document.getElementById("loading-screen").classList.add("hidden"), 300);
@@ -374,6 +385,7 @@
         const particles = [];
         function initParticleCanvas() {
             const canvas = document.getElementById("particle-canvas");
+            if (!canvas) return;
             particleCtx = canvas.getContext("2d");
             resizeCanvas();
             window.addEventListener("resize", resizeCanvas);
@@ -392,12 +404,14 @@
 
         function resizeCanvas() {
             const canvas = document.getElementById("particle-canvas");
+            if (!canvas) return;
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         }
 
         function startParticleLoop(pullToCenter = false) {
             const canvas = document.getElementById("particle-canvas");
+            if (!canvas || !particleCtx) return;
             function render() {
                 particleCtx.clearRect(0, 0, canvas.width, canvas.height);
                 const centerX = canvas.width / 2;
@@ -440,12 +454,10 @@
             closeCodeModal();
 
             if (val === MASTER_ADMIN_CODE) {
-                // Buka modal minta nomor angka khusus staff only
                 openStaffNumberModal();
                 return;
             }
 
-            // Jika user langsung memasukkan nomor angka (misal "001")
             let cleanNum = val.replace(/\D/g, "").padStart(3, '0');
             if (localCodes[cleanNum]) {
                 start20SecondCinematicExperience(localCodes[cleanNum]);
@@ -461,7 +473,6 @@
             closeStaffNumberModal();
 
             if (numVal === "000") {
-                // Masuk ke Admin Dashboard Panel
                 showToast("Master Admin Berhasil Diverifikasi!", "success");
                 document.getElementById("section-home").style.display = "none";
                 document.getElementById("section-admin-dashboard").classList.add("active");
@@ -651,7 +662,7 @@
 
         function renderAdminTable() {
             const tbody = document.getElementById("codes-table-body");
-            const keys = Object.keys(localCodes);
+            const keys = Object.keys(localCodes).sort();
 
             if (keys.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color: var(--text-secondary);">Belum ada data tersimpan.</td></tr>`;
@@ -668,7 +679,7 @@
                         <td><span style="color: ${badgeColor}; font-weight: 500;">${item.Status}</span></td>
                         <td><span style="font-family: var(--font-mono); font-size: 0.8rem; color: #d1d5db;">${sanitizeHtml(item.Task || '-')}</span></td>
                         <td>
-                            <button class="btn-secondary" style="font-size: 0.72rem; padding: 4px 8px;" onclick="deleteCode('${k}')">Hapus</button>
+                            <button type="button" class="btn-secondary" style="font-size: 0.72rem; padding: 4px 8px;" onclick="deleteCode('${k}')">Hapus</button>
                         </td>
                     </tr>
                 `;
@@ -685,6 +696,7 @@
         }
 
         function logoutAdmin() {
+            document.getElementById("section-admin-dashboard").classList.remove("action");
             document.getElementById("section-admin-dashboard").classList.remove("active");
             document.getElementById("section-home").style.display = "flex";
             showToast("Logout dari Admin Panel", "info");
@@ -692,6 +704,7 @@
 
         function showToast(msg, type = "info") {
             const box = document.getElementById("toast-box");
+            if (!box) return;
             const item = document.createElement("div");
             item.className = "toast-item";
             item.innerHTML = `<span>${sanitizeHtml(msg)}</span>`;
@@ -701,7 +714,7 @@
 
         function sanitizeHtml(str) {
             if (!str) return "";
-            return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+            return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/&#039;/g, "'");
         }
     </script>
 </body>
