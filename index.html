@@ -155,7 +155,7 @@
                 <p>Official Staff Verification Portal</p>
             </div>
             <div class="input-group">
-                <input type="text" id="reg-code" placeholder="BLDS-XXXX-XXXX" autocomplete="off" spellcheck="false">
+                <input type="text" id="reg-code" placeholder="BLDS-NAMA-NOMOR" autocomplete="off" spellcheck="false">
             </div>
             <button class="btn hover-target" id="btn-verify">Initialize Verification</button>
         </div>
@@ -203,47 +203,33 @@
                 <button class="btn hover-target" id="btn-logout" style="border-color: rgba(255,255,255,0.2); margin-top: auto;">Log Out</button>
             </div>
             <div class="main-content" id="admin-content">
-                <h2>Database Management</h2>
-                <p>Firebase connection required to view dynamic data.</p>
+                <h2>Local Database</h2>
+                <p>Staff data is securely read from the local system configuration.</p>
             </div>
         </div>
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, get, set, update, remove, child } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-
+    <script>
         // ==========================================
-        // FIREBASE CONFIGURATION
+        // 1. LOCAL DATABASE (NO FIREBASE)
         // ==========================================
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-            databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT_ID.appspot.com",
-            messagingSenderId: "YOUR_SENDER_ID",
-            appId: "YOUR_APP_ID"
+        const localDB = {
+            "BLDS-ALEX-099": { name: "Alex", status: "Approved" },
+            "BLDS-JOHN-404": { name: "John", status: "Not Approved" }
         };
 
-        // Deteksi apakah user masih pakai config dummy (mencegah loading stuck)
-        const isDemoMode = firebaseConfig.apiKey === "YOUR_API_KEY";
-
-        let db = null;
-        if (!isDemoMode) {
-            try {
-                const app = initializeApp(firebaseConfig);
-                db = getDatabase(app);
-                console.log("Firebase Initialized.");
-            } catch (e) {
-                console.warn("Firebase Init Error:", e);
-            }
-        } else {
-            console.warn("Running in UI-Only Demo Mode. Please insert real Firebase Config to connect DB.");
-        }
+        const adminIDs = {
+            "001": { name: "Michael", role: "Full Access" },
+            "002": { name: "William", role: "Admin Access" },
+            "003": { name: "Felix", role: "Admin Access" },
+            "004": { name: "Anindya", role: "Admin Access" },
+            "005": { name: "Kenya", role: "Admin Access" },
+            "006": { name: "Zavino", role: "Admin Access" },
+            "007": { name: "Rehan", role: "Admin Access" }
+        };
 
         // ==========================================
-        // AUDIO & UTILS
+        // 2. AUDIO & UTILS
         // ==========================================
         const audioBGM = document.getElementById('bgm');
         const sfxClick = document.getElementById('sfx-click');
@@ -255,7 +241,6 @@
         sfxWhoosh.volume = 0.4;
         sfxReveal.volume = 0.7;
 
-        // Auto play sound on button click (menghindari error DOM)
         document.querySelectorAll('button').forEach(btn => {
             btn.addEventListener('click', () => { 
                 if (sfxClick.readyState >= 2) {
@@ -265,7 +250,7 @@
         });
 
         const fadeAudio = (audio, targetVolume, duration) => {
-            if (audio.readyState < 2) return; // Skip if audio not loaded
+            if (audio.readyState < 2) return;
             const step = 0.05;
             const delay = duration / Math.abs(targetVolume - audio.volume) / step;
             const interval = setInterval(() => {
@@ -296,7 +281,7 @@
         const sleep = ms => new Promise(res => setTimeout(res, ms));
 
         // ==========================================
-        // PARTICLE SYSTEM (CANVAS)
+        // 3. PARTICLE SYSTEM (CANVAS)
         // ==========================================
         const canvas = document.getElementById('particles-canvas');
         const ctx = canvas.getContext('2d');
@@ -342,7 +327,7 @@
         window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; initParticles(); });
 
         // ==========================================
-        // CINEMATIC ENGINE
+        // 4. CINEMATIC ENGINE
         // ==========================================
         async function runCinematicCutscene(resultData) {
             switchScreen('screen-cinematic');
@@ -385,7 +370,7 @@
         }
 
         // ==========================================
-        // REGISTRATION LOGIC
+        // 5. REGISTRATION LOGIC
         // ==========================================
         const btnVerify = document.getElementById('btn-verify');
         const inputCode = document.getElementById('reg-code');
@@ -394,7 +379,8 @@
             const code = inputCode.value.trim().toUpperCase();
             if (!code) { showToast("Enter a valid verification code."); return; }
 
-            if (code === "BLDS-STAFF-ONLY") {
+            // Admin Gate
+            if (code === "BLDS-STAFF-ONLY-000") {
                 switchScreen('screen-admin-auth');
                 return;
             }
@@ -402,28 +388,11 @@
             btnVerify.innerText = "VERIFYING...";
             btnVerify.style.pointerEvents = "none";
 
-            let resultData = null;
+            // AAA Fake Loading Delay (1.5 seconds)
+            await sleep(1500); 
 
-            // Jika config firebase asli sudah dimasukkan
-            if (db && !isDemoMode) {
-                try {
-                    const snapshot = await get(child(ref(db), `codes/${code}`));
-                    if (snapshot.exists()) {
-                        resultData = snapshot.val();
-                    } else {
-                        resultData = { status: "not_found" };
-                    }
-                } catch (e) {
-                    showToast("Database Connection Error.");
-                    resetBtn(); return;
-                }
-            } else {
-                // FALLBACK MOCK LOGIC (Supaya tidak stuck saat demo/belum ada DB)
-                // Mensimulasikan jeda loading 1 detik
-                await sleep(1000); 
-                if (code === "BLDS-TEST-PASS") resultData = { status: "Approved", name: "Guest Developer" };
-                else resultData = { status: "not_found" };
-            }
+            // Cek Data di Local Database
+            let resultData = localDB[code] || { status: "not_found" };
 
             if (resultData.status === "not_found") {
                 showToast("Data not found. Invalid registration code.");
@@ -440,7 +409,7 @@
         }
 
         // ==========================================
-        // RESULT SCREEN LOGIC
+        // 6. RESULT SCREEN LOGIC
         // ==========================================
         function showResult(data) {
             if (sfxReveal.readyState >= 2) sfxReveal.play().catch(e => console.log('Audio error:', e));
@@ -477,18 +446,8 @@
         }
 
         // ==========================================
-        // ADMIN AUTHENTICATION LOGIC
+        // 7. ADMIN AUTHENTICATION LOGIC
         // ==========================================
-        const adminIDs = {
-            "001": { name: "Michael", role: "Full Access" },
-            "002": { name: "William", role: "Admin Access" },
-            "003": { name: "Felix", role: "Admin Access" },
-            "004": { name: "Anindya", role: "Admin Access" },
-            "005": { name: "Kenya", role: "Admin Access" },
-            "006": { name: "Zavino", role: "Admin Access" },
-            "007": { name: "Rehan", role: "Admin Access" }
-        };
-
         let currentAdmin = null;
 
         document.getElementById('btn-admin-login').addEventListener('click', () => {
