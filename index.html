@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlacklightDoms - Staff Portal & Cinematic Verification</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-base: #070709;
+            --bg-surface: rgba(16, 16, 20, 0.9);
+            --bg-card: rgba(22, 22, 28, 0.85);
+            --bg-input: rgba(12, 12, 15, 0.98);
+            --border-color: rgba(255, 255, 255, 0.12);
+            --border-glow: rgba(255, 255, 255, 0.4);
+            --text-primary: #f4f4f8;
+            --text-secondary: #9898a6;
+            --text-muted: #5e5e6c;
+            --accent-white: #ffffff;
+            --accent-glow: rgba(255, 255, 255, 0.25);
+            --accent-glow-strong: rgba(255, 255, 255, 0.6);
+            --font-main: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            font-size: 0.88rem;
+            line-height: 1.5;
+        }
+
+        /* Ambient Lighting */
+        .ambient-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; overflow: hidden; }
+        .glow-sphere { position: absolute; border-radius: 50%; filter: blur(140px); opacity: 0.12; animation: floatOrb 15s infinite alternate ease-in-out; }
+        .glow-1 { width: 400px; height: 400px; background: #ffffff; top: -50px; left: -50px; }
+        .glow-2 { width: 450px; height: 450px; background: #777777; bottom: -50px; right: -50px; animation-delay: -7s; }
+        @keyframes floatOrb { 0% { transform: translate(0,0); } 100% { transform: translate(40px, 60px); } }
+
+        .text-glow {
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px var(--accent-glow), 0 0 20px var(--accent-glow-strong);
+        }
+
+        .logo-glow-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--border-glow);
+            box-shadow: 0 0 25px var(--accent-glow-strong);
+            animation: pulseLogo 3s infinite alternate ease-in-out;
+        }
+        @keyframes pulseLogo {
+            0% { transform: scale(1); box-shadow: 0 0 15px var(--accent-glow); }
+            100% { transform: scale(1.05); box-shadow: 0 0 35px var(--accent-glow-strong); }
+        }
+
+        .glass-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Modal Overlays */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px);
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active { opacity: 1; pointer-events: all; }
+        .modal-box { width: 90%; max-width: 420px; padding: 25px; text-align: center; transform: scale(0.95); transition: transform 0.3s; }
+        .modal-overlay.active .modal-box { transform: scale(1); }
+
+        .input-group { margin: 14px 0; text-align: left; }
+        .input-group label { display: block; font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 5px; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
+        .styled-input, .styled-textarea, .styled-select {
+            width: 100%; padding: 11px 14px; background: var(--bg-input); border: 1px solid var(--border-color);
+            border-radius: 8px; color: var(--text-primary); font-family: var(--font-main); font-size: 0.88rem; outline: none; transition: border-color 0.2s;
+        }
+        .styled-input:focus, .styled-textarea:focus { border-color: var(--accent-white); box-shadow: 0 0 8px var(--accent-glow); }
+
+        .btn-primary {
+            width: 100%; padding: 12px; background: var(--accent-white); color: var(--bg-base); border: none; border-radius: 8px;
+            font-weight: 700; font-size: 0.85rem; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: transform 0.2s, opacity 0.2s;
+        }
+        .btn-primary:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 5px 15px var(--accent-glow-strong); }
+        .btn-secondary {
+            background: transparent; color: var(--text-primary); border: 1px solid var(--border-color); padding: 8px 14px;
+            border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.8rem; transition: all 0.2s;
+        }
+        .btn-secondary:hover { border-color: var(--accent-white); background: rgba(255,255,255,0.05); }
+
+        /* Loading Screen */
+        #loading-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-base); z-index: 9999;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.4s ease;
+        }
+        #loading-screen.hidden { opacity: 0; visibility: hidden; }
+
+        /* Main Container */
+        main { max-width: 600px; width: 100%; margin: 0 auto; padding: 30px 15px; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+
+        .hero-menu { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px; width: 100%; }
+        .hero-menu h1 { font-size: 2.2rem; }
+        .hero-menu p { color: var(--text-secondary); font-size: 0.9rem; max-width: 400px; }
+
+        /* --- EPICK 15-SECOND CINEMATIC SCREEN (LOGO.PNG AWAKENING) --- */
+        #cinematic-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, #101015 0%, #050507 100%);
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            z-index: 5000; display: none; flex-direction: column; align-items: center; justify-content: center;
+            padding: 20px; text-align: center; opacity: 0; transition: opacity 0.8s ease;
+        }
+        #cinematic-screen.active { display: flex; opacity: 1; }
+
+        .epic-logo-assembler {
+            position: relative; width: 140px; height: 140px;
+            display: flex; align-items: center; justify-content: center; margin-bottom: 25px;
+        }
+        .cinematic-logo-img {
+            width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
+            border: 2px solid rgba(255,255,255,0.3); filter: grayscale(100%) brightness(25%);
+            z-index: 10; transform: scale(0.85); transition: filter 14s linear, transform 14s ease;
+        }
+        .logo-aura-glow {
+            position: absolute; width: 100%; height: 100%; border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+            box-shadow: 0 0 30px rgba(255,255,255,0.15); z-index: 5;
+            animation: auraPulse 3s infinite alternate ease-in-out;
+            transition: background 14s linear, box-shadow 14s linear;
+        }
+        @keyframes auraPulse {
+            0% { transform: scale(0.9); opacity: 0.5; }
+            100% { transform: scale(1.3); opacity: 1; }
+        }
+
+        .cinematic-story-text {
+            font-size: 0.95rem; color: var(--text-secondary); letter-spacing: 0.5px;
+            max-width: 380px; min-height: 35px; transition: opacity 0.4s ease, transform 0.4s ease;
+            opacity: 0; transform: translateY(10px); margin-bottom: 15px;
+        }
+        .cinematic-story-text.show { opacity: 1; transform: translateY(0); }
+
+        .progress-bar-container { width: 100%; max-width: 280px; height: 5px; background: rgba(255,255,255,0.08); border-radius: 10px; overflow: hidden; margin-top: 10px; }
+        .progress-bar-fill { width: 0%; height: 100%; background: var(--accent-white); box-shadow: 0 0 10px var(--accent-glow-strong); transition: width 0.1s linear; }
+
+        /* Result Popup Card di Detik Terakhir */
+        #result-card {
+            display: none; width: 90%; max-width: 380px; padding: 25px; text-align: center;
+            transform: scale(0.8) translateY(20px); opacity: 0; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-top: 10px; z-index: 20;
+        }
+        #result-card.reveal { display: block; transform: scale(1) translateY(0); opacity: 1; }
+
+        /* Admin Panel Dashboard */
+        .admin-dashboard { width: 100%; max-width: 750px; display: none; flex-direction: column; gap: 20px; }
+        .admin-dashboard.active { display: flex; }
+        .admin-card { padding: 22px; }
+        .codes-table-box { width: 100%; overflow-x: auto; margin-top: 10px; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.82rem; text-align: left; }
+        th, td { padding: 10px; border-bottom: 1px solid var(--border-color); }
+        th { color: var(--text-secondary); text-transform: uppercase; font-size: 0.72rem; }
+
+        /* Toast Notifications */
+        #toast-box { position: fixed; bottom: 20px; left: 20px; z-index: 6000; display: flex; flex-direction: column; gap: 8px; pointer-events: none; }
+        .toast-item { background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-primary); padding: 10px 16px; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.4); font-size: 0.82rem; display: flex; align-items: center; gap: 8px; backdrop-filter: blur(10px); }
+
+        footer { background: var(--bg-surface); border-top: 1px solid var(--border-color); padding: 18px; text-align: center; margin-top: auto; width: 100%; }
+        .footer-links { display: flex; gap: 12px; justify-content: center; margin-bottom: 8px; flex-wrap: wrap; }
+        .social-link-btn { display: inline-flex; align-items: center; gap: 6px; color: var(--text-secondary); text-decoration: none; font-weight: 600; font-size: 0.8rem; padding: 5px 10px; border-radius: 6px; background: var(--bg-card); border: 1px solid var(--border-color); transition: 0.2s; }
+        .social-link-btn:hover { color: var(--text-primary); border-color: var(--accent-white); }
+        .copyright { font-size: 0.75rem; color: var(--text-muted); }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-bg">
+        <div class="glow-sphere glow-1"></div>
+        <div class="glow-sphere glow-2"></div>
+    </div>
+
+    <audio id="success-sound" src="https://raw.githubusercontent.com/github/audio/master/success.ogg" preload="auto"></audio>
+
+    <div id="loading-screen">
+        <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--accent-white); display: flex; align-items: center; justify-content: center; font-weight: 900; color: var(--bg-base);">B</div>
+        <span class="text-glow" style="font-size: 0.9rem; margin-top: 10px;">INITIALIZING PORTAL...</span>
+    </div>
+
+    <div id="cinematic-screen">
+        <div class="epic-logo-assembler" id="assembler-box">
+            <div class="logo-aura-glow" id="aura-glow-el"></div>
+            <img src="logo.png" alt="Logo" class="cinematic-logo-img" id="cinematic-logo-file" onerror="this.src='https://via.placeholder.com/140/161614/ffffff?text=BLDS'">
+        </div>
+
+        <div class="cinematic-story-text" id="cinematic-story-txt">Membuka gerbang verifikasi BlacklightDoms...</div>
+        
+        <div class="progress-bar-container" id="prog-container">
+            <div class="progress-bar-fill" id="progress-fill-bar"></div>
+        </div>
+        <div style="font-family: var(--font-mono); font-size: 0.95rem; font-weight: bold; margin-top: 8px;" id="progress-percent-txt">0%</div>
+
+        <div class="glass-card modal-box" id="result-card">
+            <div id="result-icon-box" style="font-size: 2.2rem; margin-bottom: 8px;"></div>
+            <h3 id="result-title-txt" style="font-size: 1.15rem; margin-bottom: 6px;"></h3>
+            <p id="result-desc-txt" style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 16px;"></p>
+            <button class="btn-primary" onclick="closeCinematicScreen()">Kembali ke Beranda</button>
+        </div>
+    </div>
+
+    <main>
+        <div class="hero-menu" id="section-home">
+            <img src="logo.png" alt="Logo" class="logo-glow-img" onerror="this.src='https://via.placeholder.com/100/161614/ffffff?text=BLDS'">
+            <h1 class="text-glow">BLACKLIGHTDOMS</h1>
+            <p>Portal Resmi Pendaftaran Staff & Verifikasi Akses Keamanan Sistem.</p>
+            
+            <div style="display: flex; gap: 10px; width: 100%; max-width: 320px; margin-top: 10px;">
+                <button class="btn-primary" onclick="openCodeModal()">
+                    <i class="fa-solid fa-key"></i> Masukkan Kode
+                </button>
+            </div>
+        </div>
+
+        <div class="admin-dashboard" id="section-admin-dashboard">
+            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                <h2 class="text-glow"><i class="fa-solid fa-shield-halved"></i> Admin Control Panel</h2>
+                <button class="btn-secondary" onclick="logoutAdmin()">Logout</button>
+            </div>
+
+            <div class="glass-card admin-card">
+                <h3 style="margin-bottom: 10px;"><i class="fa-solid fa-plus"></i> Generate Kode Staff Baru</h3>
+                <form id="form-generate-code">
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <div class="input-group" style="flex: 1; min-width: 180px; margin: 0;">
+                            <label>Nama Pendaftar (Otomatis format BLDS-NAMA-NOMOR)</label>
+                            <input type="text" id="gen-name" class="styled-input" placeholder="Misal: Budi" required autocomplete="off">
+                        </div>
+                        <div class="input-group" style="width: 140px; margin: 0;">
+                            <label>Status Kelulusan</label>
+                            <select id="gen-status" class="styled-select">
+                                <option value="Lolos">Lolos (Diterima)</option>
+                                <option value="Tidak Lolos">Tidak Lolos</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary" style="margin-top: 14px;">Generate & Simpan Kode</button>
+                </form>
+            </div>
+
+            <div class="glass-card admin-card">
+                <h3 style="margin-bottom: 10px;"><i class="fa-solid fa-pen-nib"></i> Ubah Pesan Akhir Animasi</h3>
+                <form id="form-update-message">
+                    <div class="input-group">
+                        <label>Pesan Lolos (Custom)</label>
+                        <textarea id="custom-msg-lolos" class="styled-textarea" rows="2" placeholder="Ucapan selamat lolos..."></textarea>
+                    </div>
+                    <div class="input-group">
+                        <label>Pesan Tidak Lolos (Custom)</label>
+                        <textarea id="custom-msg-tolak" class="styled-textarea" rows="2" placeholder="Ucapan tidak lolos..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-secondary" style="width: 100%;">Simpan Pesan Sistem</button>
+                </form>
+            </div>
+
+            <div class="glass-card admin-card">
+                <h3 style="margin-bottom: 6px;"><i class="fa-solid fa-list"></i> Database Kode Lokal</h3>
+                <div class="codes-table-box">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Kode Registrasi</th>
+                                <th>Nama</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="codes-table-body">
+                            <tr><td colspan="4" style="text-align:center; color: var(--text-muted);">Belum ada data kode.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal-overlay" id="modal-code-input">
+        <div class="modal-box glass-card">
+            <h3 class="text-glow" style="margin-bottom: 6px;">VERIFIKASI KODE</h3>
+            <p style="font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 14px;">Format: BLDS-NAMA-NOMOR atau Kode Master Admin.</p>
+            <form id="form-submit-code">
+                <div class="input-group">
+                    <input type="text" id="input-code-val" class="styled-input" style="text-align: center; font-family: var(--font-mono); font-size: 0.95rem; letter-spacing: 1px;" placeholder="BLDS-NAMA-0001" required autocomplete="off">
+                </div>
+                <div style="display: flex; gap: 8px;">
+                    <button type="button" class="btn-secondary" onclick="closeCodeModal()" style="flex:1;">Batal</button>
+                    <button type="submit" class="btn-primary" style="flex:1;">Periksa</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="toast-box"></div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="https://chat.whatsapp.com/LYhSQn3vXhO6qpVWyoJEoR?s=cl&p=a&ilr=1" target="_blank" class="social-link-btn">
+                <i class="fa-brands fa-whatsapp" style="color: #25D366;"></i> WhatsApp Group
+            </a>
+            <a href="https://discord.gg/7bAEeyeajJ" target="_blank" class="social-link-btn">
+                <i class="fa-brands fa-discord" style="color: #5865F2;"></i> Discord Community
+            </a>
+        </div>
+        <div class="copyright">BLACKLIGHTDOMS © 2026</div>
+    </footer>
+
+    <script>
+        const MASTER_ADMIN_CODE = "BLDS-STAFF-ONLY-0001";
+        
+        let localCodes = JSON.parse(localStorage.getItem("blds_staff_codes")) || {
+            "BLDS-ADMIN-0001": { Code: "BLDS-ADMIN-0001", Name: "Admin Demo", Status: "Lolos" }
+        };
+
+        let systemMessages = JSON.parse(localStorage.getItem("blds_system_msgs")) || {
+            lolos: "Selamat! Anda dinyatakan LOLOS dan resmi diterima sebagai bagian dari Staff BlacklightDoms.",
+            tolak: "Mohon maaf, berdasarkan hasil peninjauan sistem, Anda dinyatakan Belum Lolos."
+        };
+
+        const cinematicStories = [
+            { time: 0, text: "Membangkitkan inti energi logo BlacklightDoms..." },
+            { time: 3500, text: "Menyelaraskan frekuensi akses data registrasi Anda..." },
+            { time: 7500, text: "Menganalisis kualifikasi dan rekam jejak staff..." },
+            { time: 11000, text: "Menyiapkan gerbang keputusan akhir..." },
+            { time: 13500, text: "Sistem terbuka. Menampilkan takdir Anda..." }
+        ];
+
+        document.addEventListener("DOMContentLoaded", () => {
+            setTimeout(() => document.getElementById("loading-screen").classList.add("hidden"), 300);
+            renderAdminTable();
+            document.getElementById("custom-msg-lolos").value = systemMessages.lolos;
+            document.getElementById("custom-msg-tolak").value = systemMessages.tolak;
+        });
+
+        function openCodeModal() { document.getElementById("modal-code-input").classList.add("active"); }
+        function closeCodeModal() { document.getElementById("modal-code-input").classList.remove("active"); }
+
+        // SUBMIT KODE & VALIDASI + NOTIFIKASI ERROR JIKA SALAH
+        document.getElementById("form-submit-code").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const val = document.getElementById("input-code-val").value.trim().toUpperCase();
+            closeCodeModal();
+
+            if (val === MASTER_ADMIN_CODE) {
+                showToast("Master Admin Terverifikasi!", "success");
+                document.getElementById("section-home").style.display = "none";
+                document.getElementById("section-admin-dashboard").classList.add("active");
+                return;
+            }
+
+            // Cari kode di penyimpanan lokal
+            let matchedStaff = null;
+            Object.keys(localCodes).forEach(k => {
+                if (k.toUpperCase() === val) {
+                    matchedStaff = localCodes[k];
+                }
+            });
+
+            // JIKA KODE SALAH / TIDAK DITEMUKAN -> NOTIFIKASI ERROR MUNCUL
+            if (!matchedStaff) {
+                showToast("Kode tidak terdaftar atau format salah! (Contoh: BLDS-NAMA-0001)", "error");
+                return;
+            }
+
+            // Jalankan Animasi Epik 15 Detik
+            startCinematicAnimation(matchedStaff);
+        });
+
+        // 15-DETIK ANIMASI EPIK BERBASIS LOGO.PNG AWAKENING
+        function startCinematicAnimation(staff) {
+            const screen = document.getElementById("cinematic-screen");
+            const logoImg = document.getElementById("cinematic-logo-file");
+            const aura = document.getElementById("aura-glow-el");
+            const storyTxt = document.getElementById("cinematic-story-txt");
+            const fillBar = document.getElementById("progress-fill-bar");
+            const percentTxt = document.getElementById("progress-percent-txt");
+            const resultCard = document.getElementById("result-card");
+            const progContainer = document.getElementById("prog-container");
+            const assembler = document.getElementById("assembler-box");
+
+            // Reset UI State
+            screen.classList.add("active");
+            resultCard.classList.remove("reveal");
+            resultCard.style.display = "none";
+            progContainer.style.display = "block";
+            percentTxt.style.display = "block";
+            logoImg.style.display = "block";
+            assembler.style.display = "flex";
+            
+            logoImg.style.filter = "grayscale(100%) brightness(25%)";
+            logoImg.style.transform = "scale(0.85)";
+            aura.style.background = "radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%)";
+            aura.style.boxShadow = "0 0 30px rgba(255,255,255,0.15)";
+
+            let progress = 0;
+            const totalTime = 15000; // 15 Detik
+            const intervalTime = 50;
+            const increment = (intervalTime / totalTime) * 100;
+            let currentStoryIndex = -1;
+
+            // Efek perubahan visual logo secara bertahap selama 14 detik pertama
+            setTimeout(() => {
+                logoImg.style.filter = "grayscale(0%) brightness(100%)";
+                logoImg.style.transform = "scale(1.12)";
+                aura.style.background = "radial-gradient(circle, rgba(200,200,255,0.6) 0%, rgba(200,200,255,0) 70%)";
+                aura.style.boxShadow = "0 0 70px rgba(255,255,255,0.5)";
+            }, 800);
+
+            const timer = setInterval(() => {
+                progress += increment;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(timer);
+                    showEpicResult(staff);
+                }
+
+                fillBar.style.width = progress + "%";
+                percentTxt.innerText = Math.floor(progress) + "%";
+
+                let currentTimeMs = (progress / 100) * totalTime;
+                let matchedIndex = cinematicStories.findIndex((s, idx) => {
+                    let nextTime = cinematicStories[idx + 1] ? cinematicStories[idx + 1].time : totalTime;
+                    return currentTimeMs >= s.time && currentTimeMs < nextTime;
+                });
+
+                if (matchedIndex !== -1 && matchedIndex !== currentStoryIndex) {
+                    currentStoryIndex = matchedIndex;
+                    storyTxt.classList.remove("show");
+                    setTimeout(() => {
+                        storyTxt.innerText = cinematicStories[currentStoryIndex].text;
+                        storyTxt.classList.add("show");
+                    }, 200);
+                }
+            }, intervalTime);
+        }
+
+        function showEpicResult(staff) {
+            document.getElementById("assembler-box").style.display = "none";
+            document.getElementById("cinematic-story-txt").style.display = "none";
+            document.getElementById("prog-container").style.display = "none";
+            document.getElementById("progress-percent-txt").style.display = "none";
+
+            const resultCard = document.getElementById("result-card");
+            const iconBox = document.getElementById("result-icon-box");
+            const titleTxt = document.getElementById("result-title-txt");
+            const descTxt = document.getElementById("result-desc-txt");
+
+            const isLolos = (staff.Status === "Lolos");
+
+            if (isLolos) {
+                iconBox.innerHTML = `<i class="fa-solid fa-crown" style="color: #fde047; filter: drop-shadow(0 0 15px rgba(253,224,71,0.6));"></i>`;
+                titleTxt.innerText = `SELAMAT DATANG, ${staff.Name.toUpperCase()}!`;
+                descTxt.innerText = systemMessages.lolos;
+            } else {
+                iconBox.innerHTML = `<i class="fa-solid fa-ghost" style="color: #94a3b8; filter: drop-shadow(0 0 15px rgba(148,163,184,0.4));"></i>`;
+                titleTxt.innerText = `TETAP SEMANGAT, ${staff.Name.toUpperCase()}!`;
+                descTxt.innerText = systemMessages.tolak;
+            }
+
+            resultCard.style.display = "block";
+            setTimeout(() => resultCard.classList.add("reveal"), 50);
+            try {
+                const aud = document.getElementById("success-sound");
+                aud.currentTime = 0;
+                aud.play().catch(e => {});
+            } catch(err){}
+        }
+
+        function closeCinematicScreen() {
+            document.getElementById("cinematic-screen").classList.remove("active");
+            document.getElementById("input-code-val").value = "";
+            document.getElementById("cinematic-story-txt").style.display = "block";
+        }
+
+        /* ADMIN PANEL KELOLA DATA LOKAL */
+        document.getElementById("form-generate-code").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const rawName = document.getElementById("gen-name").value.trim().toUpperCase();
+            const status = document.getElementById("gen-status").value;
+            const randomNum = Math.floor(1000 + Math.random() * 9000);
+            const codeKey = `BLDS-${rawName}-${randomNum}`;
+
+            localCodes[codeKey] = {
+                Code: codeKey,
+                Name: rawName,
+                Status: status
+            };
+
+            localStorage.setItem("blds_staff_codes", JSON.stringify(localCodes));
+            renderAdminTable();
+            showToast(`Kode baru ${codeKey} berhasil dibuat!`, "success");
+            document.getElementById("gen-name").value = "";
+        });
+
+        document.getElementById("form-update-message").addEventListener("submit", (e) => {
+            e.preventDefault();
+            systemMessages.lolos = document.getElementById("custom-msg-lolos").value.trim();
+            systemMessages.tolak = document.getElementById("custom-msg-tolak").value.trim();
+
+            localStorage.setItem("blds_system_msgs", JSON.stringify(systemMessages));
+            showToast("Pesan akhir animasi berhasil diperbarui!", "success");
+        });
+
+        function renderAdminTable() {
+            const tbody = document.getElementById("codes-table-body");
+            const keys = Object.keys(localCodes);
+
+            if (keys.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color: var(--text-muted);">Belum ada kode tergenerate.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = keys.map(k => {
+                const item = localCodes[k];
+                const badgeColor = item.Status === 'Lolos' ? '#34d399' : '#f87171';
+                return `
+                    <tr>
+                        <td><code style="font-family: var(--font-mono); color: #38bdf8;">${item.Code}</code></td>
+                        <td>${sanitizeHtml(item.Name)}</td>
+                        <td><span style="color: ${badgeColor}; font-weight: 700;">${item.Status}</span></td>
+                        <td>
+                            <button class="btn-secondary" style="font-size: 0.68rem; padding: 3px 6px; border-color: #ef4444; color: #ef4444;" onclick="deleteCode('${k}')">Hapus</button>
+                        </td>
+                    </tr>
+                `;
+            }).join("");
+        }
+
+        function deleteCode(key) {
+            if (confirm("Hapus kode ini dari database lokal?")) {
+                delete localCodes[key];
+                localStorage.setItem("blds_staff_codes", JSON.stringify(localCodes));
+                renderAdminTable();
+                showToast("Kode berhasil dihapus", "info");
+            }
+        }
+
+        function logoutAdmin() {
+            document.getElementById("section-admin-dashboard").classList.remove("active");
+            document.getElementById("section-home").style.display = "flex";
+            showToast("Logged out dari Admin Panel", "info");
+        }
+
+        function showToast(msg, type = "info") {
+            const box = document.getElementById("toast-box");
+            const item = document.createElement("div");
+            item.className = "toast-item";
+            let icon = "fa-circle-info";
+            if (type === "success") icon = "fa-circle-check";
+            if (type === "error") icon = "fa-triangle-exclamation";
+            item.innerHTML = `<i class="fa-solid ${icon}"></i> <span>${sanitizeHtml(msg)}</span>`;
+            box.appendChild(item);
+            setTimeout(() => {
+                item.style.opacity = "0";
+                setTimeout(() => item.remove(), 300);
+            }, 3000);
+        }
+
+        function sanitizeHtml(str) {
+            if (!str) return "";
+            return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
+    </script>
+</body>
+</html>
