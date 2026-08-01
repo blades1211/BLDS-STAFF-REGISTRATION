@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BlacklightDoms - Cinematic Staff Portal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <title>BlacklightDoms - Ultra Cinematic Staff Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --bg-base: #000000;
+            --bg-base: #030305;
             --text-primary: #ffffff;
-            --text-secondary: #9ca3af;
+            --text-secondary: #a1a1aa;
+            --accent-gold: #fbbf24;
+            --accent-neon: #38bdf8;
             --font-main: 'Outfit', sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
         }
@@ -27,16 +29,23 @@
             overflow-x: hidden;
         }
 
+        /* Loading Screen */
         #loading-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000000; z-index: 9999;
-            display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.6s ease;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
         #loading-screen.hidden { opacity: 0; visibility: hidden; }
+
+        .loader-ring {
+            width: 60px; height: 60px; border: 2px solid rgba(255,255,255,0.1); border-top: 2px solid #fff; border-radius: 50%;
+            animation: spinRing 1s linear infinite; margin-bottom: 15px;
+        }
+        @keyframes spinRing { 100% { transform: rotate(360deg); } }
 
         #cinematic-audio { display: none; }
 
         /* =======================================================
-           CINEMATIC EXPERIENCE SCREEN (AAA GAME INTRO)
+           ULTRA EPIC CINEMATIC CUTSCENE SCREEN
            ======================================================= */
         #cinematic-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -47,17 +56,24 @@
         }
         #cinematic-screen.active { display: flex; opacity: 1; }
 
+        /* Flash Flash Transisi */
+        .cinematic-flash {
+            position: absolute; top:0; left:0; width:100%; height:100%; background:#ffffff; z-index: 6000;
+            pointer-events: none; opacity: 0; transition: opacity 0.15s ease-out;
+        }
+        .cinematic-flash.active { opacity: 1; }
+
         .cinematic-vignette {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2;
-            background: radial-gradient(circle, rgba(0,0,0,0) 50%, rgba(0,0,0,0.85) 100%);
+            background: radial-gradient(circle, rgba(0,0,0,0.2) 30%, rgba(0,0,0,0.95) 100%);
             opacity: 0; transition: opacity 2s ease;
         }
         .cinematic-vignette.active { opacity: 1; }
 
         .cinematic-fog {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1;
-            background: radial-gradient(circle at center, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0) 70%);
-            opacity: 0; transition: opacity 2s ease; filter: blur(40px);
+            background: radial-gradient(circle at center, rgba(56, 189, 248, 0.08) 0%, rgba(0,0,0,0) 75%);
+            opacity: 0; transition: opacity 2s ease; filter: blur(50px);
         }
         .cinematic-fog.active { opacity: 1; }
 
@@ -65,59 +81,88 @@
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3;
         }
 
+        /* Equalizer Bars Simulasi Musik */
+        .audio-visualizer {
+            position: absolute; bottom: 30px; display: flex; gap: 4px; z-index: 10; opacity: 0; transition: opacity 1s ease;
+        }
+        .audio-visualizer.active { opacity: 0.7; }
+        .vis-bar {
+            width: 3px; height: 15px; background: rgba(255,255,255,0.6); border-radius: 3px;
+            animation: barPulse 1.2s ease-in-out infinite alternate;
+        }
+        @keyframes barPulse {
+            0% { height: 4px; opacity: 0.3; }
+            100% { height: 28px; opacity: 1; }
+        }
+
         .cinematic-stage {
-            position: relative; width: 300px; height: 180px;
-            display: flex; align-items: center; justify-content: center; margin-bottom: 10px;
+            position: relative; width: 320px; height: 200px;
+            display: flex; align-items: center; justify-content: center; margin-bottom: 20px;
             transition: transform 3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
+        /* Shockwave Energy Pulse Ring */
+        .shockwave-ring {
+            position: absolute; width: 110px; height: 110px; border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.8);
+            opacity: 0; pointer-events: none; z-index: 5;
+        }
+        .shockwave-ring.pulse {
+            animation: ringExpand 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes ringExpand {
+            0% { transform: scale(0.8); opacity: 1; border-color: rgba(255,255,255,0.9); }
+            100% { transform: scale(3.5); opacity: 0; border-color: rgba(255,255,255,0); }
+        }
+
         .radial-glow-back {
-            position: absolute; width: 100px; height: 100px; border-radius: 50%;
-            background: radial-gradient(circle, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 70%);
-            opacity: 0; transform: scale(0.5); transition: all 1.5s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: none; z-index: 4;
+            position: absolute; width: 120px; height: 120px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
+            opacity: 0; transform: scale(0.5); transition: all 1.8s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: none; z-index: 4;
         }
 
         .cinematic-logo-img {
-            width: 90px; height: 90px; border-radius: 50%; object-fit: cover;
-            border: 1px solid rgba(255,255,255,0.4);
-            box-shadow: 0 0 15px rgba(255,255,255,0.1);
+            width: 105px; height: 105px; border-radius: 50%; object-fit: cover;
+            border: 2px solid rgba(255,255,255,0.4);
+            box-shadow: 0 0 25px rgba(255,255,255,0.15);
             z-index: 10;
             opacity: 0;
-            transform: scale(0.94);
-            transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 1.4s ease;
+            transform: scale(0.85);
+            transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 1.5s ease, opacity 1s ease;
         }
 
         .cinematic-textbox {
-            max-width: 620px; min-height: 80px; display: flex; align-items: center; justify-content: center;
-            padding: 0 20px; z-index: 20; margin-bottom: 20px;
+            max-width: 680px; min-height: 90px; display: flex; align-items: center; justify-content: center;
+            padding: 0 25px; z-index: 20; margin-bottom: 25px;
         }
         .cinematic-text {
-            font-size: 1.05rem; color: #f3f4f6; font-weight: 300; letter-spacing: 1.1px;
-            line-height: 1.7; opacity: 0; transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-            text-shadow: 0 2px 12px rgba(0,0,0,0.9);
+            font-size: 1.15rem; color: #f4f4f5; font-weight: 300; letter-spacing: 1.5px;
+            line-height: 1.8; opacity: 0; transform: translateY(12px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            text-shadow: 0 4px 20px rgba(0,0,0,0.95);
             text-align: center;
         }
-        .cinematic-text.show { opacity: 1; }
+        .cinematic-text.show { opacity: 1; transform: translateY(0); }
 
-        /* Kartu Ending (Hasil Lolos / Ditolak) - Diperbesar agar pas dengan teks panjang */
+        /* KARTU HASIL CINEMATIC ENDING */
         #cinematic-ending-card {
-            display: none; width: 92%; max-width: 560px; max-height: 85vh; overflow-y: auto; padding: 30px 25px; text-align: center;
-            opacity: 0; transform: scale(0.96); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
-            z-index: 5000; border-radius: 20px;
+            display: none; width: 92%; max-width: 580px; max-height: 85vh; overflow-y: auto; padding: 35px 28px; text-align: center;
+            opacity: 0; transform: scale(0.92); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 5000; border-radius: 24px;
         }
         #cinematic-ending-card.reveal { display: block; opacity: 1; transform: scale(1); }
 
         #cinematic-screen.success-theme {
             background: #ffffff !important;
             color: #000000 !important;
-            transition: background 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: background 1.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         #cinematic-screen.success-theme .cinematic-text { color: #000000 !important; }
         #cinematic-screen.success-theme #cinematic-ending-card {
             background: rgba(255, 255, 255, 0.98);
-            border: 1px solid rgba(0,0,0,0.1);
+            border: 1px solid rgba(0,0,0,0.12);
             color: #000000;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.12);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.18);
         }
 
         #cinematic-screen.failed-theme {
@@ -125,97 +170,119 @@
             color: #ffffff !important;
         }
         #cinematic-screen.failed-theme #cinematic-ending-card {
-            background: rgba(15, 15, 15, 0.96);
+            background: rgba(12, 12, 14, 0.96);
             border: 1px solid rgba(255, 255, 255, 0.15);
             color: #ffffff;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.9);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.95);
+        }
+
+        /* Tombol WA Contact Headstaff */
+        .btn-wa-contact {
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            width: 100%; max-width: 320px; padding: 14px 20px; margin-top: 20px;
+            background: #25D366; color: #ffffff; text-decoration: none; border-radius: 12px;
+            font-weight: 600; font-size: 0.9rem; letter-spacing: 0.8px; text-transform: uppercase;
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.35); transition: all 0.3s ease;
+        }
+        .btn-wa-contact:hover {
+            transform: translateY(-2px); box-shadow: 0 12px 30px rgba(37, 211, 102, 0.5); background: #22bf5b;
         }
 
         /* Tampilan Website Utama */
-        main { max-width: 650px; width: 100%; margin: 0 auto; padding: 30px 15px; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        main { max-width: 650px; width: 100%; margin: 0 auto; padding: 40px 18px; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .hero-menu { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; }
-        .hero-menu h1 { font-size: 2.2rem; font-weight: 300; letter-spacing: 2px; }
-        .hero-menu p { color: var(--text-secondary); font-size: 0.9rem; max-width: 400px; line-height: 1.6; }
+        .hero-menu h1 { font-size: 2.4rem; font-weight: 300; letter-spacing: 3px; }
+        .hero-menu p { color: var(--text-secondary); font-size: 0.92rem; max-width: 440px; line-height: 1.6; }
 
         .logo-glow-img {
-            width: 110px; height: 110px; border-radius: 50%; object-fit: cover;
+            width: 120px; height: 120px; border-radius: 50%; object-fit: cover;
             border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 35px rgba(255, 255, 255, 0.18);
         }
 
         .glass-card {
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(25px);
+            background: rgba(10, 10, 12, 0.92);
+            backdrop-filter: blur(30px);
             border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 16px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+            border-radius: 20px;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.85);
         }
 
         /* Modal Universal */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.92); backdrop-filter: blur(15px);
+            background: rgba(0, 0, 0, 0.94); backdrop-filter: blur(18px);
             z-index: 1000; display: flex; align-items: center; justify-content: center;
             opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
         }
         .modal-overlay.active { opacity: 1; pointer-events: all; }
-        .modal-box { width: 90%; max-width: 400px; padding: 35px 30px; text-align: center; transform: scale(0.96); transition: transform 0.4s ease; }
+        .modal-box { width: 90%; max-width: 420px; padding: 38px 32px; text-align: center; transform: scale(0.95); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
         .modal-overlay.active .modal-box { transform: scale(1); }
 
-        .input-group { margin: 16px 0; text-align: left; }
-        .input-group label { display: block; font-size: 0.72rem; color: var(--text-secondary); margin-bottom: 6px; text-transform: uppercase; font-weight: 500; letter-spacing: 1.2px; }
+        .input-group { margin: 18px 0; text-align: left; }
+        .input-group label { display: block; font-size: 0.74rem; color: var(--text-secondary); margin-bottom: 8px; text-transform: uppercase; font-weight: 600; letter-spacing: 1.2px; }
         .styled-input, .styled-select {
-            width: 100%; padding: 13px 16px; background: rgba(5,5,5,0.98); border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 10px; color: var(--text-primary); font-family: var(--font-main); font-size: 0.9rem; outline: none; transition: border-color 0.3s;
+            width: 100%; padding: 14px 18px; background: rgba(5,5,6,0.98); border: 1px solid rgba(255,255,255,0.14);
+            border-radius: 12px; color: var(--text-primary); font-family: var(--font-main); font-size: 0.92rem; outline: none; transition: border-color 0.3s;
         }
-        .styled-input:focus, .styled-select:focus { border-color: rgba(255,255,255,0.6); }
+        .styled-input:focus, .styled-select:focus { border-color: rgba(255,255,255,0.7); }
 
         .btn-primary {
-            width: 100%; padding: 14px; background: #ffffff; color: #000000; border: none; border-radius: 10px;
-            font-weight: 500; font-size: 0.85rem; cursor: pointer; text-transform: uppercase; letter-spacing: 1.5px;
+            width: 100%; padding: 15px; background: #ffffff; color: #000000; border: none; border-radius: 12px;
+            font-weight: 600; font-size: 0.88rem; cursor: pointer; text-transform: uppercase; letter-spacing: 1.8px;
             transition: transform 0.3s, box-shadow 0.3s;
         }
-        .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 25px rgba(255,255,255,0.25); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255,255,255,0.3); }
 
         .btn-secondary {
-            background: transparent; color: var(--text-primary); border: 1px solid rgba(255,255,255,0.12); padding: 10px 18px;
-            border-radius: 10px; cursor: pointer; font-weight: 500; font-size: 0.82rem; transition: all 0.3s;
+            background: transparent; color: var(--text-primary); border: 1px solid rgba(255,255,255,0.14); padding: 12px 20px;
+            border-radius: 12px; cursor: pointer; font-weight: 500; font-size: 0.84rem; transition: all 0.3s;
         }
-        .btn-secondary:hover { border-color: rgba(255,255,255,0.6); background: rgba(255,255,255,0.05); }
+        .btn-secondary:hover { border-color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.06); }
 
         /* Admin Dashboard UI */
-        .admin-dashboard { width: 100%; max-width: 850px; display: none; flex-direction: column; gap: 20px; }
+        .admin-dashboard { width: 100%; max-width: 880px; display: none; flex-direction: column; gap: 22px; }
         .admin-dashboard.active { display: flex; }
-        .admin-card { padding: 25px; text-align: left; }
-        .codes-table-box { width: 100%; overflow-x: auto; margin-top: 12px; max-height: 320px; overflow-y: auto; }
-        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left; }
-        th, td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        th { color: var(--text-secondary); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 1px; }
+        .admin-card { padding: 28px; text-align: left; }
+        .codes-table-box { width: 100%; overflow-x: auto; margin-top: 15px; max-height: 350px; overflow-y: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.86rem; text-align: left; }
+        th, td { padding: 14px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        th { color: var(--text-secondary); text-transform: uppercase; font-size: 0.72rem; letter-spacing: 1px; }
 
         /* Toast Notification */
         #toast-box { position: fixed; bottom: 25px; left: 25px; z-index: 7000; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
-        .toast-item { background: rgba(10,10,10,0.96); border: 1px solid rgba(255,255,255,0.15); color: var(--text-primary); padding: 12px 18px; border-radius: 10px; box-shadow: 0 8px 25px rgba(0,0,0,0.6); font-size: 0.85rem; backdrop-filter: blur(12px); animation: fadeInToast 0.3s ease; }
+        .toast-item { background: rgba(12,12,14,0.96); border: 1px solid rgba(255,255,255,0.18); color: var(--text-primary); padding: 13px 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.7); font-size: 0.86rem; backdrop-filter: blur(14px); animation: fadeInToast 0.3s ease; }
         @keyframes fadeInToast { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        footer { background: rgba(5,5,5,0.9); border-top: 1px solid rgba(255,255,255,0.08); padding: 20px; text-align: center; margin-top: auto; width: 100%; }
-        .copyright { font-size: 0.75rem; color: #52525b; }
+        footer { background: rgba(5,5,5,0.95); border-top: 1px solid rgba(255,255,255,0.08); padding: 22px; text-align: center; margin-top: auto; width: 100%; }
+        .copyright { font-size: 0.78rem; color: #52525b; letter-spacing: 1px; }
     </style>
 </head>
 <body>
 
     <div id="loading-screen">
-        <div style="width: 40px; height: 40px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; font-weight: 500; color: #000; box-shadow: 0 0 20px #fff;">B</div>
-        <span style="font-size: 0.85rem; margin-top: 12px; letter-spacing: 2px; color: var(--text-secondary);">LOADING PORTAL...</span>
+        <div class="loader-ring"></div>
+        <span style="font-size: 0.85rem; letter-spacing: 3px; color: var(--text-secondary); text-transform: uppercase;">Initializing System...</span>
     </div>
 
     <audio id="cinematic-audio" src="idoberg-relaxing-cinematic-pads-303218.mp3" loop preload="auto"></audio>
 
     <div id="cinematic-screen">
+        <div class="cinematic-flash" id="cinematic-flash"></div>
         <div class="cinematic-vignette" id="cinematic-vignette"></div>
         <div class="cinematic-fog" id="cinematic-fog"></div>
         <canvas id="particle-canvas"></canvas>
 
+        <div class="audio-visualizer" id="audio-visualizer">
+            <div class="vis-bar" style="animation-delay: 0.1s;"></div>
+            <div class="vis-bar" style="animation-delay: 0.3s;"></div>
+            <div class="vis-bar" style="animation-delay: 0.2s;"></div>
+            <div class="vis-bar" style="animation-delay: 0.5s;"></div>
+            <div class="vis-bar" style="animation-delay: 0.4s;"></div>
+        </div>
+
         <div class="cinematic-stage" id="cinematic-stage">
+            <div class="shockwave-ring" id="shockwave-ring"></div>
             <div class="radial-glow-back" id="radial-glow-back"></div>
             <img src="logo.png" alt="Logo" class="cinematic-logo-img" id="cinematic-logo-img" onerror="this.src='https://via.placeholder.com/120/000000/ffffff?text=BLDS'">
         </div>
@@ -225,23 +292,34 @@
         </div>
 
         <div class="glass-card" id="cinematic-ending-card">
-            <h2 id="ending-title-txt" style="font-size: 1.2rem; margin-bottom: 8px; font-weight: 400; letter-spacing: 1px;"></h2>
-            <div id="ending-task-box" style="margin: 10px 0; padding: 10px 14px; background: rgba(255,255,255,0.05); border-radius: 8px; font-size: 0.85rem; border-left: 2px solid rgba(255,255,255,0.5); text-align: left; display: none;">
-                <strong style="display: block; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); margin-bottom: 3px;">Role & Penugasan Anda:</strong>
-                <span id="ending-task-txt" style="font-family: var(--font-mono); color: #fff; font-weight: 500;"></span>
+            <h2 id="ending-title-txt" style="font-size: 1.3rem; margin-bottom: 12px; font-weight: 500; letter-spacing: 1.5px;"></h2>
+            
+            <div id="ending-task-box" style="margin: 12px 0 18px 0; padding: 12px 16px; background: rgba(255,255,255,0.06); border-radius: 12px; font-size: 0.88rem; border-left: 3px solid rgba(255,255,255,0.7); text-align: left; display: none;">
+                <strong style="display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-secondary); margin-bottom: 4px;">Role & Penugasan Anda:</strong>
+                <span id="ending-task-txt" style="font-family: var(--font-mono); color: #fff; font-weight: 600; font-size: 0.95rem;"></span>
             </div>
-            <p id="ending-desc-txt" style="font-size: 0.84rem; line-height: 1.6; margin-bottom: 16px; opacity: 0.9; white-space: pre-line;"></p>
-            <button class="btn-primary" onclick="closeCinematicScreen()" id="ending-btn-action" style="max-width: 180px; margin: 0 auto;"></button>
+
+            <p id="ending-desc-txt" style="font-size: 0.86rem; line-height: 1.7; margin-bottom: 20px; opacity: 0.9; white-space: pre-line;"></p>
+
+            <div id="ending-action-container" style="display: flex; flex-direction: column; align-items: center; gap: 12px;">
+                <button class="btn-primary" onclick="closeCinematicScreen()" id="ending-btn-action" style="max-width: 200px; margin: 0 auto;"></button>
+                <div id="wa-contact-wrapper" style="width: 100%; display: none;">
+                    <a href="https://wa.me/6281389632241" target="_blank" class="btn-wa-contact">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                        Hubungi Headstaff (Anindya)
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 
     <main>
         <div class="hero-menu" id="section-home">
-            <img src="logo.png" alt="Logo" class="logo-glow-img" onerror="this.src='https://via.placeholder.com/110/000000/ffffff?text=BLDS'">
-            <h1 style="letter-spacing: 2px;">BLACKLIGHTDOMS</h1>
+            <img src="logo.png" alt="Logo" class="logo-glow-img" onerror="this.src='https://via.placeholder.com/120/000000/ffffff?text=BLDS'">
+            <h1>BLACKLIGHTDOMS</h1>
             <p>Portal Resmi Pendaftaran Staff & Verifikasi Akses Keamanan Eksklusif.</p>
             
-            <div style="display: flex; gap: 10px; width: 100%; max-width: 300px; margin-top: 10px;">
+            <div style="display: flex; gap: 10px; width: 100%; max-width: 320px; margin-top: 10px;">
                 <button class="btn-primary" onclick="openCodeModal()">
                     Masukkan Kode Akses
                 </button>
@@ -250,12 +328,12 @@
 
         <div class="admin-dashboard" id="section-admin-dashboard">
             <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                <h2 style="font-weight: 400; letter-spacing: 1px;">Admin Control Panel</h2>
+                <h2 style="font-weight: 400; letter-spacing: 1px;">Admin Control Panel ⚡</h2>
                 <button class="btn-secondary" onclick="logoutAdmin()">Logout</button>
             </div>
 
             <div class="glass-card admin-card">
-                <h3 style="margin-bottom: 14px; font-size: 1rem; font-weight: 400;">Buat / Tambah Kode Akses Baru</h3>
+                <h3 style="margin-bottom: 16px; font-size: 1.05rem; font-weight: 400;">Buat / Tambah Kode Akses Baru</h3>
                 <form id="form-generate-code">
                     <div style="display: flex; gap: 12px; flex-wrap: wrap;">
                         <div class="input-group" style="flex: 1; min-width: 160px; margin: 0;">
@@ -274,7 +352,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="input-group" style="margin-top: 14px;">
+                    <div class="input-group" style="margin-top: 16px;">
                         <label>Role / Task Penugasan</label>
                         <select id="gen-task" class="styled-select" required>
                             <option value="Event Hoster">Event Hoster</option>
@@ -286,12 +364,12 @@
                             <option value="staff">staff</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn-primary" style="margin-top: 16px;">Simpan & Buat Kode Akses</button>
+                    <button type="submit" class="btn-primary" style="margin-top: 18px;">Simpan & Buat Kode Akses</button>
                 </form>
             </div>
 
             <div class="glass-card admin-card">
-                <h3 style="font-size: 1rem; font-weight: 400; margin-bottom: 8px;">Database Kode Pendaftar</h3>
+                <h3 style="font-size: 1.05rem; font-weight: 400; margin-bottom: 10px;">Database Kode Pendaftar</h3>
                 <div class="codes-table-box">
                     <table>
                         <thead>
@@ -314,13 +392,13 @@
 
     <div class="modal-overlay" id="modal-code-input">
         <div class="modal-box glass-card">
-            <h3 style="margin-bottom: 8px; font-weight: 400; letter-spacing: 1px;">VERIFIKASI KODE</h3>
-            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 18px;">Masukkan kode lengkap (cth: BLDS-MICHAEL-001) atau nomor staff (001-007) untuk akses Admin.</p>
+            <h3 style="margin-bottom: 8px; font-weight: 400; letter-spacing: 1.5px;">VERIFIKASI KODE ACCESS</h3>
+            <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 20px;">Masukkan Kode Pendaftar (cth: <code>BLDS-MICHAEL-001</code>) atau Nomor Akses Admin Staff (<code>001</code> s/d <code>007</code>).</p>
             <form id="form-submit-code">
                 <div class="input-group">
-                    <input type="text" id="input-code-val" class="styled-input" style="text-align: center; letter-spacing: 1px; font-family: var(--font-mono);" placeholder="BLDS-NAMA-000 atau 001" required autocomplete="off">
+                    <input type="text" id="input-code-val" class="styled-input" style="text-align: center; letter-spacing: 2px; font-family: var(--font-mono); font-size: 1.05rem;" placeholder="BLDS-NAMA-000 atau 001" required autocomplete="off">
                 </div>
-                <div style="display: flex; gap: 10px; margin-top: 18px;">
+                <div style="display: flex; gap: 12px; margin-top: 22px;">
                     <button type="button" class="btn-secondary" onclick="closeCodeModal()" style="flex:1;">Batal</button>
                     <button type="submit" class="btn-primary" style="flex:1;">Verifikasi</button>
                 </div>
@@ -331,13 +409,13 @@
     <div id="toast-box"></div>
 
     <footer>
-        <div class="copyright">BLACKLIGHTDOMS © 2026</div>
+        <div class="copyright">BLACKLIGHTDOMS OFFICIAL PORTAL © 2026</div>
     </footer>
 
     <script>
         const MASTER_ADMIN_CODE = "BLDS-STAFF-ONLY-000";
 
-        // Default Data Pendaftar Sesuai Format BLDS-NAMA-ANGKA dan Spesifikasi Role
+        // Default Data Staff & Admin (Nomor 001 s/d 007 dapat membuka Admin Panel secara langsung)
         const defaultCodes = {
             "BLDS-MICHAEL-001": { Code: "BLDS-MICHAEL-001", Name: "Michael", Num: "001", Status: "Lolos", Task: "owner" },
             "BLDS-WILLIAM-002": { Code: "BLDS-WILLIAM-002", Name: "William", Num: "002", Status: "Lolos", Task: "owner friend" },
@@ -350,19 +428,19 @@
 
         let localCodes;
         try {
-            const saved = localStorage.getItem("blds_staff_codes_v4");
+            const saved = localStorage.getItem("blds_staff_codes_v5");
             if (saved) {
                 localCodes = JSON.parse(saved);
             } else {
                 localCodes = defaultCodes;
-                localStorage.setItem("blds_staff_codes_v4", JSON.stringify(localCodes));
+                localStorage.setItem("blds_staff_codes_v5", JSON.stringify(localCodes));
             }
         } catch (err) {
             localCodes = defaultCodes;
         }
 
         document.addEventListener("DOMContentLoaded", () => {
-            setTimeout(() => document.getElementById("loading-screen").classList.add("hidden"), 300);
+            setTimeout(() => document.getElementById("loading-screen").classList.add("hidden"), 400);
             renderAdminTable();
             initParticleCanvas();
         });
@@ -370,7 +448,7 @@
         function openCodeModal() { document.getElementById("modal-code-input").classList.add("active"); }
         function closeCodeModal() { document.getElementById("modal-code-input").classList.remove("active"); }
 
-        // Canvas Particle Management
+        // Particles Animation Manager
         let particleCtx, particleAnimId;
         const particles = [];
         function initParticleCanvas() {
@@ -380,14 +458,14 @@
             resizeCanvas();
             window.addEventListener("resize", resizeCanvas);
 
-            for (let i = 0; i < 30; i++) {
+            for (let i = 0; i < 45; i++) {
                 particles.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
-                    size: Math.random() * 2 + 1,
-                    vx: (Math.random() - 0.5) * 0.15,
-                    vy: (Math.random() - 0.5) * 0.15,
-                    alpha: Math.random() * 0.4 + 0.1
+                    size: Math.random() * 2.2 + 0.8,
+                    vx: (Math.random() - 0.5) * 0.25,
+                    vy: (Math.random() - 0.5) * 0.25,
+                    alpha: Math.random() * 0.5 + 0.2
                 });
             }
         }
@@ -399,28 +477,18 @@
             canvas.height = window.innerHeight;
         }
 
-        function startParticleLoop(pullToCenter = false) {
+        function startParticleLoop() {
             const canvas = document.getElementById("particle-canvas");
             if (!canvas || !particleCtx) return;
             function render() {
                 particleCtx.clearRect(0, 0, canvas.width, canvas.height);
-                const centerX = canvas.width / 2;
-                const centerY = canvas.height / 2;
-
                 particles.forEach(p => {
-                    if (pullToCenter) {
-                        let dx = centerX - p.x;
-                        let dy = centerY - p.y;
-                        p.x += dx * 0.01;
-                        p.y += dy * 0.01;
-                    } else {
-                        p.x += p.vx;
-                        p.y += p.vy;
-                        if (p.x < 0) p.x = canvas.width;
-                        if (p.x > canvas.width) p.x = 0;
-                        if (p.y < 0) p.y = canvas.height;
-                        if (p.y > canvas.height) p.y = 0;
-                    }
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.x < 0) p.x = canvas.width;
+                    if (p.x > canvas.width) p.x = 0;
+                    if (p.y < 0) p.y = canvas.height;
+                    if (p.y > canvas.height) p.y = 0;
 
                     particleCtx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`;
                     particleCtx.beginPath();
@@ -437,46 +505,72 @@
             if(particleCtx) particleCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
         }
 
-        // Handle Submit Kode Utama / Nomor Staff (001-007)
+        // Trigger Efek Flash Transisi Sinematik
+        function triggerFlash() {
+            const flash = document.getElementById("cinematic-flash");
+            flash.classList.add("active");
+            setTimeout(() => flash.classList.remove("active"), 180);
+        }
+
+        // TRIGGER SHOCKWAVE PULSE
+        function triggerShockwave() {
+            const ring = document.getElementById("shockwave-ring");
+            ring.classList.remove("pulse");
+            void ring.offsetWidth; // Reflow
+            ring.classList.add("pulse");
+        }
+
+        // VERIFIKASI KODE & AKSES ADMIN PANEL (001 s/d 007)
         document.getElementById("form-submit-code").addEventListener("submit", (e) => {
             e.preventDefault();
-            const val = document.getElementById("input-code-val").value.trim().toUpperCase();
+            const inputVal = document.getElementById("input-code-val").value.trim().toUpperCase();
             closeCodeModal();
 
-            if (val === MASTER_ADMIN_CODE) {
-                showToast("Master Admin Berhasil Diverifikasi!", "success");
-                document.getElementById("section-home").style.display = "none";
-                document.getElementById("section-admin-dashboard").classList.add("active");
+            // Cek jika master code
+            if (inputVal === MASTER_ADMIN_CODE) {
+                showToast("Master Security Access Granted!", "success");
+                openAdminPanel();
                 return;
             }
 
-            // Cek apakah input berupa nomor staff 001 - 007 untuk akses Admin Panel langsung
-            let matchedStaffByNum = null;
+            // Normalisasi Format Angka (Contoh: "1" menjadi "001", "7" menjadi "007")
+            let numFormatted = inputVal.padStart(3, '0');
+            let matchedStaff = null;
+
+            // Cek apakah angka yang dimasukkan adalah 001 s/d 007
+            const isNumberCode = parseInt(inputVal, 10) >= 1 && parseInt(inputVal, 10) <= 7;
+
             Object.keys(localCodes).forEach(k => {
-                if (localCodes[k].Num === val && parseInt(val) >= 1 && parseInt(val) <= 7) {
-                    matchedStaffByNum = localCodes[k];
+                const item = localCodes[k];
+                if (item.Code === inputVal || item.Num === numFormatted || (isNumberCode && item.Num === numFormatted)) {
+                    matchedStaff = item;
                 }
             });
 
-            if (matchedStaffByNum) {
-                showToast(`Akses Staff ${matchedStaffByNum.Name} Dikonfirmasi. Membuka Admin Panel...`, "success");
-                document.getElementById("section-home").style.display = "none";
-                document.getElementById("section-admin-dashboard").classList.add("active");
+            // Jika memasukkan angka 001 - 007 -> LANGSUNG MASUK ADMIN DASHBOARD!
+            if (isNumberCode && matchedStaff) {
+                showToast(`[00${parseInt(inputVal, 10)}] Security Code Confirmed. Opening Admin Panel...`, "success");
+                openAdminPanel();
                 return;
             }
 
-            // Jika bukan nomor staff admin, jalankan cinematic untuk pendaftar
-            if (localCodes[val]) {
-                start20SecondCinematicExperience(localCodes[val]);
+            // Jika kode ditemukan (misal pendaftar umum / kode lengkap), jalankan Cutscene 20+ Detik
+            if (matchedStaff) {
+                startUltraEpicCutscene(matchedStaff);
             } else {
-                showToast("Akses Ditolak! Kode tidak terdaftar.", "error");
+                showToast("Akses Ditolak! Kode tidak terdaftar dalam database.", "error");
             }
         });
 
+        function openAdminPanel() {
+            document.getElementById("section-home").style.display = "none";
+            document.getElementById("section-admin-dashboard").classList.add("active");
+        }
+
         // ========================================================
-        // TIMING 20 DETIK CINEMATIC INTRO
+        // ULTRA EPIC 20+ SECONDS CINEMATIC CUTSCENE EXPERIENCE
         // ========================================================
-        function start20SecondCinematicExperience(staff) {
+        function startUltraEpicCutscene(staff) {
             const screen = document.getElementById("cinematic-screen");
             const audio = document.getElementById("cinematic-audio");
             const logoImg = document.getElementById("cinematic-logo-img");
@@ -487,6 +581,7 @@
             const stage = document.getElementById("cinematic-stage");
             const endingCard = document.getElementById("cinematic-ending-card");
             const textboxWrapper = document.getElementById("cinematic-textbox-wrapper");
+            const visualizer = document.getElementById("audio-visualizer");
 
             screen.className = "";
             screen.classList.add("active");
@@ -498,61 +593,71 @@
             textEl.classList.remove("show");
             fogBox.classList.remove("active");
             vignette.classList.remove("active");
+            visualizer.classList.remove("active");
             radialBack.style.opacity = "0";
             radialBack.style.transform = "scale(0.5)";
             stage.style.transform = "scale(1)";
 
             audio.currentTime = 0;
-            audio.volume = 0.10;
+            audio.volume = 0.15;
             audio.play().catch(err => {});
-            startParticleLoop(false);
+            startParticleLoop();
 
+            // SCENE 1 (0.5s): INITIAL GLOW & FOG
             setTimeout(() => {
+                triggerFlash();
                 logoImg.style.opacity = "1";
                 logoImg.style.transform = "scale(1)";
-                logoImg.style.boxShadow = "0 0 25px rgba(255,255,255,0.2)";
+                logoImg.style.boxShadow = "0 0 35px rgba(255,255,255,0.3)";
+                fogBox.classList.add("active");
+                visualizer.classList.add("active");
             }, 600);
 
+            // SCENE 2 (2.5s): SUBTITLE 1
             setTimeout(() => {
-                fogBox.classList.add("active");
-                setCinematicText("Every journey begins with a single decision.");
-            }, 2000);
+                setCinematicText("⚡ Every journey starts with a single step into the unknown.");
+            }, 2500);
 
+            // SCENE 3 (6.0s): SUBTITLE 2 + SHOCKWAVE PULSE
             setTimeout(() => {
-                audio.volume = 0.30;
-                stage.style.transform = "scale(1.02)";
-                setTimeout(() => stage.style.transform = "scale(1)", 1500);
-                setCinematicText("Not every path leads to the same destination.");
-            }, 5000);
+                audio.volume = 0.45;
+                triggerShockwave();
+                stage.style.transform = "scale(1.05)";
+                setTimeout(() => stage.style.transform = "scale(1)", 1200);
+                setCinematicText("⚔️ Greatness is not given. It is forged through dedication.");
+            }, 6000);
 
+            // SCENE 4 (10.0s): SUBTITLE 3 + RADIAL BURST
             setTimeout(() => {
-                audio.volume = 0.55;
+                audio.volume = 0.70;
                 radialBack.style.opacity = "1";
-                radialBack.style.transform = "scale(1.8)";
-                setCinematicText("Character outweighs potential.");
-            }, 8000);
+                radialBack.style.transform = "scale(2.2)";
+                setCinematicText("👑 Character & Integrity outweigh raw potential.");
+            }, 10000);
 
+            // SCENE 5 (14.0s): SUBTITLE 4 + VIGNETTE INTENSIFY
+            setTimeout(() => {
+                audio.volume = 0.85;
+                vignette.classList.add("active");
+                setCinematicText("✨ Evaluating credentials against BlackLightDoms standards...");
+            }, 14000);
+
+            // SCENE 6 (17.5s): FINAL SUSPENSE CLIMAX
             setTimeout(() => {
                 textEl.classList.remove("show");
+                triggerShockwave();
+                audio.volume = 1.0;
+                logoImg.style.transform = "scale(1.12)";
+                logoImg.style.boxShadow = "0 0 55px rgba(255,255,255,0.6)";
+            }, 17500);
+
+            // SCENE 7 (20.5s): TRANSITION TO FINAL RESULT BRANCH
+            setTimeout(() => {
+                triggerFlash();
                 stopParticleLoop();
-                fogBox.classList.remove("active");
-                stage.style.transform = "scale(1.04)";
-                vignette.classList.add("active");
-                audio.volume = 0.75;
-            }, 11000);
-
-            setTimeout(() => {
-                audio.volume = 0.90;
-                logoImg.style.transform = "scale(1.08)";
-                logoImg.style.boxShadow = "0 0 45px rgba(255,255,255,0.4)";
-            }, 15000);
-
-            setTimeout(() => {
-                audio.volume = 0.25;
-                setTimeout(() => {
-                    executeEndingBranch(staff);
-                }, 500);
-            }, 18000);
+                audio.volume = 0.2;
+                setTimeout(() => executeEndingBranch(staff), 400);
+            }, 20500);
         }
 
         function setCinematicText(text) {
@@ -564,6 +669,7 @@
             }, 300);
         }
 
+        // BRANCH HASIL seleksi (LOLOS VS TIDAK LOLOS)
         function executeEndingBranch(staff) {
             const screen = document.getElementById("cinematic-screen");
             const audio = document.getElementById("cinematic-audio");
@@ -573,18 +679,19 @@
             const taskBox = document.getElementById("ending-task-box");
             const taskTxt = document.getElementById("ending-task-txt");
             const btnAction = document.getElementById("ending-btn-action");
+            const waWrapper = document.getElementById("wa-contact-wrapper");
 
             document.getElementById("cinematic-stage").style.display = "none";
             document.getElementById("cinematic-textbox-wrapper").style.display = "none";
+            document.getElementById("audio-visualizer").classList.remove("active");
 
             const isLolos = (staff.Status === "Lolos");
 
             if (isLolos) {
                 screen.classList.add("success-theme");
-                audio.volume = 0;
-                audio.pause();
+                try { audio.pause(); } catch(e){}
 
-                titleTxt.innerText = "WELCOME DOMINIONERS!";
+                titleTxt.innerHTML = "🎉 WELCOME DOMINIONERS!";
                 descTxt.innerText = `Congratulations!
 After careful consideration, your registration has been approved.
 Today marks the beginning of a greater responsibility within BlackLightDoms.
@@ -603,18 +710,20 @@ Welcome to the BLDS Staff Team.
                     taskBox.style.display = "none";
                 }
 
-                btnAction.innerText = "Continue";
+                // TAMPILKAN TOMBOL CONTACT HEADSTAFF (ANINDYA) HANYA UNTUK YANG LOLOS
+                waWrapper.style.display = "block";
+
+                btnAction.innerText = "Lanjutkan";
                 btnAction.onclick = closeCinematicScreen;
 
                 endingCard.style.display = "block";
-                setTimeout(() => endingCard.classList.add("reveal"), 100);
+                setTimeout(() => endingCard.classList.add("reveal"), 150);
 
             } else {
                 screen.classList.add("failed-theme");
-                audio.volume = 0;
-                audio.pause();
+                try { audio.pause(); } catch(e){}
 
-                titleTxt.innerText = "THE PATH REMAINS OPEN, DOMINIONER.";
+                titleTxt.innerHTML = "✨ THE PATH REMAINS OPEN, DOMINIONER.";
                 descTxt.innerText = `Thank you for taking the time to register as a BLDS Staff candidate.
 After careful review, your registration has not been approved at this time.
 This decision is only part of your journey, not the end of it.
@@ -622,9 +731,11 @@ Continue growing, supporting the community, and improving yourself.
 We sincerely hope to welcome you in a future staff recruitment.
 Keep moving forward, Dominioner.
 "Every journey begins with the courage to try."`;
-                taskBox.style.display = "none";
                 
-                btnAction.innerText = "Return";
+                taskBox.style.display = "none";
+                waWrapper.style.display = "none"; // Sembunyikan untuk yang tidak lolos
+                
+                btnAction.innerText = "Kembali";
                 btnAction.onclick = closeCinematicScreen;
 
                 endingCard.style.display = "block";
@@ -648,7 +759,7 @@ Keep moving forward, Dominioner.
 
             const generatedCode = `BLDS-${name.toUpperCase()}-${num}`;
 
-            // Validasi Nomor Tidak Boleh Sama dalam Sistem
+            // Validasi Nomor Tidak Boleh Sama
             let numberExists = false;
             Object.keys(localCodes).forEach(k => {
                 if (localCodes[k].Num === num) {
@@ -657,15 +768,15 @@ Keep moving forward, Dominioner.
             });
 
             if (numberExists) {
-                showToast(`Nomor urut ${num} sudah digunakan oleh pendaftar lain!`, "error");
+                showToast(`Nomor urut ${num} sudah terdaftar! Gunakan nomor lain.`, "error");
                 return;
             }
 
             localCodes[generatedCode] = { Code: generatedCode, Name: name, Num: num, Status: status, Task: task };
-            localStorage.setItem("blds_staff_codes_v4", JSON.stringify(localCodes));
+            localStorage.setItem("blds_staff_codes_v5", JSON.stringify(localCodes));
 
             renderAdminTable();
-            showToast(`Kode ${generatedCode} berhasil dibuat!`, "success");
+            showToast(`Kode Akses ${generatedCode} Berhasil Dibuat!`, "success");
 
             document.getElementById("gen-name").value = "";
             document.getElementById("gen-num").value = "";
@@ -690,7 +801,7 @@ Keep moving forward, Dominioner.
                         <td><span style="color: ${badgeColor}; font-weight: 500;">${item.Status}</span></td>
                         <td><span style="font-family: var(--font-mono); font-size: 0.8rem; color: #d1d5db;">${sanitizeHtml(item.Task || '-')}</span></td>
                         <td>
-                            <button type="button" class="btn-secondary" style="font-size: 0.72rem; padding: 4px 8px;" onclick="deleteCode('${k}')">Hapus</button>
+                            <button type="button" class="btn-secondary" style="font-size: 0.74rem; padding: 5px 10px;" onclick="deleteCode('${k}')">Hapus</button>
                         </td>
                     </tr>
                 `;
@@ -700,7 +811,7 @@ Keep moving forward, Dominioner.
         function deleteCode(key) {
             if (confirm(`Yakin ingin menghapus kode ${key}?`)) {
                 delete localCodes[key];
-                localStorage.setItem("blds_staff_codes_v4", JSON.stringify(localCodes));
+                localStorage.setItem("blds_staff_codes_v5", JSON.stringify(localCodes));
                 renderAdminTable();
                 showToast("Kode berhasil dihapus dari sistem.", "info");
             }
@@ -709,7 +820,7 @@ Keep moving forward, Dominioner.
         function logoutAdmin() {
             document.getElementById("section-admin-dashboard").classList.remove("active");
             document.getElementById("section-home").style.display = "flex";
-            showToast("Berhasil Logout dari Admin Panel.", "info");
+            showToast("Logout dari Admin Panel Berhasil.", "info");
         }
 
         function showToast(msg, type = "info") {
@@ -719,7 +830,7 @@ Keep moving forward, Dominioner.
             item.className = "toast-item";
             item.innerHTML = `<span>${sanitizeHtml(msg)}</span>`;
             box.appendChild(item);
-            setTimeout(() => item.remove(), 3000);
+            setTimeout(() => item.remove(), 3200);
         }
 
         function sanitizeHtml(str) {
