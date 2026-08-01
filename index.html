@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BlacklightDoms - Cinematic Experience</title>
+    <title>BlacklightDoms - Cinematic Masterpiece Portal</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --bg-base: #020205;
+            --bg-base: #010103;
             --bg-card: rgba(12, 12, 18, 0.92);
             --bg-input: rgba(6, 6, 10, 0.95);
             --border-color: rgba(255, 255, 255, 0.1);
@@ -111,88 +111,110 @@
         .hero-menu p { color: var(--text-secondary); font-size: 0.95rem; max-width: 420px; }
 
         /* =======================================================
-           BIOSKOP STYLE: 15-DETIK FULL CINEMATIC EXPERIENCE
+           STRICT STORYBOARD CINEMATIC SCREEN (0 - 15 DETIK)
            ======================================================= */
         #cinematic-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #010103;
             z-index: 5000; display: none; flex-direction: column; align-items: center; justify-content: center;
-            padding: 20px; text-align: center; opacity: 0; transition: opacity 0.8s ease;
+            padding: 20px; text-align: center; opacity: 0; transition: opacity 0.6s ease;
             overflow: hidden;
         }
         #cinematic-screen.active { display: flex; opacity: 1; }
 
-        /* Panggung Animasi Bergerak Logo */
-        .bioscope-stage {
+        /* Stage Area */
+        .story-stage {
             position: relative; width: 240px; height: 240px;
             display: flex; align-items: center; justify-content: center; margin-bottom: 25px;
+            transition: transform 1s ease;
+        }
+        .story-stage.shake { animation: stageShake 0.4s infinite ease-in-out; }
+        @keyframes stageShake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            20% { transform: translate(-2px, -1px) rotate(-1deg); }
+            40% { transform: translate(-1px, 2px) rotate(1deg); }
+            60% { transform: translate(2px, 1px) rotate(0deg); }
+            80% { transform: translate(1px, -2px) rotate(-1deg); }
+            100% { transform: translate(-1px, -1px) rotate(1deg); }
         }
 
-        /* Logo bergerak, berputar, & melayang */
-        .moving-logo-img {
-            width: 130px; height: 130px; border-radius: 50%; object-fit: cover;
-            border: 3px solid rgba(168,85,247,0.8);
-            box-shadow: 0 0 50px rgba(168,85,247,0.6), inset 0 0 25px rgba(255,255,255,0.8);
-            z-index: 10;
-            transform: scale(0.2) rotate(-180deg);
-            filter: brightness(0.2) contrast(200%);
-            transition: transform 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 1.2s ease;
+        /* Partikel Putih Kecil (Background Bergerak) */
+        .story-particles {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; z-index: 1;
         }
-        .moving-logo-img.animate-action {
-            transform: scale(1.15) rotate(0deg);
-            filter: brightness(1) contrast(100%);
-            animation: floatingLogoMotion 4s infinite alternate ease-in-out 1.2s;
+        .particle-dot {
+            position: absolute; width: 3px; height: 3px; background: #ffffff; border-radius: 50%;
+            opacity: 0.6; animation: floatParticle 5s infinite linear;
         }
-        @keyframes floatingLogoMotion {
-            0% { transform: scale(1.15) translateY(0px) rotate(-3deg); box-shadow: 0 0 40px rgba(168,85,247,0.6); }
-            100% { transform: scale(1.22) translateY(-12px) rotate(3deg); box-shadow: 0 0 70px rgba(236,72,153,0.8); }
+        @keyframes floatParticle {
+            0% { transform: translateY(0px) scale(1); opacity: 0.2; }
+            50% { opacity: 0.9; }
+            100% { transform: translateY(-120px) scale(0.4); opacity: 0; }
         }
 
-        /* Gelombang Energi Bioskop (CGI Shockwave Ring) */
-        .bioscope-ring {
-            position: absolute; width: 100%; height: 100%; border-radius: 50%;
-            border: 2px solid rgba(168,85,247,0.4);
-            box-shadow: 0 0 30px rgba(168,85,247,0.2) inset;
-            animation: expandShockwave 3s infinite linear;
-            pointer-events: none; opacity: 0;
-        }
-        .bioscope-ring.active { opacity: 1; }
-        @keyframes expandShockwave {
-            0% { transform: scale(0.6); opacity: 0.9; border-color: #ffffff; }
-            100% { transform: scale(1.8); opacity: 0; border-color: #a855f7; }
+        /* Logo Utama di Storyboard */
+        .story-logo {
+            width: 120px; height: 120px; border-radius: 50%; object-fit: cover;
+            border: 2px solid rgba(168,85,247,0.3);
+            box-shadow: 0 0 20px rgba(168,85,247,0.2);
+            z-index: 5; transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* Subtitle Dialog / Narasi Bioskop */
-        .bioscope-subtitle-box {
-            max-width: 480px; min-height: 55px; display: flex; align-items: center; justify-content: center;
-            margin-bottom: 15px; padding: 0 10px;
+        /* Sun Rays Efek Keliling Logo */
+        .sun-ray-ring {
+            position: absolute; width: 170px; height: 170px; border-radius: 50%;
+            border: 2px dashed rgba(253, 224, 71, 0.15);
+            animation: rotateRays 10s infinite linear; pointer-events: none; z-index: 2;
+            opacity: 0; transition: opacity 0.8s ease;
         }
-        .bioscope-subtitle-txt {
-            font-size: 1.15rem; color: #f8f9fc; font-weight: 600; letter-spacing: 0.9px;
-            line-height: 1.5; opacity: 0; transform: translateY(15px);
+        .sun-ray-ring.lit { opacity: 1; border-color: rgba(253, 224, 71, 0.8); box-shadow: 0 0 30px rgba(253,224,71,0.4); }
+        @keyframes rotateRays { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* Kotak Teks Sesuai Storyboard */
+        .story-textbox {
+            max-width: 500px; min-height: 60px; display: flex; align-items: center; justify-content: center;
+            padding: 0 15px; z-index: 10;
+        }
+        .story-text {
+            font-size: 1.15rem; color: #f8f9fc; font-weight: 600; letter-spacing: 0.8px;
+            line-height: 1.5; opacity: 0; transform: translateY(10px);
             transition: opacity 0.5s ease, transform 0.5s ease;
-            text-shadow: 0 2px 12px rgba(0,0,0,0.9), 0 0 25px rgba(168,85,247,0.5);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.9), 0 0 20px rgba(168,85,247,0.5);
         }
-        .bioscope-subtitle-txt.show { opacity: 1; transform: translateY(0); }
+        .story-text.show { opacity: 1; transform: translateY(0); }
 
-        /* Efek Flash Kamera / Layar Bioskop */
-        .cinema-flash {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff;
-            z-index: 40; opacity: 0; pointer-events: none;
-        }
-        @keyframes flashEffect { 0% { opacity: 0; } 30% { opacity: 0.9; } 100% { opacity: 0; } }
-
-        /* Kartu Hasil Akhir Bioskop (Cinematic Ending Card) */
-        #result-bioscope-card {
-            display: none; width: 92%; max-width: 450px; padding: 40px 30px; text-align: center;
-            transform: scale(0.85) translateY(30px); opacity: 0; 
+        /* Layar Ending (Detik ke-15) */
+        #story-ending-container {
+            display: none; width: 90%; max-width: 480px; padding: 40px 30px; text-align: center;
+            border-radius: 22px; z-index: 100; opacity: 0; transform: scale(0.9);
             transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.25);
-            background: linear-gradient(145deg, rgba(20,20,30,0.98), rgba(8,8,12,0.99));
-            border: 1px solid rgba(168,85,247,0.6);
-            box-shadow: 0 25px 70px rgba(0,0,0,0.95), 0 0 50px rgba(168,85,247,0.35);
-            z-index: 50; border-radius: 24px;
         }
-        #result-bioscope-card.reveal { display: block; transform: scale(1) translateY(0); opacity: 1; }
+        #story-ending-container.reveal { display: block; opacity: 1; transform: scale(1); }
+
+        /* Styling Ending Lolos (Background Putih Masuk dari Tengah) */
+        #cinematic-screen.success-theme {
+            background: radial-gradient(circle, #ffffff 0%, #f1f5f9 65%, #cbd5e1 100%) !important;
+            color: #010103 !important;
+        }
+        #cinematic-screen.success-theme .story-text { color: #010103 !important; text-shadow: none; }
+        #cinematic-screen.success-theme #story-ending-container {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(0,0,0,0.1);
+            color: #010103;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        }
+
+        /* Styling Ending Gagal (Background Tetap Hitam, Glow Redup) */
+        #cinematic-screen.failed-theme {
+            background: #010103 !important;
+            color: #f8f9fc !important;
+        }
+        #cinematic-screen.failed-theme #story-ending-container {
+            background: rgba(10, 10, 15, 0.95);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            color: #f8f9fc;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9), 0 0 30px rgba(239,68,68,0.2);
+        }
 
         /* Admin Dashboard */
         .admin-dashboard { width: 100%; max-width: 800px; display: none; flex-direction: column; gap: 20px; }
@@ -230,22 +252,22 @@
     </div>
 
     <div id="cinematic-screen">
-        <div class="cinema-flash" id="cinema-flash-el"></div>
+        <div class="story-particles" id="story-particles-box"></div>
 
-        <div class="bioscope-stage" id="bioscope-stage">
-            <div class="bioscope-ring active"></div>
-            <img src="logo.png" alt="Logo" class="moving-logo-img" id="moving-logo-img" onerror="this.src='https://via.placeholder.com/130/161614/ffffff?text=BLDS'">
+        <div class="story-stage" id="story-stage">
+            <div class="sun-ray-ring" id="sun-ray-ring"></div>
+            <img src="logo.png" alt="Logo" class="story-logo" id="story-logo-img" onerror="this.src='https://via.placeholder.com/120/161614/ffffff?text=BLDS'">
         </div>
 
-        <div class="bioscope-subtitle-box">
-            <div class="bioscope-subtitle-txt" id="bioscope-subtitle-txt">Memasuki dimensi inti BlacklightDoms...</div>
+        <div class="story-textbox">
+            <div class="story-text" id="story-text-el"></div>
         </div>
 
-        <div class="glass-card" id="result-bioscope-card">
-            <div id="result-icon-box" style="font-size: 3.2rem; margin-bottom: 14px;"></div>
-            <h2 id="result-title-txt" style="font-size: 1.45rem; margin-bottom: 10px; letter-spacing: 0.8px;"></h2>
-            <p id="result-desc-txt" style="font-size: 0.9rem; color: #cbd5e1; line-height: 1.7; margin-bottom: 24px;"></p>
-            <button class="btn-primary" onclick="closeCinematicScreen()">Kembali ke Beranda</button>
+        <div id="story-ending-container">
+            <div id="ending-icon-box" style="font-size: 3rem; margin-bottom: 12px;"></div>
+            <h2 id="ending-title-txt" style="font-size: 1.35rem; margin-bottom: 8px; font-weight: 800;"></h2>
+            <p id="ending-desc-txt" style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 22px; opacity: 0.85;"></p>
+            <button class="btn-primary" onclick="closeCinematicScreen()" id="ending-btn-close">Kembali ke Beranda</button>
         </div>
     </div>
 
@@ -292,21 +314,6 @@
                         </div>
                     </div>
                     <button type="submit" class="btn-primary" style="margin-top: 16px;">Generate & Simpan Kode</button>
-                </form>
-            </div>
-
-            <div class="glass-card admin-card">
-                <h3 style="margin-bottom: 12px; font-size: 1.05rem;"><i class="fa-solid fa-pen-nib"></i> Ubah Pesan Akhir Sinematik (Ucapan)</h3>
-                <form id="form-update-message">
-                    <div class="input-group">
-                        <label>Pesan Lolos (Custom)</label>
-                        <textarea id="custom-msg-lolos" class="styled-textarea" rows="2" placeholder="Tulis ucapan selamat bioskop..."></textarea>
-                    </div>
-                    <div class="input-group">
-                        <label>Pesan Tidak Lolos (Custom)</label>
-                        <textarea id="custom-msg-tolak" class="styled-textarea" rows="2" placeholder="Tulis ucapan penolakan bioskop..."></textarea>
-                    </div>
-                    <button type="submit" class="btn-secondary" style="width: 100%;">Simpan Pesan Sistem</button>
                 </form>
             </div>
 
@@ -372,29 +379,27 @@
             "BLDS-ADMIN-0001": { Code: "BLDS-ADMIN-0001", Name: "Demo Master", Role: "Admin", Status: "Lolos" }
         };
 
-        let systemMessages = JSON.parse(localStorage.getItem("blds_system_msgs")) || {
-            lolos: "Sistem telah merestui takdir Anda. Anda resmi diangkat ke singgasana tertinggi Elite Staff BlacklightDoms.",
-            tolak: "Pintu gerbang dimensi tertutup. Frekuensi Anda belum selaras dengan energi mutlak BlacklightDoms."
-        };
-
-        // Alur Narasi Bioskop 15 Detik
-        const movieSubtitles = [
-            { time: 0, text: "Kamera menembus lapisan kegelapan tak berujung..." },
-            { time: 3000, text: "Membangkitkan energi logo inti BlacklightDoms..." },
-            { time: 7000, text: "Sistem memindai rekam jejak dan tingkat kelayakan Anda..." },
-            { time: 11000, text: "Detik-detik penentuan takdir segera dimulai..." },
-            { time: 13500, text: "Pengungkapan hasil mutlak terbuka sekarang." }
-        ];
-
         document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => document.getElementById("loading-screen").classList.add("hidden"), 350);
             renderAdminTable();
-            document.getElementById("custom-msg-lolos").value = systemMessages.lolos;
-            document.getElementById("custom-msg-tolak").value = systemMessages.tolak;
+            generateParticleDots();
         });
 
         function openCodeModal() { document.getElementById("modal-code-input").classList.add("active"); }
         function closeCodeModal() { document.getElementById("modal-code-input").classList.remove("active"); }
+
+        function generateParticleDots() {
+            const box = document.getElementById("story-particles-box");
+            box.innerHTML = "";
+            for(let i=0; i<18; i++) {
+                const dot = document.createElement("div");
+                dot.className = "particle-dot";
+                dot.style.left = `${Math.random() * 100}%`;
+                dot.style.top = `${Math.random() * 100}%`;
+                dot.style.animationDelay = `${Math.random() * 5}s`;
+                box.appendChild(dot);
+            }
+        }
 
         // SUBMIT KODE & INTERCEPT ADMIN ROLE
         document.getElementById("form-submit-code").addEventListener("submit", (e) => {
@@ -421,7 +426,6 @@
                 return;
             }
 
-            // Jika kode punya hak akses Admin, langsung buka Dashboard Admin
             if (matchedStaff.Role === "Admin" && matchedStaff.Status === "Lolos") {
                 showToast(`Selamat datang kembali, Admin ${matchedStaff.Name}!`, "success");
                 document.getElementById("section-home").style.display = "none";
@@ -429,102 +433,128 @@
                 return;
             }
 
-            // Jika Staff biasa atau Tidak Lolos, jalankan Animasi Bioskop 15 Detik
-            startBioscopeMovie(matchedStaff);
+            // Jalankan Storyboard Sinematik 15 Detik
+            startStoryboardCinematic(matchedStaff);
         });
 
-        // 15-DETIK FULL BIOSKOP CINEMATIC ANIMATION
-        function startBioscopeMovie(staff) {
+        // ==========================================
+        // EKSEKUSI STORYBOARD 15 DETIK PER DETIK
+        // ==========================================
+        function startStoryboardCinematic(staff) {
             const screen = document.getElementById("cinematic-screen");
-            const logoImg = document.getElementById("moving-logo-img");
-            const subTxt = document.getElementById("bioscope-subtitle-txt");
-            const stage = document.getElementById("bioscope-stage");
-            const resultCard = document.getElementById("result-bioscope-card");
-            const flashEl = document.getElementById("cinema-flash-el");
+            const logoImg = document.getElementById("story-logo-img");
+            const textEl = document.getElementById("story-text-el");
+            const stage = document.getElementById("story-stage");
+            const sunRing = document.getElementById("sun-ray-ring");
+            const endingCard = document.getElementById("story-ending-container");
 
-            // Reset UI State
+            // Reset UI
+            screen.className = "";
             screen.classList.add("active");
-            resultCard.classList.remove("reveal");
-            resultCard.style.display = "none";
+            endingCard.classList.remove("reveal");
+            endingCard.style.display = "none";
             stage.style.display = "flex";
-            subTxt.style.display = "block";
-            logoImg.classList.remove("animate-action");
+            textEl.style.display = "block";
+            sunRing.classList.remove("lit");
+            stage.classList.remove("shake");
 
-            // Logo mulai bergerak zoom in berputar dari kecil ke besar
+            // 0 - 2 DETIK: Logo muncul dari kegelapan (opacity naik, glow perlahan)
+            logoImg.style.opacity = "0";
+            logoImg.style.transform = "scale(0.8)";
+            logoImg.style.boxShadow = "0 0 5px rgba(168,85,247,0.1)";
+            
             setTimeout(() => {
-                logoImg.classList.add("animate-action");
-            }, 300);
+                logoImg.style.opacity = "1";
+                logoImg.style.transform = "scale(1)";
+                logoImg.style.boxShadow = "0 0 35px rgba(168,85,247,0.5)";
+                setStoryboardText("Every journey begins with a single decision.");
+            }, 200);
 
-            let progress = 0;
-            const totalTime = 15000; // 15 Detik
-            const intervalTime = 50;
-            const increment = (intervalTime / totalTime) * 100;
-            let currentSubIndex = -1;
+            // 2 - 5 DETIK: Logo mengecil, background partikel bergerak, kalimat berganti
+            setTimeout(() => {
+                logoImg.style.transform = "scale(0.85)";
+                setStoryboardText("Not every path leads to the same destination.");
+            }, 3500);
 
-            const timer = setInterval(() => {
-                progress += increment;
-                if (progress >= 100) {
-                    progress = 100;
-                    clearInterval(timer);
-                    triggerBioscopeClimax(staff);
-                }
+            // 5 - 8 DETIK: Partikel aktif mengelilingi, glow makin terang, efek mengetik teks
+            setTimeout(() => {
+                logoImg.style.boxShadow = "0 0 55px rgba(168,85,247,0.9)";
+                typewriterEffect("Character outweighs potential.", textEl);
+            }, 6000);
 
-                let currentTimeMs = (progress / 100) * totalTime;
-                let matchedIndex = movieSubtitles.findIndex((s, idx) => {
-                    let nextTime = movieSubtitles[idx + 1] ? movieSubtitles[idx + 1].time : totalTime;
-                    return currentTimeMs >= s.time && currentTimeMs < nextTime;
-                });
+            // 8 - 11 DETIK: Partikel berhenti, Sun Rays menyala satu per satu, background sedikit bergetar
+            setTimeout(() => {
+                stage.classList.add("shake");
+                sunRing.classList.add("lit");
+                setStoryboardText("Every choice shapes the path ahead.");
+            }, 9000);
 
-                if (matchedIndex !== -1 && matchedIndex !== currentSubIndex) {
-                    currentSubIndex = matchedIndex;
-                    subTxt.classList.remove("show");
-                    setTimeout(() => {
-                        subTxt.innerText = movieSubtitles[currentSubIndex].text;
-                        subTxt.classList.add("show");
-                    }, 200);
-                }
-            }, intervalTime);
+            // 11 - 14 DETIK: Semua teks menghilang, Sun Rays menyala penuh, logo jadi objek tunggal, hening
+            setTimeout(() => {
+                textEl.style.opacity = "0";
+                stage.classList.remove("shake");
+                sunRing.style.boxShadow = "0 0 60px rgba(253,224,71,0.8)";
+            }, 12000);
+
+            // DETIK KE-15: Ending (Lolos atau Gagal Sesuai Storyboard)
+            setTimeout(() => {
+                showStoryboardEnding(staff);
+            }, 15000);
         }
 
-        function triggerBioscopeClimax(staff) {
-            const flashEl = document.getElementById("cinema-flash-el");
-            flashEl.style.animation = "flashEffect 0.7s ease-out forwards";
-
+        function typewriterEffect(text, element) {
+            element.classList.remove("show");
             setTimeout(() => {
-                flashEl.style.animation = "none";
-                showBioscopeEnding(staff);
-            }, 600);
+                element.innerText = text;
+                element.classList.add("show");
+            }, 200);
         }
 
-        function showBioscopeEnding(staff) {
-            document.getElementById("bioscope-stage").style.display = "none";
-            document.getElementById("bioscope-subtitle-txt").style.display = "none";
+        function setStoryboardText(text) {
+            const el = document.getElementById("story-text-el");
+            el.classList.remove("show");
+            setTimeout(() => {
+                el.innerText = text;
+                el.classList.add("show");
+            }, 250);
+        }
 
-            const resultCard = document.getElementById("result-bioscope-card");
-            const iconBox = document.getElementById("result-icon-box");
-            const titleTxt = document.getElementById("result-title-txt");
-            const descTxt = document.getElementById("result-desc-txt");
+        function showStoryboardEnding(staff) {
+            const screen = document.getElementById("cinematic-screen");
+            document.getElementById("story-stage").style.display = "none";
+            document.getElementById("story-text-el").style.display = "none";
+
+            const endingCard = document.getElementById("story-ending-container");
+            const iconBox = document.getElementById("ending-icon-box");
+            const titleTxt = document.getElementById("ending-title-txt");
+            const descTxt = document.getElementById("ending-desc-txt");
 
             const isLolos = (staff.Status === "Lolos");
 
             if (isLolos) {
-                iconBox.innerHTML = `<i class="fa-solid fa-crown" style="color: #fde047; filter: drop-shadow(0 0 30px rgba(253,224,71,0.95));"></i>`;
-                titleTxt.innerHTML = `<span style="color: #fde047;">ELITE ACCESS GRANTED, ${staff.Name.toUpperCase()}!</span>`;
-                descTxt.innerText = systemMessages.lolos;
+                // Kalau Lolos: Background putih masuk dari tengah
+                screen.classList.add("success-theme");
+                iconBox.innerHTML = `<i class="fa-solid fa-award" style="color: #2563eb;"></i>`;
+                titleTxt.innerHTML = `WELCOME TO THE NEXT CHAPTER`;
+                descTxt.innerHTML = `<b>Congratulations, ${staff.Name}.</b><br>Your application has been accepted.`;
             } else {
-                iconBox.innerHTML = `<i class="fa-solid fa-skull" style="color: #ef4444; filter: drop-shadow(0 0 30px rgba(239,68,68,0.95));"></i>`;
-                titleTxt.innerHTML = `<span style="color: #ef4444;">ACCESS DENIED, ${staff.Name.toUpperCase()}!</span>`;
-                descTxt.innerText = systemMessages.tolak;
+                // Kalau Gagal: Background tetap hitam, glow redup
+                screen.classList.add("failed-theme");
+                iconBox.innerHTML = `<i class="fa-solid fa-moon" style="color: #94a3b8;"></i>`;
+                titleTxt.innerHTML = `THIS IS NOT THE END.`;
+                descTxt.innerHTML = `<b>Thank you for your effort, ${staff.Name}.</b><br>We hope to see you again.`;
             }
 
-            resultCard.style.display = "block";
-            setTimeout(() => resultCard.classList.add("reveal"), 50);
+            endingCard.style.display = "block";
+            setTimeout(() => endingCard.classList.add("reveal"), 50);
 
-            try {
-                const aud = document.getElementById("success-sound");
-                aud.currentTime = 0;
-                aud.play().catch(e => {});
-            } catch(err){}
+            if (isLolos) {
+                try {
+                    const aud = document.getElementById("success-sound");
+                    aud.currentTime = 0;
+                    aud.play().catch(e => {});
+                } catch(err){}
+            }
         }
 
         function closeCinematicScreen() {
@@ -552,15 +582,6 @@
             renderAdminTable();
             showToast(`Kode ${role} baru (${codeKey}) berhasil dibuat!`, "success");
             document.getElementById("gen-name").value = "";
-        });
-
-        document.getElementById("form-update-message").addEventListener("submit", (e) => {
-            e.preventDefault();
-            systemMessages.lolos = document.getElementById("custom-msg-lolos").value.trim();
-            systemMessages.tolak = document.getElementById("custom-msg-tolak").value.trim();
-
-            localStorage.setItem("blds_system_msgs", JSON.stringify(systemMessages));
-            showToast("Pesan narasi bioskop berhasil diperbarui!", "success");
         });
 
         function renderAdminTable() {
