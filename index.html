@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BlacklightDoms - Cinematic Staff Portal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -12,6 +12,7 @@
             --text-primary: #ffffff;
             --text-secondary: #9ca3af;
             --font-main: 'Outfit', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -23,7 +24,7 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
         /* Loading Screen Awal */
@@ -33,11 +34,10 @@
         }
         #loading-screen.hidden { opacity: 0; visibility: hidden; }
 
-        /* Audio Background (Idoberg Cinematic Pads) */
         #cinematic-audio { display: none; }
 
         /* =======================================================
-           20-DETIK CINEMATIC EXPERIENCE SCREEN (STRICT AAA GAME STYLE)
+           20-DETIK CINEMATIC EXPERIENCE SCREEN (AAA GAME INTRO)
            ======================================================= */
         #cinematic-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -48,7 +48,6 @@
         }
         #cinematic-screen.active { display: flex; opacity: 1; }
 
-        /* Vignette Hitam di Pinggir Layar */
         .cinematic-vignette {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2;
             background: radial-gradient(circle, rgba(0,0,0,0) 50%, rgba(0,0,0,0.85) 100%);
@@ -56,7 +55,6 @@
         }
         .cinematic-vignette.active { opacity: 1; }
 
-        /* Kabut Radial Gradient Tipis */
         .cinematic-fog {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1;
             background: radial-gradient(circle at center, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0) 70%);
@@ -64,12 +62,10 @@
         }
         .cinematic-fog.active { opacity: 1; }
 
-        /* Canvas untuk Particle Debu Halus */
         #particle-canvas {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3;
         }
 
-        /* Stage Logo & Lingkaran Glow Belakang */
         .cinematic-stage {
             position: relative; width: 300px; height: 300px;
             display: flex; align-items: center; justify-content: center; margin-bottom: 30px;
@@ -89,10 +85,9 @@
             z-index: 10;
             opacity: 0;
             transform: scale(0.94);
-            transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 1.4s ease, filter 1.4s ease;
+            transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 1.4s ease;
         }
 
-        /* Kotak Teks Sinematik */
         .cinematic-textbox {
             max-width: 580px; min-height: 55px; display: flex; align-items: center; justify-content: center;
             padding: 0 20px; z-index: 20;
@@ -105,15 +100,14 @@
         }
         .cinematic-text.show { opacity: 1; }
 
-        /* Kartu Ending (Hasil Lolos / Tidak Lolos) */
+        /* Kartu Ending (Hasil Lolos / Ditolak) */
         #cinematic-ending-card {
-            display: none; width: 90%; max-width: 440px; padding: 45px 35px; text-align: center;
+            display: none; width: 90%; max-width: 480px; padding: 40px 30px; text-align: center;
             opacity: 0; transform: scale(0.96); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: 5000; border-radius: 20px;
         }
         #cinematic-ending-card.reveal { display: block; opacity: 1; transform: scale(1); }
 
-        /* Tema Lolos (Background Berubah Menjadi Putih Elegan) */
         #cinematic-screen.success-theme {
             background: #ffffff !important;
             color: #000000 !important;
@@ -127,7 +121,6 @@
             box-shadow: 0 25px 60px rgba(0,0,0,0.12);
         }
 
-        /* Tema Ditolak (Tetap Hitam Pekat Misterius) */
         #cinematic-screen.failed-theme {
             background: #000000 !important;
             color: #ffffff !important;
@@ -139,7 +132,7 @@
             box-shadow: 0 25px 60px rgba(0,0,0,0.9);
         }
 
-        /* Tampilan Website Utama (Sebelum/Sesudah Intro) */
+        /* Tampilan Website Utama */
         main { max-width: 650px; width: 100%; margin: 0 auto; padding: 30px 15px; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .hero-menu { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; }
         .hero-menu h1 { font-size: 2.2rem; font-weight: 300; letter-spacing: 2px; }
@@ -159,7 +152,7 @@
             box-shadow: 0 20px 60px rgba(0,0,0,0.8);
         }
 
-        /* Modal Input Kode */
+        /* Modal Universal */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.92); backdrop-filter: blur(15px);
@@ -170,13 +163,13 @@
         .modal-box { width: 90%; max-width: 400px; padding: 35px 30px; text-align: center; transform: scale(0.96); transition: transform 0.4s ease; }
         .modal-overlay.active .modal-box { transform: scale(1); }
 
-        .input-group { margin: 18px 0; text-align: left; }
+        .input-group { margin: 16px 0; text-align: left; }
         .input-group label { display: block; font-size: 0.72rem; color: var(--text-secondary); margin-bottom: 6px; text-transform: uppercase; font-weight: 500; letter-spacing: 1.2px; }
-        .styled-input {
+        .styled-input, .styled-select {
             width: 100%; padding: 13px 16px; background: rgba(5,5,5,0.98); border: 1px solid rgba(255,255,255,0.12);
             border-radius: 10px; color: var(--text-primary); font-family: var(--font-main); font-size: 0.9rem; outline: none; transition: border-color 0.3s;
         }
-        .styled-input:focus { border-color: rgba(255,255,255,0.6); }
+        .styled-input:focus, .styled-select:focus { border-color: rgba(255,255,255,0.6); }
 
         .btn-primary {
             width: 100%; padding: 14px; background: #ffffff; color: #000000; border: none; border-radius: 10px;
@@ -191,9 +184,18 @@
         }
         .btn-secondary:hover { border-color: rgba(255,255,255,0.6); background: rgba(255,255,255,0.05); }
 
-        /* Toast Notifications */
+        /* Admin Dashboard UI */
+        .admin-dashboard { width: 100%; max-width: 800px; display: none; flex-direction: column; gap: 20px; }
+        .admin-dashboard.active { display: flex; }
+        .admin-card { padding: 25px; text-align: left; }
+        .codes-table-box { width: 100%; overflow-x: auto; margin-top: 12px; max-height: 320px; overflow-y: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left; }
+        th, td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        th { color: var(--text-secondary); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 1px; }
+
+        /* Toast Notification */
         #toast-box { position: fixed; bottom: 25px; left: 25px; z-index: 7000; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
-        .toast-item { background: rgba(10,10,10,0.96); border: 1px solid rgba(255,255,255,0.15); color: var(--text-primary); padding: 12px 18px; border-radius: 10px; box-shadow: 0 8px 25px rgba(0,0,0,0.6); font-size: 0.85rem; display: flex; align-items: center; gap: 10px; backdrop-filter: blur(12px); }
+        .toast-item { background: rgba(10,10,10,0.96); border: 1px solid rgba(255,255,255,0.15); color: var(--text-primary); padding: 12px 18px; border-radius: 10px; box-shadow: 0 8px 25px rgba(0,0,0,0.6); font-size: 0.85rem; backdrop-filter: blur(12px); }
 
         footer { background: rgba(5,5,5,0.9); border-top: 1px solid rgba(255,255,255,0.08); padding: 20px; text-align: center; margin-top: auto; width: 100%; }
         .copyright { font-size: 0.75rem; color: #52525b; }
@@ -223,8 +225,12 @@
         </div>
 
         <div class="glass-card" id="cinematic-ending-card">
-            <h2 id="ending-title-txt" style="font-size: 1.3rem; margin-bottom: 12px; font-weight: 400; letter-spacing: 1px;"></h2>
-            <p id="ending-desc-txt" style="font-size: 0.9rem; line-height: 1.7; margin-bottom: 25px; opacity: 0.85;"></p>
+            <h2 id="ending-title-txt" style="font-size: 1.3rem; margin-bottom: 10px; font-weight: 400; letter-spacing: 1px;"></h2>
+            <div id="ending-task-box" style="margin: 12px 0; padding: 12px; background: rgba(255,255,255,0.05); border-radius: 8px; font-size: 0.85rem; border-left: 2px solid rgba(255,255,255,0.5); text-align: left; display: none;">
+                <strong style="display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); margin-bottom: 4px;">Tugas / Penugasan Anda:</strong>
+                <span id="ending-task-txt" style="font-family: var(--font-mono); color: #fff;"></span>
+            </div>
+            <p id="ending-desc-txt" style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 20px; opacity: 0.85;"></p>
             <button class="btn-primary" onclick="closeCinematicScreen()" id="ending-btn-action" style="max-width: 180px; margin: 0 auto;"></button>
         </div>
     </div>
@@ -241,19 +247,90 @@
                 </button>
             </div>
         </div>
+
+        <div class="admin-dashboard" id="section-admin-dashboard">
+            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                <h2 style="font-weight: 400; letter-spacing: 1px;">Admin Control Panel</h2>
+                <button class="btn-secondary" onclick="logoutAdmin()">Logout</button>
+            </div>
+
+            <div class="glass-card admin-card">
+                <h3 style="margin-bottom: 14px; font-size: 1rem; font-weight: 400;"><i class="fa-solid fa-plus-circle"></i> Tambah / Generate Kode Staff Baru</h3>
+                <form id="form-generate-code">
+                    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                        <div class="input-group" style="width: 130px; margin: 0;">
+                            <label>Nomor (3 Digit)</label>
+                            <input type="text" id="gen-num" class="styled-input" placeholder="008" maxlength="3" required autocomplete="off">
+                        </div>
+                        <div class="input-group" style="flex: 1; min-width: 160px; margin: 0;">
+                            <label>Nama Pendaftar</label>
+                            <input type="text" id="gen-name" class="styled-input" placeholder="Contoh: Zian" required autocomplete="off">
+                        </div>
+                        <div class="input-group" style="width: 150px; margin: 0;">
+                            <label>Status Seleksi</label>
+                            <select id="gen-status" class="styled-select">
+                                <option value="Lolos">Lolos (Diterima)</option>
+                                <option value="Tidak Lolos">Tidak Lolos</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-group" style="margin-top: 14px;">
+                        <label>Task / Penugasan Khusus Staff</label>
+                        <input type="text" id="gen-task" class="styled-input" placeholder="Contoh: Moderasi Discord & Validasi Member Baru" required autocomplete="off">
+                    </div>
+                    <button type="submit" class="btn-primary" style="margin-top: 16px;">Simpan & Tambah Kode</button>
+                </form>
+            </div>
+
+            <div class="glass-card admin-card">
+                <h3 style="font-size: 1rem; font-weight: 400; margin-bottom: 8px;">Database Kode Pendaftar</h3>
+                <div class="codes-table-box">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>Status</th>
+                                <th>Task / Penugasan</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="codes-table-body">
+                            <tr><td colspan="5" style="text-align:center; color: var(--text-secondary);">Memuat data...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </main>
 
     <div class="modal-overlay" id="modal-code-input">
         <div class="modal-box glass-card">
             <h3 style="margin-bottom: 8px; font-weight: 400; letter-spacing: 1px;">VERIFIKASI KODE</h3>
-            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 18px;">Masukkan kode unik registrasi Anda.</p>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 18px;">Masukkan kode akses Anda.</p>
             <form id="form-submit-code">
                 <div class="input-group">
-                    <input type="text" id="input-code-val" class="styled-input" style="text-align: center; letter-spacing: 1px;" placeholder="BLDS-NAMA-0001" required autocomplete="off">
+                    <input type="text" id="input-code-val" class="styled-input" style="text-align: center; letter-spacing: 1px;" placeholder="BLDS-STAFF-ONLY-000 atau 001" required autocomplete="off">
                 </div>
                 <div style="display: flex; gap: 10px; margin-top: 18px;">
                     <button type="button" class="btn-secondary" onclick="closeCodeModal()" style="flex:1;">Batal</button>
                     <button type="submit" class="btn-primary" style="flex:1;">Verifikasi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-staff-number">
+        <div class="modal-box glass-card">
+            <h3 style="margin-bottom: 8px; font-weight: 400; letter-spacing: 1px; color: #fff;">PORTAL STAFF ONLY</h3>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 18px;">Masukkan 3 digit nomor urut staff Anda (Contoh: 001 s.d 007).</p>
+            <form id="form-submit-staff-number">
+                <div class="input-group">
+                    <input type="text" id="input-staff-num-val" class="styled-input" style="text-align: center; font-family: var(--font-mono); font-size: 1.1rem; letter-spacing: 2px;" placeholder="001" maxlength="3" required autocomplete="off">
+                </div>
+                <div style="display: flex; gap: 10px; margin-top: 18px;">
+                    <button type="button" class="btn-secondary" onclick="closeStaffNumberModal()" style="flex:1;">Batal</button>
+                    <button type="submit" class="btn-primary" style="flex:1;">Lanjutkan</button>
                 </div>
             </form>
         </div>
@@ -266,21 +343,33 @@
     </footer>
 
     <script>
-        // Database lokal simulasi kode pendaftar
-        let localCodes = JSON.parse(localStorage.getItem("blds_staff_codes")) || {
-            "BLDS-DEMO-ACCEPTED": { Code: "BLDS-DEMO-ACCEPTED", Name: "Alex", Status: "Lolos" },
-            "BLDS-DEMO-REJECTED": { Code: "BLDS-DEMO-REJECTED", Name: "Rian", Status: "Tidak Lolos" }
+        const MASTER_ADMIN_CODE = "BLDS-STAFF-ONLY-000";
+
+        // Default Data Pendaftar Sesuai Permintaan
+        const defaultCodes = {
+            "001": { Num: "001", Name: "Michael", Status: "Lolos", Task: "Lead Moderator & Community Manager" },
+            "002": { Num: "002", Name: "William", Status: "Lolos", Task: "UI/UX Assistant & Asset Organizer" },
+            "003": { Num: "003", Name: "Felix", Status: "Tidak Lolos", Task: "Reviewer & Quality Control" },
+            "004": { Num: "004", Name: "Anindya", Status: "Lolos", Task: "Content Curator & Social Media Lead" },
+            "005": { Num: "005", Name: "Kenya", Status: "Tidak Lolos", Task: "Support Desk & Event Coordinator" },
+            "006": { Num: "006", Name: "Zavino", Status: "Lolos", Task: "Security & Verification Officer" },
+            "007": { Num: "007", Name: "Rehan", Status: "Lolos", Task: "Back-End Assistant & Database Log" }
         };
+
+        let localCodes = JSON.parse(localStorage.getItem("blds_staff_codes")) || defaultCodes;
 
         document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => document.getElementById("loading-screen").classList.add("hidden"), 300);
+            renderAdminTable();
             initParticleCanvas();
         });
 
         function openCodeModal() { document.getElementById("modal-code-input").classList.add("active"); }
         function closeCodeModal() { document.getElementById("modal-code-input").classList.remove("active"); }
+        function openStaffNumberModal() { document.getElementById("modal-staff-number").classList.add("active"); }
+        function closeStaffNumberModal() { document.getElementById("modal-staff-number").classList.remove("active"); }
 
-        // Canvas Particle Management (Elegan, Lambat, Acak 1-3px)
+        // Canvas Particle Management
         let particleCtx, particleAnimId;
         const particles = [];
         function initParticleCanvas() {
@@ -293,7 +382,7 @@
                 particles.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
-                    size: Math.random() * 2 + 1, // 1 - 3 px
+                    size: Math.random() * 2 + 1,
                     vx: (Math.random() - 0.5) * 0.15,
                     vy: (Math.random() - 0.5) * 0.15,
                     alpha: Math.random() * 0.4 + 0.1
@@ -344,27 +433,50 @@
             if(particleCtx) particleCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
         }
 
+        // Handle Submit Kode Utama
         document.getElementById("form-submit-code").addEventListener("submit", (e) => {
             e.preventDefault();
             const val = document.getElementById("input-code-val").value.trim().toUpperCase();
             closeCodeModal();
 
-            let matchedStaff = null;
-            Object.keys(localCodes).forEach(k => {
-                if (k.toUpperCase() === val) matchedStaff = localCodes[k];
-            });
-
-            if (!matchedStaff) {
-                showToast("Akses Ditolak! Kode tidak terdaftar.", "error");
+            if (val === MASTER_ADMIN_CODE) {
+                // Buka modal minta nomor angka khusus staff only
+                openStaffNumberModal();
                 return;
             }
 
-            // Jalankan 20 Detik Pengalaman Sinematik AAA Game Intro
-            start20SecondCinematicExperience(matchedStaff);
+            // Jika user langsung memasukkan nomor angka (misal "001")
+            let cleanNum = val.replace(/\D/g, "").padStart(3, '0');
+            if (localCodes[cleanNum]) {
+                start20SecondCinematicExperience(localCodes[cleanNum]);
+            } else {
+                showToast("Akses Ditolak! Nomor tidak terdaftar.", "error");
+            }
+        });
+
+        // Handle Submit Angka Kedua (Khusus Staff Only)
+        document.getElementById("form-submit-staff-number").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const numVal = document.getElementById("input-staff-num-val").value.trim().padStart(3, '0');
+            closeStaffNumberModal();
+
+            if (numVal === "000") {
+                // Masuk ke Admin Dashboard Panel
+                showToast("Master Admin Berhasil Diverifikasi!", "success");
+                document.getElementById("section-home").style.display = "none";
+                document.getElementById("section-admin-dashboard").classList.add("active");
+                return;
+            }
+
+            if (localCodes[numVal]) {
+                start20SecondCinematicExperience(localCodes[numVal]);
+            } else {
+                showToast("Nomor staff tidak ditemukan dalam database.", "error");
+            }
         });
 
         // ========================================================
-        // TIMING STRICT 20 DETIK CINEMATIC INTRO
+        // TIMING 20 DETIK CINEMATIC INTRO
         // ========================================================
         function start20SecondCinematicExperience(staff) {
             const screen = document.getElementById("cinematic-screen");
@@ -377,7 +489,6 @@
             const stage = document.getElementById("cinematic-stage");
             const endingCard = document.getElementById("cinematic-ending-card");
 
-            // Reset UI States
             screen.className = "";
             screen.classList.add("active");
             endingCard.classList.remove("reveal");
@@ -389,28 +500,23 @@
             radialBack.style.opacity = "0";
             radialBack.style.transform = "scale(0.5)";
             stage.style.transform = "scale(1)";
-            document.body.style.background = "#000000";
 
-            // Audio Playback (Looping, Mulai 10% volume)
             audio.currentTime = 0;
             audio.volume = 0.10;
             audio.play().catch(err => {});
             startParticleLoop(false);
 
-            // DETIK 0 - 2: Layar hitam total. Detik 0.5 ambience mulai (10%). Detik 0.6 logo Fade In 1.4s (0%->100%, scale 94%->100%), glow putih kecil.
             setTimeout(() => {
                 logoImg.style.opacity = "1";
                 logoImg.style.transform = "scale(1)";
                 logoImg.style.boxShadow = "0 0 25px rgba(255,255,255,0.2)";
             }, 600);
 
-            // DETIK 2 - 5: Kabut tipis 10%, particle halus acak, teks pertama muncul & fade out
             setTimeout(() => {
                 fogBox.classList.add("active");
                 setCinematicText("Every journey begins with a single decision.");
             }, 2000);
 
-            // DETIK 5 - 8: Musik naik 30%, brightness background pulse (100%->108%->100%), particle mendekati logo, logo scale 100%->102%->100%, teks kedua
             setTimeout(() => {
                 audio.volume = 0.30;
                 stage.style.transform = "scale(1.02)";
@@ -418,7 +524,6 @@
                 setCinematicText("Not every path leads to the same destination.");
             }, 5000);
 
-            // DETIK 8 - 11: Background blur nambah, lingkaran glow belakang membesar, pulse glow logo tiap 1.5s, musik naik 55%, teks ketiga
             setTimeout(() => {
                 audio.volume = 0.55;
                 radialBack.style.opacity = "1";
@@ -426,7 +531,6 @@
                 setCinematicText("Character outweighs potential.");
             }, 8000);
 
-            // DETIK 11 - 15: Teks hilang, particle berhenti, kabut berhenti, logo jadi fokus, zoom in 104%, vignette hitam pinggir, musik naik 75%, cinematic hit lembut
             setTimeout(() => {
                 textEl.classList.remove("show");
                 stopParticleLoop();
@@ -436,14 +540,12 @@
                 audio.volume = 0.75;
             }, 11000);
 
-            // DETIK 15 - 18: Particle hilang, glow logo lebih terang, logo scale 100%->108%, musik 90%
             setTimeout(() => {
                 audio.volume = 0.90;
                 logoImg.style.transform = "scale(1.08)";
                 logoImg.style.boxShadow = "0 0 45px rgba(255,255,255,0.4)";
             }, 15000);
 
-            // DETIK 18 - 20: Musik turun 25%, logo berhenti, hening 500ms, lalu cabang hasil
             setTimeout(() => {
                 audio.volume = 0.25;
                 setTimeout(() => {
@@ -467,6 +569,8 @@
             const endingCard = document.getElementById("cinematic-ending-card");
             const titleTxt = document.getElementById("ending-title-txt");
             const descTxt = document.getElementById("ending-desc-txt");
+            const taskBox = document.getElementById("ending-task-box");
+            const taskTxt = document.getElementById("ending-task-txt");
             const btnAction = document.getElementById("ending-btn-action");
 
             document.getElementById("cinematic-stage").style.display = "none";
@@ -475,13 +579,20 @@
             const isLolos = (staff.Status === "Lolos");
 
             if (isLolos) {
-                // JIKA DITERIMA: Background berubah putih elegan dengan fade, logo jadi hitam, teks & button muncul
                 screen.classList.add("success-theme");
                 audio.volume = 0;
                 audio.pause();
 
                 titleTxt.innerText = "WELCOME TO THE NEXT CHAPTER";
                 descTxt.innerHTML = `Congratulations, ${staff.Name}.<br>Your application has been accepted.`;
+                
+                if (staff.Task) {
+                    taskTxt.innerText = staff.Task;
+                    taskBox.style.display = "block";
+                } else {
+                    taskBox.style.display = "none";
+                }
+
                 btnAction.innerText = "Continue";
                 btnAction.onclick = closeCinematicScreen;
 
@@ -489,7 +600,6 @@
                 setTimeout(() => endingCard.classList.add("reveal"), 100);
 
             } else {
-                // JIKA DITOLAK: Glow redup, tetap hitam, kabut tipis, logo mengecil 90%, teks & button muncul elegan
                 screen.classList.add("failed-theme");
                 audio.volume = 0;
                 audio.pause();
@@ -502,6 +612,7 @@
                 setTimeout(() => {
                     titleTxt.innerText = "THIS IS NOT THE END.";
                     descTxt.innerHTML = `Thank you for your effort, ${staff.Name}.<br>We hope to see you again.`;
+                    taskBox.style.display = "none";
                     btnAction.innerText = "Return";
                     btnAction.onclick = closeCinematicScreen;
 
@@ -515,16 +626,82 @@
         function closeCinematicScreen() {
             document.getElementById("cinematic-screen").classList.remove("active");
             document.getElementById("input-code-val").value = "";
+            document.getElementById("input-staff-num-val").value = "";
             try { document.getElementById("cinematic-audio").pause(); } catch(e){}
+        }
+
+        /* ADMIN PANEL MANAGEMENT */
+        document.getElementById("form-generate-code").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const num = document.getElementById("gen-num").value.trim().padStart(3, '0');
+            const name = document.getElementById("gen-name").value.trim();
+            const status = document.getElementById("gen-status").value;
+            const task = document.getElementById("gen-task").value.trim();
+
+            localCodes[num] = { Num: num, Name: name, Status: status, Task: task };
+            localStorage.setItem("blds_staff_codes", JSON.stringify(localCodes));
+
+            renderAdminTable();
+            showToast(`Nomor ${num} (${name}) berhasil disimpan!`, "success");
+
+            document.getElementById("gen-num").value = "";
+            document.getElementById("gen-name").value = "";
+            document.getElementById("gen-task").value = "";
+        });
+
+        function renderAdminTable() {
+            const tbody = document.getElementById("codes-table-body");
+            const keys = Object.keys(localCodes);
+
+            if (keys.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color: var(--text-secondary);">Belum ada data tersimpan.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = keys.map(k => {
+                const item = localCodes[k];
+                const badgeColor = item.Status === 'Lolos' ? '#ffffff' : '#9ca3af';
+                return `
+                    <tr>
+                        <td><code style="font-family: var(--font-mono); color: #fff;">${item.Num}</code></td>
+                        <td>${sanitizeHtml(item.Name)}</td>
+                        <td><span style="color: ${badgeColor}; font-weight: 500;">${item.Status}</span></td>
+                        <td><span style="font-family: var(--font-mono); font-size: 0.8rem; color: #d1d5db;">${sanitizeHtml(item.Task || '-')}</span></td>
+                        <td>
+                            <button class="btn-secondary" style="font-size: 0.72rem; padding: 4px 8px;" onclick="deleteCode('${k}')">Hapus</button>
+                        </td>
+                    </tr>
+                `;
+            }).join("");
+        }
+
+        function deleteCode(key) {
+            if (confirm(`Yakin ingin menghapus nomor ${key}?`)) {
+                delete localCodes[key];
+                localStorage.setItem("blds_staff_codes", JSON.stringify(localCodes));
+                renderAdminTable();
+                showToast("Data berhasil dihapus", "info");
+            }
+        }
+
+        function logoutAdmin() {
+            document.getElementById("section-admin-dashboard").classList.remove("active");
+            document.getElementById("section-home").style.display = "flex";
+            showToast("Logout dari Admin Panel", "info");
         }
 
         function showToast(msg, type = "info") {
             const box = document.getElementById("toast-box");
             const item = document.createElement("div");
             item.className = "toast-item";
-            item.innerHTML = `<span>${msg}</span>`;
+            item.innerHTML = `<span>${sanitizeHtml(msg)}</span>`;
             box.appendChild(item);
             setTimeout(() => item.remove(), 3000);
+        }
+
+        function sanitizeHtml(str) {
+            if (!str) return "";
+            return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
         }
     </script>
 </body>
