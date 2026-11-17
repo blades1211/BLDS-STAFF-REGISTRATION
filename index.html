@@ -11,7 +11,7 @@
     <meta property="og:description" content="One Identity. One Community. Official DOMS Marga System portal.">
     <meta property="og:type" content="website">
     
-    <!-- Google Fonts: Syne (Display Futuristic) + Outfit (Clean Modern UI) + JetBrains Mono -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
@@ -45,15 +45,15 @@
             --bg-card-hover: #19191f;
             --text-main: #f8f8fa;
             --text-muted: #9898a3;
-            --border-color: rgba(255, 255, 255, 0.09);
-            --border-hover: rgba(255, 255, 255, 0.28);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.25);
             --accent: #ffffff;
             --accent-invert: #050506;
             --accent-bg: rgba(255, 255, 255, 0.06);
             --shadow: 0 24px 48px rgba(0, 0, 0, 0.75);
-            --glow-soft: 0 0 25px rgba(255, 255, 255, 0.14);
-            --glow-strong: 0 0 40px rgba(255, 255, 255, 0.32), 0 0 80px rgba(255, 255, 255, 0.12);
-            --logo-filter: none;
+            --glow-soft: 0 0 25px rgba(255, 255, 255, 0.15);
+            --glow-strong: 0 0 45px rgba(255, 255, 255, 0.35), 0 0 90px rgba(255, 255, 255, 0.15);
+            --logo-filter: drop-shadow(0 0 16px rgba(255, 255, 255, 0.5));
             --scrollbar-thumb: #282832;
             --grid-color: rgba(255, 255, 255, 0.025);
         }
@@ -66,15 +66,15 @@
             --bg-card-hover: #f5f5f8;
             --text-main: #09090b;
             --text-muted: #5a5a66;
-            --border-color: rgba(0, 0, 0, 0.09);
-            --border-hover: rgba(0, 0, 0, 0.3);
+            --border-color: rgba(0, 0, 0, 0.08);
+            --border-hover: rgba(0, 0, 0, 0.25);
             --accent: #09090b;
             --accent-invert: #ffffff;
             --accent-bg: rgba(0, 0, 0, 0.04);
             --shadow: 0 20px 40px rgba(0, 0, 0, 0.07);
-            --glow-soft: 0 0 25px rgba(0, 0, 0, 0.09);
-            --glow-strong: 0 0 35px rgba(0, 0, 0, 0.2), 0 0 70px rgba(0, 0, 0, 0.08);
-            --logo-filter: invert(1);
+            --glow-soft: 0 0 25px rgba(0, 0, 0, 0.1);
+            --glow-strong: 0 0 40px rgba(0, 0, 0, 0.22), 0 0 80px rgba(0, 0, 0, 0.09);
+            --logo-filter: invert(1) drop-shadow(0 0 16px rgba(0, 0, 0, 0.4));
             --scrollbar-thumb: #c8c8d2;
             --grid-color: rgba(0, 0, 0, 0.03);
         }
@@ -118,7 +118,31 @@
         }
 
         /* ==========================================================================
-           CINEMATIC LOADING SCREEN (FIXED & ANTI-STUCK)
+           TITLE GLOW PULSE (SLOW KEDAT KEDUT)
+           ========================================================================== */
+        @keyframes slowGlowPulse {
+            0%, 100% {
+                text-shadow: 0 0 15px rgba(255, 255, 255, 0.2), 0 0 35px rgba(255, 255, 255, 0.08);
+            }
+            50% {
+                text-shadow: 0 0 30px rgba(255, 255, 255, 0.6), 0 0 70px rgba(255, 255, 255, 0.25);
+            }
+        }
+        [data-theme="light"] @keyframes slowGlowPulse {
+            0%, 100% {
+                text-shadow: 0 0 12px rgba(0, 0, 0, 0.12), 0 0 25px rgba(0, 0, 0, 0.04);
+            }
+            50% {
+                text-shadow: 0 0 25px rgba(0, 0, 0, 0.35), 0 0 55px rgba(0, 0, 0, 0.15);
+            }
+        }
+
+        .hero-title, .section-title, .cta-title {
+            animation: slowGlowPulse 4s ease-in-out infinite;
+        }
+
+        /* ==========================================================================
+           CINEMATIC LOADING SCREEN
            ========================================================================== */
         #loader {
             position: fixed;
@@ -174,7 +198,7 @@
             object-fit: contain;
             position: relative;
             z-index: 2;
-            filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.55));
+            filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.6));
             animation: breatheLogo 1.8s ease-in-out infinite;
         }
 
@@ -269,7 +293,7 @@
         }
 
         /* ==========================================================================
-           NAVIGATION BAR (DESKTOP & MOBILE OPTIMIZED)
+           NAVIGATION BAR (NO BORDERS ON LOGO/ICONS, PURE PNG WITH GLOW)
            ========================================================================== */
         header {
             position: fixed;
@@ -304,29 +328,26 @@
             text-decoration: none;
             cursor: pointer;
             flex-shrink: 0;
+            user-select: none;
         }
 
         .logo-wrapper {
-            width: 42px;
-            height: 42px;
+            width: 44px;
+            height: 44px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            background: var(--bg-secondary);
+            background: transparent;
+            border: none;
             transition: var(--transition-smooth);
             position: relative;
-            box-shadow: var(--glow-soft);
         }
         .logo-wrapper:hover {
-            border-color: var(--text-main);
-            box-shadow: var(--glow-strong);
-            transform: scale(1.05);
+            transform: scale(1.08);
         }
         .logo-wrapper img {
-            width: 26px;
-            height: 26px;
+            width: 34px;
+            height: 34px;
             object-fit: contain;
             filter: var(--logo-filter);
             transition: filter 0.4s ease, transform 0.3s ease;
@@ -337,10 +358,10 @@
         }
         @keyframes logoShakeAnim {
             0%, 100% { transform: translateX(0) rotate(0deg) scale(1); }
-            20% { transform: translateX(-4px) rotate(-10deg) scale(1.12); }
-            40% { transform: translateX(4px) rotate(10deg) scale(1.12); }
-            60% { transform: translateX(-3px) rotate(-5deg) scale(1.06); }
-            80% { transform: translateX(3px) rotate(5deg) scale(1.06); }
+            20% { transform: translateX(-4px) rotate(-10deg) scale(1.15); }
+            40% { transform: translateX(4px) rotate(10deg) scale(1.15); }
+            60% { transform: translateX(-3px) rotate(-5deg) scale(1.08); }
+            80% { transform: translateX(3px) rotate(5deg) scale(1.08); }
         }
 
         .nav-title {
@@ -569,7 +590,7 @@
         }
 
         /* ==========================================================================
-           HERO SECTION (RESPONSIVE DESKTOP & MOBILE)
+           HERO SECTION
            ========================================================================== */
         .hero {
             min-height: 100dvh;
@@ -631,7 +652,6 @@
             font-weight: 800;
             line-height: 0.98;
             letter-spacing: -0.02em;
-            text-shadow: var(--glow-soft);
         }
 
         .hero-tagline {
@@ -707,16 +727,15 @@
             to { transform: rotate(0deg); }
         }
 
+        /* Hero Logo: No border, pure PNG with strong glow */
         .hero-logo-center {
             width: 136px;
             height: 136px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-hover);
-            border-radius: 28px;
+            background: transparent;
+            border: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: var(--shadow), var(--glow-strong);
             position: relative;
             z-index: 2;
             animation: counterRotateCenter 35s linear infinite;
@@ -726,11 +745,14 @@
             to { transform: rotate(0deg); }
         }
         .hero-logo-center img {
-            width: 82px;
-            height: 82px;
+            width: 90px;
+            height: 90px;
             object-fit: contain;
-            filter: var(--logo-filter) drop-shadow(0 0 14px rgba(255,255,255,0.25));
-            transition: filter 0.4s ease;
+            filter: var(--logo-filter);
+            transition: filter 0.4s ease, transform 0.3s ease;
+        }
+        .hero-logo-center img:hover {
+            transform: scale(1.1);
         }
 
         .scroll-down-indicator {
@@ -803,7 +825,6 @@
             font-weight: 800;
             letter-spacing: -0.02em;
             line-height: 1.12;
-            text-shadow: var(--glow-soft);
         }
 
         /* ==========================================================================
@@ -870,7 +891,7 @@
         }
 
         /* ==========================================================================
-           VISION & MISSION
+           VISION & MISSION (NO BORDERS ON ICONS)
            ========================================================================== */
         .vision-mission-grid {
             display: grid;
@@ -904,14 +925,13 @@
         .vm-icon-box {
             width: 48px;
             height: 48px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
+            background: transparent;
+            border: none;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--text-main);
-            box-shadow: var(--glow-soft);
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
         }
 
         .vm-card-title {
@@ -1050,7 +1070,7 @@
         }
 
         /* ==========================================================================
-           COMMUNITY REQUIREMENTS
+           COMMUNITY REQUIREMENTS (NO BORDERS ON ICONS)
            ========================================================================== */
         .community-grid {
             display: grid;
@@ -1087,14 +1107,13 @@
         .community-icon {
             width: 56px;
             height: 56px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
+            background: transparent;
+            border: none;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--text-main);
-            box-shadow: var(--glow-soft);
+            filter: drop-shadow(0 0 12px rgba(255,255,255,0.35));
         }
 
         .community-title {
@@ -1328,7 +1347,6 @@
             font-weight: 800;
             letter-spacing: -0.02em;
             max-width: 780px;
-            text-shadow: var(--glow-soft);
         }
 
         .cta-desc {
@@ -1361,7 +1379,7 @@
         }
 
         /* ==========================================================================
-           CONTACT US SECTION
+           CONTACT US SECTION (NO BORDERS ON ICONS)
            ========================================================================== */
         .contact-container {
             max-width: 760px;
@@ -1381,14 +1399,13 @@
         .contact-icon-box {
             width: 72px;
             height: 72px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 18px;
+            background: transparent;
+            border: none;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--text-main);
-            box-shadow: var(--glow-soft);
+            filter: drop-shadow(0 0 15px rgba(255,255,255,0.4));
         }
 
         .contact-number {
@@ -1407,7 +1424,7 @@
         }
 
         /* ==========================================================================
-           FOOTER
+           FOOTER (NO BORDERS ON FOOTER LOGO)
            ========================================================================== */
         footer {
             background: var(--bg-secondary);
@@ -1588,7 +1605,6 @@
             position: fixed;
             bottom: 24px;
             right: 24px;
-            left: auto;
             background: var(--bg-card);
             border: 1px solid var(--border-hover);
             color: var(--text-main);
@@ -1643,11 +1659,10 @@
             .hero-logo-center {
                 width: 110px;
                 height: 110px;
-                border-radius: 22px;
             }
             .hero-logo-center img {
-                width: 66px;
-                height: 66px;
+                width: 72px;
+                height: 72px;
             }
             .about-grid, .vision-mission-grid, .identity-grid, .community-grid, .faq-grid {
                 grid-template-columns: 1fr;
@@ -1665,12 +1680,12 @@
                 height: 68px;
             }
             .logo-wrapper {
-                width: 36px;
-                height: 36px;
+                width: 38px;
+                height: 38px;
             }
             .logo-wrapper img {
-                width: 22px;
-                height: 22px;
+                width: 28px;
+                height: 28px;
             }
             .nav-title {
                 font-size: 1.05rem;
@@ -1709,11 +1724,10 @@
             .hero-logo-center {
                 width: 88px;
                 height: 88px;
-                border-radius: 18px;
             }
             .hero-logo-center img {
-                width: 52px;
-                height: 52px;
+                width: 58px;
+                height: 58px;
             }
             .scroll-down-indicator {
                 display: none;
@@ -1804,7 +1818,7 @@
     <!-- Navigation Bar -->
     <header id="navbar">
         <div class="nav-container">
-            <div class="nav-brand" id="themeToggleBtn" title="Klik untuk Eclipse Theme Inversion">
+            <div class="nav-brand" id="themeToggleBtn" title="Klik logo BLDS untuk Inversi Tema (Dark/Light)">
                 <div class="logo-wrapper">
                     <img id="navLogoImg" src="logo.png" alt="DOMS Logo">
                 </div>
@@ -1885,7 +1899,7 @@
                         <div class="hero-eclipse-orbit-dot"></div>
                         <div class="hero-eclipse-inner"></div>
                         <div class="hero-logo-center">
-                            <img id="heroLogoImg" src="logo.png" alt="DOMS Hero Logo">
+                            <img src="logo.png" alt="DOMS Hero Logo">
                         </div>
                     </div>
                 </div>
@@ -1946,7 +1960,7 @@
                 <div class="vm-card">
                     <div class="vm-card-header">
                         <div class="vm-icon-box">
-                            <i data-lucide="eye" size="22"></i>
+                            <i data-lucide="eye" size="26"></i>
                         </div>
                         <h3 class="vm-card-title" data-i18n="vision_card_title">Visi Kami</h3>
                     </div>
@@ -1962,7 +1976,7 @@
                 <div class="vm-card">
                     <div class="vm-card-header">
                         <div class="vm-icon-box">
-                            <i data-lucide="target" size="22"></i>
+                            <i data-lucide="target" size="26"></i>
                         </div>
                         <h3 class="vm-card-title" data-i18n="mission_card_title">Misi Kami</h3>
                     </div>
@@ -2052,7 +2066,7 @@
                 <div class="community-card">
                     <div class="community-card-top">
                         <div class="community-icon">
-                            <i data-lucide="message-circle" size="26"></i>
+                            <i data-lucide="message-circle" size="30"></i>
                         </div>
                         <div>
                             <h3 class="community-title">WhatsApp Community</h3>
@@ -2069,7 +2083,7 @@
                 <div class="community-card">
                     <div class="community-card-top">
                         <div class="community-icon">
-                            <i data-lucide="disc" size="26"></i>
+                            <i data-lucide="disc" size="30"></i>
                         </div>
                         <div>
                             <h3 class="community-title">Discord Community</h3>
@@ -2312,7 +2326,7 @@
 
             <div class="contact-container">
                 <div class="contact-icon-box">
-                    <i data-lucide="phone-call" size="32"></i>
+                    <i data-lucide="phone-call" size="36"></i>
                 </div>
                 <p style="color: var(--text-muted);" data-i18n="contact_desc">Memiliki pertanyaan, saran, atau kendala mengenai DOMS? Jangan ragu untuk menghubungi pihak administrasi.</p>
                 <div class="contact-number">085591006359</div>
@@ -2482,14 +2496,13 @@
                 } else if (fill) {
                     fill.style.width = progress + '%';
                 }
-            }, 130);
+            }, 120);
 
             window.addEventListener('load', () => {
                 clearInterval(progressInterval);
                 dismissLoader();
             });
 
-            // Failsafe timeout: dijamin hilang maksimal dalam 1.8 detik apapun kondisinya
             setTimeout(() => {
                 clearInterval(progressInterval);
                 dismissLoader();
@@ -2943,7 +2956,7 @@
         animateCanvas();
 
         /* ==========================================================================
-           4. ECLIPSE INVERSION (THEME SWITCH + LOGO SHAKE + PARTICLE BURST)
+           4. LOGO BLDS CLICK -> ECLIPSE THEME INVERSION (TOGGLE BACK & FORTH)
            ========================================================================== */
         let isAnimatingEclipse = false;
 
@@ -3022,7 +3035,7 @@
                 lucide.createIcons();
             }
 
-            // Eclipse theme toggle
+            // Clicking BLDS Logo triggers theme inversion toggle
             document.getElementById('themeToggleBtn').addEventListener('click', (e) => {
                 triggerEclipseInversion(e);
             });
