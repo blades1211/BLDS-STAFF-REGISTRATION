@@ -2,18 +2,19 @@
 <html lang="id" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>DOMS — BLACKLIGHTDOMINIONS Marga System</title>
     <meta name="description" content="Discover DOMS, an open identity system by BLACKLIGHTDOMINIONS. Explore its vision, identity requirements, community, and regulations.">
-    <meta name="theme-color" content="#0a0a0a">
+    <meta name="theme-color" content="#050506">
+    <link rel="icon" href="logo.png" type="image/png">
     <meta property="og:title" content="DOMS — BLACKLIGHTDOMINIONS Marga System">
     <meta property="og:description" content="One Identity. One Community. Official DOMS Marga System portal.">
     <meta property="og:type" content="website">
     
-    <!-- Google Fonts -->
+    <!-- Google Fonts: Syne (Display Futuristic) + Outfit (Clean Modern UI) + JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
     
     <!-- Lucide Icons CDN -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -29,46 +30,53 @@
         }
 
         :root {
-            --font-main: 'Plus Jakarta Sans', sans-serif;
-            --font-heading: 'Space Grotesk', sans-serif;
-            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            --transition-fast: all 0.2s ease;
+            --font-main: 'Outfit', sans-serif;
+            --font-heading: 'Syne', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --transition-smooth: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-fast: all 0.25s ease;
         }
 
         /* Dark Theme (Default) */
         [data-theme="dark"] {
-            --bg-main: #070708;
-            --bg-secondary: #111114;
-            --bg-card: #16161a;
-            --bg-card-hover: #1e1e24;
-            --text-main: #f4f4f6;
-            --text-muted: #9e9ea6;
-            --border-color: #24242d;
-            --border-hover: #3f3f4c;
+            --bg-main: #050506;
+            --bg-secondary: #0d0d10;
+            --bg-card: #121216;
+            --bg-card-hover: #19191f;
+            --text-main: #f8f8fa;
+            --text-muted: #9898a3;
+            --border-color: rgba(255, 255, 255, 0.09);
+            --border-hover: rgba(255, 255, 255, 0.28);
             --accent: #ffffff;
-            --accent-invert: #000000;
-            --accent-bg: rgba(255, 255, 255, 0.08);
-            --shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-            --glow: 0 0 30px rgba(255, 255, 255, 0.15);
-            --scrollbar-thumb: #2d2d38;
+            --accent-invert: #050506;
+            --accent-bg: rgba(255, 255, 255, 0.06);
+            --shadow: 0 24px 48px rgba(0, 0, 0, 0.75);
+            --glow-soft: 0 0 25px rgba(255, 255, 255, 0.14);
+            --glow-strong: 0 0 40px rgba(255, 255, 255, 0.32), 0 0 80px rgba(255, 255, 255, 0.12);
+            --logo-filter: none;
+            --scrollbar-thumb: #282832;
+            --grid-color: rgba(255, 255, 255, 0.025);
         }
 
         /* Light Theme */
         [data-theme="light"] {
-            --bg-main: #fcfcfd;
-            --bg-secondary: #f2f2f5;
+            --bg-main: #f9f9fb;
+            --bg-secondary: #f0f0f4;
             --bg-card: #ffffff;
-            --bg-card-hover: #f7f7fa;
-            --text-main: #0f0f12;
-            --text-muted: #666670;
-            --border-color: #e2e2e8;
-            --border-hover: #c4c4d0;
-            --accent: #000000;
+            --bg-card-hover: #f5f5f8;
+            --text-main: #09090b;
+            --text-muted: #5a5a66;
+            --border-color: rgba(0, 0, 0, 0.09);
+            --border-hover: rgba(0, 0, 0, 0.3);
+            --accent: #09090b;
             --accent-invert: #ffffff;
-            --accent-bg: rgba(0, 0, 0, 0.05);
-            --shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-            --glow: 0 0 30px rgba(0, 0, 0, 0.1);
-            --scrollbar-thumb: #d0d0d8;
+            --accent-bg: rgba(0, 0, 0, 0.04);
+            --shadow: 0 20px 40px rgba(0, 0, 0, 0.07);
+            --glow-soft: 0 0 25px rgba(0, 0, 0, 0.09);
+            --glow-strong: 0 0 35px rgba(0, 0, 0, 0.2), 0 0 70px rgba(0, 0, 0, 0.08);
+            --logo-filter: invert(1);
+            --scrollbar-thumb: #c8c8d2;
+            --grid-color: rgba(0, 0, 0, 0.03);
         }
 
         html {
@@ -82,7 +90,15 @@
             color: var(--text-main);
             overflow-x: hidden;
             transition: background-color 0.5s ease, color 0.5s ease;
-            line-height: 1.6;
+            line-height: 1.65;
+            background-image: 
+                linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+            background-size: 48px 48px;
+        }
+
+        body.loading-lock {
+            overflow: hidden;
         }
 
         ::selection {
@@ -91,79 +107,150 @@
         }
 
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
         }
         ::-webkit-scrollbar-track {
             background: var(--bg-main);
         }
         ::-webkit-scrollbar-thumb {
             background: var(--scrollbar-thumb);
-            border-radius: 4px;
+            border-radius: 3px;
         }
 
         /* ==========================================================================
-           LOADING SCREEN
+           CINEMATIC LOADING SCREEN (FIXED & ANTI-STUCK)
            ========================================================================== */
         #loader {
             position: fixed;
             inset: 0;
-            z-index: 9999;
-            background-color: var(--bg-main);
+            z-index: 99999;
+            background-color: #050506;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: opacity 0.6s ease, visibility 0.6s ease;
+            padding: 1.5rem;
+            transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.65s ease;
         }
         #loader.fade-out {
             opacity: 0;
+            transform: scale(1.04);
             visibility: hidden;
+            pointer-events: none;
         }
-        .loader-logo {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 24px;
-            animation: pulseLogo 2s infinite ease-in-out;
+
+        .loader-core {
+            position: relative;
+            width: 130px;
+            height: 130px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
         }
+
+        .loader-ring-outer {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-top-color: #ffffff;
+            border-right-color: rgba(255, 255, 255, 0.5);
+            animation: spinRing 1.4s cubic-bezier(0.5, 0.1, 0.5, 0.9) infinite;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
+        }
+
+        .loader-ring-inner {
+            position: absolute;
+            inset: 14px;
+            border-radius: 50%;
+            border: 1px dashed rgba(255, 255, 255, 0.25);
+            animation: spinRingReverse 4s linear infinite;
+        }
+
+        .loader-logo-img {
+            width: 64px;
+            height: 64px;
+            object-fit: contain;
+            position: relative;
+            z-index: 2;
+            filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.55));
+            animation: breatheLogo 1.8s ease-in-out infinite;
+        }
+
+        .loader-title {
+            font-family: var(--font-heading);
+            font-size: 1.35rem;
+            font-weight: 800;
+            letter-spacing: 0.35em;
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+            margin-bottom: 0.75rem;
+            padding-left: 0.35em;
+        }
+
         .loader-bar-track {
-            width: 200px;
+            width: min(240px, 70vw);
             height: 2px;
-            background: var(--border-color);
+            background: rgba(255, 255, 255, 0.12);
             position: relative;
             overflow: hidden;
             border-radius: 2px;
         }
+
         .loader-bar-fill {
             position: absolute;
             top: 0;
             left: 0;
             height: 100%;
             width: 0%;
-            background: var(--text-main);
-            transition: width 0.3s ease;
+            background: #ffffff;
+            box-shadow: 0 0 12px #ffffff;
+            transition: width 0.2s ease-out;
         }
-        .loader-text {
-            margin-top: 16px;
-            font-family: var(--font-heading);
-            font-size: 0.85rem;
-            letter-spacing: 0.2em;
+
+        .loader-status {
+            margin-top: 0.85rem;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            letter-spacing: 0.18em;
             text-transform: uppercase;
-            color: var(--text-muted);
+            color: rgba(255, 255, 255, 0.55);
         }
-        @keyframes pulseLogo {
-            0%, 100% { transform: scale(1); opacity: 0.7; }
+
+        @keyframes spinRing {
+            to { transform: rotate(360deg); }
+        }
+        @keyframes spinRingReverse {
+            to { transform: rotate(-360deg); }
+        }
+        @keyframes breatheLogo {
+            0%, 100% { transform: scale(0.95); opacity: 0.85; }
             50% { transform: scale(1.05); opacity: 1; }
         }
 
         /* ==========================================================================
-           CANVAS BACKGROUND & PARTICLES
+           CANVAS BACKGROUND & AMBIENT GLOW
            ========================================================================== */
         #bg-canvas {
             position: fixed;
             inset: 0;
             z-index: -1;
             pointer-events: none;
-            opacity: 0.4;
+            opacity: 0.45;
+        }
+
+        .ambient-eclipse-glow {
+            position: fixed;
+            top: -15%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(850px, 95vw);
+            height: 450px;
+            background: radial-gradient(ellipse at center, var(--accent-bg) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+            filter: blur(40px);
         }
 
         /* ==========================================================================
@@ -173,15 +260,16 @@
             position: fixed;
             top: 0;
             left: 0;
-            height: 3px;
+            height: 2px;
             background: var(--text-main);
+            box-shadow: var(--glow-strong);
             width: 0%;
-            z-index: 1001;
-            transition: width 0.1s linear;
+            z-index: 1002;
+            transition: width 0.08s linear;
         }
 
         /* ==========================================================================
-           NAVIGATION BAR
+           NAVIGATION BAR (DESKTOP & MOBILE OPTIMIZED)
            ========================================================================== */
         header {
             position: fixed;
@@ -189,23 +277,24 @@
             left: 0;
             width: 100%;
             z-index: 1000;
-            background-color: rgba(var(--bg-main-rgb), 0.85);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            background-color: rgba(var(--bg-main-rgb), 0.78);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
             border-bottom: 1px solid var(--border-color);
             transition: var(--transition-smooth);
         }
-        [data-theme="dark"] header { --bg-main-rgb: 7, 7, 8; }
-        [data-theme="light"] header { --bg-main-rgb: 252, 252, 253; }
+        [data-theme="dark"] header { --bg-main-rgb: 5, 5, 6; }
+        [data-theme="light"] header { --bg-main-rgb: 249, 249, 251; }
 
         .nav-container {
-            max-width: 1400px;
+            max-width: 1380px;
             margin: 0 auto;
             padding: 0 2rem;
-            height: 80px;
+            height: 76px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 1rem;
         }
 
         .nav-brand {
@@ -214,6 +303,7 @@
             gap: 12px;
             text-decoration: none;
             cursor: pointer;
+            flex-shrink: 0;
         }
 
         .logo-wrapper {
@@ -222,61 +312,67 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 8px;
+            border-radius: 10px;
             border: 1px solid var(--border-color);
             background: var(--bg-secondary);
             transition: var(--transition-smooth);
             position: relative;
+            box-shadow: var(--glow-soft);
         }
         .logo-wrapper:hover {
             border-color: var(--text-main);
+            box-shadow: var(--glow-strong);
             transform: scale(1.05);
         }
         .logo-wrapper img {
-            width: 28px;
-            height: 28px;
+            width: 26px;
+            height: 26px;
             object-fit: contain;
-            transition: var(--transition-smooth);
+            filter: var(--logo-filter);
+            transition: filter 0.4s ease, transform 0.3s ease;
         }
-        /* Logo Shake & Eclipse Animation Classes */
+
         .logo-shake {
             animation: logoShakeAnim 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
         }
         @keyframes logoShakeAnim {
             0%, 100% { transform: translateX(0) rotate(0deg) scale(1); }
-            20% { transform: translateX(-4px) rotate(-8deg) scale(1.1); }
-            40% { transform: translateX(4px) rotate(8deg) scale(1.1); }
-            60% { transform: translateX(-4px) rotate(-4deg) scale(1.05); }
-            80% { transform: translateX(4px) rotate(4deg) scale(1.05); }
+            20% { transform: translateX(-4px) rotate(-10deg) scale(1.12); }
+            40% { transform: translateX(4px) rotate(10deg) scale(1.12); }
+            60% { transform: translateX(-3px) rotate(-5deg) scale(1.06); }
+            80% { transform: translateX(3px) rotate(5deg) scale(1.06); }
         }
 
         .nav-title {
             font-family: var(--font-heading);
-            font-weight: 700;
+            font-weight: 800;
             font-size: 1.25rem;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.18em;
             color: var(--text-main);
+            text-shadow: var(--glow-soft);
         }
 
         .nav-menu {
             display: flex;
             align-items: center;
-            gap: 2rem;
+            gap: 1.65rem;
             list-style: none;
         }
 
         .nav-link {
             text-decoration: none;
             color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             font-weight: 500;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.03em;
             transition: var(--transition-fast);
             position: relative;
-            padding: 4px 0;
+            padding: 6px 0;
+            white-space: nowrap;
         }
         .nav-link:hover, .nav-link.active {
             color: var(--text-main);
+            text-shadow: var(--glow-soft);
         }
         .nav-link::after {
             content: '';
@@ -284,8 +380,9 @@
             bottom: 0;
             left: 0;
             width: 0;
-            height: 1px;
+            height: 1.5px;
             background: var(--text-main);
+            box-shadow: var(--glow-soft);
             transition: width 0.3s ease;
         }
         .nav-link:hover::after, .nav-link.active::after {
@@ -295,7 +392,8 @@
         .nav-actions {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.75rem;
+            flex-shrink: 0;
         }
 
         /* Language Dropdown */
@@ -306,18 +404,20 @@
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
             color: var(--text-main);
-            padding: 8px 12px;
-            border-radius: 6px;
+            padding: 8px 11px;
+            border-radius: 8px;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 6px;
-            font-size: 0.85rem;
-            font-family: var(--font-main);
+            font-size: 0.82rem;
+            font-family: var(--font-mono);
+            font-weight: 600;
             transition: var(--transition-fast);
         }
         .lang-btn:hover {
-            border-color: var(--text-muted);
+            border-color: var(--text-main);
+            box-shadow: var(--glow-soft);
         }
         .lang-menu {
             position: absolute;
@@ -325,15 +425,16 @@
             right: 0;
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
+            border-radius: 10px;
             box-shadow: var(--shadow);
             list-style: none;
-            min-width: 140px;
+            min-width: 155px;
             opacity: 0;
             visibility: hidden;
-            transform: translateY(-10px);
+            transform: translateY(-8px);
             transition: var(--transition-smooth);
-            z-index: 100;
+            z-index: 1050;
+            overflow: hidden;
         }
         .lang-menu.open {
             opacity: 1;
@@ -341,7 +442,7 @@
             transform: translateY(0);
         }
         .lang-item {
-            padding: 10px 16px;
+            padding: 10px 14px;
             font-size: 0.85rem;
             color: var(--text-muted);
             cursor: pointer;
@@ -357,6 +458,7 @@
         .lang-item.active {
             color: var(--text-main);
             font-weight: 600;
+            background: var(--accent-bg);
         }
 
         /* Buttons */
@@ -364,12 +466,12 @@
             background: var(--text-main);
             color: var(--bg-main);
             border: 1px solid var(--text-main);
-            padding: 10px 24px;
-            border-radius: 6px;
+            padding: 10px 22px;
+            border-radius: 8px;
             font-family: var(--font-heading);
-            font-weight: 600;
-            font-size: 0.85rem;
-            letter-spacing: 0.1em;
+            font-weight: 700;
+            font-size: 0.82rem;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
             cursor: pointer;
             transition: var(--transition-smooth);
@@ -377,23 +479,26 @@
             align-items: center;
             gap: 8px;
             text-decoration: none;
+            box-shadow: var(--glow-soft);
+            white-space: nowrap;
         }
         .btn-primary:hover {
             background: transparent;
             color: var(--text-main);
-            box-shadow: var(--glow);
+            box-shadow: var(--glow-strong);
+            transform: translateY(-2px);
         }
 
         .btn-secondary {
-            background: transparent;
+            background: var(--bg-secondary);
             color: var(--text-main);
             border: 1px solid var(--border-color);
-            padding: 10px 24px;
-            border-radius: 6px;
+            padding: 10px 22px;
+            border-radius: 8px;
             font-family: var(--font-heading);
-            font-weight: 600;
-            font-size: 0.85rem;
-            letter-spacing: 0.1em;
+            font-weight: 700;
+            font-size: 0.82rem;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
             cursor: pointer;
             transition: var(--transition-smooth);
@@ -401,34 +506,45 @@
             align-items: center;
             gap: 8px;
             text-decoration: none;
+            white-space: nowrap;
         }
         .btn-secondary:hover {
             border-color: var(--text-main);
-            background: var(--bg-secondary);
+            background: var(--bg-card-hover);
+            box-shadow: var(--glow-soft);
+            transform: translateY(-2px);
         }
 
         .hamburger {
             display: none;
-            background: none;
-            border: none;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
             cursor: pointer;
             color: var(--text-main);
-            padding: 4px;
+            width: 40px;
+            height: 40px;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-fast);
+        }
+        .hamburger:hover {
+            border-color: var(--text-main);
         }
 
-        /* Mobile Menu Overlay */
+        /* Mobile Menu Drawer */
         .mobile-menu {
             position: fixed;
-            top: 80px;
+            top: 68px;
             left: 0;
             width: 100%;
-            height: calc(100vh - 80px);
+            height: calc(100dvh - 68px);
             background: var(--bg-main);
             border-top: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
-            padding: 2rem;
-            gap: 1.5rem;
+            padding: 1.75rem 1.5rem 2.5rem 1.5rem;
+            gap: 1.1rem;
             transform: translateX(100%);
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: 999;
@@ -439,35 +555,37 @@
         }
         .mobile-nav-link {
             font-family: var(--font-heading);
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             font-weight: 700;
             color: var(--text-muted);
             text-decoration: none;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid var(--border-color);
             transition: var(--transition-fast);
         }
         .mobile-nav-link:hover, .mobile-nav-link.active {
             color: var(--text-main);
-            padding-left: 10px;
+            padding-left: 8px;
         }
 
         /* ==========================================================================
-           HERO SECTION
+           HERO SECTION (RESPONSIVE DESKTOP & MOBILE)
            ========================================================================== */
         .hero {
-            min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
-            padding: 120px 2rem 80px 2rem;
-            max-width: 1400px;
+            padding: 110px 2rem 80px 2rem;
+            max-width: 1380px;
             margin: 0 auto;
         }
 
         .hero-content {
             display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            gap: 4rem;
+            grid-template-columns: 1.25fr 0.75fr;
+            gap: 3.5rem;
             align-items: center;
             width: 100%;
         }
@@ -475,55 +593,69 @@
         .hero-text-col {
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
+            gap: 1.4rem;
         }
 
         .badge-pill {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 6px 14px;
+            gap: 10px;
+            padding: 7px 15px;
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
             border-radius: 50px;
             font-size: 0.75rem;
-            font-family: var(--font-heading);
-            letter-spacing: 0.15em;
+            font-family: var(--font-mono);
+            font-weight: 600;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
             width: fit-content;
+            box-shadow: var(--glow-soft);
         }
         .badge-dot {
-            width: 6px;
-            height: 6px;
+            width: 7px;
+            height: 7px;
             background: var(--text-main);
             border-radius: 50%;
-            animation: pulseDot 1.5s infinite;
+            box-shadow: 0 0 10px var(--text-main);
+            animation: pulseDot 1.6s infinite;
         }
         @keyframes pulseDot {
             0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(0.8); }
+            50% { opacity: 0.35; transform: scale(0.75); }
         }
 
         .hero-title {
             font-family: var(--font-heading);
-            font-size: clamp(3rem, 7vw, 6.5rem);
+            font-size: clamp(3.4rem, 7.5vw, 6.8rem);
             font-weight: 800;
-            line-height: 1.05;
+            line-height: 0.98;
             letter-spacing: -0.02em;
+            text-shadow: var(--glow-soft);
+        }
+
+        .hero-tagline {
+            font-family: var(--font-mono);
+            font-size: clamp(0.85rem, 1.5vw, 1rem);
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--text-main);
+            opacity: 0.9;
         }
 
         .hero-subtitle {
-            font-size: 1.15rem;
+            font-size: clamp(1rem, 1.4vw, 1.12rem);
             color: var(--text-muted);
-            max-width: 600px;
+            max-width: 580px;
             font-weight: 400;
-            line-height: 1.7;
+            line-height: 1.75;
         }
 
         .hero-btns {
             display: flex;
+            flex-wrap: wrap;
             gap: 1rem;
-            margin-top: 1rem;
+            margin-top: 0.75rem;
         }
 
         .hero-visual-col {
@@ -534,63 +666,85 @@
         }
 
         .hero-eclipse-container {
-            width: 380px;
-            height: 380px;
+            width: 360px;
+            height: 360px;
             border-radius: 50%;
-            border: 1px dashed var(--border-color);
+            border: 1px dashed var(--border-hover);
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
-            animation: rotateEclipse 30s linear infinite;
+            animation: rotateEclipse 35s linear infinite;
+            box-shadow: inset 0 0 50px var(--accent-bg), var(--glow-soft);
         }
         @keyframes rotateEclipse {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
+
+        .hero-eclipse-orbit-dot {
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--text-main);
+            box-shadow: var(--glow-strong);
+        }
+
         .hero-eclipse-inner {
             position: absolute;
-            width: 280px;
-            height: 280px;
+            width: 260px;
+            height: 260px;
             border-radius: 50%;
             border: 1px solid var(--border-color);
-            animation: rotateEclipseReverse 20s linear infinite;
+            animation: rotateEclipseReverse 22s linear infinite;
         }
         @keyframes rotateEclipseReverse {
             from { transform: rotate(360deg); }
             to { transform: rotate(0deg); }
         }
+
         .hero-logo-center {
-            width: 120px;
-            height: 120px;
+            width: 136px;
+            height: 136px;
             background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
+            border: 1px solid var(--border-hover);
+            border-radius: 28px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: var(--shadow);
+            box-shadow: var(--shadow), var(--glow-strong);
             position: relative;
             z-index: 2;
+            animation: counterRotateCenter 35s linear infinite;
+        }
+        @keyframes counterRotateCenter {
+            from { transform: rotate(360deg); }
+            to { transform: rotate(0deg); }
         }
         .hero-logo-center img {
-            width: 70px;
-            height: 70px;
+            width: 82px;
+            height: 82px;
             object-fit: contain;
+            filter: var(--logo-filter) drop-shadow(0 0 14px rgba(255,255,255,0.25));
+            transition: filter 0.4s ease;
         }
 
         .scroll-down-indicator {
             position: absolute;
-            bottom: 30px;
+            bottom: 24px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             color: var(--text-muted);
-            font-size: 0.75rem;
-            font-family: var(--font-heading);
+            font-size: 0.72rem;
+            font-family: var(--font-mono);
             letter-spacing: 0.2em;
             text-transform: uppercase;
             text-decoration: none;
@@ -598,46 +752,58 @@
         }
         .scroll-down-indicator:hover {
             color: var(--text-main);
+            text-shadow: var(--glow-soft);
         }
         .scroll-down-indicator i {
             animation: bounceArrow 2s infinite;
         }
         @keyframes bounceArrow {
             0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(6px); }
-            60% { transform: translateY(3px); }
+            40% { transform: translateY(5px); }
+            60% { transform: translateY(2px); }
         }
 
         /* ==========================================================================
-           SECTION COMMON STYLES
+           SECTION COMMON STYLES & SCROLL REVEAL
            ========================================================================== */
         section {
-            padding: 120px 2rem;
-            max-width: 1400px;
+            padding: 105px 2rem;
+            max-width: 1380px;
             margin: 0 auto;
             position: relative;
         }
 
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         .section-header {
-            margin-bottom: 4rem;
+            margin-bottom: 3.5rem;
         }
 
         .section-tag {
-            font-family: var(--font-heading);
-            font-size: 0.75rem;
-            letter-spacing: 0.25em;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            letter-spacing: 0.22em;
             text-transform: uppercase;
             color: var(--text-muted);
-            margin-bottom: 0.75rem;
+            margin-bottom: 0.65rem;
             display: block;
         }
 
         .section-title {
             font-family: var(--font-heading);
-            font-size: clamp(2.25rem, 4vw, 3.5rem);
-            font-weight: 700;
+            font-size: clamp(2rem, 4.2vw, 3.4rem);
+            font-weight: 800;
             letter-spacing: -0.02em;
-            line-height: 1.15;
+            line-height: 1.12;
+            text-shadow: var(--glow-soft);
         }
 
         /* ==========================================================================
@@ -646,38 +812,44 @@
         .about-grid {
             display: grid;
             grid-template-columns: 1.2fr 0.8fr;
-            gap: 4rem;
+            gap: 3.5rem;
             align-items: center;
         }
 
         .about-text {
-            font-size: 1.1rem;
+            font-size: 1.06rem;
             color: var(--text-muted);
             line-height: 1.8;
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
+            gap: 1.35rem;
         }
         .about-text p strong {
             color: var(--text-main);
+            font-weight: 600;
         }
 
         .about-stats-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 2.5rem;
+            border-radius: 20px;
+            padding: 2.25rem;
             display: flex;
             flex-direction: column;
-            gap: 2rem;
+            gap: 1.75rem;
             box-shadow: var(--shadow);
+            transition: var(--transition-smooth);
+        }
+        .about-stats-card:hover {
+            border-color: var(--border-hover);
+            box-shadow: var(--shadow), var(--glow-soft);
         }
 
         .stat-item {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
-            padding-bottom: 1.5rem;
+            gap: 0.35rem;
+            padding-bottom: 1.4rem;
             border-bottom: 1px solid var(--border-color);
         }
         .stat-item:last-child {
@@ -686,12 +858,14 @@
         }
         .stat-number {
             font-family: var(--font-heading);
-            font-size: 2.5rem;
-            font-weight: 700;
+            font-size: 2.1rem;
+            font-weight: 800;
             color: var(--text-main);
+            letter-spacing: 0.04em;
+            text-shadow: var(--glow-soft);
         }
         .stat-label {
-            font-size: 0.9rem;
+            font-size: 0.92rem;
             color: var(--text-muted);
         }
 
@@ -701,22 +875,23 @@
         .vision-mission-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 2.5rem;
+            gap: 2.25rem;
         }
 
         .vm-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 3rem;
+            border-radius: 22px;
+            padding: 2.75rem;
             display: flex;
             flex-direction: column;
-            gap: 2rem;
+            gap: 1.75rem;
             transition: var(--transition-smooth);
             box-shadow: var(--shadow);
         }
         .vm-card:hover {
             border-color: var(--border-hover);
+            box-shadow: var(--shadow), var(--glow-soft);
             transform: translateY(-4px);
         }
 
@@ -727,8 +902,8 @@
         }
 
         .vm-icon-box {
-            width: 50px;
-            height: 50px;
+            width: 48px;
+            height: 48px;
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
             border-radius: 12px;
@@ -736,42 +911,43 @@
             align-items: center;
             justify-content: center;
             color: var(--text-main);
+            box-shadow: var(--glow-soft);
         }
 
         .vm-card-title {
             font-family: var(--font-heading);
-            font-size: 1.5rem;
+            font-size: 1.45rem;
             font-weight: 700;
         }
 
         .vm-text {
             color: var(--text-muted);
-            font-size: 1.05rem;
-            line-height: 1.7;
+            font-size: 1rem;
+            line-height: 1.75;
         }
 
         .mission-list {
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 1.25rem;
+            gap: 1.15rem;
         }
 
         .mission-item {
             display: flex;
             align-items: flex-start;
-            gap: 1rem;
+            gap: 0.95rem;
             color: var(--text-muted);
-            font-size: 1rem;
+            font-size: 0.98rem;
             line-height: 1.6;
         }
 
         .mission-number {
-            font-family: var(--font-heading);
+            font-family: var(--font-mono);
             font-weight: 700;
             color: var(--text-main);
-            font-size: 0.9rem;
-            padding: 2px 8px;
+            font-size: 0.8rem;
+            padding: 3px 8px;
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
             border-radius: 6px;
@@ -786,7 +962,7 @@
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 24px;
-            padding: 4rem 3rem;
+            padding: 3.5rem 3rem;
             box-shadow: var(--shadow);
             position: relative;
             overflow: hidden;
@@ -795,68 +971,72 @@
         .identity-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 4rem;
+            gap: 3.5rem;
             align-items: center;
         }
 
         .identity-formats-box {
             display: flex;
             flex-direction: column;
-            gap: 1.25rem;
+            gap: 1.1rem;
         }
 
         .format-card {
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 1.5rem 2rem;
+            padding: 1.35rem 1.75rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-family: var(--font-heading);
-            font-size: 1.25rem;
-            font-weight: 600;
-            letter-spacing: 0.05em;
+            gap: 1rem;
+            font-family: var(--font-mono);
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
             transition: var(--transition-fast);
         }
         .format-card:hover {
             border-color: var(--text-main);
+            box-shadow: var(--glow-soft);
             transform: translateX(6px);
         }
         .format-badge {
-            font-size: 0.75rem;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
             padding: 4px 10px;
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 6px;
-            color: var(--text-muted);
-            font-weight: 500;
+            color: var(--text-main);
+            font-weight: 600;
             text-transform: uppercase;
+            flex-shrink: 0;
         }
 
         .identity-info {
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
+            gap: 1.35rem;
         }
 
         .identity-info h3 {
             font-family: var(--font-heading);
-            font-size: 1.75rem;
+            font-size: 1.65rem;
             font-weight: 700;
         }
 
         .identity-info p {
             color: var(--text-muted);
-            font-size: 1.05rem;
-            line-height: 1.7;
+            font-size: 1.02rem;
+            line-height: 1.75;
         }
 
         .identity-rules-chips {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.75rem;
-            margin-top: 0.5rem;
+            gap: 0.65rem;
+            margin-top: 0.25rem;
         }
 
         .identity-chip {
@@ -864,7 +1044,7 @@
             border: 1px solid var(--border-color);
             padding: 6px 14px;
             border-radius: 50px;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             color: var(--text-main);
             font-weight: 500;
         }
@@ -875,18 +1055,18 @@
         .community-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 2.5rem;
+            gap: 2.25rem;
         }
 
         .community-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 3rem;
+            border-radius: 22px;
+            padding: 2.75rem;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            gap: 2.5rem;
+            gap: 2.25rem;
             transition: var(--transition-smooth);
             box-shadow: var(--shadow);
             position: relative;
@@ -894,45 +1074,48 @@
         }
         .community-card:hover {
             border-color: var(--text-main);
-            transform: translateY(-6px);
+            box-shadow: var(--shadow), var(--glow-soft);
+            transform: translateY(-5px);
         }
 
         .community-card-top {
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
+            gap: 1.35rem;
         }
 
         .community-icon {
-            width: 60px;
-            height: 60px;
+            width: 56px;
+            height: 56px;
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
-            border-radius: 16px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--text-main);
+            box-shadow: var(--glow-soft);
         }
 
         .community-title {
             font-family: var(--font-heading);
-            font-size: 1.75rem;
+            font-size: 1.65rem;
             font-weight: 700;
+            margin-bottom: 0.5rem;
         }
 
         .community-desc {
             color: var(--text-muted);
-            font-size: 1.05rem;
+            font-size: 1rem;
             line-height: 1.7;
         }
 
         .community-note {
-            margin-top: 3rem;
+            margin-top: 2.5rem;
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1.5rem 2rem;
+            border-radius: 14px;
+            padding: 1.35rem 1.75rem;
             text-align: center;
             font-size: 0.95rem;
             color: var(--text-muted);
@@ -947,7 +1130,7 @@
         .rules-container {
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
+            gap: 1.15rem;
         }
 
         .rule-category-card {
@@ -957,15 +1140,16 @@
             overflow: hidden;
             transition: var(--transition-fast);
         }
-        .rule-category-card:hover {
+        .rule-category-card:hover, .rule-category-card.active {
             border-color: var(--border-hover);
         }
 
         .rule-category-header {
-            padding: 2rem;
+            padding: 1.65rem 2rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 1rem;
             cursor: pointer;
             user-select: none;
         }
@@ -973,25 +1157,25 @@
         .rule-category-title-group {
             display: flex;
             align-items: center;
-            gap: 1.5rem;
+            gap: 1.25rem;
         }
 
         .rule-cat-num {
-            font-family: var(--font-heading);
-            font-size: 1.25rem;
+            font-family: var(--font-mono);
+            font-size: 1.05rem;
             font-weight: 700;
             color: var(--text-muted);
         }
 
         .rule-cat-title {
             font-family: var(--font-heading);
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             font-weight: 700;
         }
 
         .rule-toggle-icon {
-            width: 36px;
-            height: 36px;
+            width: 34px;
+            height: 34px;
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
             border-radius: 50%;
@@ -1000,6 +1184,7 @@
             justify-content: center;
             color: var(--text-main);
             transition: transform 0.3s ease;
+            flex-shrink: 0;
         }
         .rule-category-card.active .rule-toggle-icon {
             transform: rotate(180deg);
@@ -1015,30 +1200,31 @@
         .rule-category-card.active .rule-category-body {
             max-height: 1000px;
             border-top-color: var(--border-color);
-            padding: 2rem;
+            padding: 1.75rem 2rem;
         }
 
         .rule-items-list {
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 0.9rem;
         }
 
         .rule-item {
             display: flex;
             align-items: flex-start;
-            gap: 1rem;
+            gap: 0.9rem;
             color: var(--text-muted);
-            font-size: 1rem;
-            line-height: 1.6;
+            font-size: 0.98rem;
+            line-height: 1.65;
         }
         .rule-item-bullet {
             width: 6px;
             height: 6px;
             background: var(--text-main);
+            box-shadow: var(--glow-soft);
             border-radius: 50%;
-            margin-top: 8px;
+            margin-top: 9px;
             flex-shrink: 0;
         }
 
@@ -1048,21 +1234,22 @@
         .faq-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
+            gap: 1.25rem;
+            align-items: start;
         }
 
         .faq-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 16px;
-            padding: 2rem;
+            padding: 1.65rem 1.85rem;
             cursor: pointer;
             transition: var(--transition-fast);
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 0;
         }
-        .faq-card:hover {
+        .faq-card:hover, .faq-card.active {
             border-color: var(--border-hover);
         }
 
@@ -1075,8 +1262,9 @@
 
         .faq-question {
             font-family: var(--font-heading);
-            font-size: 1.15rem;
+            font-size: 1.08rem;
             font-weight: 700;
+            line-height: 1.35;
         }
 
         .faq-icon {
@@ -1091,122 +1279,124 @@
 
         .faq-answer {
             color: var(--text-muted);
-            font-size: 1rem;
+            font-size: 0.96rem;
             line-height: 1.7;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), margin-top 0.3s ease;
         }
         .faq-card.active .faq-answer {
-            max-height: 500px;
+            max-height: 400px;
+            margin-top: 0.95rem;
         }
 
         /* ==========================================================================
            JOIN DOMS CTA SECTION
            ========================================================================== */
         .cta-section {
-            padding: 80px 2rem 140px 2rem;
-            max-width: 1400px;
+            padding: 60px 2rem 110px 2rem;
+            max-width: 1380px;
             margin: 0 auto;
         }
 
         .cta-box {
             background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 32px;
-            padding: 5rem 3rem;
+            border: 1px solid var(--border-hover);
+            border-radius: 28px;
+            padding: 4.5rem 2.5rem;
             text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 2rem;
+            gap: 1.75rem;
             position: relative;
             overflow: hidden;
-            box-shadow: var(--shadow);
+            box-shadow: var(--shadow), var(--glow-soft);
         }
 
         .cta-box::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: radial-gradient(circle at 50% 0%, var(--accent-bg), transparent 70%);
+            background: radial-gradient(circle at 50% 0%, var(--accent-bg), transparent 72%);
             pointer-events: none;
         }
 
         .cta-title {
             font-family: var(--font-heading);
-            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-size: clamp(2.1rem, 4.8vw, 3.8rem);
             font-weight: 800;
             letter-spacing: -0.02em;
-            max-width: 800px;
+            max-width: 780px;
+            text-shadow: var(--glow-soft);
         }
 
         .cta-desc {
             color: var(--text-muted);
-            font-size: 1.15rem;
-            max-width: 600px;
+            font-size: 1.1rem;
+            max-width: 580px;
             line-height: 1.7;
         }
 
         .cta-btn-glow {
             position: relative;
-            padding: 1.25rem 3rem;
-            font-size: 1rem;
+            padding: 1.15rem 2.85rem;
+            font-size: 0.95rem;
             border-radius: 12px;
             background: var(--text-main);
             color: var(--bg-main);
             font-family: var(--font-heading);
-            font-weight: 700;
-            letter-spacing: 0.15em;
+            font-weight: 800;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
-            border: none;
+            border: 1px solid var(--text-main);
             cursor: pointer;
-            box-shadow: 0 0 40px rgba(255, 255, 255, 0.2);
+            box-shadow: var(--glow-strong);
             transition: var(--transition-smooth);
         }
-        [data-theme="light"] .cta-btn-glow {
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.15);
-        }
         .cta-btn-glow:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 60px var(--text-main);
+            transform: translateY(-3px) scale(1.03);
+            background: transparent;
+            color: var(--text-main);
         }
 
         /* ==========================================================================
            CONTACT US SECTION
            ========================================================================== */
         .contact-container {
-            max-width: 800px;
+            max-width: 760px;
             margin: 0 auto;
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 24px;
-            padding: 4rem;
+            padding: 3.5rem 2.5rem;
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
-            gap: 2.5rem;
+            gap: 2rem;
             box-shadow: var(--shadow);
         }
 
         .contact-icon-box {
-            width: 80px;
-            height: 80px;
+            width: 72px;
+            height: 72px;
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
-            border-radius: 20px;
+            border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--text-main);
+            box-shadow: var(--glow-soft);
         }
 
         .contact-number {
-            font-family: var(--font-heading);
-            font-size: clamp(2rem, 4vw, 3rem);
+            font-family: var(--font-mono);
+            font-size: clamp(1.75rem, 4vw, 2.75rem);
             font-weight: 700;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.06em;
+            text-shadow: var(--glow-soft);
         }
 
         .contact-actions {
@@ -1222,34 +1412,34 @@
         footer {
             background: var(--bg-secondary);
             border-top: 1px solid var(--border-color);
-            padding: 80px 2rem 40px 2rem;
+            padding: 75px 2rem 36px 2rem;
             position: relative;
         }
 
         .footer-container {
-            max-width: 1400px;
+            max-width: 1380px;
             margin: 0 auto;
             display: grid;
             grid-template-columns: 1.5fr 1fr 1fr 1fr;
-            gap: 4rem;
-            margin-bottom: 5rem;
+            gap: 3.5rem;
+            margin-bottom: 4rem;
         }
 
         .footer-col {
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
+            gap: 1.25rem;
         }
 
         .footer-brand-desc {
             color: var(--text-muted);
-            font-size: 0.95rem;
+            font-size: 0.94rem;
             line-height: 1.7;
         }
 
         .footer-heading {
             font-family: var(--font-heading);
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 700;
             letter-spacing: 0.1em;
             text-transform: uppercase;
@@ -1259,7 +1449,7 @@
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 0.85rem;
+            gap: 0.75rem;
         }
 
         .footer-link {
@@ -1274,26 +1464,26 @@
         }
 
         .footer-bottom {
-            max-width: 1400px;
+            max-width: 1380px;
             margin: 0 auto;
-            padding-top: 2.5rem;
+            padding-top: 2rem;
             border-top: 1px solid var(--border-color);
             display: flex;
             justify-content: space-between;
             align-items: center;
             color: var(--text-muted);
-            font-size: 0.85rem;
+            font-size: 0.84rem;
             flex-wrap: wrap;
-            gap: 1.5rem;
+            gap: 1.25rem;
         }
 
         .back-to-top {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             color: var(--text-main);
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1302,7 +1492,8 @@
         }
         .back-to-top:hover {
             border-color: var(--text-main);
-            transform: translateY(-4px);
+            box-shadow: var(--glow-soft);
+            transform: translateY(-3px);
         }
 
         /* ==========================================================================
@@ -1311,14 +1502,14 @@
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.78);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             z-index: 2000;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
+            padding: 1.25rem;
             opacity: 0;
             visibility: hidden;
             transition: var(--transition-smooth);
@@ -1330,16 +1521,16 @@
 
         .modal-card {
             background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
-            max-width: 600px;
+            border: 1px solid var(--border-hover);
+            border-radius: 22px;
+            max-width: 580px;
             width: 100%;
-            padding: 3rem;
-            box-shadow: var(--shadow);
-            transform: translateY(20px) scale(0.95);
+            padding: 2.5rem;
+            box-shadow: var(--shadow), var(--glow-soft);
+            transform: translateY(20px) scale(0.96);
             transition: var(--transition-smooth);
             position: relative;
-            max-height: 90vh;
+            max-height: 90dvh;
             overflow-y: auto;
         }
         .modal-overlay.open .modal-card {
@@ -1348,8 +1539,8 @@
 
         .modal-close {
             position: absolute;
-            top: 24px;
-            right: 24px;
+            top: 20px;
+            right: 20px;
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
             color: var(--text-main);
@@ -1369,24 +1560,24 @@
         .modal-steps {
             display: flex;
             flex-direction: column;
-            gap: 2rem;
-            margin-top: 2rem;
+            gap: 1.35rem;
+            margin-top: 1.75rem;
         }
 
         .modal-step-item {
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 1.5rem;
+            border-radius: 14px;
+            padding: 1.35rem;
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 0.75rem;
         }
 
         .modal-step-title {
             font-family: var(--font-heading);
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -1395,21 +1586,23 @@
         /* Toast Notification */
         .toast {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
+            bottom: 24px;
+            right: 24px;
+            left: auto;
             background: var(--bg-card);
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--border-hover);
             color: var(--text-main);
-            padding: 1rem 1.5rem;
+            padding: 0.9rem 1.35rem;
             border-radius: 12px;
-            box-shadow: var(--shadow);
+            box-shadow: var(--shadow), var(--glow-soft);
             z-index: 3000;
-            font-family: var(--font-heading);
+            font-family: var(--font-main);
             font-size: 0.9rem;
+            font-weight: 500;
             display: flex;
             align-items: center;
-            gap: 12px;
-            transform: translateY(100px);
+            gap: 10px;
+            transform: translateY(120px);
             opacity: 0;
             transition: var(--transition-smooth);
         }
@@ -1419,101 +1612,234 @@
         }
 
         /* ==========================================================================
-           RESPONSIVE MEDIA QUERIES
+           RESPONSIVE BREAKPOINTS (TABLET & MOBILE)
            ========================================================================== */
-        @media (max-width: 1024px) {
-            .hero-content, .about-grid, .vision-mission-grid, .identity-grid, .community-grid, .faq-grid, .footer-container {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-            }
-            .hero-visual-col {
-                display: none;
-            }
-            .nav-menu, .nav-actions .lang-dropdown-wrapper {
+        @media (max-width: 1120px) {
+            .nav-menu {
                 display: none;
             }
             .hamburger {
-                display: block;
+                display: flex;
+            }
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 3rem;
+            }
+            .hero-text-col {
+                align-items: center;
+            }
+            .hero-btns {
+                justify-content: center;
+            }
+            .hero-eclipse-container {
+                width: 280px;
+                height: 280px;
+            }
+            .hero-eclipse-inner {
+                width: 205px;
+                height: 205px;
+            }
+            .hero-logo-center {
+                width: 110px;
+                height: 110px;
+                border-radius: 22px;
+            }
+            .hero-logo-center img {
+                width: 66px;
+                height: 66px;
+            }
+            .about-grid, .vision-mission-grid, .identity-grid, .community-grid, .faq-grid {
+                grid-template-columns: 1fr;
+                gap: 2.25rem;
+            }
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+                gap: 2.5rem;
             }
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 640px) {
+            .nav-container {
+                padding: 0 1rem;
+                height: 68px;
+            }
+            .logo-wrapper {
+                width: 36px;
+                height: 36px;
+            }
+            .logo-wrapper img {
+                width: 22px;
+                height: 22px;
+            }
+            .nav-title {
+                font-size: 1.05rem;
+                letter-spacing: 0.14em;
+            }
+            .nav-actions {
+                gap: 0.5rem;
+            }
+            .lang-btn {
+                padding: 6px 9px;
+                font-size: 0.78rem;
+            }
+            #joinDomsNavBtn {
+                display: none;
+            }
             section {
-                padding: 80px 1.5rem;
+                padding: 72px 1.15rem;
             }
             .hero {
-                padding: 100px 1.5rem 60px 1.5rem;
+                padding: 96px 1.15rem 64px 1.15rem;
+                min-height: auto;
             }
-            .identity-container, .cta-box, .contact-container {
-                padding: 2.5rem 1.5rem;
+            .badge-pill {
+                font-size: 0.66rem;
+                padding: 6px 12px;
+                letter-spacing: 0.08em;
+            }
+            .hero-eclipse-container {
+                width: 220px;
+                height: 220px;
+            }
+            .hero-eclipse-inner {
+                width: 160px;
+                height: 160px;
+            }
+            .hero-logo-center {
+                width: 88px;
+                height: 88px;
+                border-radius: 18px;
+            }
+            .hero-logo-center img {
+                width: 52px;
+                height: 52px;
+            }
+            .scroll-down-indicator {
+                display: none;
+            }
+            .hero-btns {
+                width: 100%;
+                flex-direction: column;
+            }
+            .hero-btns .btn-primary,
+            .hero-btns .btn-secondary {
+                width: 100%;
+                justify-content: center;
+                padding: 13px 20px;
+            }
+            .vm-card, .community-card, .identity-container, .cta-box, .contact-container {
+                padding: 1.75rem 1.35rem;
+                border-radius: 18px;
+            }
+            .format-card {
+                padding: 1.1rem 1.25rem;
+                font-size: 1rem;
+            }
+            .rule-category-header {
+                padding: 1.25rem 1.35rem;
+            }
+            .rule-category-title-group {
+                gap: 0.85rem;
+            }
+            .rule-cat-title {
+                font-size: 1.05rem;
+            }
+            .rule-category-card.active .rule-category-body {
+                padding: 1.35rem;
+            }
+            .faq-card {
+                padding: 1.35rem;
+            }
+            .faq-question {
+                font-size: 1rem;
+            }
+            .contact-actions {
+                width: 100%;
+                flex-direction: column;
+            }
+            .contact-actions .btn-primary,
+            .contact-actions .btn-secondary {
+                width: 100%;
+                justify-content: center;
             }
             .footer-container {
                 grid-template-columns: 1fr;
-                gap: 2.5rem;
+                gap: 2rem;
+            }
+            .modal-card {
+                padding: 1.75rem 1.35rem;
+            }
+            .toast {
+                left: 1rem;
+                right: 1rem;
+                bottom: 16px;
             }
         }
     </style>
 </head>
-<body>
+<body class="loading-lock">
 
-    <!-- Loading Screen -->
-    <div id="loader">
-        <div class="loader-logo">
-            <svg viewBox="0 0 100 100" width="100%" height="100%">
-                <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="8" stroke-dasharray="280" stroke-dashoffset="60"/>
-            </svg>
+    <!-- CINEMATIC LOADING SCREEN -->
+    <div id="loader" aria-hidden="true">
+        <div class="loader-core">
+            <div class="loader-ring-outer"></div>
+            <div class="loader-ring-inner"></div>
+            <img src="logo.png" alt="DOMS" class="loader-logo-img" onerror="this.style.display='none'">
         </div>
+        <div class="loader-title">DOMS</div>
         <div class="loader-bar-track">
             <div class="loader-bar-fill" id="loaderFill"></div>
         </div>
-        <div class="loader-text" data-i18n="loading">Loading DOMS System</div>
+        <div class="loader-status" id="loaderStatus">INITIALIZING SYSTEM...</div>
     </div>
 
     <!-- Scroll Progress -->
     <div class="scroll-progress" id="scrollProgress"></div>
 
-    <!-- Background Canvas -->
+    <!-- Ambient Glow & Canvas -->
+    <div class="ambient-eclipse-glow"></div>
     <canvas id="bg-canvas"></canvas>
 
     <!-- Navigation Bar -->
     <header id="navbar">
         <div class="nav-container">
-            <a class="nav-brand" href="#home">
-                <div class="logo-wrapper" id="themeToggleBtn" title="Click to Invert Theme / Eclipse">
-                    <img id="navLogoImg" src="" alt="DOMS Logo">
+            <div class="nav-brand" id="themeToggleBtn" title="Klik untuk Eclipse Theme Inversion">
+                <div class="logo-wrapper">
+                    <img id="navLogoImg" src="logo.png" alt="DOMS Logo">
                 </div>
                 <span class="nav-title">DOMS</span>
-            </a>
+            </div>
 
             <ul class="nav-menu">
-                <li><a class="nav-link active" href="#home" data-i18n="nav_home">Home</a></li>
-                <li><a class="nav-link" href="#about" data-i18n="nav_about">About</a></li>
-                <li><a class="nav-link" href="#vision" data-i18n="nav_vision">Vision & Mission</a></li>
-                <li><a class="nav-link" href="#identity" data-i18n="nav_identity">Identity</a></li>
-                <li><a class="nav-link" href="#community" data-i18n="nav_community">Community</a></li>
-                <li><a class="nav-link" href="#rules" data-i18n="nav_rules">Rules</a></li>
+                <li><a class="nav-link active" href="#home" data-i18n="nav_home">Beranda</a></li>
+                <li><a class="nav-link" href="#about" data-i18n="nav_about">Tentang</a></li>
+                <li><a class="nav-link" href="#vision" data-i18n="nav_vision">Visi & Misi</a></li>
+                <li><a class="nav-link" href="#identity" data-i18n="nav_identity">Identitas</a></li>
+                <li><a class="nav-link" href="#community" data-i18n="nav_community">Komunitas</a></li>
+                <li><a class="nav-link" href="#rules" data-i18n="nav_rules">Aturan</a></li>
                 <li><a class="nav-link" href="#faq" data-i18n="nav_faq">FAQ</a></li>
-                <li><a class="nav-link" href="#contact" data-i18n="nav_contact">Contact</a></li>
+                <li><a class="nav-link" href="#contact" data-i18n="nav_contact">Kontak</a></li>
             </ul>
 
             <div class="nav-actions">
                 <div class="lang-dropdown-wrapper">
-                    <button class="lang-btn" id="langDropdownBtn">
-                        <i data-lucide="globe" size="16"></i>
+                    <button class="lang-btn" id="langDropdownBtn" aria-label="Pilih Bahasa">
+                        <i data-lucide="globe" size="15"></i>
                         <span id="currentLangLabel">ID</span>
-                        <i data-lucide="chevron-down" size="14"></i>
+                        <i data-lucide="chevron-down" size="13"></i>
                     </button>
                     <ul class="lang-menu" id="langMenu">
-                        <li class="lang-item active" data-lang="id"><span>Indonesian (ID)</span></li>
-                        <li class="lang-item" data-lang="en"><span>English (EN)</span></li>
-                        <li class="lang-item" data-lang="ms"><span>Malay (MS)</span></li>
+                        <li class="lang-item active" data-lang="id"><span>Indonesian</span><span>ID</span></li>
+                        <li class="lang-item" data-lang="en"><span>English</span><span>EN</span></li>
+                        <li class="lang-item" data-lang="ms"><span>Melayu</span><span>MS</span></li>
                     </ul>
                 </div>
                 
-                <button class="btn-primary" id="joinDomsNavBtn" data-i18n="btn_join_doms">Join DOMS</button>
+                <button class="btn-primary" id="joinDomsNavBtn" data-i18n="btn_join_doms">Gabung DOMS</button>
 
                 <button class="hamburger" id="hamburgerBtn" aria-label="Toggle Menu">
-                    <i data-lucide="menu" size="24"></i>
+                    <i data-lucide="menu" size="22"></i>
                 </button>
             </div>
         </div>
@@ -1521,15 +1847,15 @@
 
     <!-- Mobile Menu Overlay -->
     <div class="mobile-menu" id="mobileMenu">
-        <a class="mobile-nav-link" href="#home" data-i18n="nav_home">Home</a>
-        <a class="mobile-nav-link" href="#about" data-i18n="nav_about">About</a>
-        <a class="mobile-nav-link" href="#vision" data-i18n="nav_vision">Vision & Mission</a>
-        <a class="mobile-nav-link" href="#identity" data-i18n="nav_identity">Identity</a>
-        <a class="mobile-nav-link" href="#community" data-i18n="nav_community">Community</a>
-        <a class="mobile-nav-link" href="#rules" data-i18n="nav_rules">Rules</a>
+        <a class="mobile-nav-link" href="#home" data-i18n="nav_home">Beranda</a>
+        <a class="mobile-nav-link" href="#about" data-i18n="nav_about">Tentang</a>
+        <a class="mobile-nav-link" href="#vision" data-i18n="nav_vision">Visi & Misi</a>
+        <a class="mobile-nav-link" href="#identity" data-i18n="nav_identity">Identitas</a>
+        <a class="mobile-nav-link" href="#community" data-i18n="nav_community">Komunitas</a>
+        <a class="mobile-nav-link" href="#rules" data-i18n="nav_rules">Aturan</a>
         <a class="mobile-nav-link" href="#faq" data-i18n="nav_faq">FAQ</a>
-        <a class="mobile-nav-link" href="#contact" data-i18n="nav_contact">Contact</a>
-        <button class="btn-primary" id="joinDomsMobileBtn" style="width: 100%; justify-content: center; margin-top: 1rem;" data-i18n="btn_join_doms">Join DOMS</button>
+        <a class="mobile-nav-link" href="#contact" data-i18n="nav_contact">Kontak</a>
+        <button class="btn-primary" id="joinDomsMobileBtn" style="width: 100%; justify-content: center; margin-top: 0.75rem; padding: 14px;" data-i18n="btn_join_doms">Gabung DOMS</button>
     </div>
 
     <!-- MAIN CONTENT -->
@@ -1541,76 +1867,78 @@
                 <div class="hero-text-col">
                     <div class="badge-pill">
                         <span class="badge-dot"></span>
-                        <span data-i18n="hero_badge">BLACKLIGHTDOMINIONS MARGA SYSTEM</span>
+                        <span data-i18n="hero_badge">SISTEM MARGA BLACKLIGHTDOMINIONS</span>
                     </div>
                     <h1 class="hero-title">DOMS</h1>
+                    <div class="hero-tagline" data-i18n="hero_tagline">ONE IDENTITY. ONE COMMUNITY.</div>
                     <p class="hero-subtitle" data-i18n="hero_desc">
-                        "An open identity built upon unity, shared values, and meaningful connections. DOMS brings individuals together under one identity while creating a stronger connection within the BLACKLIGHTDOMINIONS community."
+                        “Identitas terbuka yang dibangun atas dasar persatuan, nilai bersama, dan hubungan yang bermakna. DOMS menyatukan individu di dalam satu identitas sekaligus mempererat ikatan dalam komunitas BLACKLIGHTDOMINIONS.”
                     </p>
                     <div class="hero-btns">
-                        <button class="btn-primary" id="exploreHeroBtn" data-i18n="hero_btn_explore">Explore DOMS</button>
-                        <button class="btn-secondary" id="joinHeroBtn" data-i18n="btn_join_doms">Join DOMS</button>
+                        <button class="btn-primary" id="exploreHeroBtn" data-i18n="hero_btn_explore">Jelajahi DOMS</button>
+                        <button class="btn-secondary" id="joinHeroBtn" data-i18n="btn_join_doms">Gabung DOMS</button>
                     </div>
                 </div>
 
                 <div class="hero-visual-col">
                     <div class="hero-eclipse-container">
+                        <div class="hero-eclipse-orbit-dot"></div>
                         <div class="hero-eclipse-inner"></div>
                         <div class="hero-logo-center">
-                            <img id="heroLogoImg" src="" alt="DOMS Hero Logo">
+                            <img id="heroLogoImg" src="logo.png" alt="DOMS Hero Logo">
                         </div>
                     </div>
                 </div>
             </div>
 
             <a href="#about" class="scroll-down-indicator">
-                <span data-i18n="scroll_down">Scroll Down</span>
-                <i data-lucide="arrow-down" size="16"></i>
+                <span data-i18n="scroll_down">Gulir ke Bawah</span>
+                <i data-lucide="arrow-down" size="15"></i>
             </a>
         </section>
 
         <!-- ABOUT SECTION -->
-        <section id="about">
+        <section id="about" class="reveal">
             <div class="section-header">
-                <span class="section-tag" data-i18n="about_tag">01 / Introduction</span>
-                <h2 class="section-title" data-i18n="about_title">What is DOMS?</h2>
+                <span class="section-tag" data-i18n="about_tag">01 / Pengantar</span>
+                <h2 class="section-title" data-i18n="about_title">Apa itu DOMS?</h2>
             </div>
 
             <div class="about-grid">
                 <div class="about-text">
                     <p data-i18n="about_p1">
-                        <strong>DOMS</strong> is an open-to-public marga identity system associated with <strong>BLACKLIGHTDOMINIONS (BLDS)</strong>. It provides individuals with a shared identity that represents unity, connection, and a sense of belonging.
+                        <strong>DOMS</strong> adalah sistem identitas marga yang terbuka untuk umum dan berafiliasi dengan <strong>BLACKLIGHTDOMINIONS (BLDS)</strong>. Ini memberikan identitas bersama yang merepresentasikan persatuan, koneksi, dan rasa memiliki.
                     </p>
                     <p data-i18n="about_p2">
-                        DOMS is more than a nickname tag. It is a symbol of shared values, mutual respect, and participation within a growing community. Anyone can become part of DOMS, provided they follow the established identity format and community regulations.
+                        DOMS lebih dari sekadar tag nama. Ini adalah simbol nilai bersama, saling menghormati, dan partisipasi di dalam komunitas yang berkembang.
                     </p>
                     <p data-i18n="about_p3">
-                        Through this system, DOMS aims to connect people, encourage positive interactions, and create a welcoming environment where individuals can build friendships and grow together.
+                        Melalui sistem ini, DOMS bertujuan menghubungkan orang-orang, mendorong interaksi positif, dan menciptakan lingkungan yang ramah di mana individu dapat membangun persahabatan dan berkembang bersama.
                     </p>
                 </div>
 
                 <div class="about-stats-card">
                     <div class="stat-item">
                         <div class="stat-number">PUBLIC</div>
-                        <div class="stat-label" data-i18n="stat_label_1">Open identity system accessible to everyone without strict rank barriers.</div>
+                        <div class="stat-label" data-i18n="stat_label_1">Sistem identitas terbuka yang dapat diakses semua orang tanpa batasan pangkat ketat.</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-number">BLDS</div>
-                        <div class="stat-label" data-i18n="stat_label_2">Associated with BLACKLIGHTDOMINIONS community ecosystem.</div>
+                        <div class="stat-label" data-i18n="stat_label_2">Berafiliasi dengan ekosistem komunitas BLACKLIGHTDOMINIONS.</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-number">UNITY</div>
-                        <div class="stat-label" data-i18n="stat_label_3">Built upon mutual respect, shared values, and strong solidarity.</div>
+                        <div class="stat-label" data-i18n="stat_label_3">Dibangun atas dasar saling menghormati, nilai bersama, dan solidaritas yang kuat.</div>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- VISION & MISSION -->
-        <section id="vision">
+        <section id="vision" class="reveal">
             <div class="section-header">
-                <span class="section-tag" data-i18n="vision_tag">02 / Purpose & Goals</span>
-                <h2 class="section-title" data-i18n="vision_title">Vision & Mission</h2>
+                <span class="section-tag" data-i18n="vision_tag">02 / Tujuan & Sasaran</span>
+                <h2 class="section-title" data-i18n="vision_title">Visi & Misi</h2>
             </div>
 
             <div class="vision-mission-grid">
@@ -1618,15 +1946,15 @@
                 <div class="vm-card">
                     <div class="vm-card-header">
                         <div class="vm-icon-box">
-                            <i data-lucide="eye" size="24"></i>
+                            <i data-lucide="eye" size="22"></i>
                         </div>
-                        <h3 class="vm-card-title" data-i18n="vision_card_title">Our Vision</h3>
+                        <h3 class="vm-card-title" data-i18n="vision_card_title">Visi Kami</h3>
                     </div>
                     <p class="vm-text" data-i18n="vision_card_text">
-                        "To establish DOMS as an inclusive, recognizable, and meaningful identity that connects individuals through shared values, mutual respect, and a strong sense of belonging.<br><br>
-                        DOMS aims to become more than simply a shared nickname or community tag. It strives to represent a lasting connection between individuals who believe in unity, friendship, integrity, and positive interaction.<br><br>
-                        By bringing together people from different backgrounds and interests, DOMS seeks to create an environment where everyone has the opportunity to participate, build meaningful relationships, exchange experiences, support one another, and grow together.<br><br>
-                        Through consistent values, collective responsibility, and active community participation, DOMS aspires to develop into a strong and sustainable identity that represents solidarity, trust, and a positive reputation within BLACKLIGHTDOMINIONS and beyond."
+                        “Menjadikan DOMS sebagai identitas inklusif, mudah dikenali, dan bermakna yang menghubungkan individu melalui nilai-nilai bersama, rasa saling menghormati, dan rasa memiliki yang kuat.<br><br>
+                        DOMS bertujuan menjadi lebih dari sekadar nama panggilan atau tag komunitas. DOMS berupaya merepresentasikan hubungan abadi antara individu yang percaya pada persatuan, persahabatan, integritas, dan interaksi positif.<br><br>
+                        Dengan menyatukan orang-orang dari berbagai latar belakang, DOMS menciptakan lingkungan di mana setiap orang memiliki kesempatan berpartisipasi, membangun hubungan, saling mendukung, dan berkembang bersama.<br><br>
+                        Melalui nilai konsisten dan partisipasi aktif, DOMS bercita-cita menjadi identitas kuat yang merepresentasikan solidaritas dan kepercayaan dalam BLACKLIGHTDOMINIONS.”
                     </p>
                 </div>
 
@@ -1634,38 +1962,38 @@
                 <div class="vm-card">
                     <div class="vm-card-header">
                         <div class="vm-icon-box">
-                            <i data-lucide="target" size="24"></i>
+                            <i data-lucide="target" size="22"></i>
                         </div>
-                        <h3 class="vm-card-title" data-i18n="mission_card_title">Our Mission</h3>
+                        <h3 class="vm-card-title" data-i18n="mission_card_title">Misi Kami</h3>
                     </div>
                     <ul class="mission-list">
                         <li class="mission-item">
                             <span class="mission-number">01</span>
-                            <span data-i18n="mission_1">Establish DOMS as an inclusive identity that anyone can become part of.</span>
+                            <span data-i18n="mission_1">Menetapkan DOMS sebagai identitas inklusif yang dapat diikuti oleh siapa saja.</span>
                         </li>
                         <li class="mission-item">
                             <span class="mission-number">02</span>
-                            <span data-i18n="mission_2">Strengthen relationships and connections between individuals through community participation.</span>
+                            <span data-i18n="mission_2">Memperkuat hubungan dan koneksi antar individu melalui partisipasi komunitas.</span>
                         </li>
                         <li class="mission-item">
                             <span class="mission-number">03</span>
-                            <span data-i18n="mission_3">Encourage mutual respect, responsibility, honesty, and positive behavior.</span>
+                            <span data-i18n="mission_3">Mendorong rasa saling menghormati, tanggung jawab, kejujuran, dan perilaku positif.</span>
                         </li>
                         <li class="mission-item">
                             <span class="mission-number">04</span>
-                            <span data-i18n="mission_4">Build a welcoming environment where members can interact, share experiences, and develop meaningful friendships.</span>
+                            <span data-i18n="mission_4">Membangun lingkungan ramah di mana anggota dapat berinteraksi dan membangun persahabatan.</span>
                         </li>
                         <li class="mission-item">
                             <span class="mission-number">05</span>
-                            <span data-i18n="mission_5">Maintain the reputation and values associated with BLACKLIGHTDOMINIONS.</span>
+                            <span data-i18n="mission_5">Menjaga reputasi dan nilai-nilai yang diasosiasikan dengan BLACKLIGHTDOMINIONS.</span>
                         </li>
                         <li class="mission-item">
                             <span class="mission-number">06</span>
-                            <span data-i18n="mission_6">Encourage unity and cooperation among DOMS users regardless of their backgrounds.</span>
+                            <span data-i18n="mission_6">Mendorong persatuan dan kerja sama di antara pengguna DOMS tanpa memandang latar belakang.</span>
                         </li>
                         <li class="mission-item">
                             <span class="mission-number">07</span>
-                            <span data-i18n="mission_7">Develop a sustainable identity system that can grow alongside the BLACKLIGHTDOMINIONS community.</span>
+                            <span data-i18n="mission_7">Mengembangkan sistem identitas berkelanjutan yang berkembang bersama BLACKLIGHTDOMINIONS.</span>
                         </li>
                     </ul>
                 </div>
@@ -1673,10 +2001,10 @@
         </section>
 
         <!-- IDENTITY SYSTEM -->
-        <section id="identity">
+        <section id="identity" class="reveal">
             <div class="section-header">
-                <span class="section-tag" data-i18n="identity_tag">03 / Nickname Standards</span>
-                <h2 class="section-title" data-i18n="identity_title">Your Identity</h2>
+                <span class="section-tag" data-i18n="identity_tag">03 / Standar Nama Panggilan</span>
+                <h2 class="section-title" data-i18n="identity_title">Identitas Anda</h2>
             </div>
 
             <div class="identity-container">
@@ -1684,28 +2012,28 @@
                     <div class="identity-formats-box">
                         <div class="format-card">
                             <span>Nama X DOMS</span>
-                            <span class="format-badge" data-i18n="accepted_badge">Accepted</span>
+                            <span class="format-badge" data-i18n="accepted_badge">Diterima</span>
                         </div>
                         <div class="format-card">
                             <span>Nama x DOMS</span>
-                            <span class="format-badge" data-i18n="accepted_badge">Accepted</span>
+                            <span class="format-badge" data-i18n="accepted_badge">Diterima</span>
                         </div>
                         <div class="format-card">
                             <span>Nama × DOMS</span>
-                            <span class="format-badge" data-i18n="accepted_badge">Accepted</span>
+                            <span class="format-badge" data-i18n="accepted_badge">Diterima</span>
                         </div>
                     </div>
 
                     <div class="identity-info">
-                        <h3 data-i18n="identity_info_title">The Official Format</h3>
+                        <h3 data-i18n="identity_info_title">Format Resmi</h3>
                         <p data-i18n="identity_info_desc">
-                            All three nickname formats are officially accepted. The DOMS tag must always remain at the end of your nickname. You have full freedom to personalize your primary name before the tag.
+                            Ketiga format nama panggilan di atas diterima secara resmi. Tag DOMS harus selalu berada di bagian akhir nama panggilan Anda. Anda memiliki kebebasan penuh untuk mempersonalisasi nama utama sebelum tag.
                         </p>
                         <div class="identity-rules-chips">
-                            <span class="identity-chip" data-i18n="chip_1">No Impersonation</span>
-                            <span class="identity-chip" data-i18n="chip_2">Tag at the end</span>
-                            <span class="identity-chip" data-i18n="chip_3">Respect others</span>
-                            <span class="identity-chip" data-i18n="chip_4">Open to public</span>
+                            <span class="identity-chip" data-i18n="chip_1">Tanpa Peniruan</span>
+                            <span class="identity-chip" data-i18n="chip_2">Tag di Akhir</span>
+                            <span class="identity-chip" data-i18n="chip_3">Saling Menghormati</span>
+                            <span class="identity-chip" data-i18n="chip_4">Terbuka untuk Umum</span>
                         </div>
                     </div>
                 </div>
@@ -1713,10 +2041,10 @@
         </section>
 
         <!-- COMMUNITY REQUIREMENTS -->
-        <section id="community">
+        <section id="community" class="reveal">
             <div class="section-header">
-                <span class="section-tag" data-i18n="community_tag">04 / Ecosystem Connection</span>
-                <h2 class="section-title" data-i18n="community_title">Join the Community</h2>
+                <span class="section-tag" data-i18n="community_tag">04 / Koneksi Ekosistem</span>
+                <h2 class="section-title" data-i18n="community_title">Gabung Komunitas</h2>
             </div>
 
             <div class="community-grid">
@@ -1724,16 +2052,16 @@
                 <div class="community-card">
                     <div class="community-card-top">
                         <div class="community-icon">
-                            <i data-lucide="message-circle" size="28"></i>
+                            <i data-lucide="message-circle" size="26"></i>
                         </div>
                         <div>
                             <h3 class="community-title">WhatsApp Community</h3>
-                            <p class="community-desc" data-i18n="wa_card_desc">Connect instantly with fellow DOMS members and BLDS participants through our active WhatsApp community group.</p>
+                            <p class="community-desc" data-i18n="wa_card_desc">Terhubung langsung dengan sesama anggota DOMS dan partisipan BLDS melalui grup komunitas WhatsApp kami yang aktif.</p>
                         </div>
                     </div>
-                    <a href="https://chat.whatsapp.com/LJvQ6Bu1FESAvNk5bqbk1F?s=cl&p=a&mlu=4" target="_blank" class="btn-primary" style="justify-content: center;">
-                        <span data-i18n="btn_join_whatsapp">Join WhatsApp</span>
-                        <i data-lucide="external-link" size="16"></i>
+                    <a href="https://chat.whatsapp.com/LJvQ6Bu1FESAvNk5bqbk1F?s=cl&p=a&mlu=4" target="_blank" rel="noopener noreferrer" class="btn-primary" style="justify-content: center;">
+                        <span data-i18n="btn_join_whatsapp">Gabung WhatsApp</span>
+                        <i data-lucide="external-link" size="15"></i>
                     </a>
                 </div>
 
@@ -1741,50 +2069,50 @@
                 <div class="community-card">
                     <div class="community-card-top">
                         <div class="community-icon">
-                            <i data-lucide="disc" size="28"></i>
+                            <i data-lucide="disc" size="26"></i>
                         </div>
                         <div>
                             <h3 class="community-title">Discord Community</h3>
-                            <p class="community-desc" data-i18n="discord_card_desc">Join our official Discord server for voice channels, community events, announcements, and structured discussions.</p>
+                            <p class="community-desc" data-i18n="discord_card_desc">Bergabunglah dengan server Discord resmi kami untuk kanal suara, acara komunitas, pengumuman, dan diskusi terstruktur.</p>
                         </div>
                     </div>
-                    <a href="https://discord.gg/rDTJMwaHNg" target="_blank" class="btn-primary" style="justify-content: center;">
-                        <span data-i18n="btn_join_discord">Join Discord</span>
-                        <i data-lucide="external-link" size="16"></i>
+                    <a href="https://discord.gg/r4dM4QFteV" target="_blank" rel="noopener noreferrer" class="btn-primary" style="justify-content: center;">
+                        <span data-i18n="btn_join_discord">Gabung Discord</span>
+                        <i data-lucide="external-link" size="15"></i>
                     </a>
                 </div>
             </div>
 
             <div class="community-note">
-                <span data-i18n="community_note_text">💡 <strong>Note:</strong> Joining at least <strong>ONE</strong> official BLDS community platform is mandatory. Joining both is strongly encouraged.</span>
+                <span data-i18n="community_note_text">💡 <strong>Catatan:</strong> Bergabung dengan setidaknya <strong>SATU</strong> platform komunitas BLDS resmi adalah wajib. Bergabung dengan keduanya sangat dianjurkan.</span>
             </div>
         </section>
 
         <!-- RULES & REGULATIONS -->
-        <section id="rules">
+        <section id="rules" class="reveal">
             <div class="section-header">
-                <span class="section-tag" data-i18n="rules_tag">05 / Code of Conduct</span>
-                <h2 class="section-title" data-i18n="rules_title">DOMS Rules & Regulations</h2>
+                <span class="section-tag" data-i18n="rules_tag">05 / Kode Etik</span>
+                <h2 class="section-title" data-i18n="rules_title">Aturan & Regulasi DOMS</h2>
             </div>
 
             <div class="rules-container" id="rulesAccordionContainer">
                 <!-- Rule Cat 01 -->
-                <div class="rule-category-card">
+                <div class="rule-category-card active">
                     <div class="rule-category-header">
                         <div class="rule-category-title-group">
                             <span class="rule-cat-num">01</span>
-                            <h3 class="rule-cat-title" data-i18n="rule_cat_1_title">Identity Regulations</h3>
+                            <h3 class="rule-cat-title" data-i18n="rule_cat_1_title">Regulasi Identitas</h3>
                         </div>
                         <div class="rule-toggle-icon">
-                            <i data-lucide="chevron-down" size="18"></i>
+                            <i data-lucide="chevron-down" size="17"></i>
                         </div>
                     </div>
                     <div class="rule-category-body">
                         <ul class="rule-items-list">
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_1_1">Every DOMS user must use one of the accepted nickname formats: Nama X DOMS, Nama x DOMS, or Nama × DOMS.</span></li>
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_1_2">The DOMS tag must remain at the end of the nickname.</span></li>
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_1_3">Users are responsible for maintaining their own identity.</span></li>
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_1_4">Impersonating another DOMS user or BLDS representative is strictly prohibited.</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_1_1">Setiap pengguna DOMS harus menggunakan salah satu format nama panggilan yang diterima: Nama X DOMS, Nama x DOMS, atau Nama × DOMS.</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_1_2">Tag DOMS harus tetap berada di akhir nama panggilan.</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_1_3">Pengguna bertanggung jawab atas identitas mereka sendiri.</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_1_4">Meniru pengguna DOMS atau perwakilan BLDS lain dilarang keras.</span></li>
                         </ul>
                     </div>
                 </div>
@@ -1794,18 +2122,18 @@
                     <div class="rule-category-header">
                         <div class="rule-category-title-group">
                             <span class="rule-cat-num">02</span>
-                            <h3 class="rule-cat-title" data-i18n="rule_cat_2_title">Community Requirements</h3>
+                            <h3 class="rule-cat-title" data-i18n="rule_cat_2_title">Persyaratan Komunitas</h3>
                         </div>
                         <div class="rule-toggle-icon">
-                            <i data-lucide="chevron-down" size="18"></i>
+                            <i data-lucide="chevron-down" size="17"></i>
                         </div>
                     </div>
                     <div class="rule-category-body">
                         <ul class="rule-items-list">
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_2_1">Every DOMS user must join at least one official BLDS community platform (WhatsApp or Discord).</span></li>
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_2_2">Users must respect the rules of the WhatsApp or Discord community they join.</span></li>
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_2_3">Users are encouraged to participate positively in community activities.</span></li>
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_2_4">Users must not use DOMS as a means to create unnecessary conflict.</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_2_1">Setiap pengguna DOMS harus bergabung dengan setidaknya satu platform komunitas BLDS resmi (WhatsApp atau Discord).</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_2_2">Pengguna harus menghormati aturan komunitas WhatsApp atau Discord yang mereka ikuti.</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_2_3">Pengguna didorong untuk berpartisipasi secara positif dalam kegiatan komunitas.</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_2_4">Pengguna tidak boleh menggunakan DOMS sebagai sarana menciptakan konflik yang tidak perlu.</span></li>
                         </ul>
                     </div>
                 </div>
@@ -1815,19 +2143,19 @@
                     <div class="rule-category-header">
                         <div class="rule-category-title-group">
                             <span class="rule-cat-num">03</span>
-                            <h3 class="rule-cat-title" data-i18n="rule_cat_3_title">Conduct & Behavior</h3>
+                            <h3 class="rule-cat-title" data-i18n="rule_cat_3_title">Perilaku & Etika</h3>
                         </div>
                         <div class="rule-toggle-icon">
-                            <i data-lucide="chevron-down" size="18"></i>
+                            <i data-lucide="chevron-down" size="17"></i>
                         </div>
                     </div>
                     <div class="rule-category-body">
                         <ul class="rule-items-list">
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_3_1">Respect other individuals regardless of their backgrounds.</span></li>
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_3_2">Harassment, bullying, intimidation, and targeted abuse are strictly prohibited.</span></li>
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_3_3">Spamming and disruptive behavior are not permitted.</span></li>
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_3_4">Fraudulent behavior and impersonation are prohibited.</span></li>
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_3_5">Do not use the DOMS identity to damage the reputation of other people or the community.</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_3_1">Menghormati individu lain terlepas dari latar belakang mereka.</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_3_2">Pelecehan, perundungan, intimidasi, dan penyalahgunaan terarah dilarang keras.</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_3_3">Spam dan perilaku mengganggu tidak diizinkan.</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_3_4">Perilaku penipuan dan penyamaran dilarang.</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_3_5">Jangan gunakan identitas DOMS untuk merusak reputasi orang lain atau komunitas.</span></li>
                         </ul>
                     </div>
                 </div>
@@ -1837,18 +2165,18 @@
                     <div class="rule-category-header">
                         <div class="rule-category-title-group">
                             <span class="rule-cat-num">04</span>
-                            <h3 class="rule-cat-title" data-i18n="rule_cat_4_title">Identity Misuse</h3>
+                            <h3 class="rule-cat-title" data-i18n="rule_cat_4_title">Penyalahgunaan Identitas</h3>
                         </div>
                         <div class="rule-toggle-icon">
-                            <i data-lucide="chevron-down" size="18"></i>
+                            <i data-lucide="chevron-down" size="17"></i>
                         </div>
                     </div>
                     <div class="rule-category-body">
                         <ul class="rule-items-list">
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_4_1">Do not falsely claim to represent the official BLDS administration.</span></li>
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_4_2">Do not misuse the DOMS identity for scams or misleading activities.</span></li>
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_4_3">Do not spread false announcements on behalf of DOMS or BLDS.</span></li>
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_4_4">Do not use the DOMS identity to engage in harmful activities.</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_4_1">Jangan secara keliru mengaku mewakili administrasi resmi BLDS.</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_4_2">Jangan menyalahgunakan identitas DOMS untuk penipuan atau aktivitas menyesatkan.</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_4_3">Jangan menyebarkan pengumuman palsu atas nama DOMS atau BLDS.</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_4_4">Jangan gunakan identitas DOMS untuk terlibat dalam aktivitas berbahaya.</span></li>
                         </ul>
                     </div>
                 </div>
@@ -1858,17 +2186,17 @@
                     <div class="rule-category-header">
                         <div class="rule-category-title-group">
                             <span class="rule-cat-num">05</span>
-                            <h3 class="rule-cat-title" data-i18n="rule_cat_5_title">Enforcement</h3>
+                            <h3 class="rule-cat-title" data-i18n="rule_cat_5_title">Penegakan Aturan</h3>
                         </div>
                         <div class="rule-toggle-icon">
-                            <i data-lucide="chevron-down" size="18"></i>
+                            <i data-lucide="chevron-down" size="17"></i>
                         </div>
                     </div>
                     <div class="rule-category-body">
                         <ul class="rule-items-list">
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_5_1">Violations may result in verbal reminder, official warning, temporary restriction, or revocation of permission to use the DOMS identity.</span></li>
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_5_2">The response will depend on the seriousness and circumstances of the violation.</span></li>
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_5_3">Severe violations may receive stronger action. Note: Using DOMS does not automatically make someone an official BLDS MLBB squad member.</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_5_1">Pelanggaran dapat mengakibatkan teguran lisan, peringatan resmi, pembatasan sementara, atau pencabutan izin menggunakan identitas DOMS.</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_5_2">Tindakan akan bergantung pada keseriusan dan keadaan pelanggaran.</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_5_3">Pelanggaran berat dapat menerima tindakan lebih tegas. Catatan: Menggunakan DOMS tidak secara otomatis menjadikan seseorang anggota resmi skuad MLBB BLDS.</span></li>
                         </ul>
                     </div>
                 </div>
@@ -1876,126 +2204,126 @@
         </section>
 
         <!-- FAQ SECTION -->
-        <section id="faq">
+        <section id="faq" class="reveal">
             <div class="section-header">
-                <span class="section-tag" data-i18n="faq_tag">06 / Common Questions</span>
-                <h2 class="section-title" data-i18n="faq_title">Frequently Asked Questions</h2>
+                <span class="section-tag" data-i18n="faq_tag">06 / Pertanyaan Umum</span>
+                <h2 class="section-title" data-i18n="faq_title">Pertanyaan yang Sering Diajukan</h2>
             </div>
 
             <div class="faq-grid" id="faqContainer">
                 <!-- FAQ 1 -->
                 <div class="faq-card">
                     <div class="faq-question-header">
-                        <span class="faq-question" data-i18n="faq_q1">What is DOMS?</span>
+                        <span class="faq-question" data-i18n="faq_q1">Apa itu DOMS?</span>
                         <i data-lucide="chevron-down" class="faq-icon" size="18"></i>
                     </div>
-                    <div class="faq-answer" data-i18n="faq_a1">DOMS is an open-to-public marga identity system associated with BLACKLIGHTDOMINIONS, designed to unite individuals through shared values and meaningful connections.</div>
+                    <div class="faq-answer" data-i18n="faq_a1">DOMS adalah sistem identitas marga yang terbuka untuk umum dan berafiliasi dengan BLACKLIGHTDOMINIONS, dirancang untuk menyatukan individu melalui nilai bersama.</div>
                 </div>
 
                 <!-- FAQ 2 -->
                 <div class="faq-card">
                     <div class="faq-question-header">
-                        <span class="faq-question" data-i18n="faq_q2">Who can use the DOMS identity?</span>
+                        <span class="faq-question" data-i18n="faq_q2">Siapa yang dapat menggunakan identitas DOMS?</span>
                         <i data-lucide="chevron-down" class="faq-icon" size="18"></i>
                     </div>
-                    <div class="faq-answer" data-i18n="faq_a2">Anyone can use the DOMS identity as long as they follow the established nickname format and adhere to community regulations.</div>
+                    <div class="faq-answer" data-i18n="faq_a2">Siapa pun dapat menggunakan identitas DOMS selama mereka mengikuti format nama panggilan yang ditetapkan dan mematuhi aturan komunitas.</div>
                 </div>
 
                 <!-- FAQ 3 -->
                 <div class="faq-card">
                     <div class="faq-question-header">
-                        <span class="faq-question" data-i18n="faq_q3">Is DOMS open to the public?</span>
+                        <span class="faq-question" data-i18n="faq_q3">Apakah DOMS terbuka untuk umum?</span>
                         <i data-lucide="chevron-down" class="faq-icon" size="18"></i>
                     </div>
-                    <div class="faq-answer" data-i18n="faq_a3">Yes, DOMS is completely open to the public regardless of gaming rank, background, or previous membership status.</div>
+                    <div class="faq-answer" data-i18n="faq_a3">Ya, DOMS sepenuhnya terbuka untuk umum tanpa memandang peringkat game, latar belakang, atau status keanggotaan sebelumnya.</div>
                 </div>
 
                 <!-- FAQ 4 -->
                 <div class="faq-card">
                     <div class="faq-question-header">
-                        <span class="faq-question" data-i18n="faq_q4">What nickname format must I use?</span>
+                        <span class="faq-question" data-i18n="faq_q4">Format nama panggilan apa yang harus saya gunakan?</span>
                         <i data-lucide="chevron-down" class="faq-icon" size="18"></i>
                     </div>
-                    <div class="faq-answer" data-i18n="faq_a4">You must use one of three accepted formats: Nama X DOMS, Nama x DOMS, or Nama × DOMS, with the tag positioned at the end.</div>
+                    <div class="faq-answer" data-i18n="faq_a4">Anda harus menggunakan salah satu dari tiga format yang diterima: Nama X DOMS, Nama x DOMS, atau Nama × DOMS, dengan tag di bagian akhir.</div>
                 </div>
 
                 <!-- FAQ 5 -->
                 <div class="faq-card">
                     <div class="faq-question-header">
-                        <span class="faq-question" data-i18n="faq_q5">Do I need to join the BLDS community?</span>
+                        <span class="faq-question" data-i18n="faq_q5">Apakah saya perlu bergabung dengan komunitas BLDS?</span>
                         <i data-lucide="chevron-down" class="faq-icon" size="18"></i>
                     </div>
-                    <div class="faq-answer" data-i18n="faq_a5">Yes, every DOMS user is required to join at least one official BLDS community platform (WhatsApp or Discord).</div>
+                    <div class="faq-answer" data-i18n="faq_a5">Ya, setiap pengguna DOMS wajib bergabung dengan setidaknya satu platform komunitas resmi BLDS (WhatsApp atau Discord).</div>
                 </div>
 
                 <!-- FAQ 6 -->
                 <div class="faq-card">
                     <div class="faq-question-header">
-                        <span class="faq-question" data-i18n="faq_q6">Do I need to join both WhatsApp and Discord?</span>
+                        <span class="faq-question" data-i18n="faq_q6">Apakah saya harus bergabung dengan WhatsApp dan Discord?</span>
                         <i data-lucide="chevron-down" class="faq-icon" size="18"></i>
                     </div>
-                    <div class="faq-answer" data-i18n="faq_a6">Joining both is strongly encouraged, but joining at least one platform is the minimum mandatory requirement.</div>
+                    <div class="faq-answer" data-i18n="faq_a6">Bergabung dengan keduanya sangat dianjurkan, namun bergabung dengan setidaknya satu platform adalah persyaratan minimum.</div>
                 </div>
 
                 <!-- FAQ 7 -->
                 <div class="faq-card">
                     <div class="faq-question-header">
-                        <span class="faq-question" data-i18n="faq_q7">Does using DOMS make me an official BLDS MLBB squad member?</span>
+                        <span class="faq-question" data-i18n="faq_q7">Apakah menggunakan DOMS membuat saya menjadi anggota resmi skuad MLBB BLDS?</span>
                         <i data-lucide="chevron-down" class="faq-icon" size="18"></i>
                     </div>
-                    <div class="faq-answer" data-i18n="faq_a7">No. Using the DOMS tag does not automatically make someone an officially registered member of the BLDS MLBB squad.</div>
+                    <div class="faq-answer" data-i18n="faq_a7">Tidak. Menggunakan tag DOMS tidak secara otomatis menjadikan seseorang anggota resmi yang terdaftar di skuad MLBB BLDS.</div>
                 </div>
 
                 <!-- FAQ 8 -->
                 <div class="faq-card">
                     <div class="faq-question-header">
-                        <span class="faq-question" data-i18n="faq_q8">What happens if I violate the rules?</span>
+                        <span class="faq-question" data-i18n="faq_q8">Apa yang terjadi jika saya melanggar aturan?</span>
                         <i data-lucide="chevron-down" class="faq-icon" size="18"></i>
                     </div>
-                    <div class="faq-answer" data-i18n="faq_a8">Violations may lead to reminders, warnings, temporary restrictions, or revocation of permission to use the DOMS identity depending on severity.</div>
+                    <div class="faq-answer" data-i18n="faq_a8">Pelanggaran dapat berujung pada teguran, peringatan, pembatasan sementara, atau pencabutan izin penggunaan identitas DOMS tergantung tingkat keseriusan.</div>
                 </div>
 
                 <!-- FAQ 9 -->
                 <div class="faq-card">
                     <div class="faq-question-header">
-                        <span class="faq-question" data-i18n="faq_q9">Where can I contact the DOMS administration?</span>
+                        <span class="faq-question" data-i18n="faq_q9">Di mana saya dapat menghubungi administrasi DOMS?</span>
                         <i data-lucide="chevron-down" class="faq-icon" size="18"></i>
                     </div>
-                    <div class="faq-answer" data-i18n="faq_a9">You can reach the administration directly via WhatsApp at 085591006359 or through our official community platforms.</div>
+                    <div class="faq-answer" data-i18n="faq_a9">Anda dapat menghubungi administrasi secara langsung via WhatsApp di 085591006359 atau melalui platform komunitas resmi kami.</div>
                 </div>
             </div>
         </section>
 
         <!-- JOIN DOMS CTA SECTION -->
-        <section class="cta-section">
+        <section class="cta-section reveal">
             <div class="cta-box">
-                <h2 class="cta-title" data-i18n="cta_title">Ready to Join DOMS?</h2>
-                <p class="cta-desc" data-i18n="cta_desc">Become part of a growing identity built on unity, shared values, and meaningful connections.</p>
-                <button class="cta-btn-glow" id="ctaJoinBtn" data-i18n="btn_join_doms">Join DOMS</button>
+                <h2 class="cta-title" data-i18n="cta_title">Siap Bergabung dengan DOMS?</h2>
+                <p class="cta-desc" data-i18n="cta_desc">Jadilah bagian dari identitas yang berkembang berdasarkan persatuan, nilai bersama, dan hubungan yang bermakna.</p>
+                <button class="cta-btn-glow" id="ctaJoinBtn" data-i18n="btn_join_doms">Gabung DOMS</button>
             </div>
         </section>
 
         <!-- CONTACT US SECTION -->
-        <section id="contact">
+        <section id="contact" class="reveal">
             <div class="section-header" style="text-align: center;">
-                <span class="section-tag" data-i18n="contact_tag">07 / Support & Inquiry</span>
-                <h2 class="section-title" data-i18n="contact_title">Get in Touch</h2>
+                <span class="section-tag" data-i18n="contact_tag">07 / Dukungan & Pertanyaan</span>
+                <h2 class="section-title" data-i18n="contact_title">Hubungi Kami</h2>
             </div>
 
             <div class="contact-container">
                 <div class="contact-icon-box">
-                    <i data-lucide="phone-call" size="36"></i>
+                    <i data-lucide="phone-call" size="32"></i>
                 </div>
-                <p style="color: var(--text-muted);" data-i18n="contact_desc">Have questions, suggestions, or concerns regarding DOMS? Feel free to contact the administration.</p>
+                <p style="color: var(--text-muted);" data-i18n="contact_desc">Memiliki pertanyaan, saran, atau kendala mengenai DOMS? Jangan ragu untuk menghubungi pihak administrasi.</p>
                 <div class="contact-number">085591006359</div>
                 <div class="contact-actions">
-                    <a href="https://wa.me/6285591006359" target="_blank" class="btn-primary">
+                    <a href="https://wa.me/6285591006359" target="_blank" rel="noopener noreferrer" class="btn-primary">
                         <i data-lucide="message-circle" size="16"></i>
-                        <span data-i18n="contact_wa_btn">Contact via WhatsApp</span>
+                        <span data-i18n="contact_wa_btn">Hubungi via WhatsApp</span>
                     </a>
                     <button class="btn-secondary" id="copyNumberBtn">
                         <i data-lucide="copy" size="16"></i>
-                        <span data-i18n="contact_copy_btn">Copy Number</span>
+                        <span data-i18n="contact_copy_btn">Salin Nomor</span>
                     </button>
                 </div>
             </div>
@@ -2009,48 +2337,48 @@
             <div class="footer-col">
                 <div class="nav-brand">
                     <div class="logo-wrapper" style="width: 36px; height: 36px;">
-                        <img id="footerLogoImg" src="" alt="DOMS Logo">
+                        <img id="footerLogoImg" src="logo.png" alt="DOMS Logo">
                     </div>
                     <span class="nav-title">DOMS</span>
                 </div>
-                <p class="footer-brand-desc" data-i18n="footer_desc">DOMS is an open identity system built around unity, shared values, and meaningful connections within the BLACKLIGHTDOMINIONS community.</p>
-                <span style="font-family: var(--font-heading); font-size: 0.85rem; letter-spacing: 0.1em; color: var(--text-main);">ONE IDENTITY. ONE COMMUNITY.</span>
+                <p class="footer-brand-desc" data-i18n="footer_desc">DOMS adalah sistem identitas terbuka yang dibangun di sekitar persatuan, nilai bersama, dan hubungan bermakna dalam komunitas BLACKLIGHTDOMINIONS.</p>
+                <span style="font-family: var(--font-mono); font-size: 0.82rem; letter-spacing: 0.14em; color: var(--text-main);">ONE IDENTITY. ONE COMMUNITY.</span>
             </div>
 
             <div class="footer-col">
-                <h4 class="footer-heading" data-i18n="footer_nav_heading">Quick Navigation</h4>
+                <h4 class="footer-heading" data-i18n="footer_nav_heading">Navigasi Cepat</h4>
                 <ul class="footer-links">
-                    <li><a class="footer-link" href="#home" data-i18n="nav_home">Home</a></li>
-                    <li><a class="footer-link" href="#about" data-i18n="nav_about">About DOMS</a></li>
-                    <li><a class="footer-link" href="#vision" data-i18n="nav_vision">Vision & Mission</a></li>
-                    <li><a class="footer-link" href="#identity" data-i18n="nav_identity">Identity</a></li>
-                    <li><a class="footer-link" href="#community" data-i18n="nav_community">Requirements</a></li>
-                    <li><a class="footer-link" href="#rules" data-i18n="nav_rules">Rules</a></li>
+                    <li><a class="footer-link" href="#home" data-i18n="nav_home">Beranda</a></li>
+                    <li><a class="footer-link" href="#about" data-i18n="nav_about">Tentang DOMS</a></li>
+                    <li><a class="footer-link" href="#vision" data-i18n="nav_vision">Visi & Misi</a></li>
+                    <li><a class="footer-link" href="#identity" data-i18n="nav_identity">Identitas</a></li>
+                    <li><a class="footer-link" href="#community" data-i18n="nav_community">Komunitas</a></li>
+                    <li><a class="footer-link" href="#rules" data-i18n="nav_rules">Aturan</a></li>
                     <li><a class="footer-link" href="#faq" data-i18n="nav_faq">FAQ</a></li>
                 </ul>
             </div>
 
             <div class="footer-col">
-                <h4 class="footer-heading" data-i18n="footer_community_heading">Community</h4>
+                <h4 class="footer-heading" data-i18n="footer_community_heading">Komunitas</h4>
                 <ul class="footer-links">
-                    <li><a class="footer-link" href="https://chat.whatsapp.com/LJvQ6Bu1FESAvNk5bqbk1F?s=cl&p=a&mlu=4" target="_blank">WhatsApp Community</a></li>
-                    <li><a class="footer-link" href="https://discord.gg/rDTJMwaHNg" target="_blank">Discord Community</a></li>
+                    <li><a class="footer-link" href="https://chat.whatsapp.com/LJvQ6Bu1FESAvNk5bqbk1F?s=cl&p=a&mlu=4" target="_blank" rel="noopener noreferrer">WhatsApp Community</a></li>
+                    <li><a class="footer-link" href="https://discord.gg/r4dM4QFteV" target="_blank" rel="noopener noreferrer">Discord Community</a></li>
                 </ul>
             </div>
 
             <div class="footer-col">
-                <h4 class="footer-heading" data-i18n="footer_contact_heading">Contact</h4>
+                <h4 class="footer-heading" data-i18n="footer_contact_heading">Kontak</h4>
                 <ul class="footer-links">
-                    <li><a class="footer-link" href="#contact" data-i18n="nav_contact">Contact Us</a></li>
-                    <li><span style="color: var(--text-main); font-weight: 600;">085591006359</span></li>
-                    <li><a class="footer-link" href="https://wa.me/6285591006359" target="_blank" data-i18n="contact_wa_btn">WhatsApp Chat</a></li>
+                    <li><a class="footer-link" href="#contact" data-i18n="nav_contact">Hubungi Kami</a></li>
+                    <li><span style="color: var(--text-main); font-family: var(--font-mono); font-weight: 600;">085591006359</span></li>
+                    <li><a class="footer-link" href="https://wa.me/6285591006359" target="_blank" rel="noopener noreferrer" data-i18n="contact_wa_btn">WhatsApp Chat</a></li>
                 </ul>
             </div>
         </div>
 
         <div class="footer-bottom">
-            <div>© <span id="currentYear"></span> DOMS — BLACKLIGHTDOMINIONS. All Rights Reserved. Built upon unity. Connected beyond identity.</div>
-            <button class="back-to-top" id="backToTopBtn" aria-label="Back to top">
+            <div>© <span id="currentYear"></span> DOMS — BLACKLIGHTDOMINIONS. All Rights Reserved.</div>
+            <button class="back-to-top" id="backToTopBtn" aria-label="Kembali ke atas">
                 <i data-lucide="arrow-up" size="18"></i>
             </button>
         </div>
@@ -2059,30 +2387,30 @@
     <!-- JOIN MODAL -->
     <div class="modal-overlay" id="joinModal">
         <div class="modal-card">
-            <button class="modal-close" id="modalCloseBtn">
-                <i data-lucide="x" size="20"></i>
+            <button class="modal-close" id="modalCloseBtn" aria-label="Tutup Modal">
+                <i data-lucide="x" size="18"></i>
             </button>
 
             <div class="badge-pill" style="margin-bottom: 1rem;">
                 <span class="badge-dot"></span>
-                <span>DOMS REGISTRATION GUIDE</span>
+                <span>DOMS ONBOARDING</span>
             </div>
 
-            <h3 style="font-family: var(--font-heading); font-size: 1.75rem; font-weight: 700;" data-i18n="modal_title">WELCOME TO DOMS</h3>
-            <p style="color: var(--text-muted); margin-top: 0.5rem;" data-i18n="modal_desc">Before becoming part of DOMS, make sure you understand and complete the required steps.</p>
+            <h3 style="font-family: var(--font-heading); font-size: 1.65rem; font-weight: 800;" data-i18n="modal_title">SELAMAT DATANG DI DOMS</h3>
+            <p style="color: var(--text-muted); margin-top: 0.45rem; font-size: 0.95rem;" data-i18n="modal_desc">Sebelum menjadi bagian dari DOMS, pastikan Anda memahami dan melengkapi langkah-langkah yang diperlukan.</p>
 
             <div class="modal-steps">
                 <!-- Step 1 -->
                 <div class="modal-step-item">
                     <div class="modal-step-title">
                         <span class="mission-number">01</span>
-                        <span data-i18n="modal_step1_title">Understand the Identity Format</span>
+                        <span data-i18n="modal_step1_title">Pahami Format Identitas</span>
                     </div>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;" data-i18n="modal_step1_desc">Use one of the accepted nickname formats in your profile:</p>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;" data-i18n="modal_step1_desc">Gunakan salah satu format nama panggilan yang diterima di profil Anda:</p>
                     <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                        <span class="identity-chip">Nama X DOMS</span>
-                        <span class="identity-chip">Nama x DOMS</span>
-                        <span class="identity-chip">Nama × DOMS</span>
+                        <span class="identity-chip" style="font-family: var(--font-mono);">Nama X DOMS</span>
+                        <span class="identity-chip" style="font-family: var(--font-mono);">Nama x DOMS</span>
+                        <span class="identity-chip" style="font-family: var(--font-mono);">Nama × DOMS</span>
                     </div>
                 </div>
 
@@ -2090,14 +2418,14 @@
                 <div class="modal-step-item">
                     <div class="modal-step-title">
                         <span class="mission-number">02</span>
-                        <span data-i18n="modal_step2_title">Join at Least ONE Community</span>
+                        <span data-i18n="modal_step2_title">Gabung Minimal SATU Komunitas</span>
                     </div>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;" data-i18n="modal_step2_desc">Joining at least one official BLDS platform is mandatory.</p>
-                    <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.5rem;">
-                        <a href="https://chat.whatsapp.com/LJvQ6Bu1FESAvNk5bqbk1F?s=cl&p=a&mlu=4" target="_blank" class="btn-secondary" style="font-size: 0.75rem; padding: 8px 16px;">
+                    <p style="color: var(--text-muted); font-size: 0.9rem;" data-i18n="modal_step2_desc">Bergabung dengan setidaknya satu platform resmi BLDS adalah wajib.</p>
+                    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 0.25rem;">
+                        <a href="https://chat.whatsapp.com/LJvQ6Bu1FESAvNk5bqbk1F?s=cl&p=a&mlu=4" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="font-size: 0.76rem; padding: 9px 16px;">
                             <i data-lucide="message-circle" size="14"></i> WhatsApp
                         </a>
-                        <a href="https://discord.gg/rDTJMwaHNg" target="_blank" class="btn-secondary" style="font-size: 0.75rem; padding: 8px 16px;">
+                        <a href="https://discord.gg/r4dM4QFteV" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="font-size: 0.76rem; padding: 9px 16px;">
                             <i data-lucide="disc" size="14"></i> Discord
                         </a>
                     </div>
@@ -2107,10 +2435,10 @@
                 <div class="modal-step-item">
                     <div class="modal-step-title">
                         <span class="mission-number">03</span>
-                        <span data-i18n="modal_step3_title">Final Confirmation</span>
+                        <span data-i18n="modal_step3_title">Konfirmasi Akhir</span>
                     </div>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;" data-i18n="modal_step3_desc">Once you have joined the community and updated your nickname format, you are officially part of the DOMS system!</p>
-                    <button class="btn-primary" id="modalConfirmBtn" style="justify-content: center; margin-top: 0.5rem;" data-i18n="modal_confirm_btn">I Have Joined & Understand</button>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;" data-i18n="modal_step3_desc">Setelah Anda bergabung dengan komunitas dan memperbarui format nama panggilan, Anda resmi menjadi bagian dari sistem DOMS!</p>
+                    <button class="btn-primary" id="modalConfirmBtn" style="justify-content: center; margin-top: 0.35rem; width: 100%;" data-i18n="modal_confirm_btn">Saya Telah Bergabung & Paham</button>
                 </div>
             </div>
         </div>
@@ -2118,44 +2446,61 @@
 
     <!-- Toast Notification -->
     <div class="toast" id="toastNotification">
-        <i data-lucide="check-circle" size="20" style="color: var(--text-main);"></i>
-        <span id="toastMessage">Action completed successfully.</span>
+        <i data-lucide="check-circle" size="18"></i>
+        <span id="toastMessage">Aksi berhasil dilakukan.</span>
     </div>
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
         /* ==========================================================================
-           LOGOS DATA (SUPPLIED AS BASE64 / EMBEDDED SVG)
+           1. ANTI-STUCK CINEMATIC LOADER SYSTEM
            ========================================================================== */
-        // Clean professional SVG representations of the exact DOMS / BLDS identity logo
-        // Dark theme logo (White on dark) & Light theme logo (Black on light)
-        const LOGO_DARK = "data:image/svg+xml;base64," + btoa(`
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="44" fill="#000" stroke="#fff" stroke-width="6"/>
-                <path d="M30 35 L50 65 L70 35 Z" fill="#fff"/>
-            </svg>
-        `);
-        const LOGO_LIGHT = "data:image/svg+xml;base64," + btoa(`
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="44" fill="#fff" stroke="#000" stroke-width="6"/>
-                <path d="M30 35 L50 65 L70 35 Z" fill="#000"/>
-            </svg>
-        `);
+        (function initLoader() {
+            const loader = document.getElementById('loader');
+            const fill = document.getElementById('loaderFill');
+            const status = document.getElementById('loaderStatus');
+            let progress = 0;
+            let dismissed = false;
 
-        // Update logo sources based on theme
-        function updateLogos(theme) {
-            const logoSrc = theme === 'dark' ? LOGO_DARK : LOGO_LIGHT;
-            document.getElementById('navLogoImg').src = logoSrc;
-            document.getElementById('heroLogoImg').src = logoSrc;
-            document.getElementById('footerLogoImg').src = logoSrc;
-        }
+            function dismissLoader() {
+                if (dismissed) return;
+                dismissed = true;
+                if (fill) fill.style.width = '100%';
+                if (status) status.textContent = 'SYSTEM READY';
+                setTimeout(() => {
+                    if (loader) loader.classList.add('fade-out');
+                    document.body.classList.remove('loading-lock');
+                }, 260);
+            }
+
+            const progressInterval = setInterval(() => {
+                progress += Math.floor(Math.random() * 25) + 18;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(progressInterval);
+                    dismissLoader();
+                } else if (fill) {
+                    fill.style.width = progress + '%';
+                }
+            }, 130);
+
+            window.addEventListener('load', () => {
+                clearInterval(progressInterval);
+                dismissLoader();
+            });
+
+            // Failsafe timeout: dijamin hilang maksimal dalam 1.8 detik apapun kondisinya
+            setTimeout(() => {
+                clearInterval(progressInterval);
+                dismissLoader();
+            }, 1800);
+        })();
 
         /* ==========================================================================
-           TRANSLATION DICTIONARY (ID, EN, MS)
+           2. TRANSLATION DICTIONARY (ID, EN, MS)
            ========================================================================== */
         const translations = {
             id: {
-                loading: "Memuat Sistem DOMS",
                 nav_home: "Beranda",
                 nav_about: "Tentang",
                 nav_vision: "Visi & Misi",
@@ -2166,6 +2511,7 @@
                 nav_contact: "Kontak",
                 btn_join_doms: "Gabung DOMS",
                 hero_badge: "SISTEM MARGA BLACKLIGHTDOMINIONS",
+                hero_tagline: "ONE IDENTITY. ONE COMMUNITY.",
                 hero_desc: "“Identitas terbuka yang dibangun atas dasar persatuan, nilai bersama, dan hubungan yang bermakna. DOMS menyatukan individu di dalam satu identitas sekaligus mempererat ikatan dalam komunitas BLACKLIGHTDOMINIONS.”",
                 hero_btn_explore: "Jelajahi DOMS",
                 scroll_down: "Gulir ke Bawah",
@@ -2274,7 +2620,6 @@
                 modal_confirm_btn: "Saya Telah Bergabung & Paham"
             },
             en: {
-                loading: "Loading DOMS System",
                 nav_home: "Home",
                 nav_about: "About",
                 nav_vision: "Vision & Mission",
@@ -2285,6 +2630,7 @@
                 nav_contact: "Contact",
                 btn_join_doms: "Join DOMS",
                 hero_badge: "BLACKLIGHTDOMINIONS MARGA SYSTEM",
+                hero_tagline: "ONE IDENTITY. ONE COMMUNITY.",
                 hero_desc: "“An open identity built upon unity, shared values, and meaningful connections. DOMS brings individuals together under one identity while creating a stronger connection within the BLACKLIGHTDOMINIONS community.”",
                 hero_btn_explore: "Explore DOMS",
                 scroll_down: "Scroll Down",
@@ -2393,7 +2739,6 @@
                 modal_confirm_btn: "I Have Joined & Understand"
             },
             ms: {
-                loading: "Memuatkan Sistem DOMS",
                 nav_home: "Utama",
                 nav_about: "Tentang",
                 nav_vision: "Visi & Misi",
@@ -2404,6 +2749,7 @@
                 nav_contact: "Hubungi",
                 btn_join_doms: "Sertai DOMS",
                 hero_badge: "SISTEM MARGA BLACKLIGHTDOMINIONS",
+                hero_tagline: "ONE IDENTITY. ONE COMMUNITY.",
                 hero_desc: "“Identiti terbuka yang dibina atas perpaduan, nilai bersama, dan hubungan bermakna. DOMS menyatukan individu di bawah satu identiti sambil mengeratkan ikatan dalam komuniti BLACKLIGHTDOMINIONS.”",
                 hero_btn_explore: "Teroka DOMS",
                 scroll_down: "Tatal ke Bawah",
@@ -2513,16 +2859,13 @@
             }
         };
 
-        // Current Language state
         let currentLang = localStorage.getItem('doms_lang') || 'id';
 
         function applyLanguage(lang) {
             currentLang = lang;
             localStorage.setItem('doms_lang', lang);
-            document.getElementById('currentLangLabel').toUpperCase();
             document.getElementById('currentLangLabel').innerText = lang.toUpperCase();
 
-            // Update all elements with data-i18n
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (translations[lang] && translations[lang][key]) {
@@ -2530,18 +2873,13 @@
                 }
             });
 
-            // Update language menu active item
             document.querySelectorAll('.lang-item').forEach(item => {
-                if (item.getAttribute('data-lang') === lang) {
-                    item.classList.add('active');
-                } else {
-                    item.classList.remove('active');
-                }
+                item.classList.toggle('active', item.getAttribute('data-lang') === lang);
             });
         }
 
         /* ==========================================================================
-           CANVAS BACKGROUND PARTICLES
+           3. CANVAS BACKGROUND PARTICLES
            ========================================================================== */
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
@@ -2551,17 +2889,20 @@
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         }
-        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            initParticles();
+        });
         resizeCanvas();
 
         class Particle {
             constructor() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 0.5;
-                this.speedX = (Math.random() - 0.5) * 0.4;
-                this.speedY = (Math.random() - 0.5) * 0.4;
-                this.opacity = Math.random() * 0.5 + 0.2;
+                this.size = Math.random() * 1.8 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.35;
+                this.speedY = (Math.random() - 0.5) * 0.35;
+                this.opacity = Math.random() * 0.5 + 0.15;
             }
             update() {
                 this.x += this.speedX;
@@ -2582,8 +2923,10 @@
 
         function initParticles() {
             particles = [];
-            const count = Math.floor((canvas.width * canvas.height) / 15000);
-            for (let i = 0; i < Math.min(count, 80); i++) {
+            const isMobile = window.innerWidth < 768;
+            const maxParticles = isMobile ? 35 : 75;
+            const count = Math.min(Math.floor((canvas.width * canvas.height) / 16000), maxParticles);
+            for (let i = 0; i < count; i++) {
                 particles.push(new Particle());
             }
         }
@@ -2600,7 +2943,7 @@
         animateCanvas();
 
         /* ==========================================================================
-           ECLIPSE INVERSION (THEME SWITCH + LOGO SHAKE + PARTICLE BURST)
+           4. ECLIPSE INVERSION (THEME SWITCH + LOGO SHAKE + PARTICLE BURST)
            ========================================================================== */
         let isAnimatingEclipse = false;
 
@@ -2611,28 +2954,23 @@
             const currentTheme = document.documentElement.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
 
-            // Phase 1: Logo Shake
-            const logoWrapper = document.getElementById('themeToggleBtn');
+            const logoWrapper = document.querySelector('#themeToggleBtn .logo-wrapper');
             logoWrapper.classList.add('logo-shake');
 
-            // Phase 2: Particle Burst around click point if event exists, else center
             const rect = logoWrapper.getBoundingClientRect();
-            const burstX = e ? e.clientX : rect.left + rect.width / 2;
-            const burstY = e ? e.clientY : rect.top + rect.height / 2;
+            const burstX = e && e.clientX ? e.clientX : rect.left + rect.width / 2;
+            const burstY = e && e.clientY ? e.clientY : rect.top + rect.height / 2;
             createParticleBurst(burstX, burstY);
 
-            // Phase 3 & 4: Color and Logo Inversion after short shake delay
             setTimeout(() => {
                 document.documentElement.setAttribute('data-theme', newTheme);
                 localStorage.setItem('doms_theme', newTheme);
-                updateLogos(newTheme);
-            }, 250);
+            }, 220);
 
-            // Phase 5: Completion
             setTimeout(() => {
                 logoWrapper.classList.remove('logo-shake');
                 isAnimatingEclipse = false;
-            }, 600);
+            }, 550);
         }
 
         function createParticleBurst(x, y) {
@@ -2648,14 +2986,15 @@
             for (let i = 0; i < 16; i++) {
                 const p = document.createElement('div');
                 const angle = (Math.PI * 2 / 16) * i;
-                const distance = Math.random() * 80 + 40;
+                const distance = Math.random() * 75 + 35;
                 const destX = Math.cos(angle) * distance;
                 const destY = Math.sin(angle) * distance;
 
                 p.style.position = 'absolute';
-                p.style.width = '6px';
-                p.style.height = '6px';
-                p.style.backgroundColor = isDark ? '#ffffff' : '#000000';
+                p.style.width = '5px';
+                p.style.height = '5px';
+                p.style.backgroundColor = isDark ? '#ffffff' : '#09090b';
+                p.style.boxShadow = isDark ? '0 0 8px #ffffff' : '0 0 8px #09090b';
                 p.style.borderRadius = '50%';
                 p.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease';
                 burstContainer.appendChild(p);
@@ -2666,45 +3005,29 @@
                 });
             }
 
-            setTimeout(() => {
-                burstContainer.remove();
-            }, 600);
+            setTimeout(() => burstContainer.remove(), 550);
         }
 
         /* ==========================================================================
-           INITIALIZATION & INTERACTION LISTENERS
+           5. DOM READY & EVENT LISTENERS
            ========================================================================== */
         document.addEventListener('DOMContentLoaded', () => {
-            // Load saved theme or default to dark
             const savedTheme = localStorage.getItem('doms_theme') || 'dark';
             document.documentElement.setAttribute('data-theme', savedTheme);
-            updateLogos(savedTheme);
 
-            // Load saved language or default to id
             applyLanguage(currentLang);
-
-            // Set current year in footer
             document.getElementById('currentYear').innerText = new Date().getFullYear();
 
-            // Initialize Lucide icons
-            lucide.createIcons();
+            if (window.lucide) {
+                lucide.createIcons();
+            }
 
-            // Loading screen fade out
-            setTimeout(() => {
-                const loader = document.getElementById('loader');
-                const fill = document.getElementById('loaderFill');
-                fill.style.width = '100%';
-                setTimeout(() => {
-                    loader.classList.add('fade-out');
-                }, 300);
-            }, 500);
-
-            // Theme Toggle / Eclipse trigger
+            // Eclipse theme toggle
             document.getElementById('themeToggleBtn').addEventListener('click', (e) => {
                 triggerEclipseInversion(e);
             });
 
-            // Language Dropdown Toggle
+            // Language dropdown
             const langBtn = document.getElementById('langDropdownBtn');
             const langMenu = document.getElementById('langMenu');
 
@@ -2719,13 +3042,12 @@
 
             document.querySelectorAll('.lang-item').forEach(item => {
                 item.addEventListener('click', () => {
-                    const lang = item.getAttribute('data-lang');
-                    applyLanguage(lang);
+                    applyLanguage(item.getAttribute('data-lang'));
                     langMenu.classList.remove('open');
                 });
             });
 
-            // Mobile Menu Toggle
+            // Mobile menu toggle
             const hamburgerBtn = document.getElementById('hamburgerBtn');
             const mobileMenu = document.getElementById('mobileMenu');
 
@@ -2739,41 +3061,33 @@
                 });
             });
 
-            // Rules Accordion
+            // Rules accordion
             document.querySelectorAll('.rule-category-header').forEach(header => {
                 header.addEventListener('click', () => {
-                    const card = header.parentElement;
-                    const isActive = card.classList.contains('active');
-                    
-                    // Optional: Close others or keep open. Keeping open independently is clean.
-                    card.classList.toggle('active', !isActive);
+                    header.parentElement.classList.toggle('active');
                 });
             });
 
-            // FAQ Accordion
+            // FAQ accordion
             document.querySelectorAll('.faq-card').forEach(card => {
                 card.addEventListener('click', () => {
                     const isActive = card.classList.contains('active');
-                    // Close all other FAQs for clean UX
                     document.querySelectorAll('.faq-card').forEach(c => c.classList.remove('active'));
-                    if (!isActive) {
-                        card.classList.add('active');
-                    }
+                    if (!isActive) card.classList.add('active');
                 });
             });
 
-            // Modal Controls
+            // Modal controls
             const joinModal = document.getElementById('joinModal');
-            const openModalBtns = [
+            [
                 document.getElementById('joinDomsNavBtn'),
                 document.getElementById('joinDomsMobileBtn'),
                 document.getElementById('joinHeroBtn'),
                 document.getElementById('ctaJoinBtn')
-            ];
-
-            openModalBtns.forEach(btn => {
+            ].forEach(btn => {
                 if (btn) {
                     btn.addEventListener('click', () => {
+                        mobileMenu.classList.remove('open');
                         joinModal.classList.add('open');
                     });
                 }
@@ -2785,56 +3099,79 @@
 
             document.getElementById('modalConfirmBtn').addEventListener('click', () => {
                 joinModal.classList.remove('open');
-                showToast(currentLang === 'id' ? 'Selamat! Anda telah memahami sistem DOMS.' : currentLang === 'en' ? 'Success! You understand the DOMS system.' : 'Berjaya! Anda memahami sistem DOMS.');
+                const msg = currentLang === 'id'
+                    ? 'Selamat! Anda telah memahami sistem DOMS.'
+                    : currentLang === 'en'
+                    ? 'Success! You understand the DOMS system.'
+                    : 'Berjaya! Anda memahami sistem DOMS.';
+                showToast(msg);
             });
 
             joinModal.addEventListener('click', (e) => {
-                if (e.target === joinModal) {
-                    joinModal.classList.remove('open');
-                }
+                if (e.target === joinModal) joinModal.classList.remove('open');
             });
 
-            // Explore Hero Button
+            // Explore button
             document.getElementById('exploreHeroBtn').addEventListener('click', () => {
                 document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
             });
 
-            // Copy Number Button
+            // Copy number button
             document.getElementById('copyNumberBtn').addEventListener('click', () => {
                 navigator.clipboard.writeText('085591006359');
-                showToast(currentLang === 'id' ? 'Nomor berhasil disalin ke clipboard!' : currentLang === 'en' ? 'Number copied to clipboard!' : 'Nombor berjaya disalin ke clipboard!');
+                const msg = currentLang === 'id'
+                    ? 'Nomor berhasil disalin ke clipboard!'
+                    : currentLang === 'en'
+                    ? 'Number copied to clipboard!'
+                    : 'Nombor berjaya disalin ke clipboard!';
+                showToast(msg);
             });
 
-            // Back to Top Button
+            // Back to top
             document.getElementById('backToTopBtn').addEventListener('click', () => {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
 
-            // Scroll Progress & Active Nav Link Observer
+            // Scroll reveal observer
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.12 });
+
+            document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+            // Scroll progress & active nav highlight
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+
             window.addEventListener('scroll', () => {
                 const totalScroll = document.documentElement.scrollHeight - document.documentElement.clientHeight;
                 const currentScroll = window.scrollY;
-                const scrollPercentage = (currentScroll / totalScroll) * 100;
+                const scrollPercentage = totalScroll > 0 ? (currentScroll / totalScroll) * 100 : 0;
                 document.getElementById('scrollProgress').style.width = `${scrollPercentage}%`;
 
-                // Header background blur intensification on scroll
-                const header = document.getElementById('navbar');
-                if (currentScroll > 50) {
-                    header.style.boxShadow = '0 10px 30px rgba(0,0,0,0.05)';
-                } else {
-                    header.style.boxShadow = 'none';
-                }
-            });
+                let currentSectionId = '';
+                sections.forEach(sec => {
+                    const secTop = sec.offsetTop - 160;
+                    if (currentScroll >= secTop) {
+                        currentSectionId = sec.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.toggle('active', link.getAttribute('href') === `#${currentSectionId}`);
+                });
+            }, { passive: true });
         });
 
-        // Toast Notification Helper
         function showToast(message) {
             const toast = document.getElementById('toastNotification');
             document.getElementById('toastMessage').innerText = message;
             toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3500);
+            setTimeout(() => toast.classList.remove('show'), 3400);
         }
     </script>
 </body>
