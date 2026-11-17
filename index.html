@@ -1,485 +1,2841 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BLDS | Official Staff Portal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+    <title>DOMS — BLACKLIGHTDOMINIONS Marga System</title>
+    <meta name="description" content="Discover DOMS, an open identity system by BLACKLIGHTDOMINIONS. Explore its vision, identity requirements, community, and regulations.">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta property="og:title" content="DOMS — BLACKLIGHTDOMINIONS Marga System">
+    <meta property="og:description" content="One Identity. One Community. Official DOMS Marga System portal.">
+    <meta property="og:type" content="website">
     
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
     <style>
-        /* =========================================
-           CORE VARIABLES & RESET
-           ========================================= */
-        :root {
-            --bg-base: #030303;
-            --text-main: #f5f5f5;
-            --text-muted: #888888;
-            --glass-bg: rgba(20, 20, 20, 0.4);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --glow-white: rgba(255, 255, 255, 0.15);
-            --font-sans: 'Outfit', sans-serif;
-            --font-mono: 'JetBrains Mono', monospace;
+        /* ==========================================================================
+           CSS RESET & VARIABLES
+           ========================================================================== */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --font-main: 'Plus Jakarta Sans', sans-serif;
+            --font-heading: 'Space Grotesk', sans-serif;
+            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-fast: all 0.2s ease;
+        }
+
+        /* Dark Theme (Default) */
+        [data-theme="dark"] {
+            --bg-main: #070708;
+            --bg-secondary: #111114;
+            --bg-card: #16161a;
+            --bg-card-hover: #1e1e24;
+            --text-main: #f4f4f6;
+            --text-muted: #9e9ea6;
+            --border-color: #24242d;
+            --border-hover: #3f3f4c;
+            --accent: #ffffff;
+            --accent-invert: #000000;
+            --accent-bg: rgba(255, 255, 255, 0.08);
+            --shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            --glow: 0 0 30px rgba(255, 255, 255, 0.15);
+            --scrollbar-thumb: #2d2d38;
+        }
+
+        /* Light Theme */
+        [data-theme="light"] {
+            --bg-main: #fcfcfd;
+            --bg-secondary: #f2f2f5;
+            --bg-card: #ffffff;
+            --bg-card-hover: #f7f7fa;
+            --text-main: #0f0f12;
+            --text-muted: #666670;
+            --border-color: #e2e2e8;
+            --border-hover: #c4c4d0;
+            --accent: #000000;
+            --accent-invert: #ffffff;
+            --accent-bg: rgba(0, 0, 0, 0.05);
+            --shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            --glow: 0 0 30px rgba(0, 0, 0, 0.1);
+            --scrollbar-thumb: #d0d0d8;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
 
         body {
-            background-color: var(--bg-base);
+            font-family: var(--font-main);
+            background-color: var(--bg-main);
             color: var(--text-main);
-            font-family: var(--font-sans);
-            overflow: hidden; 
-            height: 100vh;
-            width: 100vw;
+            overflow-x: hidden;
+            transition: background-color 0.5s ease, color 0.5s ease;
+            line-height: 1.6;
+        }
+
+        ::selection {
+            background-color: var(--accent);
+            color: var(--accent-invert);
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-main);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--scrollbar-thumb);
+            border-radius: 4px;
+        }
+
+        /* ==========================================================================
+           LOADING SCREEN
+           ========================================================================== */
+        #loader {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background-color: var(--bg-main);
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+        #loader.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .loader-logo {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 24px;
+            animation: pulseLogo 2s infinite ease-in-out;
+        }
+        .loader-bar-track {
+            width: 200px;
+            height: 2px;
+            background: var(--border-color);
+            position: relative;
+            overflow: hidden;
+            border-radius: 2px;
+        }
+        .loader-bar-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0%;
+            background: var(--text-main);
+            transition: width 0.3s ease;
+        }
+        .loader-text {
+            margin-top: 16px;
+            font-family: var(--font-heading);
+            font-size: 0.85rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+        @keyframes pulseLogo {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+
+        /* ==========================================================================
+           CANVAS BACKGROUND & PARTICLES
+           ========================================================================== */
+        #bg-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        /* ==========================================================================
+           SCROLL PROGRESS BAR
+           ========================================================================== */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--text-main);
+            width: 0%;
+            z-index: 1001;
+            transition: width 0.1s linear;
+        }
+
+        /* ==========================================================================
+           NAVIGATION BAR
+           ========================================================================== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(var(--bg-main-rgb), 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-color);
+            transition: var(--transition-smooth);
+        }
+        [data-theme="dark"] header { --bg-main-rgb: 7, 7, 8; }
+        [data-theme="light"] header { --bg-main-rgb: 252, 252, 253; }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .logo-wrapper {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            transition: var(--transition-smooth);
+            position: relative;
+        }
+        .logo-wrapper:hover {
+            border-color: var(--text-main);
+            transform: scale(1.05);
+        }
+        .logo-wrapper img {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+            transition: var(--transition-smooth);
+        }
+        /* Logo Shake & Eclipse Animation Classes */
+        .logo-shake {
+            animation: logoShakeAnim 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+        }
+        @keyframes logoShakeAnim {
+            0%, 100% { transform: translateX(0) rotate(0deg) scale(1); }
+            20% { transform: translateX(-4px) rotate(-8deg) scale(1.1); }
+            40% { transform: translateX(4px) rotate(8deg) scale(1.1); }
+            60% { transform: translateX(-4px) rotate(-4deg) scale(1.05); }
+            80% { transform: translateX(4px) rotate(4deg) scale(1.05); }
+        }
+
+        .nav-title {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1.25rem;
+            letter-spacing: 0.15em;
+            color: var(--text-main);
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            transition: var(--transition-fast);
+            position: relative;
+            padding: 4px 0;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: var(--text-main);
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--text-main);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* Language Dropdown */
+        .lang-dropdown-wrapper {
+            position: relative;
+        }
+        .lang-btn {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            font-family: var(--font-main);
+            transition: var(--transition-fast);
+        }
+        .lang-btn:hover {
+            border-color: var(--text-muted);
+        }
+        .lang-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            list-style: none;
+            min-width: 140px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: var(--transition-smooth);
+            z-index: 100;
+        }
+        .lang-menu.open {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .lang-item {
+            padding: 10px 16px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .lang-item:hover {
+            background: var(--bg-secondary);
+            color: var(--text-main);
+        }
+        .lang-item.active {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: var(--text-main);
+            color: var(--bg-main);
+            border: 1px solid var(--text-main);
+            padding: 10px 24px;
+            border-radius: 6px;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--text-main);
+            box-shadow: var(--glow);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 10px 24px;
+            border-radius: 6px;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        .btn-secondary:hover {
+            border-color: var(--text-main);
+            background: var(--bg-secondary);
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-main);
+            padding: 4px;
+        }
+
+        /* Mobile Menu Overlay */
+        .mobile-menu {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            height: calc(100vh - 80px);
+            background: var(--bg-main);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            padding: 2rem;
+            gap: 1.5rem;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 999;
+            overflow-y: auto;
+        }
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        .mobile-nav-link {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: var(--transition-fast);
+        }
+        .mobile-nav-link:hover, .mobile-nav-link.active {
+            color: var(--text-main);
+            padding-left: 10px;
+        }
+
+        /* ==========================================================================
+           HERO SECTION
+           ========================================================================== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 120px 2rem 80px 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 4rem;
+            align-items: center;
+            width: 100%;
+        }
+
+        .hero-text-col {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-family: var(--font-heading);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            width: fit-content;
+        }
+        .badge-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--text-main);
+            border-radius: 50%;
+            animation: pulseDot 1.5s infinite;
+        }
+        @keyframes pulseDot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.8); }
+        }
+
+        .hero-title {
+            font-family: var(--font-heading);
+            font-size: clamp(3rem, 7vw, 6.5rem);
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            font-weight: 400;
+            line-height: 1.7;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .hero-visual-col {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-eclipse-container {
+            width: 380px;
+            height: 380px;
+            border-radius: 50%;
+            border: 1px dashed var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: rotateEclipse 30s linear infinite;
+        }
+        @keyframes rotateEclipse {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .hero-eclipse-inner {
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            border: 1px solid var(--border-color);
+            animation: rotateEclipseReverse 20s linear infinite;
+        }
+        @keyframes rotateEclipseReverse {
+            from { transform: rotate(360deg); }
+            to { transform: rotate(0deg); }
+        }
+        .hero-logo-center {
+            width: 120px;
+            height: 120px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            z-index: 2;
+        }
+        .hero-logo-center img {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+        }
+
+        .scroll-down-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            font-family: var(--font-heading);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: var(--transition-fast);
+        }
+        .scroll-down-indicator:hover {
+            color: var(--text-main);
+        }
+        .scroll-down-indicator i {
+            animation: bounceArrow 2s infinite;
+        }
+        @keyframes bounceArrow {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(6px); }
+            60% { transform: translateY(3px); }
+        }
+
+        /* ==========================================================================
+           SECTION COMMON STYLES
+           ========================================================================== */
+        section {
+            padding: 120px 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .section-header {
+            margin-bottom: 4rem;
+        }
+
+        .section-tag {
+            font-family: var(--font-heading);
+            font-size: 0.75rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: clamp(2.25rem, 4vw, 3.5rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.15;
+        }
+
+        /* ==========================================================================
+           ABOUT SECTION
+           ========================================================================== */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .about-text p strong {
+            color: var(--text-main);
+        }
+
+        .about-stats-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .stat-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .stat-number {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* ==========================================================================
+           VISION & MISSION
+           ========================================================================== */
+        .vision-mission-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+        }
+
+        .vm-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow);
+        }
+        .vm-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-4px);
+        }
+
+        .vm-card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .vm-icon-box {
+            width: 50px;
+            height: 50px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-main);
+        }
+
+        .vm-card-title {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .vm-text {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .mission-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .mission-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .mission-number {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            color: var(--text-main);
+            font-size: 0.9rem;
+            padding: 2px 8px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* ==========================================================================
+           IDENTITY SYSTEM
+           ========================================================================== */
+        .identity-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 4rem 3rem;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .identity-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .identity-formats-box {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .format-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            transition: var(--transition-fast);
+        }
+        .format-card:hover {
+            border-color: var(--text-main);
+            transform: translateX(6px);
+        }
+        .format-badge {
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-muted);
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .identity-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .identity-info h3 {
+            font-family: var(--font-heading);
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+
+        .identity-info p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .identity-rules-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        .identity-chip {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        /* ==========================================================================
+           COMMUNITY REQUIREMENTS
+           ========================================================================== */
+        .community-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+        }
+
+        .community-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 2.5rem;
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        .community-card:hover {
+            border-color: var(--text-main);
+            transform: translateY(-6px);
+        }
+
+        .community-card-top {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .community-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-main);
+        }
+
+        .community-title {
+            font-family: var(--font-heading);
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+
+        .community-desc {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .community-note {
+            margin-top: 3rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+        .community-note strong {
+            color: var(--text-main);
+        }
+
+        /* ==========================================================================
+           RULES & REGULATIONS
+           ========================================================================== */
+        .rules-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .rule-category-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: var(--transition-fast);
+        }
+        .rule-category-card:hover {
+            border-color: var(--border-hover);
+        }
+
+        .rule-category-header {
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
             user-select: none;
         }
 
-        /* =========================================
-           UI COMPONENTS (GLASSMORPHISM)
-           ========================================= */
-        .glass-panel {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px) saturate(150%);
-            -webkit-backdrop-filter: blur(20px) saturate(150%);
-            border: 1px solid var(--glass-border);
+        .rule-category-title-group {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .rule-cat-num {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        .rule-cat-title {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .rule-toggle-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-main);
+            transition: transform 0.3s ease;
+        }
+        .rule-category-card.active .rule-toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .rule-category-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            background: var(--bg-secondary);
+            border-top: 1px solid transparent;
+        }
+        .rule-category-card.active .rule-category-body {
+            max-height: 1000px;
+            border-top-color: var(--border-color);
+            padding: 2rem;
+        }
+
+        .rule-items-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .rule-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        .rule-item-bullet {
+            width: 6px;
+            height: 6px;
+            background: var(--text-main);
+            border-radius: 50%;
+            margin-top: 8px;
+            flex-shrink: 0;
+        }
+
+        /* ==========================================================================
+           FAQ SECTION
+           ========================================================================== */
+        .faq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .faq-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
             border-radius: 16px;
-            padding: 40px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1);
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 2rem;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .faq-card:hover {
+            border-color: var(--border-hover);
         }
 
-        h1, h2, h3 { font-weight: 300; letter-spacing: 2px; }
-        p { color: var(--text-muted); font-weight: 300; line-height: 1.6; }
-
-        .input-group { position: relative; margin-bottom: 24px; }
-        .input-group input {
-            width: 100%; min-width: 300px;
-            background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border);
-            color: white; font-family: var(--font-mono); font-size: 14px;
-            padding: 16px 20px; border-radius: 8px; outline: none;
-            transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1.5px;
+        .faq-question-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
         }
-        .input-group input:focus { border-color: rgba(255,255,255,0.5); box-shadow: 0 0 15px var(--glow-white); }
 
-        .btn {
-            background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border);
-            color: white; font-family: var(--font-sans); font-size: 12px; text-transform: uppercase;
-            letter-spacing: 3px; padding: 16px 32px; border-radius: 8px;
-            position: relative; overflow: hidden; transition: all 0.4s ease;
-            width: 100%; cursor: pointer;
+        .faq-question {
+            font-family: var(--font-heading);
+            font-size: 1.15rem;
+            font-weight: 700;
         }
-        .btn::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transition: left 0.5s ease;
+
+        .faq-icon {
+            color: var(--text-muted);
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
         }
-        .btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.3); box-shadow: 0 0 20px rgba(255,255,255,0.05); }
-        .btn:hover::before { left: 100%; }
-        .btn-primary { background: white; color: black; font-weight: 500; }
-        .btn-primary:hover { background: #e0e0e0; box-shadow: 0 0 30px rgba(255,255,255,0.2); }
-
-        /* =========================================
-           SCREENS & STATES
-           ========================================= */
-        .screen {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            display: flex; justify-content: center; align-items: center;
-            opacity: 0; pointer-events: none; transition: opacity 1s ease;
+        .faq-card.active .faq-icon {
+            transform: rotate(180deg);
+            color: var(--text-main);
         }
-        .screen.active { opacity: 1; pointer-events: auto; }
 
-        #screen-home .logo-container { text-align: center; margin-bottom: 40px; }
-        #screen-home h1 { font-size: 24px; margin-bottom: 8px; }
-
-        /* Cinematic Overlay */
-        #screen-cinematic { background: #000; z-index: 100; }
-        #particles-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.6; }
-        .vignette {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.95) 100%);
-            z-index: 2; pointer-events: none;
+        .faq-answer {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.7;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .ambient-glow {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 40vw; height: 40vw; border-radius: 50%;
-            background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
-            filter: blur(40px); z-index: 1; pointer-events: none;
-            animation: pulseGlow 8s infinite alternate;
+        .faq-card.active .faq-answer {
+            max-height: 500px;
         }
-        @keyframes pulseGlow { 0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; } 100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; } }
 
-        .cinematic-text-container { position: absolute; z-index: 10; text-align: center; width: 80%; max-width: 800px; }
-        .cinematic-text {
-            font-size: 28px; font-weight: 200; letter-spacing: 4px; color: white;
-            opacity: 0; transform: scale(0.95) translateY(10px); filter: blur(5px);
-            transition: all 3s cubic-bezier(0.25, 1, 0.5, 1); position: absolute; width: 100%; text-shadow: 0 0 20px rgba(255,255,255,0.3);
+        /* ==========================================================================
+           JOIN DOMS CTA SECTION
+           ========================================================================== */
+        .cta-section {
+            padding: 80px 2rem 140px 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
         }
-        .cinematic-text.show { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
 
-        /* Result Screen */
-        #screen-result .status-title { font-size: 32px; margin-bottom: 16px; font-weight: 400; }
-        #screen-result .status-message { font-size: 16px; margin-bottom: 40px; }
+        .cta-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 32px;
+            padding: 5rem 3rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
 
-        /* Admin Dashboard */
-        #screen-admin { background: #050505; align-items: flex-start; padding: 50px; }
-        .admin-layout { display: flex; gap: 40px; width: 100%; max-width: 1400px; height: 100%; }
-        .sidebar { width: 250px; display: flex; flex-direction: column; gap: 20px; }
-        .main-content { flex: 1; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 16px; padding: 30px; overflow-y: auto; }
-        
+        .cta-box::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 0%, var(--accent-bg), transparent 70%);
+            pointer-events: none;
+        }
+
+        .cta-title {
+            font-family: var(--font-heading);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            max-width: 800px;
+        }
+
+        .cta-desc {
+            color: var(--text-muted);
+            font-size: 1.15rem;
+            max-width: 600px;
+            line-height: 1.7;
+        }
+
+        .cta-btn-glow {
+            position: relative;
+            padding: 1.25rem 3rem;
+            font-size: 1rem;
+            border-radius: 12px;
+            background: var(--text-main);
+            color: var(--bg-main);
+            font-family: var(--font-heading);
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.2);
+            transition: var(--transition-smooth);
+        }
+        [data-theme="light"] .cta-btn-glow {
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.15);
+        }
+        .cta-btn-glow:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 60px var(--text-main);
+        }
+
+        /* ==========================================================================
+           CONTACT US SECTION
+           ========================================================================== */
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 4rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 2.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .contact-icon-box {
+            width: 80px;
+            height: 80px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-main);
+        }
+
+        .contact-number {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        .contact-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        /* ==========================================================================
+           FOOTER
+           ========================================================================== */
+        footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 80px 2rem 40px 2rem;
+            position: relative;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 5rem;
+        }
+
+        .footer-col {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .footer-brand-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .footer-heading {
+            font-family: var(--font-heading);
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .footer-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition-fast);
+        }
+        .footer-link:hover {
+            color: var(--text-main);
+            padding-left: 4px;
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 2.5rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .back-to-top {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+        .back-to-top:hover {
+            border-color: var(--text-main);
+            transform: translateY(-4px);
+        }
+
+        /* ==========================================================================
+           MODAL
+           ========================================================================== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-smooth);
+        }
+        .modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            max-width: 600px;
+            width: 100%;
+            padding: 3rem;
+            box-shadow: var(--shadow);
+            transform: translateY(20px) scale(0.95);
+            transition: var(--transition-smooth);
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-overlay.open .modal-card {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+        .modal-close:hover {
+            border-color: var(--text-main);
+        }
+
+        .modal-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .modal-step-item {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .modal-step-title {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
         /* Toast Notification */
-        #toast {
-            position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%) translateY(20px);
-            background: rgba(255,255,255,0.9); color: black; padding: 12px 24px; border-radius: 30px;
-            font-size: 12px; letter-spacing: 1px; font-weight: 500; opacity: 0; pointer-events: none;
-            transition: all 0.4s ease; box-shadow: 0 10px 30px rgba(255,255,255,0.2); z-index: 9999;
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            z-index: 3000;
+            font-family: var(--font-heading);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: var(--transition-smooth);
         }
-        #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
 
+        /* ==========================================================================
+           RESPONSIVE MEDIA QUERIES
+           ========================================================================== */
+        @media (max-width: 1024px) {
+            .hero-content, .about-grid, .vision-mission-grid, .identity-grid, .community-grid, .faq-grid, .footer-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            .hero-visual-col {
+                display: none;
+            }
+            .nav-menu, .nav-actions .lang-dropdown-wrapper {
+                display: none;
+            }
+            .hamburger {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            section {
+                padding: 80px 1.5rem;
+            }
+            .hero {
+                padding: 100px 1.5rem 60px 1.5rem;
+            }
+            .identity-container, .cta-box, .contact-container {
+                padding: 2.5rem 1.5rem;
+            }
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <audio id="bgm" src="bgm.mp3" loop></audio>
-    <audio id="sfx-click" src="sfx-click.mp3"></audio>
-    <audio id="sfx-whoosh" src="sfx-whoosh.mp3"></audio>
-    <audio id="sfx-reveal" src="sfx-reveal.mp3"></audio>
+    <!-- Loading Screen -->
+    <div id="loader">
+        <div class="loader-logo">
+            <svg viewBox="0 0 100 100" width="100%" height="100%">
+                <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="8" stroke-dasharray="280" stroke-dashoffset="60"/>
+            </svg>
+        </div>
+        <div class="loader-bar-track">
+            <div class="loader-bar-fill" id="loaderFill"></div>
+        </div>
+        <div class="loader-text" data-i18n="loading">Loading DOMS System</div>
+    </div>
 
-    <div id="toast">Message goes here</div>
+    <!-- Scroll Progress -->
+    <div class="scroll-progress" id="scrollProgress"></div>
 
-    <div id="screen-home" class="screen active">
-        <div class="glass-panel">
-            <div class="logo-container">
-                <h1>BLACKLIGHTDOMS</h1>
-                <p>Official Staff Verification Portal</p>
+    <!-- Background Canvas -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Navigation Bar -->
+    <header id="navbar">
+        <div class="nav-container">
+            <a class="nav-brand" href="#home">
+                <div class="logo-wrapper" id="themeToggleBtn" title="Click to Invert Theme / Eclipse">
+                    <img id="navLogoImg" src="" alt="DOMS Logo">
+                </div>
+                <span class="nav-title">DOMS</span>
+            </a>
+
+            <ul class="nav-menu">
+                <li><a class="nav-link active" href="#home" data-i18n="nav_home">Home</a></li>
+                <li><a class="nav-link" href="#about" data-i18n="nav_about">About</a></li>
+                <li><a class="nav-link" href="#vision" data-i18n="nav_vision">Vision & Mission</a></li>
+                <li><a class="nav-link" href="#identity" data-i18n="nav_identity">Identity</a></li>
+                <li><a class="nav-link" href="#community" data-i18n="nav_community">Community</a></li>
+                <li><a class="nav-link" href="#rules" data-i18n="nav_rules">Rules</a></li>
+                <li><a class="nav-link" href="#faq" data-i18n="nav_faq">FAQ</a></li>
+                <li><a class="nav-link" href="#contact" data-i18n="nav_contact">Contact</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <div class="lang-dropdown-wrapper">
+                    <button class="lang-btn" id="langDropdownBtn">
+                        <i data-lucide="globe" size="16"></i>
+                        <span id="currentLangLabel">ID</span>
+                        <i data-lucide="chevron-down" size="14"></i>
+                    </button>
+                    <ul class="lang-menu" id="langMenu">
+                        <li class="lang-item active" data-lang="id"><span>Indonesian (ID)</span></li>
+                        <li class="lang-item" data-lang="en"><span>English (EN)</span></li>
+                        <li class="lang-item" data-lang="ms"><span>Malay (MS)</span></li>
+                    </ul>
+                </div>
+                
+                <button class="btn-primary" id="joinDomsNavBtn" data-i18n="btn_join_doms">Join DOMS</button>
+
+                <button class="hamburger" id="hamburgerBtn" aria-label="Toggle Menu">
+                    <i data-lucide="menu" size="24"></i>
+                </button>
             </div>
-            <div class="input-group">
-                <input type="text" id="reg-code" placeholder="BLDS-NAMA-NOMOR" autocomplete="off" spellcheck="false">
+        </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a class="mobile-nav-link" href="#home" data-i18n="nav_home">Home</a>
+        <a class="mobile-nav-link" href="#about" data-i18n="nav_about">About</a>
+        <a class="mobile-nav-link" href="#vision" data-i18n="nav_vision">Vision & Mission</a>
+        <a class="mobile-nav-link" href="#identity" data-i18n="nav_identity">Identity</a>
+        <a class="mobile-nav-link" href="#community" data-i18n="nav_community">Community</a>
+        <a class="mobile-nav-link" href="#rules" data-i18n="nav_rules">Rules</a>
+        <a class="mobile-nav-link" href="#faq" data-i18n="nav_faq">FAQ</a>
+        <a class="mobile-nav-link" href="#contact" data-i18n="nav_contact">Contact</a>
+        <button class="btn-primary" id="joinDomsMobileBtn" style="width: 100%; justify-content: center; margin-top: 1rem;" data-i18n="btn_join_doms">Join DOMS</button>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main>
+
+        <!-- HERO SECTION -->
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <div class="hero-text-col">
+                    <div class="badge-pill">
+                        <span class="badge-dot"></span>
+                        <span data-i18n="hero_badge">BLACKLIGHTDOMINIONS MARGA SYSTEM</span>
+                    </div>
+                    <h1 class="hero-title">DOMS</h1>
+                    <p class="hero-subtitle" data-i18n="hero_desc">
+                        "An open identity built upon unity, shared values, and meaningful connections. DOMS brings individuals together under one identity while creating a stronger connection within the BLACKLIGHTDOMINIONS community."
+                    </p>
+                    <div class="hero-btns">
+                        <button class="btn-primary" id="exploreHeroBtn" data-i18n="hero_btn_explore">Explore DOMS</button>
+                        <button class="btn-secondary" id="joinHeroBtn" data-i18n="btn_join_doms">Join DOMS</button>
+                    </div>
+                </div>
+
+                <div class="hero-visual-col">
+                    <div class="hero-eclipse-container">
+                        <div class="hero-eclipse-inner"></div>
+                        <div class="hero-logo-center">
+                            <img id="heroLogoImg" src="" alt="DOMS Hero Logo">
+                        </div>
+                    </div>
+                </div>
             </div>
-            <button class="btn hover-target" id="btn-verify">Initialize Verification</button>
+
+            <a href="#about" class="scroll-down-indicator">
+                <span data-i18n="scroll_down">Scroll Down</span>
+                <i data-lucide="arrow-down" size="16"></i>
+            </a>
+        </section>
+
+        <!-- ABOUT SECTION -->
+        <section id="about">
+            <div class="section-header">
+                <span class="section-tag" data-i18n="about_tag">01 / Introduction</span>
+                <h2 class="section-title" data-i18n="about_title">What is DOMS?</h2>
+            </div>
+
+            <div class="about-grid">
+                <div class="about-text">
+                    <p data-i18n="about_p1">
+                        <strong>DOMS</strong> is an open-to-public marga identity system associated with <strong>BLACKLIGHTDOMINIONS (BLDS)</strong>. It provides individuals with a shared identity that represents unity, connection, and a sense of belonging.
+                    </p>
+                    <p data-i18n="about_p2">
+                        DOMS is more than a nickname tag. It is a symbol of shared values, mutual respect, and participation within a growing community. Anyone can become part of DOMS, provided they follow the established identity format and community regulations.
+                    </p>
+                    <p data-i18n="about_p3">
+                        Through this system, DOMS aims to connect people, encourage positive interactions, and create a welcoming environment where individuals can build friendships and grow together.
+                    </p>
+                </div>
+
+                <div class="about-stats-card">
+                    <div class="stat-item">
+                        <div class="stat-number">PUBLIC</div>
+                        <div class="stat-label" data-i18n="stat_label_1">Open identity system accessible to everyone without strict rank barriers.</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">BLDS</div>
+                        <div class="stat-label" data-i18n="stat_label_2">Associated with BLACKLIGHTDOMINIONS community ecosystem.</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">UNITY</div>
+                        <div class="stat-label" data-i18n="stat_label_3">Built upon mutual respect, shared values, and strong solidarity.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VISION & MISSION -->
+        <section id="vision">
+            <div class="section-header">
+                <span class="section-tag" data-i18n="vision_tag">02 / Purpose & Goals</span>
+                <h2 class="section-title" data-i18n="vision_title">Vision & Mission</h2>
+            </div>
+
+            <div class="vision-mission-grid">
+                <!-- Vision Card -->
+                <div class="vm-card">
+                    <div class="vm-card-header">
+                        <div class="vm-icon-box">
+                            <i data-lucide="eye" size="24"></i>
+                        </div>
+                        <h3 class="vm-card-title" data-i18n="vision_card_title">Our Vision</h3>
+                    </div>
+                    <p class="vm-text" data-i18n="vision_card_text">
+                        "To establish DOMS as an inclusive, recognizable, and meaningful identity that connects individuals through shared values, mutual respect, and a strong sense of belonging.<br><br>
+                        DOMS aims to become more than simply a shared nickname or community tag. It strives to represent a lasting connection between individuals who believe in unity, friendship, integrity, and positive interaction.<br><br>
+                        By bringing together people from different backgrounds and interests, DOMS seeks to create an environment where everyone has the opportunity to participate, build meaningful relationships, exchange experiences, support one another, and grow together.<br><br>
+                        Through consistent values, collective responsibility, and active community participation, DOMS aspires to develop into a strong and sustainable identity that represents solidarity, trust, and a positive reputation within BLACKLIGHTDOMINIONS and beyond."
+                    </p>
+                </div>
+
+                <!-- Mission Card -->
+                <div class="vm-card">
+                    <div class="vm-card-header">
+                        <div class="vm-icon-box">
+                            <i data-lucide="target" size="24"></i>
+                        </div>
+                        <h3 class="vm-card-title" data-i18n="mission_card_title">Our Mission</h3>
+                    </div>
+                    <ul class="mission-list">
+                        <li class="mission-item">
+                            <span class="mission-number">01</span>
+                            <span data-i18n="mission_1">Establish DOMS as an inclusive identity that anyone can become part of.</span>
+                        </li>
+                        <li class="mission-item">
+                            <span class="mission-number">02</span>
+                            <span data-i18n="mission_2">Strengthen relationships and connections between individuals through community participation.</span>
+                        </li>
+                        <li class="mission-item">
+                            <span class="mission-number">03</span>
+                            <span data-i18n="mission_3">Encourage mutual respect, responsibility, honesty, and positive behavior.</span>
+                        </li>
+                        <li class="mission-item">
+                            <span class="mission-number">04</span>
+                            <span data-i18n="mission_4">Build a welcoming environment where members can interact, share experiences, and develop meaningful friendships.</span>
+                        </li>
+                        <li class="mission-item">
+                            <span class="mission-number">05</span>
+                            <span data-i18n="mission_5">Maintain the reputation and values associated with BLACKLIGHTDOMINIONS.</span>
+                        </li>
+                        <li class="mission-item">
+                            <span class="mission-number">06</span>
+                            <span data-i18n="mission_6">Encourage unity and cooperation among DOMS users regardless of their backgrounds.</span>
+                        </li>
+                        <li class="mission-item">
+                            <span class="mission-number">07</span>
+                            <span data-i18n="mission_7">Develop a sustainable identity system that can grow alongside the BLACKLIGHTDOMINIONS community.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- IDENTITY SYSTEM -->
+        <section id="identity">
+            <div class="section-header">
+                <span class="section-tag" data-i18n="identity_tag">03 / Nickname Standards</span>
+                <h2 class="section-title" data-i18n="identity_title">Your Identity</h2>
+            </div>
+
+            <div class="identity-container">
+                <div class="identity-grid">
+                    <div class="identity-formats-box">
+                        <div class="format-card">
+                            <span>Nama X DOMS</span>
+                            <span class="format-badge" data-i18n="accepted_badge">Accepted</span>
+                        </div>
+                        <div class="format-card">
+                            <span>Nama x DOMS</span>
+                            <span class="format-badge" data-i18n="accepted_badge">Accepted</span>
+                        </div>
+                        <div class="format-card">
+                            <span>Nama × DOMS</span>
+                            <span class="format-badge" data-i18n="accepted_badge">Accepted</span>
+                        </div>
+                    </div>
+
+                    <div class="identity-info">
+                        <h3 data-i18n="identity_info_title">The Official Format</h3>
+                        <p data-i18n="identity_info_desc">
+                            All three nickname formats are officially accepted. The DOMS tag must always remain at the end of your nickname. You have full freedom to personalize your primary name before the tag.
+                        </p>
+                        <div class="identity-rules-chips">
+                            <span class="identity-chip" data-i18n="chip_1">No Impersonation</span>
+                            <span class="identity-chip" data-i18n="chip_2">Tag at the end</span>
+                            <span class="identity-chip" data-i18n="chip_3">Respect others</span>
+                            <span class="identity-chip" data-i18n="chip_4">Open to public</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- COMMUNITY REQUIREMENTS -->
+        <section id="community">
+            <div class="section-header">
+                <span class="section-tag" data-i18n="community_tag">04 / Ecosystem Connection</span>
+                <h2 class="section-title" data-i18n="community_title">Join the Community</h2>
+            </div>
+
+            <div class="community-grid">
+                <!-- WhatsApp Card -->
+                <div class="community-card">
+                    <div class="community-card-top">
+                        <div class="community-icon">
+                            <i data-lucide="message-circle" size="28"></i>
+                        </div>
+                        <div>
+                            <h3 class="community-title">WhatsApp Community</h3>
+                            <p class="community-desc" data-i18n="wa_card_desc">Connect instantly with fellow DOMS members and BLDS participants through our active WhatsApp community group.</p>
+                        </div>
+                    </div>
+                    <a href="https://chat.whatsapp.com/LJvQ6Bu1FESAvNk5bqbk1F?s=cl&p=a&mlu=4" target="_blank" class="btn-primary" style="justify-content: center;">
+                        <span data-i18n="btn_join_whatsapp">Join WhatsApp</span>
+                        <i data-lucide="external-link" size="16"></i>
+                    </a>
+                </div>
+
+                <!-- Discord Card -->
+                <div class="community-card">
+                    <div class="community-card-top">
+                        <div class="community-icon">
+                            <i data-lucide="disc" size="28"></i>
+                        </div>
+                        <div>
+                            <h3 class="community-title">Discord Community</h3>
+                            <p class="community-desc" data-i18n="discord_card_desc">Join our official Discord server for voice channels, community events, announcements, and structured discussions.</p>
+                        </div>
+                    </div>
+                    <a href="https://discord.gg/rDTJMwaHNg" target="_blank" class="btn-primary" style="justify-content: center;">
+                        <span data-i18n="btn_join_discord">Join Discord</span>
+                        <i data-lucide="external-link" size="16"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="community-note">
+                <span data-i18n="community_note_text">💡 <strong>Note:</strong> Joining at least <strong>ONE</strong> official BLDS community platform is mandatory. Joining both is strongly encouraged.</span>
+            </div>
+        </section>
+
+        <!-- RULES & REGULATIONS -->
+        <section id="rules">
+            <div class="section-header">
+                <span class="section-tag" data-i18n="rules_tag">05 / Code of Conduct</span>
+                <h2 class="section-title" data-i18n="rules_title">DOMS Rules & Regulations</h2>
+            </div>
+
+            <div class="rules-container" id="rulesAccordionContainer">
+                <!-- Rule Cat 01 -->
+                <div class="rule-category-card">
+                    <div class="rule-category-header">
+                        <div class="rule-category-title-group">
+                            <span class="rule-cat-num">01</span>
+                            <h3 class="rule-cat-title" data-i18n="rule_cat_1_title">Identity Regulations</h3>
+                        </div>
+                        <div class="rule-toggle-icon">
+                            <i data-lucide="chevron-down" size="18"></i>
+                        </div>
+                    </div>
+                    <div class="rule-category-body">
+                        <ul class="rule-items-list">
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_1_1">Every DOMS user must use one of the accepted nickname formats: Nama X DOMS, Nama x DOMS, or Nama × DOMS.</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_1_2">The DOMS tag must remain at the end of the nickname.</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_1_3">Users are responsible for maintaining their own identity.</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_1_4">Impersonating another DOMS user or BLDS representative is strictly prohibited.</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Rule Cat 02 -->
+                <div class="rule-category-card">
+                    <div class="rule-category-header">
+                        <div class="rule-category-title-group">
+                            <span class="rule-cat-num">02</span>
+                            <h3 class="rule-cat-title" data-i18n="rule_cat_2_title">Community Requirements</h3>
+                        </div>
+                        <div class="rule-toggle-icon">
+                            <i data-lucide="chevron-down" size="18"></i>
+                        </div>
+                    </div>
+                    <div class="rule-category-body">
+                        <ul class="rule-items-list">
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_2_1">Every DOMS user must join at least one official BLDS community platform (WhatsApp or Discord).</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_2_2">Users must respect the rules of the WhatsApp or Discord community they join.</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_2_3">Users are encouraged to participate positively in community activities.</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_2_4">Users must not use DOMS as a means to create unnecessary conflict.</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Rule Cat 03 -->
+                <div class="rule-category-card">
+                    <div class="rule-category-header">
+                        <div class="rule-category-title-group">
+                            <span class="rule-cat-num">03</span>
+                            <h3 class="rule-cat-title" data-i18n="rule_cat_3_title">Conduct & Behavior</h3>
+                        </div>
+                        <div class="rule-toggle-icon">
+                            <i data-lucide="chevron-down" size="18"></i>
+                        </div>
+                    </div>
+                    <div class="rule-category-body">
+                        <ul class="rule-items-list">
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_3_1">Respect other individuals regardless of their backgrounds.</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_3_2">Harassment, bullying, intimidation, and targeted abuse are strictly prohibited.</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_3_3">Spamming and disruptive behavior are not permitted.</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_3_4">Fraudulent behavior and impersonation are prohibited.</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_3_5">Do not use the DOMS identity to damage the reputation of other people or the community.</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Rule Cat 04 -->
+                <div class="rule-category-card">
+                    <div class="rule-category-header">
+                        <div class="rule-category-title-group">
+                            <span class="rule-cat-num">04</span>
+                            <h3 class="rule-cat-title" data-i18n="rule_cat_4_title">Identity Misuse</h3>
+                        </div>
+                        <div class="rule-toggle-icon">
+                            <i data-lucide="chevron-down" size="18"></i>
+                        </div>
+                    </div>
+                    <div class="rule-category-body">
+                        <ul class="rule-items-list">
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_4_1">Do not falsely claim to represent the official BLDS administration.</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_4_2">Do not misuse the DOMS identity for scams or misleading activities.</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_4_3">Do not spread false announcements on behalf of DOMS or BLDS.</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_4_4">Do not use the DOMS identity to engage in harmful activities.</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Rule Cat 05 -->
+                <div class="rule-category-card">
+                    <div class="rule-category-header">
+                        <div class="rule-category-title-group">
+                            <span class="rule-cat-num">05</span>
+                            <h3 class="rule-cat-title" data-i18n="rule_cat_5_title">Enforcement</h3>
+                        </div>
+                        <div class="rule-toggle-icon">
+                            <i data-lucide="chevron-down" size="18"></i>
+                        </div>
+                    </div>
+                    <div class="rule-category-body">
+                        <ul class="rule-items-list">
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_5_1">Violations may result in verbal reminder, official warning, temporary restriction, or revocation of permission to use the DOMS identity.</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_5_2">The response will depend on the seriousness and circumstances of the violation.</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_5_3">Severe violations may receive stronger action. Note: Using DOMS does not automatically make someone an official BLDS MLBB squad member.</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ SECTION -->
+        <section id="faq">
+            <div class="section-header">
+                <span class="section-tag" data-i18n="faq_tag">06 / Common Questions</span>
+                <h2 class="section-title" data-i18n="faq_title">Frequently Asked Questions</h2>
+            </div>
+
+            <div class="faq-grid" id="faqContainer">
+                <!-- FAQ 1 -->
+                <div class="faq-card">
+                    <div class="faq-question-header">
+                        <span class="faq-question" data-i18n="faq_q1">What is DOMS?</span>
+                        <i data-lucide="chevron-down" class="faq-icon" size="18"></i>
+                    </div>
+                    <div class="faq-answer" data-i18n="faq_a1">DOMS is an open-to-public marga identity system associated with BLACKLIGHTDOMINIONS, designed to unite individuals through shared values and meaningful connections.</div>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="faq-card">
+                    <div class="faq-question-header">
+                        <span class="faq-question" data-i18n="faq_q2">Who can use the DOMS identity?</span>
+                        <i data-lucide="chevron-down" class="faq-icon" size="18"></i>
+                    </div>
+                    <div class="faq-answer" data-i18n="faq_a2">Anyone can use the DOMS identity as long as they follow the established nickname format and adhere to community regulations.</div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="faq-card">
+                    <div class="faq-question-header">
+                        <span class="faq-question" data-i18n="faq_q3">Is DOMS open to the public?</span>
+                        <i data-lucide="chevron-down" class="faq-icon" size="18"></i>
+                    </div>
+                    <div class="faq-answer" data-i18n="faq_a3">Yes, DOMS is completely open to the public regardless of gaming rank, background, or previous membership status.</div>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="faq-card">
+                    <div class="faq-question-header">
+                        <span class="faq-question" data-i18n="faq_q4">What nickname format must I use?</span>
+                        <i data-lucide="chevron-down" class="faq-icon" size="18"></i>
+                    </div>
+                    <div class="faq-answer" data-i18n="faq_a4">You must use one of three accepted formats: Nama X DOMS, Nama x DOMS, or Nama × DOMS, with the tag positioned at the end.</div>
+                </div>
+
+                <!-- FAQ 5 -->
+                <div class="faq-card">
+                    <div class="faq-question-header">
+                        <span class="faq-question" data-i18n="faq_q5">Do I need to join the BLDS community?</span>
+                        <i data-lucide="chevron-down" class="faq-icon" size="18"></i>
+                    </div>
+                    <div class="faq-answer" data-i18n="faq_a5">Yes, every DOMS user is required to join at least one official BLDS community platform (WhatsApp or Discord).</div>
+                </div>
+
+                <!-- FAQ 6 -->
+                <div class="faq-card">
+                    <div class="faq-question-header">
+                        <span class="faq-question" data-i18n="faq_q6">Do I need to join both WhatsApp and Discord?</span>
+                        <i data-lucide="chevron-down" class="faq-icon" size="18"></i>
+                    </div>
+                    <div class="faq-answer" data-i18n="faq_a6">Joining both is strongly encouraged, but joining at least one platform is the minimum mandatory requirement.</div>
+                </div>
+
+                <!-- FAQ 7 -->
+                <div class="faq-card">
+                    <div class="faq-question-header">
+                        <span class="faq-question" data-i18n="faq_q7">Does using DOMS make me an official BLDS MLBB squad member?</span>
+                        <i data-lucide="chevron-down" class="faq-icon" size="18"></i>
+                    </div>
+                    <div class="faq-answer" data-i18n="faq_a7">No. Using the DOMS tag does not automatically make someone an officially registered member of the BLDS MLBB squad.</div>
+                </div>
+
+                <!-- FAQ 8 -->
+                <div class="faq-card">
+                    <div class="faq-question-header">
+                        <span class="faq-question" data-i18n="faq_q8">What happens if I violate the rules?</span>
+                        <i data-lucide="chevron-down" class="faq-icon" size="18"></i>
+                    </div>
+                    <div class="faq-answer" data-i18n="faq_a8">Violations may lead to reminders, warnings, temporary restrictions, or revocation of permission to use the DOMS identity depending on severity.</div>
+                </div>
+
+                <!-- FAQ 9 -->
+                <div class="faq-card">
+                    <div class="faq-question-header">
+                        <span class="faq-question" data-i18n="faq_q9">Where can I contact the DOMS administration?</span>
+                        <i data-lucide="chevron-down" class="faq-icon" size="18"></i>
+                    </div>
+                    <div class="faq-answer" data-i18n="faq_a9">You can reach the administration directly via WhatsApp at 085591006359 or through our official community platforms.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- JOIN DOMS CTA SECTION -->
+        <section class="cta-section">
+            <div class="cta-box">
+                <h2 class="cta-title" data-i18n="cta_title">Ready to Join DOMS?</h2>
+                <p class="cta-desc" data-i18n="cta_desc">Become part of a growing identity built on unity, shared values, and meaningful connections.</p>
+                <button class="cta-btn-glow" id="ctaJoinBtn" data-i18n="btn_join_doms">Join DOMS</button>
+            </div>
+        </section>
+
+        <!-- CONTACT US SECTION -->
+        <section id="contact">
+            <div class="section-header" style="text-align: center;">
+                <span class="section-tag" data-i18n="contact_tag">07 / Support & Inquiry</span>
+                <h2 class="section-title" data-i18n="contact_title">Get in Touch</h2>
+            </div>
+
+            <div class="contact-container">
+                <div class="contact-icon-box">
+                    <i data-lucide="phone-call" size="36"></i>
+                </div>
+                <p style="color: var(--text-muted);" data-i18n="contact_desc">Have questions, suggestions, or concerns regarding DOMS? Feel free to contact the administration.</p>
+                <div class="contact-number">085591006359</div>
+                <div class="contact-actions">
+                    <a href="https://wa.me/6285591006359" target="_blank" class="btn-primary">
+                        <i data-lucide="message-circle" size="16"></i>
+                        <span data-i18n="contact_wa_btn">Contact via WhatsApp</span>
+                    </a>
+                    <button class="btn-secondary" id="copyNumberBtn">
+                        <i data-lucide="copy" size="16"></i>
+                        <span data-i18n="contact_copy_btn">Copy Number</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <div class="nav-brand">
+                    <div class="logo-wrapper" style="width: 36px; height: 36px;">
+                        <img id="footerLogoImg" src="" alt="DOMS Logo">
+                    </div>
+                    <span class="nav-title">DOMS</span>
+                </div>
+                <p class="footer-brand-desc" data-i18n="footer_desc">DOMS is an open identity system built around unity, shared values, and meaningful connections within the BLACKLIGHTDOMINIONS community.</p>
+                <span style="font-family: var(--font-heading); font-size: 0.85rem; letter-spacing: 0.1em; color: var(--text-main);">ONE IDENTITY. ONE COMMUNITY.</span>
+            </div>
+
+            <div class="footer-col">
+                <h4 class="footer-heading" data-i18n="footer_nav_heading">Quick Navigation</h4>
+                <ul class="footer-links">
+                    <li><a class="footer-link" href="#home" data-i18n="nav_home">Home</a></li>
+                    <li><a class="footer-link" href="#about" data-i18n="nav_about">About DOMS</a></li>
+                    <li><a class="footer-link" href="#vision" data-i18n="nav_vision">Vision & Mission</a></li>
+                    <li><a class="footer-link" href="#identity" data-i18n="nav_identity">Identity</a></li>
+                    <li><a class="footer-link" href="#community" data-i18n="nav_community">Requirements</a></li>
+                    <li><a class="footer-link" href="#rules" data-i18n="nav_rules">Rules</a></li>
+                    <li><a class="footer-link" href="#faq" data-i18n="nav_faq">FAQ</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4 class="footer-heading" data-i18n="footer_community_heading">Community</h4>
+                <ul class="footer-links">
+                    <li><a class="footer-link" href="https://chat.whatsapp.com/LJvQ6Bu1FESAvNk5bqbk1F?s=cl&p=a&mlu=4" target="_blank">WhatsApp Community</a></li>
+                    <li><a class="footer-link" href="https://discord.gg/rDTJMwaHNg" target="_blank">Discord Community</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4 class="footer-heading" data-i18n="footer_contact_heading">Contact</h4>
+                <ul class="footer-links">
+                    <li><a class="footer-link" href="#contact" data-i18n="nav_contact">Contact Us</a></li>
+                    <li><span style="color: var(--text-main); font-weight: 600;">085591006359</span></li>
+                    <li><a class="footer-link" href="https://wa.me/6285591006359" target="_blank" data-i18n="contact_wa_btn">WhatsApp Chat</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div>© <span id="currentYear"></span> DOMS — BLACKLIGHTDOMINIONS. All Rights Reserved. Built upon unity. Connected beyond identity.</div>
+            <button class="back-to-top" id="backToTopBtn" aria-label="Back to top">
+                <i data-lucide="arrow-up" size="18"></i>
+            </button>
+        </div>
+    </footer>
+
+    <!-- JOIN MODAL -->
+    <div class="modal-overlay" id="joinModal">
+        <div class="modal-card">
+            <button class="modal-close" id="modalCloseBtn">
+                <i data-lucide="x" size="20"></i>
+            </button>
+
+            <div class="badge-pill" style="margin-bottom: 1rem;">
+                <span class="badge-dot"></span>
+                <span>DOMS REGISTRATION GUIDE</span>
+            </div>
+
+            <h3 style="font-family: var(--font-heading); font-size: 1.75rem; font-weight: 700;" data-i18n="modal_title">WELCOME TO DOMS</h3>
+            <p style="color: var(--text-muted); margin-top: 0.5rem;" data-i18n="modal_desc">Before becoming part of DOMS, make sure you understand and complete the required steps.</p>
+
+            <div class="modal-steps">
+                <!-- Step 1 -->
+                <div class="modal-step-item">
+                    <div class="modal-step-title">
+                        <span class="mission-number">01</span>
+                        <span data-i18n="modal_step1_title">Understand the Identity Format</span>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;" data-i18n="modal_step1_desc">Use one of the accepted nickname formats in your profile:</p>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <span class="identity-chip">Nama X DOMS</span>
+                        <span class="identity-chip">Nama x DOMS</span>
+                        <span class="identity-chip">Nama × DOMS</span>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="modal-step-item">
+                    <div class="modal-step-title">
+                        <span class="mission-number">02</span>
+                        <span data-i18n="modal_step2_title">Join at Least ONE Community</span>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;" data-i18n="modal_step2_desc">Joining at least one official BLDS platform is mandatory.</p>
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.5rem;">
+                        <a href="https://chat.whatsapp.com/LJvQ6Bu1FESAvNk5bqbk1F?s=cl&p=a&mlu=4" target="_blank" class="btn-secondary" style="font-size: 0.75rem; padding: 8px 16px;">
+                            <i data-lucide="message-circle" size="14"></i> WhatsApp
+                        </a>
+                        <a href="https://discord.gg/rDTJMwaHNg" target="_blank" class="btn-secondary" style="font-size: 0.75rem; padding: 8px 16px;">
+                            <i data-lucide="disc" size="14"></i> Discord
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="modal-step-item">
+                    <div class="modal-step-title">
+                        <span class="mission-number">03</span>
+                        <span data-i18n="modal_step3_title">Final Confirmation</span>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;" data-i18n="modal_step3_desc">Once you have joined the community and updated your nickname format, you are officially part of the DOMS system!</p>
+                    <button class="btn-primary" id="modalConfirmBtn" style="justify-content: center; margin-top: 0.5rem;" data-i18n="modal_confirm_btn">I Have Joined & Understand</button>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div id="screen-admin-auth" class="screen">
-        <div class="glass-panel">
-            <h2>System Override</h2>
-            <p style="margin-bottom: 24px;">Enter Authorization ID</p>
-            <div class="input-group">
-                <input type="password" id="admin-id" placeholder="ID (e.g., 001)" autocomplete="off">
-            </div>
-            <button class="btn hover-target" id="btn-admin-login">Authenticate</button>
-        </div>
+    <!-- Toast Notification -->
+    <div class="toast" id="toastNotification">
+        <i data-lucide="check-circle" size="20" style="color: var(--text-main);"></i>
+        <span id="toastMessage">Action completed successfully.</span>
     </div>
 
-    <div id="screen-cinematic" class="screen">
-        <canvas id="particles-canvas"></canvas>
-        <div class="ambient-glow"></div>
-        <div class="vignette"></div>
-        <div class="cinematic-text-container">
-            <div class="cinematic-text" id="cine-text-1">Every journey begins with a single decision.</div>
-            <div class="cinematic-text" id="cine-text-2">Not every path leads to the same destination.</div>
-            <div class="cinematic-text" id="cine-text-3">Character outweighs potential.</div>
-            <div class="cinematic-text" id="cine-text-4">Every choice shapes the path ahead.</div>
-        </div>
-    </div>
-
-    <div id="screen-result" class="screen">
-        <div class="glass-panel" style="text-align: center;">
-            <p id="result-subtitle" style="text-transform: uppercase; letter-spacing: 4px; margin-bottom: 10px;"></p>
-            <h2 id="result-title" class="status-title"></h2>
-            <p id="result-message" class="status-message"></p>
-            <button class="btn btn-primary hover-target" id="btn-result-action">Return</button>
-        </div>
-    </div>
-
-    <div id="screen-admin" class="screen">
-        <div class="admin-layout">
-            <div class="sidebar">
-                <h3 style="margin-bottom: 20px;">BLDS Core</h3>
-                <p id="admin-welcome" style="font-size: 12px; margin-bottom: 30px;"></p>
-                <button class="btn hover-target" id="tab-candidates">Candidates</button>
-                <button class="btn hover-target" id="tab-settings" style="display:none;">System Settings</button>
-                <button class="btn hover-target" id="btn-logout" style="border-color: rgba(255,255,255,0.2); margin-top: auto;">Log Out</button>
-            </div>
-            <div class="main-content" id="admin-content">
-                <h2>Local Database</h2>
-                <p>Staff data is securely read from the local system configuration.</p>
-            </div>
-        </div>
-    </div>
-
+    <!-- JAVASCRIPT LOGIC -->
     <script>
-        // ==========================================
-        // 1. LOCAL DATABASE (NO FIREBASE)
-        // ==========================================
-        const localDB = {
-            "BLDS-ALEX-099": { name: "Alex", status: "Approved" },
-            "BLDS-JOHN-404": { name: "John", status: "Not Approved" }
+        /* ==========================================================================
+           LOGOS DATA (SUPPLIED AS BASE64 / EMBEDDED SVG)
+           ========================================================================== */
+        // Clean professional SVG representations of the exact DOMS / BLDS identity logo
+        // Dark theme logo (White on dark) & Light theme logo (Black on light)
+        const LOGO_DARK = "data:image/svg+xml;base64," + btoa(`
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="44" fill="#000" stroke="#fff" stroke-width="6"/>
+                <path d="M30 35 L50 65 L70 35 Z" fill="#fff"/>
+            </svg>
+        `);
+        const LOGO_LIGHT = "data:image/svg+xml;base64," + btoa(`
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="44" fill="#fff" stroke="#000" stroke-width="6"/>
+                <path d="M30 35 L50 65 L70 35 Z" fill="#000"/>
+            </svg>
+        `);
+
+        // Update logo sources based on theme
+        function updateLogos(theme) {
+            const logoSrc = theme === 'dark' ? LOGO_DARK : LOGO_LIGHT;
+            document.getElementById('navLogoImg').src = logoSrc;
+            document.getElementById('heroLogoImg').src = logoSrc;
+            document.getElementById('footerLogoImg').src = logoSrc;
+        }
+
+        /* ==========================================================================
+           TRANSLATION DICTIONARY (ID, EN, MS)
+           ========================================================================== */
+        const translations = {
+            id: {
+                loading: "Memuat Sistem DOMS",
+                nav_home: "Beranda",
+                nav_about: "Tentang",
+                nav_vision: "Visi & Misi",
+                nav_identity: "Identitas",
+                nav_community: "Komunitas",
+                nav_rules: "Aturan",
+                nav_faq: "FAQ",
+                nav_contact: "Kontak",
+                btn_join_doms: "Gabung DOMS",
+                hero_badge: "SISTEM MARGA BLACKLIGHTDOMINIONS",
+                hero_desc: "“Identitas terbuka yang dibangun atas dasar persatuan, nilai bersama, dan hubungan yang bermakna. DOMS menyatukan individu di dalam satu identitas sekaligus mempererat ikatan dalam komunitas BLACKLIGHTDOMINIONS.”",
+                hero_btn_explore: "Jelajahi DOMS",
+                scroll_down: "Gulir ke Bawah",
+                about_tag: "01 / Pengantar",
+                about_title: "Apa itu DOMS?",
+                about_p1: "<strong>DOMS</strong> adalah sistem identitas marga yang terbuka untuk umum dan berafiliasi dengan <strong>BLACKLIGHTDOMINIONS (BLDS)</strong>. Ini memberikan identitas bersama yang merepresentasikan persatuan, koneksi, dan rasa memiliki.",
+                about_p2: "DOMS lebih dari sekadar tag nama. Ini adalah simbol nilai bersama, saling menghormati, dan partisipasi di dalam komunitas yang berkembang.",
+                about_p3: "Melalui sistem ini, DOMS bertujuan menghubungkan orang-orang, mendorong interaksi positif, dan menciptakan lingkungan yang ramah di mana individu dapat membangun persahabatan dan berkembang bersama.",
+                stat_label_1: "Sistem identitas terbuka yang dapat diakses semua orang tanpa batasan pangkat ketat.",
+                stat_label_2: "Berafiliasi dengan ekosistem komunitas BLACKLIGHTDOMINIONS.",
+                stat_label_3: "Dibangun atas dasar saling menghormati, nilai bersama, dan solidaritas yang kuat.",
+                vision_tag: "02 / Tujuan & Sasaran",
+                vision_title: "Visi & Misi",
+                vision_card_title: "Visi Kami",
+                vision_card_text: "“Menjadikan DOMS sebagai identitas inklusif, mudah dikenali, dan bermakna yang menghubungkan individu melalui nilai-nilai bersama, rasa saling menghormati, dan rasa memiliki yang kuat.<br><br>DOMS bertujuan menjadi lebih dari sekadar nama panggilan atau tag komunitas. DOMS berupaya merepresentasikan hubungan abadi antara individu yang percaya pada persatuan, persahabatan, integritas, dan interaksi positif.<br><br>Dengan menyatukan orang-orang dari berbagai latar belakang, DOMS menciptakan lingkungan di mana setiap orang memiliki kesempatan berpartisipasi, membangun hubungan, saling mendukung, dan berkembang bersama.<br><br>Melalui nilai konsisten dan partisipasi aktif, DOMS bercita-cita menjadi identitas kuat yang merepresentasikan solidaritas dan kepercayaan dalam BLACKLIGHTDOMINIONS.”",
+                mission_card_title: "Misi Kami",
+                mission_1: "Menetapkan DOMS sebagai identitas inklusif yang dapat diikuti oleh siapa saja.",
+                mission_2: "Memperkuat hubungan dan koneksi antar individu melalui partisipasi komunitas.",
+                mission_3: "Mendorong rasa saling menghormati, tanggung jawab, kejujuran, dan perilaku positif.",
+                mission_4: "Membangun lingkungan ramah di mana anggota dapat berinteraksi dan membangun persahabatan.",
+                mission_5: "Menjaga reputasi dan nilai-nilai yang diasosiasikan dengan BLACKLIGHTDOMINIONS.",
+                mission_6: "Mendorong persatuan dan kerja sama di antara pengguna DOMS tanpa memandang latar belakang.",
+                mission_7: "Mengembangkan sistem identitas berkelanjutan yang berkembang bersama BLACKLIGHTDOMINIONS.",
+                identity_tag: "03 / Standar Nama Panggilan",
+                identity_title: "Identitas Anda",
+                accepted_badge: "Diterima",
+                identity_info_title: "Format Resmi",
+                identity_info_desc: "Ketiga format nama panggilan di atas diterima secara resmi. Tag DOMS harus selalu berada di bagian akhir nama panggilan Anda. Anda memiliki kebebasan penuh untuk mempersonalisasi nama utama sebelum tag.",
+                chip_1: "Tanpa Peniruan",
+                chip_2: "Tag di Akhir",
+                chip_3: "Saling Menghormati",
+                chip_4: "Terbuka untuk Umum",
+                community_tag: "04 / Koneksi Ekosistem",
+                community_title: "Gabung Komunitas",
+                wa_card_desc: "Terhubung langsung dengan sesama anggota DOMS dan partisipan BLDS melalui grup komunitas WhatsApp kami yang aktif.",
+                discord_card_desc: "Bergabunglah dengan server Discord resmi kami untuk kanal suara, acara komunitas, pengumuman, dan diskusi terstruktur.",
+                btn_join_whatsapp: "Gabung WhatsApp",
+                btn_join_discord: "Gabung Discord",
+                community_note_text: "💡 <strong>Catatan:</strong> Bergabung dengan setidaknya <strong>SATU</strong> platform komunitas BLDS resmi adalah wajib. Bergabung dengan keduanya sangat dianjurkan.",
+                rules_tag: "05 / Kode Etik",
+                rules_title: "Aturan & Regulasi DOMS",
+                rule_cat_1_title: "Regulasi Identitas",
+                rule_1_1: "Setiap pengguna DOMS harus menggunakan salah satu format nama panggilan yang diterima: Nama X DOMS, Nama x DOMS, atau Nama × DOMS.",
+                rule_1_2: "Tag DOMS harus tetap berada di akhir nama panggilan.",
+                rule_1_3: "Pengguna bertanggung jawab atas identitas mereka sendiri.",
+                rule_1_4: "Meniru pengguna DOMS atau perwakilan BLDS lain dilarang keras.",
+                rule_cat_2_title: "Persyaratan Komunitas",
+                rule_2_1: "Setiap pengguna DOMS harus bergabung dengan setidaknya satu platform komunitas BLDS resmi (WhatsApp atau Discord).",
+                rule_2_2: "Pengguna harus menghormati aturan komunitas WhatsApp atau Discord yang mereka ikuti.",
+                rule_2_3: "Pengguna didorong untuk berpartisipasi secara positif dalam kegiatan komunitas.",
+                rule_2_4: "Pengguna tidak boleh menggunakan DOMS sebagai sarana menciptakan konflik yang tidak perlu.",
+                rule_cat_3_title: "Perilaku & Etika",
+                rule_3_1: "Menghormati individu lain terlepas dari latar belakang mereka.",
+                rule_3_2: "Pelecehan, perundungan, intimidasi, dan penyalahgunaan terarah dilarang keras.",
+                rule_3_3: "Spam dan perilaku mengganggu tidak diizinkan.",
+                rule_3_4: "Perilaku penipuan dan penyamaran dilarang.",
+                rule_3_5: "Jangan gunakan identitas DOMS untuk merusak reputasi orang lain atau komunitas.",
+                rule_cat_4_title: "Penyalahgunaan Identitas",
+                rule_4_1: "Jangan secara keliru mengaku mewakili administrasi resmi BLDS.",
+                rule_4_2: "Jangan menyalahgunakan identitas DOMS untuk penipuan atau aktivitas menyesatkan.",
+                rule_4_3: "Jangan menyebarkan pengumuman palsu atas nama DOMS atau BLDS.",
+                rule_4_4: "Jangan gunakan identitas DOMS untuk terlibat dalam aktivitas berbahaya.",
+                rule_cat_5_title: "Penegakan Aturan",
+                rule_5_1: "Pelanggaran dapat mengakibatkan teguran lisan, peringatan resmi, pembatasan sementara, atau pencabutan izin menggunakan identitas DOMS.",
+                rule_5_2: "Tindakan akan bergantung pada keseriusan dan keadaan pelanggaran.",
+                rule_5_3: "Pelanggaran berat dapat menerima tindakan lebih tegas. Catatan: Menggunakan DOMS tidak secara otomatis menjadikan seseorang anggota resmi skuad MLBB BLDS.",
+                faq_tag: "06 / Pertanyaan Umum",
+                faq_title: "Pertanyaan yang Sering Diajukan",
+                faq_q1: "Apa itu DOMS?",
+                faq_a1: "DOMS adalah sistem identitas marga yang terbuka untuk umum dan berafiliasi dengan BLACKLIGHTDOMINIONS, dirancang untuk menyatukan individu melalui nilai bersama.",
+                faq_q2: "Siapa yang dapat menggunakan identitas DOMS?",
+                faq_a2: "Siapa pun dapat menggunakan identitas DOMS selama mereka mengikuti format nama panggilan yang ditetapkan dan mematuhi aturan komunitas.",
+                faq_q3: "Apakah DOMS terbuka untuk umum?",
+                faq_a3: "Ya, DOMS sepenuhnya terbuka untuk umum tanpa memandang peringkat game, latar belakang, atau status keanggotaan sebelumnya.",
+                faq_q4: "Format nama panggilan apa yang harus saya gunakan?",
+                faq_a4: "Anda harus menggunakan salah satu dari tiga format yang diterima: Nama X DOMS, Nama x DOMS, atau Nama × DOMS, dengan tag di bagian akhir.",
+                faq_q5: "Apakah saya perlu bergabung dengan komunitas BLDS?",
+                faq_a5: "Ya, setiap pengguna DOMS wajib bergabung dengan setidaknya satu platform komunitas resmi BLDS (WhatsApp atau Discord).",
+                faq_q6: "Apakah saya harus bergabung dengan WhatsApp dan Discord?",
+                faq_a6: "Bergabung dengan keduanya sangat dianjurkan, namun bergabung dengan setidaknya satu platform adalah persyaratan minimum.",
+                faq_q7: "Apakah menggunakan DOMS membuat saya menjadi anggota resmi skuad MLBB BLDS?",
+                faq_a7: "Tidak. Menggunakan tag DOMS tidak secara otomatis menjadikan seseorang anggota resmi yang terdaftar di skuad MLBB BLDS.",
+                faq_q8: "Apa yang terjadi jika saya melanggar aturan?",
+                faq_a8: "Pelanggaran dapat berujung pada teguran, peringatan, pembatasan sementara, atau pencabutan izin penggunaan identitas DOMS tergantung tingkat keseriusan.",
+                faq_q9: "Di mana saya dapat menghubungi administrasi DOMS?",
+                faq_a9: "Anda dapat menghubungi administrasi secara langsung via WhatsApp di 085591006359 atau melalui platform komunitas resmi kami.",
+                cta_title: "Siap Bergabung dengan DOMS?",
+                cta_desc: "Jadilah bagian dari identitas yang berkembang berdasarkan persatuan, nilai bersama, dan hubungan yang bermakna.",
+                contact_tag: "07 / Dukungan & Pertanyaan",
+                contact_title: "Hubungi Kami",
+                contact_desc: "Memiliki pertanyaan, saran, atau kendala mengenai DOMS? Jangan ragu untuk menghubungi pihak administrasi.",
+                contact_wa_btn: "Hubungi via WhatsApp",
+                contact_copy_btn: "Salin Nomor",
+                footer_desc: "DOMS adalah sistem identitas terbuka yang dibangun di sekitar persatuan, nilai bersama, dan hubungan bermakna dalam komunitas BLACKLIGHTDOMINIONS.",
+                footer_nav_heading: "Navigasi Cepat",
+                footer_community_heading: "Komunitas",
+                footer_contact_heading: "Kontak",
+                modal_title: "SELAMAT DATANG DI DOMS",
+                modal_desc: "Sebelum menjadi bagian dari DOMS, pastikan Anda memahami dan melengkapi langkah-langkah yang diperlukan.",
+                modal_step1_title: "Pahami Format Identitas",
+                modal_step1_desc: "Gunakan salah satu format nama panggilan yang diterima di profil Anda:",
+                modal_step2_title: "Gabung Minimal SATU Komunitas",
+                modal_step2_desc: "Bergabung dengan setidaknya satu platform resmi BLDS adalah wajib.",
+                modal_step3_title: "Konfirmasi Akhir",
+                modal_step3_desc: "Setelah Anda bergabung dengan komunitas dan memperbarui format nama panggilan, Anda resmi menjadi bagian dari sistem DOMS!",
+                modal_confirm_btn: "Saya Telah Bergabung & Paham"
+            },
+            en: {
+                loading: "Loading DOMS System",
+                nav_home: "Home",
+                nav_about: "About",
+                nav_vision: "Vision & Mission",
+                nav_identity: "Identity",
+                nav_community: "Community",
+                nav_rules: "Rules",
+                nav_faq: "FAQ",
+                nav_contact: "Contact",
+                btn_join_doms: "Join DOMS",
+                hero_badge: "BLACKLIGHTDOMINIONS MARGA SYSTEM",
+                hero_desc: "“An open identity built upon unity, shared values, and meaningful connections. DOMS brings individuals together under one identity while creating a stronger connection within the BLACKLIGHTDOMINIONS community.”",
+                hero_btn_explore: "Explore DOMS",
+                scroll_down: "Scroll Down",
+                about_tag: "01 / Introduction",
+                about_title: "What is DOMS?",
+                about_p1: "<strong>DOMS</strong> is an open-to-public marga identity system associated with <strong>BLACKLIGHTDOMINIONS (BLDS)</strong>. It provides individuals with a shared identity that represents unity, connection, and a sense of belonging.",
+                about_p2: "DOMS is more than a nickname tag. It is a symbol of shared values, mutual respect, and participation within a growing community.",
+                about_p3: "Through this system, DOMS aims to connect people, encourage positive interactions, and create a welcoming environment where individuals can build friendships and grow together.",
+                stat_label_1: "Open identity system accessible to everyone without strict rank barriers.",
+                stat_label_2: "Associated with BLACKLIGHTDOMINIONS community ecosystem.",
+                stat_label_3: "Built upon mutual respect, shared values, and strong solidarity.",
+                vision_tag: "02 / Purpose & Goals",
+                vision_title: "Vision & Mission",
+                vision_card_title: "Our Vision",
+                vision_card_text: "“To establish DOMS as an inclusive, recognizable, and meaningful identity that connects individuals through shared values, mutual respect, and a strong sense of belonging.<br><br>DOMS aims to become more than simply a shared nickname or community tag. It strives to represent a lasting connection between individuals who believe in unity, friendship, integrity, and positive interaction.<br><br>By bringing together people from different backgrounds and interests, DOMS seeks to create an environment where everyone has the opportunity to participate, build meaningful relationships, exchange experiences, support one another, and grow together.<br><br>Through consistent values, collective responsibility, and active community participation, DOMS aspires to develop into a strong and sustainable identity that represents solidarity, trust, and a positive reputation within BLACKLIGHTDOMINIONS and beyond.”",
+                mission_card_title: "Our Mission",
+                mission_1: "Establish DOMS as an inclusive identity that anyone can become part of.",
+                mission_2: "Strengthen relationships and connections between individuals through community participation.",
+                mission_3: "Encourage mutual respect, responsibility, honesty, and positive behavior.",
+                mission_4: "Build a welcoming environment where members can interact, share experiences, and develop meaningful friendships.",
+                mission_5: "Maintain the reputation and values associated with BLACKLIGHTDOMINIONS.",
+                mission_6: "Encourage unity and cooperation among DOMS users regardless of their backgrounds.",
+                mission_7: "Develop a sustainable identity system that can grow alongside the BLACKLIGHTDOMINIONS community.",
+                identity_tag: "03 / Nickname Standards",
+                identity_title: "Your Identity",
+                accepted_badge: "Accepted",
+                identity_info_title: "The Official Format",
+                identity_info_desc: "All three nickname formats are officially accepted. The DOMS tag must always remain at the end of your nickname. You have full freedom to personalize your primary name before the tag.",
+                chip_1: "No Impersonation",
+                chip_2: "Tag at the End",
+                chip_3: "Respect Others",
+                chip_4: "Open to Public",
+                community_tag: "04 / Ecosystem Connection",
+                community_title: "Join the Community",
+                wa_card_desc: "Connect instantly with fellow DOMS members and BLDS participants through our active WhatsApp community group.",
+                discord_card_desc: "Join our official Discord server for voice channels, community events, announcements, and structured discussions.",
+                btn_join_whatsapp: "Join WhatsApp",
+                btn_join_discord: "Join Discord",
+                community_note_text: "💡 <strong>Note:</strong> Joining at least <strong>ONE</strong> official BLDS community platform is mandatory. Joining both is strongly encouraged.",
+                rules_tag: "05 / Code of Conduct",
+                rules_title: "DOMS Rules & Regulations",
+                rule_cat_1_title: "Identity Regulations",
+                rule_1_1: "Every DOMS user must use one of the accepted nickname formats: Nama X DOMS, Nama x DOMS, or Nama × DOMS.",
+                rule_1_2: "The DOMS tag must remain at the end of the nickname.",
+                rule_1_3: "Users are responsible for maintaining their own identity.",
+                rule_1_4: "Impersonating another DOMS user or BLDS representative is strictly prohibited.",
+                rule_cat_2_title: "Community Requirements",
+                rule_2_1: "Every DOMS user must join at least one official BLDS community platform (WhatsApp or Discord).",
+                rule_2_2: "Users must respect the rules of the WhatsApp or Discord community they join.",
+                rule_2_3: "Users are encouraged to participate positively in community activities.",
+                rule_2_4: "Users must not use DOMS as a means to create unnecessary conflict.",
+                rule_cat_3_title: "Conduct & Behavior",
+                rule_3_1: "Respect other individuals regardless of their backgrounds.",
+                rule_3_2: "Harassment, bullying, intimidation, and targeted abuse are strictly prohibited.",
+                rule_3_3: "Spamming and disruptive behavior are not permitted.",
+                rule_3_4: "Fraudulent behavior and impersonation are prohibited.",
+                rule_3_5: "Do not use the DOMS identity to damage the reputation of other people or the community.",
+                rule_cat_4_title: "Identity Misuse",
+                rule_4_1: "Do not falsely claim to represent the official BLDS administration.",
+                rule_4_2: "Do not misuse the DOMS identity for scams or misleading activities.",
+                rule_4_3: "Do not spread false announcements on behalf of DOMS or BLDS.",
+                rule_4_4: "Do not use the DOMS identity to engage in harmful activities.",
+                rule_cat_5_title: "Enforcement",
+                rule_5_1: "Violations may result in verbal reminder, official warning, temporary restriction, or revocation of permission to use the DOMS identity.",
+                rule_5_2: "The response will depend on the seriousness and circumstances of the violation.",
+                rule_5_3: "Severe violations may receive stronger action. Note: Using DOMS does not automatically make someone an official BLDS MLBB squad member.",
+                faq_tag: "06 / Common Questions",
+                faq_title: "Frequently Asked Questions",
+                faq_q1: "What is DOMS?",
+                faq_a1: "DOMS is an open-to-public marga identity system associated with BLACKLIGHTDOMINIONS, designed to unite individuals through shared values.",
+                faq_q2: "Who can use the DOMS identity?",
+                faq_a2: "Anyone can use the DOMS identity as long as they follow the established nickname format and adhere to community regulations.",
+                faq_q3: "Is DOMS open to the public?",
+                faq_a3: "Yes, DOMS is completely open to the public regardless of gaming rank, background, or previous membership status.",
+                faq_q4: "What nickname format must I use?",
+                faq_a4: "You must use one of three accepted formats: Nama X DOMS, Nama x DOMS, or Nama × DOMS, with the tag positioned at the end.",
+                faq_q5: "Do I need to join the BLDS community?",
+                faq_a5: "Yes, every DOMS user is required to join at least one official BLDS community platform (WhatsApp or Discord).",
+                faq_q6: "Do I need to join both WhatsApp and Discord?",
+                faq_a6: "Joining both is strongly encouraged, but joining at least one platform is the minimum mandatory requirement.",
+                faq_q7: "Does using DOMS make me an official BLDS MLBB squad member?",
+                faq_a7: "No. Using the DOMS tag does not automatically make someone an officially registered member of the BLDS MLBB squad.",
+                faq_q8: "What happens if I violate the rules?",
+                faq_a8: "Violations may lead to reminders, warnings, temporary restrictions, or revocation of permission to use the DOMS identity depending on severity.",
+                faq_q9: "Where can I contact the DOMS administration?",
+                faq_a9: "You can reach the administration directly via WhatsApp at 085591006359 or through our official community platforms.",
+                cta_title: "Ready to Join DOMS?",
+                cta_desc: "Become part of a growing identity built on unity, shared values, and meaningful connections.",
+                contact_tag: "07 / Support & Inquiry",
+                contact_title: "Get in Touch",
+                contact_desc: "Have questions, suggestions, or concerns regarding DOMS? Feel free to contact the administration.",
+                contact_wa_btn: "Contact via WhatsApp",
+                contact_copy_btn: "Copy Number",
+                footer_desc: "DOMS is an open identity system built around unity, shared values, and meaningful connections within the BLACKLIGHTDOMINIONS community.",
+                footer_nav_heading: "Quick Navigation",
+                footer_community_heading: "Community",
+                footer_contact_heading: "Contact",
+                modal_title: "WELCOME TO DOMS",
+                modal_desc: "Before becoming part of DOMS, make sure you understand and complete the required steps.",
+                modal_step1_title: "Understand the Identity Format",
+                modal_step1_desc: "Use one of the accepted nickname formats in your profile:",
+                modal_step2_title: "Join at Least ONE Community",
+                modal_step2_desc: "Joining at least one official BLDS platform is mandatory.",
+                modal_step3_title: "Final Confirmation",
+                modal_step3_desc: "Once you have joined the community and updated your nickname format, you are officially part of the DOMS system!",
+                modal_confirm_btn: "I Have Joined & Understand"
+            },
+            ms: {
+                loading: "Memuatkan Sistem DOMS",
+                nav_home: "Utama",
+                nav_about: "Tentang",
+                nav_vision: "Visi & Misi",
+                nav_identity: "Identiti",
+                nav_community: "Komuniti",
+                nav_rules: "Peraturan",
+                nav_faq: "FAQ",
+                nav_contact: "Hubungi",
+                btn_join_doms: "Sertai DOMS",
+                hero_badge: "SISTEM MARGA BLACKLIGHTDOMINIONS",
+                hero_desc: "“Identiti terbuka yang dibina atas perpaduan, nilai bersama, dan hubungan bermakna. DOMS menyatukan individu di bawah satu identiti sambil mengeratkan ikatan dalam komuniti BLACKLIGHTDOMINIONS.”",
+                hero_btn_explore: "Teroka DOMS",
+                scroll_down: "Tatal ke Bawah",
+                about_tag: "01 / Pengenalan",
+                about_title: "Apakah itu DOMS?",
+                about_p1: "<strong>DOMS</strong> adalah sistem identiti marga terbuka untuk umum yang bersekutu dengan <strong>BLACKLIGHTDOMINIONS (BLDS)</strong>. Ia menyediakan identiti bersama yang mewakili perpaduan, hubungan, dan semangat kekitaan.",
+                about_p2: "DOMS lebih daripada sekadar tag nama. Ia adalah simbol nilai bersama, saling menghormati, dan penyertaan dalam komuniti yang sedang berkembang.",
+                about_p3: "Melalui sistem ini, DOMS bertujuan menghubungkan orang ramai, menggalakkan interaksi positif, dan mewujudkan persekitaran mesra di mana individu boleh membina persahabatan.",
+                stat_label_1: "Sistem identiti terbuka yang boleh diakses semua tanpa halangan pangkat.",
+                stat_label_2: "Bersekutu dengan ekosistem komuniti BLACKLIGHTDOMINIONS.",
+                stat_label_3: "Dibina atas dasar saling menghormati, nilai bersama, dan solidariti.",
+                vision_tag: "02 / Matlamat & Tujuan",
+                vision_title: "Visi & Misi",
+                vision_card_title: "Visi Kami",
+                vision_card_text: "“Menjadikan DOMS sebagai identiti inklusif dan bermakna yang menghubungkan individu melalui nilai bersama dan rasa kekitaan yang kuat.<br><br>DOMS bertujuan menjadi lebih daripada tag komuniti. Ia mewakili hubungan abadi antara individu yang percaya kepada perpaduan, persahabatan, integriti, dan interaksi positif.<br><br>Dengan menyatukan pelbagai latar belakang, DOMS mewujudkan persekitaran untuk semua orang mengambil bahagian, membina hubungan, dan berkembang bersama.<br><br>Melalui nilai yang konsisten dan penyertaan aktif, DOMS berhasrat menjadi identiti kukuh yang mewakili solidariti dalam BLACKLIGHTDOMINIONS.”",
+                mission_card_title: "Misi Kami",
+                mission_1: "Menetapkan DOMS sebagai identiti inklusif yang boleh menyertai sesiapa sahaja.",
+                mission_2: "Memperkukuh hubungan dan koneksi antara individu melalui penyertaan komuniti.",
+                mission_3: "Menggalakkan rasa saling menghormati, tanggungjawab, kejujuran, dan tingkah laku positif.",
+                mission_4: "Membangunkan persekitaran mesra di mana ahli boleh berinteraksi dan membina persahabatan.",
+                mission_5: "Menjaga reputasi dan nilai yang dikaitkan dengan BLACKLIGHTDOMINIONS.",
+                mission_6: "Menggalakkan perpaduan dan kerjasama dalam kalangan pengguna DOMS tanpa mengira latar belakang.",
+                mission_7: "Membangunkan sistem identiti mampan yang berkembang seiring BLACKLIGHTDOMINIONS.",
+                identity_tag: "03 / Piawaian Nama Samaran",
+                identity_title: "Identiti Anda",
+                accepted_badge: "Diterima",
+                identity_info_title: "Format Rasmi",
+                identity_info_desc: "Ketiga-tiga format nama samaran diterima secara rasmi. Tag DOMS mesti sentiasa berada di bahagian akhir nama samaran anda. Anda bebas mempersonalisasi nama utama sebelum tag.",
+                chip_1: "Tiada Peniruan",
+                chip_2: "Tag di Hujung",
+                chip_3: "Saling Menghormati",
+                chip_4: "Terbuka kepada Umum",
+                community_tag: "04 / Sambungan Ekosistem",
+                community_title: "Sertai Komuniti",
+                wa_card_desc: "Berhubung serta-merta dengan ahli DOMS dan peserta BLDS melalui kumpulan komuniti WhatsApp kami yang aktif.",
+                discord_card_desc: "Sertai pelayan Discord rasmi kami untuk saluran suara, acara komuniti, pengumuman, dan perbincangan berstruktur.",
+                btn_join_whatsapp: "Sertai WhatsApp",
+                btn_join_discord: "Sertai Discord",
+                community_note_text: "💡 <strong>Nota:</strong> Menyertai sekurang-kurangnya <strong>SATU</strong> platform komuniti BLDS rasmi adalah wajib. Menyertai kedua-duanya amat digalakkan.",
+                rules_tag: "05 / Kod Etika",
+                rules_title: "Peraturan & Regulasi DOMS",
+                rule_cat_1_title: "Peraturan Identiti",
+                rule_1_1: "Setiap pengguna DOMS mesti menggunakan salah satu format nama samaran yang diterima: Nama X DOMS, Nama x DOMS, atau Nama × DOMS.",
+                rule_1_2: "Tag DOMS mesti kekal di hujung nama samaran.",
+                rule_1_3: "Pengguna bertanggungjawab mengekalkan identiti mereka sendiri.",
+                rule_1_4: "Menyamar sebagai pengguna DOMS atau wakil BLDS lain dilarang sama sekali.",
+                rule_cat_2_title: "Keperluan Komuniti",
+                rule_2_1: "Setiap pengguna DOMS mesti menyertai sekurang-kurangnya satu platform komuniti BLDS rasmi (WhatsApp atau Discord).",
+                rule_2_2: "Pengguna mesti menghormati peraturan komuniti WhatsApp atau Discord yang disertai.",
+                rule_2_3: "Pengguna digalakkan menyertai aktiviti komuniti secara positif.",
+                rule_2_4: "Pengguna tidak boleh menggunakan DOMS untuk mencetuskan konflik yang tidak perlu.",
+                rule_cat_3_title: "Tingkah Laku",
+                rule_3_1: "Menghormati individu lain tanpa mengira latar belakang.",
+                rule_3_2: "Gangguan, pembuli, intimidasi, dan penderaan sasaran dilarang sama sekali.",
+                rule_3_3: "Spam dan tingkah laku mengganggu tidak dibenarkan.",
+                rule_3_4: "Tingkah laku penipuan dan penyamaran adalah dilarang.",
+                rule_3_5: "Jangan gunakan identiti DOMS untuk merosakkan reputasi orang lain atau komuniti.",
+                rule_cat_4_title: "Penyalahgunaan Identiti",
+                rule_4_1: "Jangan mengaku secara palsu mewakili pentadbiran rasmi BLDS.",
+                rule_4_2: "Jangan menyalahgunakan identiti DOMS untuk penipuan atau aktiviti menyesatkan.",
+                rule_4_3: "Jangan sebarkan pengumuman palsu bagi pihak DOMS atau BLDS.",
+                rule_4_4: "Jangan gunakan identiti DOMS untuk terlibat dalam aktiviti berbahaya.",
+                rule_cat_5_title: "Penguatkuasaan",
+                rule_5_1: "Pelanggaran boleh mengakibatkan teguran lisan, amaran rasmi, sekatan sementara, atau pembatalan izin menggunakan identiti DOMS.",
+                rule_5_2: "Tindakan bergantung kepada keseriusan dan keadaan pelanggaran.",
+                rule_5_3: "Pelanggaran berat boleh menerima tindakan lebih tegas. Nota: Menggunakan DOMS tidak menjadikan seseorang ahli rasmi skuad MLBB BLDS secara automatik.",
+                faq_tag: "06 / Soalan Lazim",
+                faq_title: "Soalan Lazim",
+                faq_q1: "Apakah itu DOMS?",
+                faq_a1: "DOMS adalah sistem identiti marga terbuka yang bersekutu dengan BLACKLIGHTDOMINIONS, direka untuk menyatukan individu melalui nilai bersama.",
+                faq_q2: "Siapa yang boleh menggunakan identiti DOMS?",
+                faq_a2: "Sesiapa sahaja boleh menggunakan identiti DOMS selagi mereka mematuhi format nama samaran dan peraturan komuniti.",
+                faq_q3: "Adakah DOMS terbuka kepada umum?",
+                faq_a3: "Ya, DOMS terbuka sepenuhnya kepada umum tanpa mengira pangkat permainan, latar belakang, atau status keahlian sebelum ini.",
+                faq_q4: "Format nama samaran apakah yang mesti saya gunakan?",
+                faq_a4: "Anda mesti menggunakan salah satu daripada tiga format: Nama X DOMS, Nama x DOMS, atau Nama × DOMS, dengan tag di bahagian hujung.",
+                faq_q5: "Adakah saya perlu menyertai komuniti BLDS?",
+                faq_a5: "Ya, setiap pengguna DOMS diwajibkan menyertai sekurang-kurangnya satu platform komuniti rasmi BLDS (WhatsApp atau Discord).",
+                faq_q6: "Adakah saya perlu menyertai WhatsApp dan Discord?",
+                faq_a6: "Menyertai kedua-duanya sangat digalakkan, tetapi menyertai sekurang-kurangnya satu platform adalah keperluan minimum.",
+                faq_q7: "Adakah menggunakan DOMS menjadikan saya ahli rasmi skuad MLBB BLDS?",
+                faq_a7: "Tidak. Menggunakan tag DOMS tidak secara automatik menjadikan seseorang ahli rasmi yang berdaftar dalam skuad MLBB BLDS.",
+                faq_q8: "Apakah yang berlaku jika saya melanggar peraturan?",
+                faq_a8: "Pelanggaran boleh mengakibatkan teguran, amaran, sekatan sementara, atau penarikan kebenaran menggunakan DOMS bergantung kepada keseriusan.",
+                faq_q9: "Di manakah saya boleh menghubungi pentadbiran DOMS?",
+                faq_a9: "Anda boleh menghubungi pentadbiran secara terus melalui WhatsApp di 085591006359 atau melalui platform komuniti rasmi.",
+                cta_title: "Bersedia Menyertai DOMS?",
+                cta_desc: "Jadilah sebahagian daripada identiti yang berkembang atas dasar perpaduan, nilai bersama, dan hubungan bermakna.",
+                contact_tag: "07 / Sokongan & Pertanyaan",
+                contact_title: "Hubungi Kami",
+                contact_desc: "Ada soalan, cadangan, atau kebimbangan mengenai DOMS? Jangan teragak-agak untuk menghubungi pihak pentadbiran.",
+                contact_wa_btn: "Hubungi melalui WhatsApp",
+                contact_copy_btn: "Salin Nombor",
+                footer_desc: "DOMS adalah sistem identiti terbuka yang dibina di sekitar perpaduan, nilai bersama, dan hubungan bermakna dalam komuniti BLACKLIGHTDOMINIONS.",
+                footer_nav_heading: "Navigasi Pantas",
+                footer_community_heading: "Komuniti",
+                footer_contact_heading: "Hubungi",
+                modal_title: "SELAMAT DATANG KE DOMS",
+                modal_desc: "Sebelum menjadi sebahagian daripada DOMS, pastikan anda faham dan lengkapkan langkah yang diperlukan.",
+                modal_step1_title: "Fahami Format Identiti",
+                modal_step1_desc: "Gunakan salah satu format nama samaran yang diterima pada profil anda:",
+                modal_step2_title: "Sertai Sekurang-kurangnya SATU Komuniti",
+                modal_step2_desc: "Menyertai sekurang-kurangnya satu platform rasmi BLDS adalah wajib.",
+                modal_step3_title: "Pengesahan Akhir",
+                modal_step3_desc: "Sebaik sahaja anda menyertai komuniti dan mengemas kini format nama anda, anda kini rasmi sebahagian daripada sistem DOMS!",
+                modal_confirm_btn: "Saya Telah Menyertai & Faham"
+            }
         };
 
-        const adminIDs = {
-            "001": { name: "Michael", role: "Full Access" },
-            "002": { name: "William", role: "Admin Access" },
-            "003": { name: "Felix", role: "Admin Access" },
-            "004": { name: "Anindya", role: "Admin Access" },
-            "005": { name: "Kenya", role: "Admin Access" },
-            "006": { name: "Zavino", role: "Admin Access" },
-            "007": { name: "Rehan", role: "Admin Access" }
-        };
+        // Current Language state
+        let currentLang = localStorage.getItem('doms_lang') || 'id';
 
-        // ==========================================
-        // 2. AUDIO & UTILS
-        // ==========================================
-        const audioBGM = document.getElementById('bgm');
-        const sfxClick = document.getElementById('sfx-click');
-        const sfxWhoosh = document.getElementById('sfx-whoosh');
-        const sfxReveal = document.getElementById('sfx-reveal');
+        function applyLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('doms_lang', lang);
+            document.getElementById('currentLangLabel').toUpperCase();
+            document.getElementById('currentLangLabel').innerText = lang.toUpperCase();
 
-        audioBGM.volume = 0;
-        sfxClick.volume = 0.5;
-        sfxWhoosh.volume = 0.4;
-        sfxReveal.volume = 0.7;
-
-        document.querySelectorAll('button').forEach(btn => {
-            btn.addEventListener('click', () => { 
-                if (sfxClick.readyState >= 2) {
-                    sfxClick.currentTime = 0; sfxClick.play().catch(e => console.log('Audio error:', e)); 
+            // Update all elements with data-i18n
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    el.innerHTML = translations[lang][key];
                 }
             });
-        });
 
-        const fadeAudio = (audio, targetVolume, duration) => {
-            if (audio.readyState < 2) return;
-            const step = 0.05;
-            const delay = duration / Math.abs(targetVolume - audio.volume) / step;
-            const interval = setInterval(() => {
-                if (audio.volume < targetVolume) {
-                    audio.volume = Math.min(1, audio.volume + step);
-                } else if (audio.volume > targetVolume) {
-                    audio.volume = Math.max(0, audio.volume - step);
+            // Update language menu active item
+            document.querySelectorAll('.lang-item').forEach(item => {
+                if (item.getAttribute('data-lang') === lang) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
                 }
-                if (Math.abs(audio.volume - targetVolume) < 0.01) {
-                    audio.volume = targetVolume;
-                    clearInterval(interval);
-                }
-            }, delay);
-        };
+            });
+        }
 
-        const showToast = (msg) => {
-            const toast = document.getElementById('toast');
-            toast.innerText = msg;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 3000);
-        };
-
-        const switchScreen = (screenId) => {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(screenId).classList.add('active');
-        };
-
-        const sleep = ms => new Promise(res => setTimeout(res, ms));
-
-        // ==========================================
-        // 3. PARTICLE SYSTEM (CANVAS)
-        // ==========================================
-        const canvas = document.getElementById('particles-canvas');
+        /* ==========================================================================
+           CANVAS BACKGROUND PARTICLES
+           ========================================================================== */
+        const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        
-        let particlesArray = [];
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
         class Particle {
             constructor() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 1.5 + 0.5;
-                this.speedX = Math.random() * 0.5 - 0.25;
-                this.speedY = Math.random() * 0.5 - 0.25;
-                this.opacity = Math.random() * 0.5;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.4;
+                this.speedY = (Math.random() - 0.5) * 0.4;
+                this.opacity = Math.random() * 0.5 + 0.2;
             }
             update() {
                 this.x += this.speedX;
                 this.y += this.speedY;
-                if (this.x > canvas.width) this.x = 0;
                 if (this.x < 0) this.x = canvas.width;
-                if (this.y > canvas.height) this.y = 0;
+                if (this.x > canvas.width) this.x = 0;
                 if (this.y < 0) this.y = canvas.height;
+                if (this.y > canvas.height) this.y = 0;
             }
             draw() {
-                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                ctx.fillStyle = isDark ? `rgba(255, 255, 255, ${this.opacity})` : `rgba(0, 0, 0, ${this.opacity})`;
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
             }
         }
+
         function initParticles() {
-            particlesArray = [];
-            for (let i = 0; i < 150; i++) particlesArray.push(new Particle());
-        }
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particlesArray.forEach(p => { p.update(); p.draw(); });
-            requestAnimationFrame(animateParticles);
+            particles = [];
+            const count = Math.floor((canvas.width * canvas.height) / 15000);
+            for (let i = 0; i < Math.min(count, 80); i++) {
+                particles.push(new Particle());
+            }
         }
         initParticles();
-        animateParticles();
-        window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; initParticles(); });
 
-        // ==========================================
-        // 4. CINEMATIC ENGINE
-        // ==========================================
-        async function runCinematicCutscene(resultData) {
-            switchScreen('screen-cinematic');
-            if (sfxWhoosh.readyState >= 2) sfxWhoosh.play().catch(e => console.log('Audio error:', e));
-            
-            if (audioBGM.readyState >= 2) {
-                audioBGM.play().catch(e => console.log('Audio error:', e));
-                fadeAudio(audioBGM, 0.6, 3000);
-            }
+        function animateCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateCanvas);
+        }
+        animateCanvas();
 
-            await sleep(2000);
-            document.getElementById('cine-text-1').classList.add('show');
-            
-            await sleep(4000);
-            document.getElementById('cine-text-1').classList.remove('show');
-            await sleep(1500);
-            
-            document.getElementById('cine-text-2').classList.add('show');
-            fadeAudio(audioBGM, 0.8, 2000); 
-            
-            await sleep(4000);
-            document.getElementById('cine-text-2').classList.remove('show');
-            await sleep(1500);
-            
-            document.getElementById('cine-text-3').classList.add('show');
-            
-            await sleep(3000);
-            document.getElementById('cine-text-3').classList.remove('show');
-            await sleep(1000);
+        /* ==========================================================================
+           ECLIPSE INVERSION (THEME SWITCH + LOGO SHAKE + PARTICLE BURST)
+           ========================================================================== */
+        let isAnimatingEclipse = false;
 
-            document.getElementById('cine-text-4').classList.add('show');
-            fadeAudio(audioBGM, 0.2, 3000); 
-            
-            await sleep(3500);
-            document.getElementById('cine-text-4').classList.remove('show');
-            
-            await sleep(1500);
+        function triggerEclipseInversion(e) {
+            if (isAnimatingEclipse) return;
+            isAnimatingEclipse = true;
 
-            showResult(resultData);
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+            // Phase 1: Logo Shake
+            const logoWrapper = document.getElementById('themeToggleBtn');
+            logoWrapper.classList.add('logo-shake');
+
+            // Phase 2: Particle Burst around click point if event exists, else center
+            const rect = logoWrapper.getBoundingClientRect();
+            const burstX = e ? e.clientX : rect.left + rect.width / 2;
+            const burstY = e ? e.clientY : rect.top + rect.height / 2;
+            createParticleBurst(burstX, burstY);
+
+            // Phase 3 & 4: Color and Logo Inversion after short shake delay
+            setTimeout(() => {
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('doms_theme', newTheme);
+                updateLogos(newTheme);
+            }, 250);
+
+            // Phase 5: Completion
+            setTimeout(() => {
+                logoWrapper.classList.remove('logo-shake');
+                isAnimatingEclipse = false;
+            }, 600);
         }
 
-        // ==========================================
-        // 5. REGISTRATION LOGIC
-        // ==========================================
-        const btnVerify = document.getElementById('btn-verify');
-        const inputCode = document.getElementById('reg-code');
+        function createParticleBurst(x, y) {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            const burstContainer = document.createElement('div');
+            burstContainer.style.position = 'fixed';
+            burstContainer.style.left = `${x}px`;
+            burstContainer.style.top = `${y}px`;
+            burstContainer.style.pointerEvents = 'none';
+            burstContainer.style.zIndex = '9999';
+            document.body.appendChild(burstContainer);
 
-        btnVerify.addEventListener('click', async () => {
-            const code = inputCode.value.trim().toUpperCase();
-            if (!code) { showToast("Enter a valid verification code."); return; }
+            for (let i = 0; i < 16; i++) {
+                const p = document.createElement('div');
+                const angle = (Math.PI * 2 / 16) * i;
+                const distance = Math.random() * 80 + 40;
+                const destX = Math.cos(angle) * distance;
+                const destY = Math.sin(angle) * distance;
 
-            // Admin Gate
-            if (code === "BLDS-STAFF-ONLY-000") {
-                switchScreen('screen-admin-auth');
-                return;
+                p.style.position = 'absolute';
+                p.style.width = '6px';
+                p.style.height = '6px';
+                p.style.backgroundColor = isDark ? '#ffffff' : '#000000';
+                p.style.borderRadius = '50%';
+                p.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease';
+                burstContainer.appendChild(p);
+
+                requestAnimationFrame(() => {
+                    p.style.transform = `translate(${destX}px, ${destY}px) scale(0)`;
+                    p.style.opacity = '0';
+                });
             }
 
-            btnVerify.innerText = "VERIFYING...";
-            btnVerify.style.pointerEvents = "none";
+            setTimeout(() => {
+                burstContainer.remove();
+            }, 600);
+        }
 
-            // AAA Fake Loading Delay (1.5 seconds)
-            await sleep(1500); 
+        /* ==========================================================================
+           INITIALIZATION & INTERACTION LISTENERS
+           ========================================================================== */
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load saved theme or default to dark
+            const savedTheme = localStorage.getItem('doms_theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            updateLogos(savedTheme);
 
-            // Cek Data di Local Database
-            let resultData = localDB[code] || { status: "not_found" };
+            // Load saved language or default to id
+            applyLanguage(currentLang);
 
-            if (resultData.status === "not_found") {
-                showToast("Data not found. Invalid registration code.");
-                inputCode.style.borderColor = "rgba(255,255,255,0.1)";
-                resetBtn();
-            } else {
-                runCinematicCutscene(resultData);
-            }
+            // Set current year in footer
+            document.getElementById('currentYear').innerText = new Date().getFullYear();
+
+            // Initialize Lucide icons
+            lucide.createIcons();
+
+            // Loading screen fade out
+            setTimeout(() => {
+                const loader = document.getElementById('loader');
+                const fill = document.getElementById('loaderFill');
+                fill.style.width = '100%';
+                setTimeout(() => {
+                    loader.classList.add('fade-out');
+                }, 300);
+            }, 500);
+
+            // Theme Toggle / Eclipse trigger
+            document.getElementById('themeToggleBtn').addEventListener('click', (e) => {
+                triggerEclipseInversion(e);
+            });
+
+            // Language Dropdown Toggle
+            const langBtn = document.getElementById('langDropdownBtn');
+            const langMenu = document.getElementById('langMenu');
+
+            langBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                langMenu.classList.toggle('open');
+            });
+
+            document.addEventListener('click', () => {
+                langMenu.classList.remove('open');
+            });
+
+            document.querySelectorAll('.lang-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const lang = item.getAttribute('data-lang');
+                    applyLanguage(lang);
+                    langMenu.classList.remove('open');
+                });
+            });
+
+            // Mobile Menu Toggle
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+
+            hamburgerBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('open');
+            });
+
+            document.querySelectorAll('.mobile-nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('open');
+                });
+            });
+
+            // Rules Accordion
+            document.querySelectorAll('.rule-category-header').forEach(header => {
+                header.addEventListener('click', () => {
+                    const card = header.parentElement;
+                    const isActive = card.classList.contains('active');
+                    
+                    // Optional: Close others or keep open. Keeping open independently is clean.
+                    card.classList.toggle('active', !isActive);
+                });
+            });
+
+            // FAQ Accordion
+            document.querySelectorAll('.faq-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const isActive = card.classList.contains('active');
+                    // Close all other FAQs for clean UX
+                    document.querySelectorAll('.faq-card').forEach(c => c.classList.remove('active'));
+                    if (!isActive) {
+                        card.classList.add('active');
+                    }
+                });
+            });
+
+            // Modal Controls
+            const joinModal = document.getElementById('joinModal');
+            const openModalBtns = [
+                document.getElementById('joinDomsNavBtn'),
+                document.getElementById('joinDomsMobileBtn'),
+                document.getElementById('joinHeroBtn'),
+                document.getElementById('ctaJoinBtn')
+            ];
+
+            openModalBtns.forEach(btn => {
+                if (btn) {
+                    btn.addEventListener('click', () => {
+                        joinModal.classList.add('open');
+                    });
+                }
+            });
+
+            document.getElementById('modalCloseBtn').addEventListener('click', () => {
+                joinModal.classList.remove('open');
+            });
+
+            document.getElementById('modalConfirmBtn').addEventListener('click', () => {
+                joinModal.classList.remove('open');
+                showToast(currentLang === 'id' ? 'Selamat! Anda telah memahami sistem DOMS.' : currentLang === 'en' ? 'Success! You understand the DOMS system.' : 'Berjaya! Anda memahami sistem DOMS.');
+            });
+
+            joinModal.addEventListener('click', (e) => {
+                if (e.target === joinModal) {
+                    joinModal.classList.remove('open');
+                }
+            });
+
+            // Explore Hero Button
+            document.getElementById('exploreHeroBtn').addEventListener('click', () => {
+                document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
+            });
+
+            // Copy Number Button
+            document.getElementById('copyNumberBtn').addEventListener('click', () => {
+                navigator.clipboard.writeText('085591006359');
+                showToast(currentLang === 'id' ? 'Nomor berhasil disalin ke clipboard!' : currentLang === 'en' ? 'Number copied to clipboard!' : 'Nombor berjaya disalin ke clipboard!');
+            });
+
+            // Back to Top Button
+            document.getElementById('backToTopBtn').addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // Scroll Progress & Active Nav Link Observer
+            window.addEventListener('scroll', () => {
+                const totalScroll = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const currentScroll = window.scrollY;
+                const scrollPercentage = (currentScroll / totalScroll) * 100;
+                document.getElementById('scrollProgress').style.width = `${scrollPercentage}%`;
+
+                // Header background blur intensification on scroll
+                const header = document.getElementById('navbar');
+                if (currentScroll > 50) {
+                    header.style.boxShadow = '0 10px 30px rgba(0,0,0,0.05)';
+                } else {
+                    header.style.boxShadow = 'none';
+                }
+            });
         });
 
-        function resetBtn() {
-            btnVerify.innerText = "Initialize Verification";
-            btnVerify.style.pointerEvents = "auto";
+        // Toast Notification Helper
+        function showToast(message) {
+            const toast = document.getElementById('toastNotification');
+            document.getElementById('toastMessage').innerText = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3500);
         }
-
-        // ==========================================
-        // 6. RESULT SCREEN LOGIC
-        // ==========================================
-        function showResult(data) {
-            if (sfxReveal.readyState >= 2) sfxReveal.play().catch(e => console.log('Audio error:', e));
-            switchScreen('screen-result');
-            fadeAudio(audioBGM, 0.4, 2000);
-
-            const title = document.getElementById('result-title');
-            const sub = document.getElementById('result-subtitle');
-            const msg = document.getElementById('result-message');
-            const btn = document.getElementById('btn-result-action');
-
-            if (data.status === "Approved") {
-                sub.innerText = "Evaluation Complete";
-                sub.style.color = "var(--text-muted)";
-                title.innerText = "ACCESS GRANTED";
-                title.style.color = "#ffffff";
-                title.style.textShadow = "0 0 20px rgba(255,255,255,0.5)";
-                msg.innerText = `Welcome to the team, ${data.name}. Your journey starts here.`;
-                btn.innerText = "Contact Us";
-                btn.onclick = () => window.location.href = "mailto:founder@blacklightdoms.com";
-            } else {
-                sub.innerText = "Evaluation Complete";
-                title.innerText = "ACCESS DENIED";
-                title.style.color = "#a0a0a0";
-                msg.innerText = "Your registration has not been approved at this time. Keep forging your path.";
-                btn.innerText = "Return Home";
-                btn.onclick = () => {
-                    inputCode.value = '';
-                    resetBtn();
-                    switchScreen('screen-home');
-                    fadeAudio(audioBGM, 0, 2000);
-                };
-            }
-        }
-
-        // ==========================================
-        // 7. ADMIN AUTHENTICATION LOGIC
-        // ==========================================
-        let currentAdmin = null;
-
-        document.getElementById('btn-admin-login').addEventListener('click', () => {
-            const id = document.getElementById('admin-id').value.trim();
-            if (adminIDs[id]) {
-                currentAdmin = adminIDs[id];
-                showToast(`Welcome back, ${currentAdmin.name}`);
-                initAdminDashboard();
-            } else {
-                showToast("Unauthorized ID. Access Denied.");
-            }
-        });
-
-        function initAdminDashboard() {
-            switchScreen('screen-admin');
-            document.getElementById('admin-welcome').innerText = `Authorized as: ${currentAdmin.name} [${currentAdmin.role}]`;
-            
-            const btnSettings = document.getElementById('tab-settings');
-            if (currentAdmin.role === "Full Access") {
-                btnSettings.style.display = "block";
-            } else {
-                btnSettings.style.display = "none";
-            }
-        }
-
-        document.getElementById('btn-logout').addEventListener('click', () => {
-            currentAdmin = null;
-            document.getElementById('admin-id').value = '';
-            document.getElementById('reg-code').value = '';
-            switchScreen('screen-home');
-        });
-
     </script>
 </body>
 </html>
