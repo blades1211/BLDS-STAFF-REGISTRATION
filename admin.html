@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>DOMS Admin Dashboard</title>
+<link rel="icon" href="logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#050506;--bg2:#0d0d10;--cd:#121216;--tx:#f8f8fa;--mu:#9898a3;--bd:rgba(255,255,255,.1);--bh:rgba(255,255,255,.3);--gl:0 0 16px rgba(255,255,255,.16);--tg:0 0 14px rgba(255,255,255,.32)}
+body{font-family:'Outfit',system-ui,sans-serif;background:var(--bg);color:var(--tx);line-height:1.5}
+[hidden]{display:none!important}
+h1,h2,h3{font-weight:800;letter-spacing:-.01em}
+#app{display:grid;grid-template-columns:230px 1fr;min-height:100svh}
+aside{background:var(--bg2);border-right:1px solid var(--bd);padding:1.2rem;display:flex;flex-direction:column;gap:1rem;position:sticky;top:0;height:100svh}
+.br{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.14em;font-size:1.2rem;text-shadow:var(--tg)}
+.br img{width:30px;filter:drop-shadow(0 0 8px rgba(255,255,255,.55))}
+nav{display:flex;flex-direction:column;gap:4px;flex:1}
+nav button{background:0;border:1px solid transparent;color:var(--mu);text-align:left;padding:10px 12px;border-radius:10px;font:600 .92rem 'Outfit';cursor:pointer;transition:.25s}
+nav button:hover{color:var(--tx);background:var(--cd)}
+nav button.on{color:var(--tx);border-color:var(--bh);background:var(--cd);box-shadow:var(--gl)}
+main{padding:1.5rem;min-width:0}
+header{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1.3rem;flex-wrap:wrap}
+header h1{font-size:1.9rem;text-shadow:var(--tg)}
+.pill{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.08em;padding:3px 10px;border:1px solid var(--bd);border-radius:99px;background:var(--bg2);text-transform:uppercase}
+.b{background:var(--tx);color:var(--bg);border:1px solid var(--tx);padding:9px 16px;border-radius:10px;font:700 .85rem 'Outfit';cursor:pointer;box-shadow:var(--gl);transition:.25s}
+.b:hover{background:transparent;color:var(--tx);box-shadow:var(--tg)}
+.b.s{background:var(--bg2);color:var(--tx);border-color:var(--bd);box-shadow:none}.b.s:hover{border-color:var(--bh)}
+.b.d{background:transparent;color:#ff8a8a;border-color:rgba(255,138,138,.4);box-shadow:none}
+.b.sm{padding:5px 10px;font-size:.78rem}
+input,select,textarea{background:var(--bg2);border:1px solid var(--bd);color:var(--tx);border-radius:10px;padding:10px 12px;font:inherit;outline:0;width:100%}
+input:focus,select:focus,textarea:focus{border-color:var(--tx);box-shadow:var(--gl)}
+label{display:block;font-size:.8rem;color:var(--mu);margin:.8rem 0 .25rem;font-weight:600}
+.tools{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1rem}.tools input{flex:1;min-width:180px}.tools select{width:auto}
+.st{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1rem;margin-bottom:1.2rem}
+.cd{background:var(--cd);border:1px solid var(--bd);border-radius:14px;padding:1.1rem}
+.cd b{font-size:2.2rem;font-weight:800;text-shadow:var(--tg);display:block}.cd span{color:var(--mu);font-size:.85rem}
+.tw{overflow-x:auto;border:1px solid var(--bd);border-radius:14px;background:var(--cd)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--bd);white-space:nowrap}
+th{color:var(--mu);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase}
+tr:last-child td{border:0}td.ac{display:flex;gap:.4rem}
+.em{padding:2rem;text-align:center;color:var(--mu)}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);z-index:90;display:none;align-items:center;justify-content:center;padding:1rem}
+.ov.on{display:flex}
+.box{background:var(--cd);border:1px solid var(--bh);border-radius:18px;padding:1.6rem;width:100%;max-width:520px;max-height:92svh;overflow:auto;box-shadow:var(--gl)}
+.err{color:#ff8a8a;font-size:.85rem;margin-top:.7rem}
+#ts{position:fixed;bottom:18px;left:50%;transform:translate(-50%,100px);background:var(--cd);border:1px solid var(--bh);padding:.8rem 1.2rem;border-radius:12px;z-index:99;transition:.35s;box-shadow:var(--gl);max-width:92vw}
+#ts.on{transform:translate(-50%,0)}#ts.bad{border-color:#ff8a8a}
+.pv{border:1px dashed var(--bh);border-radius:12px;padding:1rem;margin-top:1rem}
+.th{width:44px;height:44px;border-radius:8px;object-fit:cover}
+@media(max-width:820px){#app{grid-template-columns:1fr}aside{position:static;height:auto;flex-direction:row;align-items:center;overflow-x:auto;padding:.7rem}nav{flex-direction:row;flex:none}nav button{white-space:nowrap}.br span{display:none}main{padding:1rem}}
+</style>
+</head>
+<body>
+<div class="ov on" id="login"><form class="box" id="lf" style="max-width:380px"><div class="br" style="margin-bottom:1rem"><img src="logo.png" alt="" onerror="this.remove()">DOMS ADMIN</div>
+<label>Email staff</label><input id="em" type="email" required autocomplete="username"><label>Password</label><input id="pw" type="password" required autocomplete="current-password"><br><br><button class="b" style="width:100%" id="lb">Masuk</button><p class="err" id="le"></p></form></div>
+
+<div id="app" hidden>
+<aside><div class="br"><img src="logo.png" alt="" onerror="this.remove()"><span>DOMS</span></div><nav id="nav"></nav><button class="b s" id="out">Keluar</button></aside>
+<main><header><h1 id="ttl"></h1><div id="who"></div></header><div id="view"></div></main>
+</div>
+<div class="ov" id="md"><div class="box" id="mb"></div></div>
+<div id="ts"></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
+<script>
+/* ====== WAJIB: ganti dengan firebaseConfig asli dari Firebase Console > Project settings > Your apps ====== */
+const CFG={
+  apiKey:"AIzaSyAa1LDCHHexBl196SP_TlWebw_bNpTw0Lw",
+  authDomain:"blds-8975d.firebaseapp.com",
+  databaseURL:"https://blds-8975d-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId:"blds-8975d",
+  storageBucket:"blds-8975d.firebasestorage.app", // kosongkan jika Storage belum aktif
+  messagingSenderId:"226784385031",
+  appId:"1:226784385031:web:d32e69f45d45f1f3b372a2"
+};
+/* ======================================================================================================== */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fd=t=>t?new Date(t).toLocaleString('id-ID',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}):'-';
+function toast(m,bad){const t=$('#ts');t.textContent=m;t.className='on'+(bad?' bad':'');setTimeout(()=>t.className='',3500)}
+const closeM=()=>$('#md').classList.remove('on');
+const openM=h=>{$('#mb').innerHTML=h;$('#md').classList.add('on')};
+
+firebase.initializeApp(CFG);
+const auth=firebase.auth(),db=firebase.database();
+let me=null,C={},tab='overview',q='',sf='';
+const hasStorage=CFG.storageBucket&&!CFG.storageBucket.startsWith('ISI');
+
+/* Role & izin (juga ditegakkan oleh Firebase Security Rules) */
+const P={owner:['*'],admin:['members','memberRequests','announcements','news','staff'],editor:['announcements','news'],staff:['memberRequests']};
+const can=m=>P[me.role].includes('*')||P[me.role].includes(m);
+const canVerify=()=>me.role==='owner'||(me.role==='admin'&&me.canVerify===true);
+
+const ROLES=['Member','Core','Officer','Leader'],MS=['Pending','Approved','Rejected','Suspended'];
+const LEG={nickname:'nama',mlbbId:'idml'}; // kompatibel data lama /members
+const E={
+ members:{t:'Anggota',cols:[['Nickname',r=>r.nickname||r.nama],['MLBB ID',r=>r.mlbbId||r.idml],['Server',r=>r.serverId],['Role',r=>r.role],['Status',r=>r.status||'Legacy']],
+  f:[['nickname','Nickname','text',1],['realName','Nama asli'],['mlbbId','MLBB User ID','text',1],['serverId','Server ID'],['role','Role','select',0,ROLES],['status','Status','select',0,MS],['joinedAt','Tanggal bergabung','date'],['photoUrl','Foto profil (URL atau upload)','img'],['bio','Deskripsi singkat','textarea'],['note','Catatan internal (tidak tampil publik)','textarea']]},
+ memberRequests:{t:'Pengajuan',cols:[['Nickname',r=>r.nickname||r.nama],['MLBB ID',r=>r.mlbbId||r.idml],['Server',r=>r.serverId],['Pengirim',r=>r.createdByName||r.source||'-'],['Waktu',r=>fd(r.submittedAt||r.createdAt)],['Status',r=>r.status||'Pending'],['Alasan',r=>r.rejectReason]],
+  f:[['nickname','Nickname','text',1],['realName','Nama asli'],['mlbbId','MLBB User ID','text',1],['serverId','Server ID']]},
+ announcements:{t:'Pengumuman',cols:[['Judul',r=>r.title],['Kategori',r=>r.category],['Status',r=>r.status],['Terbit',r=>fd(r.publishedAt)]],
+  f:[['title','Judul','text',1],['body','Isi pengumuman','textarea',1],['category','Kategori'],['status','Status','select',0,['active','inactive']],['publishedAt','Tanggal publikasi','date']]},
+ news:{t:'Berita',cols:[['Thumb',r=>r.thumb?`<img class="th" alt="" src="${esc(r.thumb)}">`:'-',1],['Judul',r=>r.title],['Kategori',r=>r.category],['Status',r=>r.status],['Terbit',r=>fd(r.publishedAt)]],
+  f:[['title','Judul','text',1],['summary','Deskripsi singkat','textarea'],['body','Isi berita','textarea',1],['category','Kategori'],['thumb','Thumbnail (URL atau upload)','img'],['status','Status','select',0,['draft','published','archived']],['publishedAt','Tanggal publikasi','date']]}
+};
+const SETF=[['siteName','Nama website'],['description','Deskripsi','textarea'],['logo','URL logo'],['phone','Nomor kontak'],['whatsapp','Link WhatsApp komunitas'],['discord','Link Discord'],['instagram','Instagram URL'],['youtube','YouTube URL'],['tiktok','TikTok URL'],['footer','Informasi footer','textarea']];
+
+const log=(action,target,ok=true)=>db.ref('activityLogs').push({uid:me.uid,name:me.name||me.email,role:me.role,action,target:target||'',ok,at:firebase.database.ServerValue.TIMESTAMP}).catch(()=>{});
+
+/* ===== Auth ===== */
+$('#lf').onsubmit=async e=>{e.preventDefault();$('#le').textContent='';$('#lb').disabled=true;
+ try{await auth.signInWithEmailAndPassword($('#em').value.trim(),$('#pw').value)}catch(x){$('#le').textContent='Login gagal: '+(x.code||x.message)}
+ $('#lb').disabled=false};
+$('#out').onclick=()=>auth.signOut().then(()=>location.reload());
+auth.onAuthStateChanged(async u=>{
+ if(!u){$('#login').classList.add('on');$('#app').hidden=true;return}
+ try{const s=await db.ref('staff/'+u.uid).once('value');const v=s.val();
+  if(!v||v.active!==true||!P[v.role]){$('#le').textContent='Akun ini belum terdaftar/aktif sebagai staff.';await auth.signOut();return}
+  me={...v,uid:u.uid,email:u.email};boot()}
+ catch(x){$('#le').textContent='Gagal memuat profil staff: '+x.message;auth.signOut()}});
+
+const TABS=[['overview','Overview',null],['members','Anggota','members'],['memberRequests','Pengajuan','memberRequests'],['announcements','Pengumuman','announcements'],['news','Berita','news'],['staff','Staff','staff'],['settings','Pengaturan','settings'],['activityLogs','Activity Logs','activityLogs']];
+function boot(){$('#login').classList.remove('on');$('#app').hidden=false;
+ $('#who').innerHTML=`<span class="pill">${esc(me.role)}</span> ${esc(me.name||me.email)}`;
+ $('#nav').innerHTML=TABS.filter(t=>!t[2]||can(t[2])).map(t=>`<button data-t="${t[0]}">${t[1]}</button>`).join('');
+ $('#nav').onclick=e=>{const b=e.target.closest('button');if(b){tab=b.dataset.t;q='';sf='';render()}};
+ ['members','memberRequests','announcements','news','staff','settings','activityLogs','memberNotes'].forEach(c=>{
+  const ok=c==='memberNotes'?can('members'):['settings'].includes(c)?true:c==='activityLogs'?me.role==='owner':['members','announcements','news','memberRequests'].includes(c)?true:can('staff');
+  if(!ok){C[c]={};return}
+  db.ref(c).on('value',s=>{C[c]=s.val()||{};render()},()=>{C[c]={};render()})});
+ render()}
+
+/* ===== Render ===== */
+const rows=c=>Object.entries(C[c]||{}).map(([id,v])=>({id,...v}));
+function render(){if(!me)return;const t=TABS.find(x=>x[0]===tab);$('#ttl').textContent=t[1];
+ document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.t===tab));
+ if(tab!=='overview'&&t[2]&&!can(t[2])){$('#view').innerHTML='<div class="em">Tidak ada izin.</div>';return}
+ const v=$('#view');
+ if(tab==='overview')return overview(v);
+ if(tab==='staff')return staffView(v);
+ if(tab==='settings')return settingsView(v);
+ if(tab==='activityLogs')return logsView(v);
+ tableView(v,tab)}
+
+function overview(v){
+ const mem=rows('members').filter(m=>m.status==='Approved').length,pend=rows('memberRequests').filter(r=>(r.status||'Pending')==='Pending').length,
+ ann=rows('announcements').filter(a=>a.status==='active').length,nw=rows('news').length,pub=rows('news').filter(n=>n.status==='published').length;
+ const recent=[...rows('news').map(n=>['Berita',n.title,n.updatedAt||n.createdAt]),...rows('announcements').map(n=>['Pengumuman',n.title,n.updatedAt||n.createdAt]),...rows('memberRequests').map(n=>['Pengajuan',n.nickname||n.nama,n.submittedAt||n.createdAt])].sort((a,b)=>(b[2]||0)-(a[2]||0)).slice(0,8);
+ v.innerHTML=`<div class="st"><div class="cd"><b>${mem}</b><span>Anggota Approved</span></div><div class="cd"><b>${pend}</b><span>Pengajuan Pending</span></div><div class="cd"><b>${nw}</b><span>Total berita (${pub} terbit)</span></div><div class="cd"><b>${ann}</b><span>Pengumuman aktif</span></div></div>
+ <h3 style="margin:1rem 0 .6rem">Aktivitas terbaru</h3><div class="tw"><table><tbody>${recent.map(r=>`<tr><td><span class="pill">${r[0]}</span></td><td>${esc(r[1])}</td><td>${fd(r[2])}</td></tr>`).join('')||'<tr><td class="em">Belum ada aktivitas.</td></tr>'}</tbody></table></div>
+ <p style="color:var(--mu);margin-top:1rem;font-size:.85rem">Koneksi database: <b id="cn">…</b></p>`;
+ db.ref('.info/connected').once('value').then(s=>{const e=$('#cn');if(e)e.textContent=s.val()?'Terhubung':'Terputus'})}
+
+function tableView(v,c){const e=E[c];let l=rows(c).filter(r=>JSON.stringify(r).toLowerCase().includes(q)&&(!sf||(r.status||(c==='memberRequests'?'Pending':''))===sf)).sort((a,b)=>(b.updatedAt||b.submittedAt||b.createdAt||0)-(a.updatedAt||a.submittedAt||a.createdAt||0));
+ const so=(e.f.find(f=>f[0]==='status')||[])[4]||(c==='memberRequests'?MS:null);
+ const add=c==='memberRequests'?can(c):can(c);
+ v.innerHTML=`<div class="tools"><input id="q" placeholder="Cari…" value="${esc(q)}">${so?`<select id="sf"><option value="">Semua status</option>${so.map(s=>`<option ${s===sf?'selected':''}>${s}</option>`)}</select>`:''}${add?`<button class="b" data-a="add">+ ${c==='memberRequests'?'Ajukan':'Tambah'} ${e.t}</button>`:''}</div>
+ <div class="tw"><table><thead><tr>${e.cols.map(x=>`<th>${x[0]}</th>`).join('')}<th></th></tr></thead><tbody>${l.map(r=>`<tr>${e.cols.map(x=>`<td>${x[2]?x[1](r):esc(x[1](r)??'-')}</td>`).join('')}<td class="ac">${acts(c,r)}</td></tr>`).join('')||`<tr><td class="em" colspan="9">Belum ada data.</td></tr>`}</tbody></table></div>`;
+ $('#q').oninput=ev=>{q=ev.target.value.toLowerCase();const p=ev.target.selectionStart;render();const i=$('#q');i.focus();i.setSelectionRange(p,p)};
+ if($('#sf'))$('#sf').onchange=ev=>{sf=ev.target.value;render()};
+ v.onclick=ev=>{const b=ev.target.closest('[data-a]');if(!b)return;const a=b.dataset.a,id=b.dataset.id;
+  if(a==='add')form(c);else if(a==='edit')form(c,id);else if(a==='del')del(c,id);else if(a==='ok')verify(id,true);else if(a==='no')verify(id,false)}}
+function acts(c,r){let h='';
+ if(c==='memberRequests'){if((r.status||'Pending')==='Pending'&&canVerify()&&r.createdBy!==me.uid)h+=`<button class="b sm" data-a="ok" data-id="${r.id}">Setujui</button><button class="b sm d" data-a="no" data-id="${r.id}">Tolak</button>`;
+  else if((r.status||'Pending')==='Pending'&&r.createdBy===me.uid)h+='<span class="pill">Pengajuan Anda</span>';
+  if(me.role==='owner'||me.role==='admin')h+=`<button class="b sm d" data-a="del" data-id="${r.id}">Hapus</button>`;return h}
+ if(can(c)){h+=`<button class="b sm s" data-a="edit" data-id="${r.id}">Edit</button>`;
+  if(c!=='members'||me.role==='owner'||me.role==='admin')h+=`<button class="b sm d" data-a="del" data-id="${r.id}">Hapus</button>`}return h}
+
+/* ===== Form generik ===== */
+function form(c,id){const e=E[c],r=id?(C[c][id]||{}):{};
+ const val=k=>k==='note'?(C.memberNotes||{})[id]:(r[k]??r[LEG[k]]);
+ openM(`<h3>${id?'Edit':'Tambah'} ${e.t}</h3><form id="ff">${e.f.filter(f=>f[0]!=='note'||can('members')).map(([k,l,t='text',req,o])=>{let v=val(k);
+  if(t==='date')v=new Date(v||Date.now()).toISOString().slice(0,10);
+  const a=`id="f_${k}" ${req?'required':''}`;
+  return `<label>${l}${req?' *':''}</label>`+(t==='select'?`<select ${a}>${o.map(x=>`<option ${x===(v||o[0])?'selected':''}>${x}</option>`)}</select>`:t==='textarea'?`<textarea ${a} rows="4">${esc(v||'')}</textarea>`:t==='img'?`<input ${a} type="url" value="${esc(v||'')}" placeholder="https://…">${hasStorage?`<input type="file" accept="image/jpeg,image/png,image/webp" data-up="f_${k}" style="margin-top:.4rem"><div id="pg_${k}" style="font-size:.8rem;color:var(--mu)"></div>`:'<div style="font-size:.78rem;color:var(--mu)">Upload nonaktif: Storage belum dikonfigurasi.</div>'}`:`<input ${a} type="${t}" value="${esc(v||'')}">`)}).join('')}
+ <div style="display:flex;gap:.6rem;margin-top:1.3rem;flex-wrap:wrap"><button class="b">Simpan</button>${['news','announcements'].includes(c)?'<button type="button" class="b s" id="pvb">Preview</button>':''}<button type="button" class="b s" onclick="closeM()">Batal</button></div><div id="pv"></div><p class="err" id="fe"></p></form>`);
+ document.querySelectorAll('[data-up]').forEach(i=>i.onchange=()=>upload(i));
+ if($('#pvb'))$('#pvb').onclick=()=>{$('#pv').innerHTML=`<div class="pv"><span class="pill">${esc($('#f_category').value||'—')}</span><h3 style="margin:.5rem 0">${esc($('#f_title').value)}</h3><p style="white-space:pre-wrap;color:var(--mu)">${esc($('#f_body').value)}</p></div>`};
+ $('#ff').onsubmit=async ev=>{ev.preventDefault();const d={};let note;
+  e.f.forEach(([k,,t])=>{const el=$('#f_'+k);if(!el)return;const x=el.value.trim();if(k==='note')note=x;else d[k]=t==='date'?Date.parse(x)||Date.now():x});
+  const key=id||db.ref(c).push().key,now=Date.now(),data={...d,updatedAt:now,updatedBy:me.uid};
+  if(!id){data.createdAt=now;data.createdBy=me.uid;data.createdByName=me.name||me.email}
+  if(c==='memberRequests'&&!id){data.status='Pending';data.submittedAt=now}
+  if(c==='news'&&data.status==='published'&&!data.publishedAt)data.publishedAt=now;
+  try{await db.ref(c+'/'+key).update(data);
+   if(c==='members'&&note!==undefined&&can('members'))await db.ref('memberNotes/'+key).set(note||null);
+   log((id?'edit ':'tambah ')+c,d.title||d.nickname);closeM();toast('Tersimpan')}catch(x){$('#fe').textContent=x.message;log((id?'edit ':'tambah ')+c,d.title||d.nickname,false)}}}
+
+function upload(inp){const f=inp.files[0];if(!f)return;const k=inp.dataset.up.slice(2),pg=$('#pg_'+k);
+ if(!/^image\/(jpeg|png|webp)$/.test(f.type))return toast('Hanya JPG/PNG/WEBP',1);if(f.size>2*1024*1024)return toast('Maksimal 2 MB',1);
+ const t=firebase.storage().ref('uploads/'+Date.now()+'_'+f.name.replace(/[^\w.-]/g,'_')).put(f);
+ t.on('state_changed',s=>pg.textContent='Upload '+Math.round(s.bytesTransferred/s.totalBytes*100)+'%',x=>toast('Upload gagal: '+x.code,1),async()=>{const u=await t.snapshot.ref.getDownloadURL();$('#'+inp.dataset.up).value=u;pg.textContent='Selesai ✓'})}
+
+function del(c,id){const r=C[c][id];if(!confirm('Hapus '+E[c].t+' ini? Tindakan tidak bisa dibatalkan.'))return;
+ const u={};u[c+'/'+id]=null;if(c==='members')u['memberNotes/'+id]=null;
+ db.ref().update(u).then(()=>{log('hapus '+c,r.title||r.nickname||r.nama);toast('Dihapus')}).catch(x=>{toast(x.message,1);log('hapus '+c,r.title||r.nickname,false)})}
+
+function verify(id,ok){const r=C.memberRequests[id];if(!canVerify()||r.createdBy===me.uid)return toast('Tidak diizinkan memverifikasi pengajuan ini',1);
+ let reason='';if(!ok){reason=prompt('Alasan penolakan:');if(reason===null)return;if(!reason.trim())return toast('Alasan wajib diisi',1)}
+ const now=Date.now(),u={};u['memberRequests/'+id+'/status']=ok?'Approved':'Rejected';u['memberRequests/'+id+'/reviewedBy']=me.uid;u['memberRequests/'+id+'/reviewedByName']=me.name||me.email;u['memberRequests/'+id+'/reviewedAt']=now;
+ if(!ok)u['memberRequests/'+id+'/rejectReason']=reason.trim();
+ if(ok)u['members/'+id]={nickname:r.nickname||r.nama||'',realName:r.realName||'',mlbbId:r.mlbbId||r.idml||'',serverId:r.serverId||'',role:'Member',status:'Approved',joinedAt:now,createdAt:now,createdBy:r.createdBy||'public',reviewedBy:me.uid,updatedAt:now};
+ db.ref().update(u).then(()=>{log(ok?'setujui anggota':'tolak anggota',r.nickname||r.nama);toast(ok?'Anggota disetujui':'Pengajuan ditolak')}).catch(x=>toast(x.message,1))}
+
+/* ===== Staff ===== */
+function staffView(v){const l=rows('staff');
+ v.innerHTML=`<div class="tools"><button class="b" id="sa">+ Tambah Staff</button></div><div class="tw"><table><thead><tr><th>Nama</th><th>Email</th><th>Role</th><th>Verifikasi</th><th>Aktif</th><th></th></tr></thead><tbody>${l.map(r=>`<tr><td>${esc(r.name)}</td><td>${esc(r.email)}</td><td><span class="pill">${esc(r.role)}</span></td><td>${r.canVerify||r.role==='owner'?'Ya':'-'}</td><td>${r.active?'Ya':'Tidak'}</td><td class="ac">${editable(r)?`<button class="b sm s" data-id="${r.id}" data-a="e">Edit</button><button class="b sm d" data-id="${r.id}" data-a="x">Hapus</button>`:''}</td></tr>`).join('')||'<tr><td class="em" colspan="6">Belum ada staff.</td></tr>'}</tbody></table></div>
+ <p style="color:var(--mu);font-size:.8rem;margin-top:.8rem">Menghapus staff mencabut akses dashboard. Akun login-nya dihapus lewat Firebase Console > Authentication.</p>`;
+ $('#sa').onclick=()=>staffForm();v.onclick=ev=>{const b=ev.target.closest('[data-a]');if(!b)return;b.dataset.a==='e'?staffForm(b.dataset.id):delStaff(b.dataset.id)}}
+const editable=r=>r.id!==me.uid&&r.role!=='owner'&&(me.role==='owner'||(me.role==='admin'&&['editor','staff'].includes(r.role)));
+function staffForm(id){const r=id?C.staff[id]:{role:'staff',active:true},ro=me.role==='owner'?['admin','editor','staff']:['editor','staff'];
+ openM(`<h3>${id?'Edit':'Tambah'} Staff</h3><form id="ff">${id?'':'<label>Email</label><input id="sem" type="email" required><label>Password awal (min 8)</label><input id="spw" type="password" minlength="8" required>'}<label>Nama</label><input id="snm" required value="${esc(r.name||'')}"><label>Role</label><select id="srl">${ro.map(x=>`<option ${x===r.role?'selected':''}>${x}</option>`)}</select>
+ ${me.role==='owner'?`<label>Hak verifikasi anggota</label><select id="scv"><option value="0">Tidak</option><option value="1" ${r.canVerify?'selected':''}>Ya</option></select>`:''}<label>Status akun</label><select id="sac"><option value="1">Aktif</option><option value="0" ${r.active===false?'selected':''}>Nonaktif</option></select>
+ <div style="display:flex;gap:.6rem;margin-top:1.3rem"><button class="b">Simpan</button><button type="button" class="b s" onclick="closeM()">Batal</button></div><p class="err" id="fe"></p></form>`);
+ $('#ff').onsubmit=async ev=>{ev.preventDefault();try{let uid=id,email=r.email;
+  if(!id){email=$('#sem').value.trim();const sec=firebase.apps.find(a=>a.name==='sec')||firebase.initializeApp(CFG,'sec');const cr=await sec.auth().createUserWithEmailAndPassword(email,$('#spw').value);uid=cr.user.uid;await sec.auth().signOut()}
+  const d={name:$('#snm').value.trim(),email,role:$('#srl').value,active:$('#sac').value==='1',canVerify:me.role==='owner'?$('#scv').value==='1':!!r.canVerify,updatedAt:Date.now(),updatedBy:me.uid};if(!id){d.createdAt=Date.now();d.createdBy=me.uid}
+  await db.ref('staff/'+uid).update(d);log((id?'edit':'tambah')+' staff',email);closeM();toast('Staff tersimpan')}catch(x){$('#fe').textContent=x.message}}}
+function delStaff(id){const r=C.staff[id];if(!confirm('Cabut akses staff '+r.name+'?'))return;db.ref('staff/'+id).remove().then(()=>{log('hapus staff',r.email);toast('Akses dicabut')}).catch(x=>toast(x.message,1))}
+
+/* ===== Settings & Logs ===== */
+function settingsView(v){const s=C.settings||{};
+ v.innerHTML=`<form class="cd" id="sf2" style="max-width:640px">${SETF.map(([k,l,t])=>`<label>${l}</label>${t==='textarea'?`<textarea id="s_${k}" rows="3">${esc(s[k]||'')}</textarea>`:`<input id="s_${k}" value="${esc(s[k]||'')}">`}`).join('')}<br><button class="b">Simpan Pengaturan</button></form>`;
+ $('#sf2').onsubmit=ev=>{ev.preventDefault();const d={updatedAt:Date.now(),updatedBy:me.uid};SETF.forEach(([k])=>d[k]=$('#s_'+k).value.trim());
+  db.ref('settings').update(d).then(()=>{log('ubah settings');toast('Pengaturan tersimpan')}).catch(x=>toast(x.message,1))}}
+function logsView(v){const l=rows('activityLogs').sort((a,b)=>b.at-a.at).slice(0,150);
+ v.innerHTML=`<div class="tw"><table><thead><tr><th>Waktu</th><th>Pengguna</th><th>Role</th><th>Tindakan</th><th>Data</th><th>Hasil</th></tr></thead><tbody>${l.map(r=>`<tr><td>${fd(r.at)}</td><td>${esc(r.name)}</td><td>${esc(r.role)}</td><td>${esc(r.action)}</td><td>${esc(r.target)}</td><td>${r.ok?'Berhasil':'Gagal'}</td></tr>`).join('')||'<tr><td class="em" colspan="6">Belum ada log.</td></tr>'}</tbody></table></div>`}
+</script>
+</body>
+</html>
