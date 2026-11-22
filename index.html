@@ -7,6 +7,9 @@
     <meta name="description" content="Discover DOMS, an open identity system by BLACKLIGHTDOMINIONS. Explore its vision, identity requirements, community, and regulations.">
     <meta name="theme-color" content="#050506">
     <link rel="icon" href="logo.png" type="image/png">
+    <meta property="og:title" content="DOMS — BLACKLIGHTDOMINIONS Marga System">
+    <meta property="og:description" content="One Identity. One Community. Official DOMS Marga System portal.">
+    <meta property="og:type" content="website">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -274,9 +277,6 @@
             filter: blur(40px);
         }
 
-        /* ==========================================================================
-           SCROLL PROGRESS BAR
-           ========================================================================== */
         .scroll-progress {
             position: fixed;
             top: 0;
@@ -414,7 +414,6 @@
             flex-shrink: 0;
         }
 
-        /* Language Dropdown */
         .lang-dropdown-wrapper {
             position: relative;
         }
@@ -479,7 +478,6 @@
             background: var(--accent-bg);
         }
 
-        /* Buttons */
         .btn-primary {
             background: var(--text-main);
             color: var(--bg-main);
@@ -550,7 +548,6 @@
             border-color: var(--text-main);
         }
 
-        /* Mobile Menu Drawer */
         .mobile-menu {
             position: fixed;
             top: 68px;
@@ -782,7 +779,7 @@
         }
 
         /* ==========================================================================
-           SECTIONS & REVEAL
+           SECTION COMMON STYLES & SCROLL REVEAL
            ========================================================================== */
         section {
             padding: 105px 2rem;
@@ -1262,7 +1259,6 @@
             transition: var(--transition-fast);
             display: flex;
             flex-direction: column;
-            gap: 0;
         }
         .faq-card:hover, .faq-card.active {
             border-color: var(--border-hover);
@@ -1732,168 +1728,51 @@
             opacity: 1;
         }
 
-        /* ==========================================================================
-           RESPONSIVE BREAKPOINTS
-           ========================================================================== */
         @media (max-width: 1120px) {
-            .nav-menu {
-                display: none;
-            }
-            .hamburger {
-                display: flex;
-            }
-            .hero-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-                gap: 3rem;
-            }
-            .hero-text-col {
-                align-items: center;
-            }
-            .hero-btns {
-                justify-content: center;
-            }
-            .hero-eclipse-container {
-                width: 280px;
-                height: 280px;
-            }
-            .hero-eclipse-inner {
-                width: 205px;
-                height: 205px;
-            }
-            .hero-logo-center {
-                width: 110px;
-                height: 110px;
-            }
-            .hero-logo-center img {
-                width: 72px;
-                height: 72px;
-            }
-            .about-grid, .vision-mission-grid, .identity-grid, .community-grid, .faq-grid {
-                grid-template-columns: 1fr;
-                gap: 2.25rem;
-            }
-            .footer-container {
-                grid-template-columns: 1fr 1fr;
-                gap: 2.5rem;
-            }
+            .nav-menu { display: none; }
+            .hamburger { display: flex; }
+            .hero-content { grid-template-columns: 1fr; text-align: center; gap: 3rem; }
+            .hero-text-col { align-items: center; }
+            .hero-btns { justify-content: center; }
+            .hero-eclipse-container { width: 280px; height: 280px; }
+            .hero-eclipse-inner { width: 205px; height: 205px; }
+            .hero-logo-center { width: 110px; height: 110px; }
+            .hero-logo-center img { width: 72px; height: 72px; }
+            .about-grid, .vision-mission-grid, .identity-grid, .community-grid, .faq-grid { grid-template-columns: 1fr; gap: 2.25rem; }
+            .footer-container { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
         }
 
         @media (max-width: 640px) {
-            .nav-container {
-                padding: 0 1rem;
-                height: 68px;
-            }
-            .logo-wrapper {
-                width: 38px;
-                height: 38px;
-            }
-            .logo-wrapper img {
-                width: 28px;
-                height: 28px;
-            }
-            .nav-title {
-                font-size: 1.05rem;
-                letter-spacing: 0.14em;
-            }
-            .nav-actions {
-                gap: 0.5rem;
-            }
-            .lang-btn {
-                padding: 6px 9px;
-                font-size: 0.78rem;
-            }
-            #joinDomsNavBtn {
-                display: none;
-            }
-            section {
-                padding: 72px 1.15rem;
-            }
-            .hero {
-                padding: 96px 1.15rem 64px 1.15rem;
-                min-height: auto;
-            }
-            .badge-pill {
-                font-size: 0.66rem;
-                padding: 6px 12px;
-                letter-spacing: 0.08em;
-            }
-            .hero-eclipse-container {
-                width: 220px;
-                height: 220px;
-            }
-            .hero-eclipse-inner {
-                width: 160px;
-                height: 160px;
-            }
-            .hero-logo-center {
-                width: 88px;
-                height: 88px;
-            }
-            .hero-logo-center img {
-                width: 58px;
-                height: 58px;
-            }
-            .scroll-down-indicator {
-                display: none;
-            }
-            .hero-btns {
-                width: 100%;
-                flex-direction: column;
-            }
-            .hero-btns .btn-primary,
-            .hero-btns .btn-secondary {
-                width: 100%;
-                justify-content: center;
-                padding: 13px 20px;
-            }
-            .vm-card, .community-card, .identity-container, .cta-box, .contact-container {
-                padding: 1.75rem 1.35rem;
-                border-radius: 18px;
-            }
-            .format-card {
-                padding: 1.1rem 1.25rem;
-                font-size: 1rem;
-            }
-            .rule-category-header {
-                padding: 1.25rem 1.35rem;
-            }
-            .rule-category-title-group {
-                gap: 0.85rem;
-            }
-            .rule-cat-title {
-                font-size: 1.05rem;
-            }
-            .rule-category-card.active .rule-category-body {
-                padding: 1.35rem;
-            }
-            .faq-card {
-                padding: 1.35rem;
-            }
-            .faq-question {
-                font-size: 1rem;
-            }
-            .contact-actions {
-                width: 100%;
-                flex-direction: column;
-            }
-            .contact-actions .btn-primary,
-            .contact-actions .btn-secondary {
-                width: 100%;
-                justify-content: center;
-            }
-            .footer-container {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-            .modal-card {
-                padding: 1.75rem 1.35rem;
-            }
-            .toast {
-                left: 1rem;
-                right: 1rem;
-                bottom: 16px;
-            }
+            .nav-container { padding: 0 1rem; height: 68px; }
+            .logo-wrapper { width: 38px; height: 38px; }
+            .logo-wrapper img { width: 28px; height: 28px; }
+            .nav-title { font-size: 1.05rem; letter-spacing: 0.14em; }
+            .nav-actions { gap: 0.5rem; }
+            .lang-btn { padding: 6px 9px; font-size: 0.78rem; }
+            #joinDomsNavBtn { display: none; }
+            section { padding: 72px 1.15rem; }
+            .hero { padding: 96px 1.15rem 64px 1.15rem; min-height: auto; }
+            .badge-pill { font-size: 0.66rem; padding: 6px 12px; letter-spacing: 0.08em; }
+            .hero-eclipse-container { width: 220px; height: 220px; }
+            .hero-eclipse-inner { width: 160px; height: 160px; }
+            .hero-logo-center { width: 88px; height: 88px; }
+            .hero-logo-center img { width: 58px; height: 58px; }
+            .scroll-down-indicator { display: none; }
+            .hero-btns { width: 100%; flex-direction: column; }
+            .hero-btns .btn-primary, .hero-btns .btn-secondary { width: 100%; justify-content: center; padding: 13px 20px; }
+            .vm-card, .community-card, .identity-container, .cta-box, .contact-container { padding: 1.75rem 1.35rem; border-radius: 18px; }
+            .format-card { padding: 1.1rem 1.25rem; font-size: 1rem; }
+            .rule-category-header { padding: 1.25rem 1.35rem; }
+            .rule-category-title-group { gap: 0.85rem; }
+            .rule-cat-title { font-size: 1.05rem; }
+            .rule-category-card.active .rule-category-body { padding: 1.35rem; }
+            .faq-card { padding: 1.35rem; }
+            .faq-question { font-size: 1rem; }
+            .contact-actions { width: 100%; flex-direction: column; }
+            .contact-actions .btn-primary, .contact-actions .btn-secondary { width: 100%; justify-content: center; }
+            .footer-container { grid-template-columns: 1fr; gap: 2rem; }
+            .modal-card { padding: 1.75rem 1.35rem; }
+            .toast { left: 1rem; right: 1rem; bottom: 16px; }
         }
     </style>
 </head>
@@ -1913,10 +1792,7 @@
         <div class="loader-status" id="loaderStatus">INITIALIZING SYSTEM...</div>
     </div>
 
-    <!-- Scroll Progress -->
     <div class="scroll-progress" id="scrollProgress"></div>
-
-    <!-- Ambient Glow & Canvas -->
     <div class="ambient-eclipse-glow"></div>
     <canvas id="bg-canvas"></canvas>
 
@@ -1927,7 +1803,7 @@
                 <div class="logo-wrapper">
                     <img id="navLogoImg" src="logo.png" alt="DOMS Logo">
                 </div>
-                <span class="nav-title">DOMS</span>
+                <span class="nav-title" id="brandNavTitle">DOMS</span>
             </div>
 
             <ul class="nav-menu">
@@ -1964,7 +1840,6 @@
         </div>
     </header>
 
-    <!-- Mobile Menu Overlay -->
     <div class="mobile-menu" id="mobileMenu">
         <a class="mobile-nav-link" href="#home" data-i18n="nav_home">Beranda</a>
         <a class="mobile-nav-link" href="#about" data-i18n="nav_about">Tentang</a>
@@ -1988,9 +1863,9 @@
                         <span class="badge-dot"></span>
                         <span data-i18n="hero_badge">SISTEM MARGA BLACKLIGHTDOMINIONS</span>
                     </div>
-                    <h1 class="hero-title">DOMS</h1>
+                    <h1 class="hero-title" id="heroTitleMain">DOMS</h1>
                     <div class="hero-tagline" data-i18n="hero_tagline">ONE IDENTITY. ONE COMMUNITY.</div>
-                    <p class="hero-subtitle" data-i18n="hero_desc">
+                    <p class="hero-subtitle" id="heroSubtitleText" data-i18n="hero_desc">
                         “Identitas terbuka yang dibangun atas dasar persatuan, nilai bersama, dan hubungan yang bermakna. DOMS menyatukan individu di dalam satu identitas sekaligus mempererat ikatan dalam komunitas BLACKLIGHTDOMINIONS.”
                     </p>
                     <div class="hero-btns">
@@ -2004,7 +1879,7 @@
                         <div class="hero-eclipse-orbit-dot"></div>
                         <div class="hero-eclipse-inner"></div>
                         <div class="hero-logo-center">
-                            <img src="logo.png" alt="DOMS Hero Logo">
+                            <img id="heroLogoImg" src="logo.png" alt="DOMS Hero Logo">
                         </div>
                     </div>
                 </div>
@@ -2015,6 +1890,9 @@
                 <i data-lucide="arrow-down" size="15"></i>
             </a>
         </section>
+
+        <!-- ANNOUNCEMENTS BANNER CONTAINER (Dynamic from Firebase) -->
+        <div id="announcementBannerContainer" style="max-width: 1380px; margin: 0 auto; padding: 0 2rem;"></div>
 
         <!-- ABOUT SECTION -->
         <section id="about" class="reveal">
@@ -2063,55 +1941,28 @@
             <div class="vision-mission-grid">
                 <div class="vm-card">
                     <div class="vm-card-header">
-                        <div class="vm-icon-box">
-                            <i data-lucide="eye" size="26"></i>
-                        </div>
+                        <div class="vm-icon-box"><i data-lucide="eye" size="26"></i></div>
                         <h3 class="vm-card-title" data-i18n="vision_card_title">Visi Kami</h3>
                     </div>
                     <p class="vm-text" data-i18n="vision_card_text">
                         “Menjadikan DOMS sebagai identitas inklusif, mudah dikenali, dan bermakna yang menghubungkan individu melalui nilai-nilai bersama, rasa saling menghormati, dan rasa memiliki yang kuat.<br><br>
-                        DOMS bertujuan menjadi lebih dari sekadar nama panggilan atau tag komunitas. DOMS berupaya merepresentasikan hubungan abadi antara individu yang percaya pada persatuan, persahabatan, integritas, dan interaksi positif.<br><br>
-                        Dengan menyatukan orang-orang dari berbagai latar belakang, DOMS menciptakan lingkungan di mana setiap orang memiliki kesempatan berpartisipasi, membangun hubungan, saling mendukung, dan berkembang bersama.<br><br>
-                        Melalui nilai konsisten dan partisipasi aktif, DOMS bercita-cita menjadi identitas kuat yang merepresentasikan solidaritas dan kepercayaan dalam BLACKLIGHTDOMINIONS.”
+                        DOMS bertujuan menjadi lebih dari sekadar nama panggilan atau tag komunitas. DOMS berupaya merepresentasikan hubungan abadi antara individu yang percaya pada persatuan, persahabatan, integritas, dan interaksi positif.”
                     </p>
                 </div>
 
                 <div class="vm-card">
                     <div class="vm-card-header">
-                        <div class="vm-icon-box">
-                            <i data-lucide="target" size="26"></i>
-                        </div>
+                        <div class="vm-icon-box"><i data-lucide="target" size="26"></i></div>
                         <h3 class="vm-card-title" data-i18n="mission_card_title">Misi Kami</h3>
                     </div>
                     <ul class="mission-list">
-                        <li class="mission-item">
-                            <span class="mission-number">01</span>
-                            <span data-i18n="mission_1">Menetapkan DOMS sebagai identitas inklusif yang dapat diikuti oleh siapa saja.</span>
-                        </li>
-                        <li class="mission-item">
-                            <span class="mission-number">02</span>
-                            <span data-i18n="mission_2">Memperkuat hubungan dan koneksi antar individu melalui partisipasi komunitas.</span>
-                        </li>
-                        <li class="mission-item">
-                            <span class="mission-number">03</span>
-                            <span data-i18n="mission_3">Mendorong rasa saling menghormati, tanggung jawab, kejujuran, dan perilaku positif.</span>
-                        </li>
-                        <li class="mission-item">
-                            <span class="mission-number">04</span>
-                            <span data-i18n="mission_4">Membangun lingkungan ramah di mana anggota dapat berinteraksi dan membangun persahabatan.</span>
-                        </li>
-                        <li class="mission-item">
-                            <span class="mission-number">05</span>
-                            <span data-i18n="mission_5">Menjaga reputasi dan nilai-nilai yang diasosiasikan dengan BLACKLIGHTDOMINIONS.</span>
-                        </li>
-                        <li class="mission-item">
-                            <span class="mission-number">06</span>
-                            <span data-i18n="mission_6">Mendorong persatuan dan kerja sama di antara pengguna DOMS tanpa memandang latar belakang.</span>
-                        </li>
-                        <li class="mission-item">
-                            <span class="mission-number">07</span>
-                            <span data-i18n="mission_7">Mengembangkan sistem identitas berkelanjutan yang berkembang bersama BLACKLIGHTDOMINIONS.</span>
-                        </li>
+                        <li class="mission-item"><span class="mission-number">01</span><span data-i18n="mission_1">Menetapkan DOMS sebagai identitas inklusif yang dapat diikuti oleh siapa saja.</span></li>
+                        <li class="mission-item"><span class="mission-number">02</span><span data-i18n="mission_2">Memperkuat hubungan dan koneksi antar individu melalui partisipasi komunitas.</span></li>
+                        <li class="mission-item"><span class="mission-number">03</span><span data-i18n="mission_3">Mendorong rasa saling menghormati, tanggung jawab, kejujuran, dan perilaku positif.</span></li>
+                        <li class="mission-item"><span class="mission-number">04</span><span data-i18n="mission_4">Membangun lingkungan ramah di mana anggota dapat berinteraksi dan membangun persahabatan.</span></li>
+                        <li class="mission-item"><span class="mission-number">05</span><span data-i18n="mission_5">Menjaga reputasi dan nilai-nilai yang diasosiasikan dengan BLACKLIGHTDOMINIONS.</span></li>
+                        <li class="mission-item"><span class="mission-number">06</span><span data-i18n="mission_6">Mendorong persatuan dan kerja sama di antara pengguna DOMS tanpa memandang latar belakang.</span></li>
+                        <li class="mission-item"><span class="mission-number">07</span><span data-i18n="mission_7">Mengembangkan sistem identitas berkelanjutan yang berkembang bersama BLACKLIGHTDOMINIONS.</span></li>
                     </ul>
                 </div>
             </div>
@@ -2127,25 +1978,14 @@
             <div class="identity-container">
                 <div class="identity-grid">
                     <div class="identity-formats-box">
-                        <div class="format-card">
-                            <span>Nama X DOMS</span>
-                            <span class="format-badge" data-i18n="accepted_badge">Diterima</span>
-                        </div>
-                        <div class="format-card">
-                            <span>Nama x DOMS</span>
-                            <span class="format-badge" data-i18n="accepted_badge">Diterima</span>
-                        </div>
-                        <div class="format-card">
-                            <span>Nama × DOMS</span>
-                            <span class="format-badge" data-i18n="accepted_badge">Diterima</span>
-                        </div>
+                        <div class="format-card"><span>Nama X DOMS</span><span class="format-badge" data-i18n="accepted_badge">Diterima</span></div>
+                        <div class="format-card"><span>Nama x DOMS</span><span class="format-badge" data-i18n="accepted_badge">Diterima</span></div>
+                        <div class="format-card"><span>Nama × DOMS</span><span class="format-badge" data-i18n="accepted_badge">Diterima</span></div>
                     </div>
 
                     <div class="identity-info">
                         <h3 data-i18n="identity_info_title">Format Resmi</h3>
-                        <p data-i18n="identity_info_desc">
-                            Ketiga format nama panggilan di atas diterima secara resmi. Tag DOMS harus selalu berada di bagian akhir nama panggilan Anda. Anda memiliki kebebasan penuh untuk mempersonalisasi nama utama sebelum tag.
-                        </p>
+                        <p data-i18n="identity_info_desc">Ketiga format nama panggilan di atas diterima secara resmi. Tag DOMS harus selalu berada di bagian akhir nama panggilan Anda.</p>
                         <div class="identity-rules-chips">
                             <span class="identity-chip" data-i18n="chip_1">Tanpa Peniruan</span>
                             <span class="identity-chip" data-i18n="chip_2">Tag di Akhir</span>
@@ -2157,25 +1997,37 @@
             </div>
         </section>
 
+        <!-- VERIFIED MEMBER DIRECTORY SECTION (Public Approved Members) -->
+        <section id="directory" class="reveal">
+            <div class="section-header">
+                <span class="section-tag">04 / Direktori Publik</span>
+                <h2 class="section-title">Direktori Anggota Terverifikasi</h2>
+            </div>
+            <div style="margin-bottom: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+                <input type="text" id="publicSearchInput" class="form-input" placeholder="Cari nama MLBB / ID..." style="max-width: 320px; flex: 1;">
+            </div>
+            <div id="publicMemberGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem;">
+                <!-- Dinamis dari Firebase /members -->
+            </div>
+        </section>
+
         <!-- COMMUNITY REQUIREMENTS -->
         <section id="community" class="reveal">
             <div class="section-header">
-                <span class="section-tag" data-i18n="community_tag">04 / Koneksi Ekosistem</span>
+                <span class="section-tag" data-i18n="community_tag">05 / Koneksi Ekosistem</span>
                 <h2 class="section-title" data-i18n="community_title">Gabung Komunitas</h2>
             </div>
 
             <div class="community-grid">
                 <div class="community-card">
                     <div class="community-card-top">
-                        <div class="community-icon">
-                            <i data-lucide="message-circle" size="30"></i>
-                        </div>
+                        <div class="community-icon"><i data-lucide="message-circle" size="30"></i></div>
                         <div>
                             <h3 class="community-title">WhatsApp Community</h3>
-                            <p class="community-desc" data-i18n="wa_card_desc">Terhubung langsung dengan sesama anggota DOMS dan partisipan BLDS melalui grup komunitas WhatsApp kami yang aktif.</p>
+                            <p class="community-desc" id="waDescText" data-i18n="wa_card_desc">Terhubung langsung dengan sesama anggota DOMS dan partisipan BLDS melalui grup komunitas WhatsApp kami yang aktif.</p>
                         </div>
                     </div>
-                    <a href="https://chat.whatsapp.com/LJvQ6Bu1FESAvNk5bqbk1F?s=cl&p=a&mlu=4" target="_blank" rel="noopener noreferrer" class="btn-primary" style="justify-content: center;">
+                    <a id="waCommunityLink" href="https://chat.whatsapp.com/LJvQ6Bu1FESAvNk5bqbk1F?s=cl&p=a&mlu=4" target="_blank" rel="noopener noreferrer" class="btn-primary" style="justify-content: center;">
                         <span data-i18n="btn_join_whatsapp">Gabung WhatsApp</span>
                         <i data-lucide="external-link" size="15"></i>
                     </a>
@@ -2183,15 +2035,13 @@
 
                 <div class="community-card">
                     <div class="community-card-top">
-                        <div class="community-icon">
-                            <i data-lucide="disc" size="30"></i>
-                        </div>
+                        <div class="community-icon"><i data-lucide="disc" size="30"></i></div>
                         <div>
                             <h3 class="community-title">Discord Community</h3>
-                            <p class="community-desc" data-i18n="discord_card_desc">Bergabunglah dengan server Discord resmi kami untuk kanal suara, acara komunitas, pengumuman, dan diskusi terstruktur.</p>
+                            <p class="community-desc" id="discordDescText" data-i18n="discord_card_desc">Bergabunglah dengan server Discord resmi kami untuk kanal suara, acara komunitas, pengumuman, dan diskusi terstruktur.</p>
                         </div>
                     </div>
-                    <a href="https://discord.gg/r4dM4QFteV" target="_blank" rel="noopener noreferrer" class="btn-primary" style="justify-content: center;">
+                    <a id="discordCommunityLink" href="https://discord.gg/r4dM4QFteV" target="_blank" rel="noopener noreferrer" class="btn-primary" style="justify-content: center;">
                         <span data-i18n="btn_join_discord">Gabung Discord</span>
                         <i data-lucide="external-link" size="15"></i>
                     </a>
@@ -2199,198 +2049,56 @@
             </div>
 
             <div class="community-note">
-                <span data-i18n="community_note_text">💡 <strong>Catatan:</strong> Bergabung dengan setidaknya <strong>SATU</strong> platform komunitas BLDS resmi adalah wajib. Bergabung dengan keduanya sangat dianjurkan.</span>
+                <span data-i18n="community_note_text">💡 <strong>Catatan:</strong> Bergabung dengan setidaknya <strong>SATU</strong> platform komunitas BLDS resmi adalah wajib.</span>
             </div>
         </section>
 
         <!-- RULES & REGULATIONS -->
         <section id="rules" class="reveal">
             <div class="section-header">
-                <span class="section-tag" data-i18n="rules_tag">05 / Kode Etik</span>
+                <span class="section-tag" data-i18n="rules_tag">06 / Kode Etik</span>
                 <h2 class="section-title" data-i18n="rules_title">Aturan & Regulasi DOMS</h2>
             </div>
 
             <div class="rules-container" id="rulesAccordionContainer">
                 <div class="rule-category-card active">
                     <div class="rule-category-header">
-                        <div class="rule-category-title-group">
-                            <span class="rule-cat-num">01</span>
-                            <h3 class="rule-cat-title" data-i18n="rule_cat_1_title">Regulasi Identitas</h3>
-                        </div>
-                        <div class="rule-toggle-icon">
-                            <i data-lucide="chevron-down" size="17"></i>
-                        </div>
+                        <div class="rule-category-title-group"><span class="rule-cat-num">01</span><h3 class="rule-cat-title" data-i18n="rule_cat_1_title">Regulasi Identitas</h3></div>
+                        <div class="rule-toggle-icon"><i data-lucide="chevron-down" size="17"></i></div>
                     </div>
                     <div class="rule-category-body">
                         <ul class="rule-items-list">
                             <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_1_1">Setiap pengguna DOMS harus menggunakan salah satu format nama panggilan yang diterima: Nama X DOMS, Nama x DOMS, atau Nama × DOMS.</span></li>
                             <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_1_2">Tag DOMS harus tetap berada di akhir nama panggilan.</span></li>
                             <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_1_3">Pengguna bertanggung jawab atas identitas mereka sendiri.</span></li>
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_1_4">Meniru pengguna DOMS atau perwakilan BLDS lain dilarang keras.</span></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="rule-category-card">
-                    <div class="rule-category-header">
-                        <div class="rule-category-title-group">
-                            <span class="rule-cat-num">02</span>
-                            <h3 class="rule-cat-title" data-i18n="rule_cat_2_title">Persyaratan Komunitas</h3>
-                        </div>
-                        <div class="rule-toggle-icon">
-                            <i data-lucide="chevron-down" size="17"></i>
-                        </div>
-                    </div>
-                    <div class="rule-category-body">
-                        <ul class="rule-items-list">
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_2_1">Setiap pengguna DOMS harus bergabung dengan setidaknya satu platform komunitas BLDS resmi (WhatsApp atau Discord).</span></li>
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_2_2">Pengguna harus menghormati aturan komunitas WhatsApp atau Discord yang mereka ikuti.</span></li>
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_2_3">Pengguna didorong untuk berpartisipasi secara positif dalam kegiatan komunitas.</span></li>
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_2_4">Pengguna tidak boleh menggunakan DOMS sebagai sarana menciptakan konflik yang tidak perlu.</span></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="rule-category-card">
-                    <div class="rule-category-header">
-                        <div class="rule-category-title-group">
-                            <span class="rule-cat-num">03</span>
-                            <h3 class="rule-cat-title" data-i18n="rule_cat_3_title">Perilaku & Etika</h3>
-                        </div>
-                        <div class="rule-toggle-icon">
-                            <i data-lucide="chevron-down" size="17"></i>
-                        </div>
-                    </div>
-                    <div class="rule-category-body">
-                        <ul class="rule-items-list">
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_3_1">Menghormati individu lain terlepas dari latar belakang mereka.</span></li>
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_3_2">Pelecehan, perundungan, intimidasi, dan penyalahgunaan terarah dilarang keras.</span></li>
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_3_3">Spam dan perilaku mengganggu tidak diizinkan.</span></li>
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_3_4">Perilaku penipuan dan penyamaran dilarang.</span></li>
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_3_5">Jangan gunakan identitas DOMS untuk merusak reputasi orang lain atau komunitas.</span></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="rule-category-card">
-                    <div class="rule-category-header">
-                        <div class="rule-category-title-group">
-                            <span class="rule-cat-num">04</span>
-                            <h3 class="rule-cat-title" data-i18n="rule_cat_4_title">Penyalahgunaan Identitas</h3>
-                        </div>
-                        <div class="rule-toggle-icon">
-                            <i data-lucide="chevron-down" size="17"></i>
-                        </div>
-                    </div>
-                    <div class="rule-category-body">
-                        <ul class="rule-items-list">
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_4_1">Jangan secara keliru mengaku mewakili administrasi resmi BLDS.</span></li>
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_4_2">Jangan menyalahgunakan identitas DOMS untuk penipuan atau aktivitas menyesatkan.</span></li>
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_4_3">Jangan menyebarkan pengumuman palsu atas nama DOMS atau BLDS.</span></li>
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_4_4">Jangan gunakan identitas DOMS untuk terlibat dalam aktivitas berbahaya.</span></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="rule-category-card">
-                    <div class="rule-category-header">
-                        <div class="rule-category-title-group">
-                            <span class="rule-cat-num">05</span>
-                            <h3 class="rule-cat-title" data-i18n="rule_cat_5_title">Penegakan Aturan</h3>
-                        </div>
-                        <div class="rule-toggle-icon">
-                            <i data-lucide="chevron-down" size="17"></i>
-                        </div>
-                    </div>
-                    <div class="rule-category-body">
-                        <ul class="rule-items-list">
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_5_1">Pelanggaran dapat mengakibatkan teguran lisan, peringatan resmi, pembatasan sementara, atau pencabutan izin menggunakan identitas DOMS.</span></li>
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_5_2">Tindakan akan bergantung pada keseriusan dan keadaan pelanggaran.</span></li>
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_5_3">Pelanggaran berat dapat menerima tindakan lebih tegas. Catatan: Menggunakan DOMS tidak secara otomatis menjadikan seseorang anggota resmi skuad MLBB BLDS.</span></li>
                         </ul>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- NEWS & ANNOUNCEMENTS SECTION -->
+        <section id="news" class="reveal">
+            <div class="section-header">
+                <span class="section-tag">07 / Informasi Terkini</span>
+                <h2 class="section-title">Berita & Pengumuman</h2>
+            </div>
+            <div id="publicNewsGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.75rem;">
+                <!-- Dinamis dari Firebase /news & /announcements -->
+            </div>
+        </section>
+
         <!-- FAQ SECTION -->
         <section id="faq" class="reveal">
             <div class="section-header">
-                <span class="section-tag" data-i18n="faq_tag">06 / Pertanyaan Umum</span>
+                <span class="section-tag" data-i18n="faq_tag">08 / Pertanyaan Umum</span>
                 <h2 class="section-title" data-i18n="faq_title">Pertanyaan yang Sering Diajukan</h2>
             </div>
 
             <div class="faq-grid" id="faqContainer">
                 <div class="faq-card">
-                    <div class="faq-question-header">
-                        <span class="faq-question" data-i18n="faq_q1">Apa itu DOMS?</span>
-                        <i data-lucide="chevron-down" class="faq-icon" size="18"></i>
-                    </div>
-                    <div class="faq-answer" data-i18n="faq_a1">DOMS adalah sistem identitas marga yang terbuka untuk umum dan berafiliasi dengan BLACKLIGHTDOMINIONS, dirancang untuk menyatukan individu melalui nilai bersama.</div>
-                </div>
-
-                <div class="faq-card">
-                    <div class="faq-question-header">
-                        <span class="faq-question" data-i18n="faq_q2">Siapa yang dapat menggunakan identitas DOMS?</span>
-                        <i data-lucide="chevron-down" class="faq-icon" size="18"></i>
-                    </div>
-                    <div class="faq-answer" data-i18n="faq_a2">Siapa pun dapat menggunakan identitas DOMS selama mereka mengikuti format nama panggilan yang ditetapkan dan mematuhi aturan komunitas.</div>
-                </div>
-
-                <div class="faq-card">
-                    <div class="faq-question-header">
-                        <span class="faq-question" data-i18n="faq_q3">Apakah DOMS terbuka untuk umum?</span>
-                        <i data-lucide="chevron-down" class="faq-icon" size="18"></i>
-                    </div>
-                    <div class="faq-answer" data-i18n="faq_a3">Ya, DOMS sepenuhnya terbuka untuk umum tanpa memandang peringkat game, latar belakang, atau status keanggotaan sebelumnya.</div>
-                </div>
-
-                <div class="faq-card">
-                    <div class="faq-question-header">
-                        <span class="faq-question" data-i18n="faq_q4">Format nama panggilan apa yang harus saya gunakan?</span>
-                        <i data-lucide="chevron-down" class="faq-icon" size="18"></i>
-                    </div>
-                    <div class="faq-answer" data-i18n="faq_a4">Anda harus menggunakan salah satu dari tiga format yang diterima: Nama X DOMS, Nama x DOMS, atau Nama × DOMS, dengan tag di bagian akhir.</div>
-                </div>
-
-                <div class="faq-card">
-                    <div class="faq-question-header">
-                        <span class="faq-question" data-i18n="faq_q5">Apakah saya perlu bergabung dengan komunitas BLDS?</span>
-                        <i data-lucide="chevron-down" class="faq-icon" size="18"></i>
-                    </div>
-                    <div class="faq-answer" data-i18n="faq_a5">Ya, setiap pengguna DOMS wajib bergabung dengan setidaknya satu platform komunitas resmi BLDS (WhatsApp atau Discord).</div>
-                </div>
-
-                <div class="faq-card">
-                    <div class="faq-question-header">
-                        <span class="faq-question" data-i18n="faq_q6">Apakah saya harus bergabung dengan WhatsApp dan Discord?</span>
-                        <i data-lucide="chevron-down" class="faq-icon" size="18"></i>
-                    </div>
-                    <div class="faq-answer" data-i18n="faq_a6">Bergabung dengan keduanya sangat dianjurkan, namun bergabung dengan setidaknya satu platform adalah persyaratan minimum.</div>
-                </div>
-
-                <div class="faq-card">
-                    <div class="faq-question-header">
-                        <span class="faq-question" data-i18n="faq_q7">Apakah menggunakan DOMS membuat saya menjadi anggota resmi skuad MLBB BLDS?</span>
-                        <i data-lucide="chevron-down" class="faq-icon" size="18"></i>
-                    </div>
-                    <div class="faq-answer" data-i18n="faq_a7">Tidak. Menggunakan tag DOMS tidak secara otomatis menjadikan seseorang anggota resmi yang terdaftar di skuad MLBB BLDS.</div>
-                </div>
-
-                <div class="faq-card">
-                    <div class="faq-question-header">
-                        <span class="faq-question" data-i18n="faq_q8">Apa yang terjadi jika saya melanggar aturan?</span>
-                        <i data-lucide="chevron-down" class="faq-icon" size="18"></i>
-                    </div>
-                    <div class="faq-answer" data-i18n="faq_a8">Pelanggaran dapat berujung pada teguran, peringatan, pembatasan sementara, atau pencabutan izin menggunakan identitas DOMS tergantung tingkat keseriusan.</div>
-                </div>
-
-                <div class="faq-card">
-                    <div class="faq-question-header">
-                        <span class="faq-question" data-i18n="faq_q9">Di mana saya dapat menghubungi administrasi DOMS?</span>
-                        <i data-lucide="chevron-down" class="faq-icon" size="18"></i>
-                    </div>
-                    <div class="faq-answer" data-i18n="faq_a9">Anda dapat menghubungi administrasi secara langsung via WhatsApp di 085591006359 atau melalui platform komunitas resmi kami.</div>
+                    <div class="faq-question-header"><span class="faq-question" data-i18n="faq_q1">Apa itu DOMS?</span><i data-lucide="chevron-down" class="faq-icon" size="18"></i></div>
+                    <div class="faq-answer" data-i18n="faq_a1">DOMS adalah sistem identitas marga yang terbuka untuk umum dan berafiliasi dengan BLACKLIGHTDOMINIONS.</div>
                 </div>
             </div>
         </section>
@@ -2407,18 +2115,16 @@
         <!-- CONTACT US SECTION -->
         <section id="contact" class="reveal">
             <div class="section-header" style="text-align: center;">
-                <span class="section-tag" data-i18n="contact_tag">07 / Dukungan & Pertanyaan</span>
+                <span class="section-tag" data-i18n="contact_tag">09 / Dukungan & Pertanyaan</span>
                 <h2 class="section-title" data-i18n="contact_title">Hubungi Kami</h2>
             </div>
 
             <div class="contact-container">
-                <div class="contact-icon-box">
-                    <i data-lucide="phone-call" size="36"></i>
-                </div>
+                <div class="contact-icon-box"><i data-lucide="phone-call" size="36"></i></div>
                 <p style="color: var(--text-muted);" data-i18n="contact_desc">Memiliki pertanyaan, saran, atau kendala mengenai DOMS? Jangan ragu untuk menghubungi pihak administrasi.</p>
-                <div class="contact-number">085591006359</div>
+                <div class="contact-number" id="contactPhoneText">085591006359</div>
                 <div class="contact-actions">
-                    <a href="https://wa.me/6285591006359" target="_blank" rel="noopener noreferrer" class="btn-primary">
+                    <a id="contactWhatsAppBtn" href="https://wa.me/6285591006359" target="_blank" rel="noopener noreferrer" class="btn-primary">
                         <i data-lucide="message-circle" size="16"></i>
                         <span data-i18n="contact_wa_btn">Hubungi via WhatsApp</span>
                     </a>
@@ -2440,9 +2146,9 @@
                     <div class="logo-wrapper" style="width: 36px; height: 36px;">
                         <img id="footerLogoImg" src="logo.png" alt="DOMS Logo">
                     </div>
-                    <span class="nav-title">DOMS</span>
+                    <span class="nav-title" id="footerBrandTitle">DOMS</span>
                 </div>
-                <p class="footer-brand-desc" data-i18n="footer_desc">DOMS adalah sistem identitas terbuka yang dibangun di sekitar persatuan, nilai bersama, dan hubungan bermakna dalam komunitas BLACKLIGHTDOMINIONS.</p>
+                <p class="footer-brand-desc" id="footerDescText" data-i18n="footer_desc">DOMS adalah sistem identitas terbuka yang dibangun di sekitar persatuan, nilai bersama, dan hubungan bermakna dalam komunitas BLACKLIGHTDOMINIONS.</p>
                 <span style="font-family: var(--font-mono); font-size: 0.82rem; letter-spacing: 0.14em; color: var(--text-main);">ONE IDENTITY. ONE COMMUNITY.</span>
             </div>
 
@@ -2453,17 +2159,15 @@
                     <li><a class="footer-link" href="#about" data-i18n="nav_about">Tentang DOMS</a></li>
                     <li><a class="footer-link" href="#vision" data-i18n="nav_vision">Visi & Misi</a></li>
                     <li><a class="footer-link" href="#identity" data-i18n="nav_identity">Identitas</a></li>
-                    <li><a class="footer-link" href="#community" data-i18n="nav_community">Komunitas</a></li>
-                    <li><a class="footer-link" href="#rules" data-i18n="nav_rules">Aturan</a></li>
-                    <li><a class="footer-link" href="#faq" data-i18n="nav_faq">FAQ</a></li>
+                    <li><a class="footer-link" href="#directory">Direktori Anggota</a></li>
                 </ul>
             </div>
 
             <div class="footer-col">
                 <h4 class="footer-heading" data-i18n="footer_community_heading">Komunitas</h4>
                 <ul class="footer-links">
-                    <li><a class="footer-link" href="https://chat.whatsapp.com/LJvQ6Bu1FESAvNk5bqbk1F?s=cl&p=a&mlu=4" target="_blank" rel="noopener noreferrer">WhatsApp Community</a></li>
-                    <li><a class="footer-link" href="https://discord.gg/r4dM4QFteV" target="_blank" rel="noopener noreferrer">Discord Community</a></li>
+                    <li><a id="footerWaLink" class="footer-link" href="https://chat.whatsapp.com/LJvQ6Bu1FESAvNk5bqbk1F?s=cl&p=a&mlu=4" target="_blank" rel="noopener noreferrer">WhatsApp Community</a></li>
+                    <li><a id="footerDiscordLink" class="footer-link" href="https://discord.gg/r4dM4QFteV" target="_blank" rel="noopener noreferrer">Discord Community</a></li>
                 </ul>
             </div>
 
@@ -2471,123 +2175,76 @@
                 <h4 class="footer-heading" data-i18n="footer_contact_heading">Kontak</h4>
                 <ul class="footer-links">
                     <li><a class="footer-link" href="#contact" data-i18n="nav_contact">Hubungi Kami</a></li>
-                    <li><span style="color: var(--text-main); font-family: var(--font-mono); font-weight: 600;">085591006359</span></li>
-                    <li><a class="footer-link" href="https://wa.me/6285591006359" target="_blank" rel="noopener noreferrer" data-i18n="contact_wa_btn">WhatsApp Chat</a></li>
+                    <li><span id="footerPhoneText" style="color: var(--text-main); font-family: var(--font-mono); font-weight: 600;">085591006359</span></li>
                 </ul>
             </div>
         </div>
 
         <div class="footer-bottom">
-            <div>© <span id="currentYear"></span> DOMS — BLACKLIGHTDOMINIONS. All Rights Reserved.</div>
+            <div>© <span id="currentYear"></span> <span id="footerCopyrightTitle">DOMS — BLACKLIGHTDOMINIONS</span>. All Rights Reserved.</div>
             <button class="back-to-top" id="backToTopBtn" aria-label="Kembali ke atas">
                 <i data-lucide="arrow-up" size="18"></i>
             </button>
         </div>
     </footer>
 
-    <!-- JOIN MODAL & DOMS CARD REGISTRATION -->
+    <!-- JOIN MODAL & REGISTRATION FOR VERIFICATION -->
     <div class="modal-overlay" id="joinModal">
         <div class="modal-card">
-            <button class="modal-close" id="modalCloseBtn" aria-label="Tutup Modal">
-                <i data-lucide="x" size="18"></i>
-            </button>
+            <button class="modal-close" id="modalCloseBtn" aria-label="Tutup Modal"><i data-lucide="x" size="18"></i></button>
 
             <div id="modalFormView">
-                <div class="badge-pill" style="margin-bottom: 1rem;">
-                    <span class="badge-dot"></span>
-                    <span>REGISTRASI DOMS CARD</span>
-                </div>
-
+                <div class="badge-pill" style="margin-bottom: 1rem;"><span class="badge-dot"></span><span>PENGAJUAN ANGGOTA DOMS</span></div>
                 <h3 style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800;">BUAT IDENTITAS ANDA</h3>
-                <p style="color: var(--text-muted); margin-top: 0.35rem; font-size: 0.9rem;">Isi identitas diri Anda di bawah untuk langsung menerbitkan DOMS Card resmi secara instan.</p>
+                <p style="color: var(--text-muted); margin-top: 0.35rem; font-size: 0.9rem;">Pengajuan Anda akan diverifikasi oleh Staff/Admin sebelum tampil di Direktori Publik.</p>
 
                 <form id="domsRegForm" style="margin-top: 1.2rem;">
                     <div class="form-group">
-                        <label class="form-label" for="regNama">Nama Asli *</label>
-                        <input type="text" id="regNama" class="form-input" placeholder="Contoh: Alexandro" required>
+                        <label class="form-label" for="regMlbbNickname">Nickname MLBB (dengan tag X/x/× DOMS) *</label>
+                        <input type="text" id="regMlbbNickname" class="form-input" placeholder="Contoh: Alexandro X DOMS" required>
                     </div>
-
                     <div class="form-group">
-                        <label class="form-label" for="regIdMl">ID Mobile Legends (ID ML) *</label>
-                        <input type="text" id="regIdMl" class="form-input" placeholder="Contoh: 12345678 (9999)" required>
+                        <label class="form-label" for="regRealName">Nama Asli (Opsional)</label>
+                        <input type="text" id="regRealName" class="form-input" placeholder="Contoh: Alexandro">
                     </div>
-
                     <div class="form-group">
-                        <label class="form-label" for="regSosmed">Akun Sosmed (Opsional)</label>
-                        <input type="text" id="regSosmed" class="form-input" placeholder="Contoh: @blacklightdominions">
+                        <label class="form-label" for="regUserId">User ID MLBB *</label>
+                        <input type="text" id="regUserId" class="form-input" placeholder="Contoh: 12345678" required>
                     </div>
-
+                    <div class="form-group">
+                        <label class="form-label" for="regServerId">Server ID MLBB *</label>
+                        <input type="text" id="regServerId" class="form-input" placeholder="Contoh: 9999" required>
+                    </div>
                     <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1.5rem; padding: 14px;" id="submitCardBtn">
-                        Generate DOMS Card & Simpan <i data-lucide="arrow-right" size="16"></i>
+                        Kirim Pengajuan Verifikasi <i data-lucide="arrow-right" size="16"></i>
                     </button>
                 </form>
             </div>
 
             <div id="modalCardResultView" style="display: none; text-align: center;">
-                <div class="badge-pill" style="margin: 0 auto 0.75rem auto; display: inline-flex;">
-                    <span class="badge-dot"></span>
-                    <span>DOMS MEMBER CARD BERHASIL</span>
-                </div>
-                <h3 style="font-family: var(--font-heading); font-size: 1.35rem; font-weight: 800;">KARTU IDENTITAS RESMI</h3>
-                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">Data Anda telah tersimpan aman di database Firebase.</p>
-
-                <div class="doms-id-card" id="domsCardOutput">
-                    <div class="card-header-row">
-                        <span class="card-brand-title">DOMS // BLDS</span>
-                        <span class="card-badge-status">VERIFIED</span>
-                    </div>
-                    <div class="card-body-grid">
-                        <div class="card-field">
-                            <span class="card-label">NAMA ASLI</span>
-                            <span class="card-value" id="cardOutNama">-</span>
-                        </div>
-                        <div class="card-field">
-                            <span class="card-label">ID MOBILE LEGENDS</span>
-                            <span class="card-value" id="cardOutIdMl">-</span>
-                        </div>
-                        <div class="card-field">
-                            <span class="card-label">AKUN SOSMED</span>
-                            <span class="card-value" id="cardOutSosmed">-</span>
-                        </div>
-                    </div>
-                    <div class="card-footer-row">
-                        <span>REG ID: <strong id="cardOutRegId" style="color: #fff;">#DOMS-0000</strong></span>
-                        <span>BLACKLIGHTDOMINIONS</span>
-                    </div>
-                </div>
-
-                <div style="margin-top: 1.75rem; border-top: 1px solid var(--border-color); padding-top: 1.25rem;">
-                    <p style="font-size: 0.88rem; font-weight: 600; color: var(--text-main); margin-bottom: 0.85rem;">
-                        ⚠️ Wajib Bergabung dengan Minimal 1 Komunitas Resmi:
-                    </p>
-                    <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
-                        <a href="https://chat.whatsapp.com/LJvQ6Bu1FESAvNk5bqbk1F?s=cl&p=a&mlu=4" target="_blank" rel="noopener noreferrer" class="btn-primary" style="font-size: 0.8rem; padding: 11px 18px;">
-                            <i data-lucide="message-circle" size="15"></i> WhatsApp Community
-                        </a>
-                        <a href="https://discord.gg/r4dM4QFteV" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="font-size: 0.8rem; padding: 11px 18px;">
-                            <i data-lucide="disc" size="15"></i> Discord Community
-                        </a>
-                    </div>
-                </div>
-
-                <button class="btn-primary" id="finishRegBtn" style="width: 100%; justify-content: center; margin-top: 1.5rem; padding: 12px; background: transparent; color: var(--text-main); border: 1px solid var(--border-hover);">
-                    Tutup & Selesai
-                </button>
+                <div class="badge-pill" style="margin: 0 auto 0.75rem auto; display: inline-flex;"><span class="badge-dot"></span><span>PENGAJUAN DIKIRIM</span></div>
+                <h3 style="font-family: var(--font-heading); font-size: 1.35rem; font-weight: 800;">MENUNGGU VERIFIKASI</h3>
+                <p style="color: var(--text-muted); font-size: 0.88rem; margin-top: 8px;">Pengajuan Anda berhasil disimpan dengan status <strong>Pending</strong>. Setelah disetujui Admin, nama Anda akan tampil di Direktori Publik.</p>
+                <button class="btn-primary" id="finishRegBtn" style="width: 100%; justify-content: center; margin-top: 1.75rem; padding: 12px;">Tutup</button>
             </div>
         </div>
     </div>
 
-    <!-- Toast Notification -->
     <div class="toast" id="toastNotification">
         <i data-lucide="check-circle" size="18"></i>
         <span id="toastMessage">Aksi berhasil dilakukan.</span>
     </div>
 
-    <!-- JAVASCRIPT LOGIC -->
-    <script>
-        /* ==========================================================================
-           1. ANTI-STUCK CINEMATIC LOADER SYSTEM
-           ========================================================================== */
+    <!-- FIREBASE CLIENT SDK & MAIN JAVASCRIPT -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, get, push, set, query, orderByChild, equalTo } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { firebaseConfig } from "./firebase-config.js";
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // Loader
         (function initLoader() {
             const loader = document.getElementById('loader');
             const fill = document.getElementById('loaderFill');
@@ -2606,725 +2263,156 @@
                 }, 260);
             }
 
-            const progressInterval = setInterval(() => {
+            const interval = setInterval(() => {
                 progress += Math.floor(Math.random() * 25) + 18;
                 if (progress >= 100) {
                     progress = 100;
-                    clearInterval(progressInterval);
+                    clearInterval(interval);
                     dismissLoader();
-                } else if (fill) {
-                    fill.style.width = progress + '%';
-                }
-            }, 120);
+                } else if (fill) fill.style.width = progress + '%';
+            }, 100);
 
-            window.addEventListener('load', () => {
-                clearInterval(progressInterval);
-                dismissLoader();
-            });
-
-            setTimeout(() => {
-                clearInterval(progressInterval);
-                dismissLoader();
-            }, 1800);
+            window.addEventListener('load', () => { clearInterval(interval); dismissLoader(); });
+            setTimeout(() => { clearInterval(interval); dismissLoader(); }, 1800);
         })();
 
-        /* ==========================================================================
-           2. TRANSLATION DICTIONARY (ID, EN, MS)
-           ========================================================================== */
-        const translations = {
-            id: {
-                nav_home: "Beranda",
-                nav_about: "Tentang",
-                nav_vision: "Visi & Misi",
-                nav_identity: "Identitas",
-                nav_community: "Komunitas",
-                nav_rules: "Aturan",
-                nav_faq: "FAQ",
-                nav_contact: "Kontak",
-                btn_join_doms: "Gabung DOMS",
-                hero_badge: "SISTEM MARGA BLACKLIGHTDOMINIONS",
-                hero_tagline: "ONE IDENTITY. ONE COMMUNITY.",
-                hero_desc: "“Identitas terbuka yang dibangun atas dasar persatuan, nilai bersama, dan hubungan yang bermakna. DOMS menyatukan individu di dalam satu identitas sekaligus mempererat ikatan dalam komunitas BLACKLIGHTDOMINIONS.”",
-                hero_btn_explore: "Jelajahi DOMS",
-                scroll_down: "Gulir ke Bawah",
-                about_tag: "01 / Pengantar",
-                about_title: "Apa itu DOMS?",
-                about_p1: "<strong>DOMS</strong> adalah sistem identitas marga yang terbuka untuk umum dan berafiliasi dengan <strong>BLACKLIGHTDOMINIONS (BLDS)</strong>. Ini memberikan identitas bersama yang merepresentasikan persatuan, koneksi, dan rasa memiliki.",
-                about_p2: "DOMS lebih dari sekadar tag nama. Ini adalah simbol nilai bersama, saling menghormati, dan partisipasi di dalam komunitas yang berkembang.",
-                about_p3: "Melalui sistem ini, DOMS bertujuan menghubungkan orang-orang, mendorong interaksi positif, dan menciptakan lingkungan yang ramah di mana individu dapat membangun persahabatan dan berkembang bersama.",
-                stat_label_1: "Sistem identitas terbuka yang dapat diakses semua orang tanpa batasan pangkat ketat.",
-                stat_label_2: "Berafiliasi dengan ekosistem komunitas BLACKLIGHTDOMINIONS.",
-                stat_label_3: "Dibangun atas dasar saling menghormati, nilai bersama, dan solidaritas yang kuat.",
-                vision_tag: "02 / Tujuan & Sasaran",
-                vision_title: "Visi & Misi",
-                vision_card_title: "Visi Kami",
-                vision_card_text: "“Menjadikan DOMS sebagai identitas inklusif, mudah dikenali, dan bermakna yang menghubungkan individu melalui nilai-nilai bersama, rasa saling menghormati, dan rasa memiliki yang kuat.<br><br>DOMS bertujuan menjadi lebih dari sekadar nama panggilan atau tag komunitas. DOMS berupaya merepresentasikan hubungan abadi antara individu yang percaya pada persatuan, persahabatan, integritas, dan interaksi positif.<br><br>Dengan menyatukan orang-orang dari berbagai latar belakang, DOMS menciptakan lingkungan di mana setiap orang memiliki kesempatan berpartisipasi, membangun hubungan, saling mendukung, dan berkembang bersama.<br><br>Melalui nilai konsisten dan partisipasi aktif, DOMS bercita-cita menjadi identitas kuat yang merepresentasikan solidaritas dan kepercayaan dalam BLACKLIGHTDOMINIONS.”",
-                mission_card_title: "Misi Kami",
-                mission_1: "Menetapkan DOMS sebagai identitas inklusif yang dapat diikuti oleh siapa saja.",
-                mission_2: "Memperkuat hubungan dan koneksi antar individu melalui partisipasi komunitas.",
-                mission_3: "Mendorong rasa saling menghormati, tanggung jawab, kejujuran, dan perilaku positif.",
-                mission_4: "Membangun lingkungan ramah di mana anggota dapat berinteraksi dan membangun persahabatan.",
-                mission_5: "Menjaga reputasi dan nilai-nilai yang diasosiasikan dengan BLACKLIGHTDOMINIONS.",
-                mission_6: "Mendorong persatuan dan kerja sama di antara pengguna DOMS tanpa memandang latar belakang.",
-                mission_7: "Mengembangkan sistem identitas berkelanjutan yang berkembang bersama BLACKLIGHTDOMINIONS.",
-                identity_tag: "03 / Standar Nama Panggilan",
-                identity_title: "Identitas Anda",
-                accepted_badge: "Diterima",
-                identity_info_title: "Format Resmi",
-                identity_info_desc: "Ketiga format nama panggilan di atas diterima secara resmi. Tag DOMS harus selalu berada di bagian akhir nama panggilan Anda. Anda memiliki kebebasan penuh untuk mempersonalisasi nama utama sebelum tag.",
-                chip_1: "Tanpa Peniruan",
-                chip_2: "Tag di Akhir",
-                chip_3: "Saling Menghormati",
-                chip_4: "Terbuka untuk Umum",
-                community_tag: "04 / Koneksi Ekosistem",
-                community_title: "Gabung Komunitas",
-                wa_card_desc: "Terhubung langsung dengan sesama anggota DOMS dan partisipan BLDS melalui grup komunitas WhatsApp kami yang aktif.",
-                discord_card_desc: "Bergabunglah dengan server Discord resmi kami untuk kanal suara, acara komunitas, pengumuman, dan diskusi terstruktur.",
-                btn_join_whatsapp: "Gabung WhatsApp",
-                btn_join_discord: "Gabung Discord",
-                community_note_text: "💡 <strong>Catatan:</strong> Bergabung dengan setidaknya <strong>SATU</strong> platform komunitas BLDS resmi adalah wajib. Bergabung dengan keduanya sangat dianjurkan.",
-                rules_tag: "05 / Kode Etik",
-                rules_title: "Aturan & Regulasi DOMS",
-                rule_cat_1_title: "Regulasi Identitas",
-                rule_1_1: "Setiap pengguna DOMS harus menggunakan salah satu format nama panggilan yang diterima: Nama X DOMS, Nama x DOMS, atau Nama × DOMS.",
-                rule_1_2: "Tag DOMS harus tetap berada di akhir nama panggilan.",
-                rule_1_3: "Pengguna bertanggung jawab atas identitas mereka sendiri.",
-                rule_1_4: "Meniru pengguna DOMS atau perwakilan BLDS lain dilarang keras.",
-                rule_cat_2_title: "Persyaratan Komunitas",
-                rule_2_1: "Setiap pengguna DOMS harus bergabung dengan setidaknya satu platform komunitas BLDS resmi (WhatsApp atau Discord).",
-                rule_2_2: "Pengguna harus menghormati aturan komunitas WhatsApp atau Discord yang mereka ikuti.",
-                rule_2_3: "Pengguna didorong untuk berpartisipasi secara positif dalam kegiatan komunitas.",
-                rule_2_4: "Pengguna tidak boleh menggunakan DOMS sebagai sarana menciptakan konflik yang tidak perlu.",
-                rule_cat_3_title: "Perilaku & Etika",
-                rule_3_1: "Menghormati individu lain terlepas dari latar belakang mereka.",
-                rule_3_2: "Pelecehan, perundungan, intimidasi, dan penyalahgunaan terarah dilarang keras.",
-                rule_3_3: "Spam dan perilaku mengganggu tidak diizinkan.",
-                rule_3_4: "Perilaku penipuan dan penyamaran dilarang.",
-                rule_3_5: "Jangan gunakan identitas DOMS untuk merusak reputasi orang lain atau komunitas.",
-                rule_cat_4_title: "Penyalahgunaan Identitas",
-                rule_4_1: "Jangan secara keliru mengaku mewakili administrasi resmi BLDS.",
-                rule_4_2: "Jangan menyalahgunakan identitas DOMS untuk penipuan atau aktivitas menyesatkan.",
-                rule_4_3: "Jangan menyebarkan pengumuman palsu atas nama DOMS atau BLDS.",
-                rule_4_4: "Jangan gunakan identitas DOMS untuk terlibat dalam aktivitas berbahaya.",
-                rule_cat_5_title: "Penegakan Aturan",
-                rule_5_1: "Pelanggaran dapat mengakibatkan teguran lisan, peringatan resmi, pembatasan sementara, atau pencabutan izin menggunakan identitas DOMS.",
-                rule_5_2: "Tindakan akan bergantung pada keseriusan dan keadaan pelanggaran.",
-                rule_5_3: "Pelanggaran berat dapat menerima tindakan lebih tegas. Catatan: Menggunakan DOMS tidak secara otomatis menjadikan seseorang anggota resmi skuad MLBB BLDS.",
-                faq_tag: "06 / Pertanyaan Umum",
-                faq_title: "Pertanyaan yang Sering Diajukan",
-                faq_q1: "Apa itu DOMS?",
-                faq_a1: "DOMS adalah sistem identitas marga yang terbuka untuk umum dan berafiliasi dengan BLACKLIGHTDOMINIONS, dirancang untuk menyatukan individu melalui nilai bersama.",
-                faq_q2: "Siapa yang dapat menggunakan identitas DOMS?",
-                faq_a2: "Siapa pun dapat menggunakan identitas DOMS selama mereka mengikuti format nama panggilan yang ditetapkan dan mematuhi aturan komunitas.",
-                faq_q3: "Apakah DOMS terbuka untuk umum?",
-                faq_a3: "Ya, DOMS sepenuhnya terbuka untuk umum tanpa memandang peringkat game, latar belakang, atau status keanggotaan sebelumnya.",
-                faq_q4: "Format nama panggilan apa yang harus saya gunakan?",
-                faq_a4: "Anda harus menggunakan salah satu dari tiga format yang diterima: Nama X DOMS, Nama x DOMS, atau Nama × DOMS, dengan tag di bagian akhir.",
-                faq_q5: "Apakah saya perlu bergabung dengan komunitas BLDS?",
-                faq_a5: "Ya, setiap pengguna DOMS wajib bergabung dengan setidaknya satu platform komunitas resmi BLDS (WhatsApp atau Discord).",
-                faq_q6: "Apakah saya harus bergabung dengan WhatsApp dan Discord?",
-                faq_a6: "Bergabung dengan keduanya sangat dianjurkan, namun bergabung dengan setidaknya satu platform adalah persyaratan minimum.",
-                faq_q7: "Apakah menggunakan DOMS membuat saya menjadi anggota resmi skuad MLBB BLDS?",
-                faq_a7: "Tidak. Menggunakan tag DOMS tidak secara otomatis menjadikan seseorang anggota resmi yang terdaftar di skuad MLBB BLDS.",
-                faq_q8: "Apa yang terjadi jika saya melanggar aturan?",
-                faq_a8: "Pelanggaran dapat berujung pada teguran, peringatan, pembatasan sementara, atau pencabutan izin menggunakan identitas DOMS tergantung tingkat keseriusan.",
-                faq_q9: "Di mana saya dapat menghubungi administrasi DOMS?",
-                faq_a9: "Anda dapat menghubungi administrasi secara langsung via WhatsApp di 085591006359 atau melalui platform komunitas resmi kami.",
-                cta_title: "Siap Bergabung dengan DOMS?",
-                cta_desc: "Jadilah bagian dari identitas yang berkembang berdasarkan persatuan, nilai bersama, dan hubungan yang bermakna.",
-                contact_tag: "07 / Dukungan & Pertanyaan",
-                contact_title: "Hubungi Kami",
-                contact_desc: "Memiliki pertanyaan, saran, atau kendala mengenai DOMS? Jangan ragu untuk menghubungi pihak administrasi.",
-                contact_wa_btn: "Hubungi via WhatsApp",
-                contact_copy_btn: "Salin Nomor",
-                footer_desc: "DOMS adalah sistem identitas terbuka yang dibangun di sekitar persatuan, nilai bersama, dan hubungan bermakna dalam komunitas BLACKLIGHTDOMINIONS.",
-                footer_nav_heading: "Navigasi Cepat",
-                footer_community_heading: "Komunitas",
-                footer_contact_heading: "Kontak"
-            },
-            en: {
-                nav_home: "Home",
-                nav_about: "About",
-                nav_vision: "Vision & Mission",
-                nav_identity: "Identity",
-                nav_community: "Community",
-                nav_rules: "Rules",
-                nav_faq: "FAQ",
-                nav_contact: "Contact",
-                btn_join_doms: "Join DOMS",
-                hero_badge: "BLACKLIGHTDOMINIONS MARGA SYSTEM",
-                hero_tagline: "ONE IDENTITY. ONE COMMUNITY.",
-                hero_desc: "“An open identity built upon unity, shared values, and meaningful connections. DOMS brings individuals together under one identity while creating a stronger connection within the BLACKLIGHTDOMINIONS community.”",
-                hero_btn_explore: "Explore DOMS",
-                scroll_down: "Scroll Down",
-                about_tag: "01 / Introduction",
-                about_title: "What is DOMS?",
-                about_p1: "<strong>DOMS</strong> is an open-to-public marga identity system associated with <strong>BLACKLIGHTDOMINIONS (BLDS)</strong>. It provides individuals with a shared identity that represents unity, connection, and a sense of belonging.",
-                about_p2: "DOMS is more than a nickname tag. It is a symbol of shared values, mutual respect, and participation within a growing community.",
-                about_p3: "Through this system, DOMS aims to connect people, encourage positive interactions, and create a welcoming environment where individuals can build friendships and grow together.",
-                stat_label_1: "Open identity system accessible to everyone without strict rank barriers.",
-                stat_label_2: "Associated with BLACKLIGHTDOMINIONS community ecosystem.",
-                stat_label_3: "Built upon mutual respect, shared values, and strong solidarity.",
-                vision_tag: "02 / Purpose & Goals",
-                vision_title: "Vision & Mission",
-                vision_card_title: "Our Vision",
-                vision_card_text: "“To establish DOMS as an inclusive, recognizable, and meaningful identity that connects individuals through shared values, mutual respect, and a strong sense of belonging.<br><br>DOMS aims to become more than simply a shared nickname or community tag. It strives to represent a lasting connection between individuals who believe in unity, friendship, integrity, and positive interaction.<br><br>By bringing together people from different backgrounds and interests, DOMS seeks to create an environment where everyone has the opportunity to participate, build meaningful relationships, exchange experiences, support one another, and grow together.<br><br>Through consistent values, collective responsibility, and active community participation, DOMS aspires to develop into a strong and sustainable identity that represents solidarity, trust, and a positive reputation within BLACKLIGHTDOMINIONS and beyond.”",
-                mission_card_title: "Our Mission",
-                mission_1: "Establish DOMS as an inclusive identity that anyone can become part of.",
-                mission_2: "Strengthen relationships and connections between individuals through community participation.",
-                mission_3: "Encourage mutual respect, responsibility, honesty, and positive behavior.",
-                mission_4: "Build a welcoming environment where members can interact, share experiences, and develop meaningful friendships.",
-                mission_5: "Maintain the reputation and values associated with BLACKLIGHTDOMINIONS.",
-                mission_6: "Encourage unity and cooperation among DOMS users regardless of their backgrounds.",
-                mission_7: "Develop a sustainable identity system that can grow alongside the BLACKLIGHTDOMINIONS community.",
-                identity_tag: "03 / Nickname Standards",
-                identity_title: "Your Identity",
-                accepted_badge: "Accepted",
-                identity_info_title: "The Official Format",
-                identity_info_desc: "All three nickname formats are officially accepted. The DOMS tag must always remain at the end of your nickname. You have full freedom to personalize your primary name before the tag.",
-                chip_1: "No Impersonation",
-                chip_2: "Tag at the End",
-                chip_3: "Respect Others",
-                chip_4: "Open to Public",
-                community_tag: "04 / Ecosystem Connection",
-                community_title: "Join the Community",
-                wa_card_desc: "Connect instantly with fellow DOMS members and BLDS participants through our active WhatsApp community group.",
-                discord_card_desc: "Join our official Discord server for voice channels, community events, announcements, and structured discussions.",
-                btn_join_whatsapp: "Join WhatsApp",
-                btn_join_discord: "Join Discord",
-                community_note_text: "💡 <strong>Note:</strong> Joining at least <strong>ONE</strong> official BLDS community platform is mandatory. Joining both is strongly encouraged.",
-                rules_tag: "05 / Code of Conduct",
-                rules_title: "DOMS Rules & Regulations",
-                rule_cat_1_title: "Identity Regulations",
-                rule_1_1: "Every DOMS user must use one of the accepted nickname formats: Nama X DOMS, Nama x DOMS, or Nama × DOMS.",
-                rule_1_2: "The DOMS tag must remain at the end of the nickname.",
-                rule_1_3: "Users are responsible for maintaining their own identity.",
-                rule_1_4: "Impersonating another DOMS user or BLDS representative is strictly prohibited.",
-                rule_cat_2_title: "Community Requirements",
-                rule_2_1: "Every DOMS user must join at least one official BLDS community platform (WhatsApp or Discord).",
-                rule_2_2: "Users must respect the rules of the WhatsApp or Discord community they join.",
-                rule_2_3: "Users are encouraged to participate positively in community activities.",
-                rule_2_4: "Users must not use DOMS as a means to create unnecessary conflict.",
-                rule_cat_3_title: "Conduct & Behavior",
-                rule_3_1: "Respect other individuals regardless of their backgrounds.",
-                rule_3_2: "Harassment, bullying, intimidation, and targeted abuse are strictly prohibited.",
-                rule_3_3: "Spamming and disruptive behavior are not permitted.",
-                rule_3_4: "Fraudulent behavior and impersonation are prohibited.",
-                rule_3_5: "Do not use the DOMS identity to damage the reputation of other people or the community.",
-                rule_cat_4_title: "Identity Misuse",
-                rule_4_1: "Do not falsely claim to represent the official BLDS administration.",
-                rule_4_2: "Do not misuse the DOMS identity for scams or misleading activities.",
-                rule_4_3: "Do not spread false announcements on behalf of DOMS or BLDS.",
-                rule_4_4: "Do not use the DOMS identity to engage in harmful activities.",
-                rule_cat_5_title: "Enforcement",
-                rule_5_1: "Violations may result in verbal reminder, official warning, temporary restriction, or revocation of permission to use the DOMS identity.",
-                rule_5_2: "The response will depend on the seriousness and circumstances of the violation.",
-                rule_5_3: "Severe violations may receive stronger action. Note: Using DOMS does not automatically make someone an official BLDS MLBB squad member.",
-                faq_tag: "06 / Common Questions",
-                faq_title: "Frequently Asked Questions",
-                faq_q1: "What is DOMS?",
-                faq_a1: "DOMS is an open-to-public marga identity system associated with BLACKLIGHTDOMINIONS, designed to unite individuals through shared values.",
-                faq_q2: "Who can use the DOMS identity?",
-                faq_a2: "Anyone can use the DOMS identity as long as they follow the established nickname format and adhere to community regulations.",
-                faq_q3: "Is DOMS open to the public?",
-                faq_a3: "Yes, DOMS is completely open to the public regardless of gaming rank, background, or previous membership status.",
-                faq_q4: "What nickname format must I use?",
-                faq_a4: "You must use one of three accepted formats: Nama X DOMS, Nama x DOMS, or Nama × DOMS, with the tag positioned at the end.",
-                faq_q5: "Do I need to join the BLDS community?",
-                faq_a5: "Yes, every DOMS user is required to join at least one official BLDS community platform (WhatsApp or Discord).",
-                faq_q6: "Do I need to join both WhatsApp and Discord?",
-                faq_a6: "Joining both is strongly encouraged, but joining at least one platform is the minimum mandatory requirement.",
-                faq_q7: "Does using DOMS make me an official BLDS MLBB squad member?",
-                faq_a7: "No. Using the DOMS tag does not automatically make someone an officially registered member of the BLDS MLBB squad.",
-                faq_q8: "What happens if I violate the rules?",
-                faq_a8: "Violations may lead to reminders, warnings, temporary restrictions, or revocation of permission to use the DOMS identity depending on severity.",
-                faq_q9: "Where can I contact the DOMS administration?",
-                faq_a9: "You can reach the administration directly via WhatsApp at 085591006359 or through our official community platforms.",
-                cta_title: "Ready to Join DOMS?",
-                cta_desc: "Become part of a growing identity built on unity, shared values, and meaningful connections.",
-                contact_tag: "07 / Support & Inquiry",
-                contact_title: "Get in Touch",
-                contact_desc: "Have questions, suggestions, or concerns regarding DOMS? Feel free to contact the administration.",
-                contact_wa_btn: "Contact via WhatsApp",
-                contact_copy_btn: "Copy Number",
-                footer_desc: "DOMS is an open identity system built around unity, shared values, and meaningful connections within the BLACKLIGHTDOMINIONS community.",
-                footer_nav_heading: "Quick Navigation",
-                footer_community_heading: "Community",
-                footer_contact_heading: "Contact"
-            },
-            ms: {
-                nav_home: "Utama",
-                nav_about: "Tentang",
-                nav_vision: "Visi & Misi",
-                nav_identity: "Identiti",
-                nav_community: "Komuniti",
-                nav_rules: "Peraturan",
-                nav_faq: "FAQ",
-                nav_contact: "Hubungi",
-                btn_join_doms: "Sertai DOMS",
-                hero_badge: "SISTEM MARGA BLACKLIGHTDOMINIONS",
-                hero_tagline: "ONE IDENTITY. ONE COMMUNITY.",
-                hero_desc: "“Identiti terbuka yang dibina atas perpaduan, nilai bersama, dan hubungan bermakna. DOMS menyatukan individu di bawah satu identiti sambil mengeratkan ikatan dalam komuniti BLACKLIGHTDOMINIONS.”",
-                hero_btn_explore: "Teroka DOMS",
-                scroll_down: "Tatal ke Bawah",
-                about_tag: "01 / Pengenalan",
-                about_title: "Apakah itu DOMS?",
-                about_p1: "<strong>DOMS</strong> adalah sistem identiti marga terbuka untuk umum yang bersekutu dengan <strong>BLACKLIGHTDOMINIONS (BLDS)</strong>. Ia menyediakan identiti bersama yang mewakili perpaduan, hubungan, dan semangat kekitaan.",
-                about_p2: "DOMS lebih daripada sekadar tag nama. Ia adalah simbol nilai bersama, saling menghormati, dan penyertaan dalam komuniti yang sedang berkembang.",
-                about_p3: "Melalui sistem ini, DOMS bertujuan menghubungkan orang ramai, menggalakkan interaksi positif, dan mewujudkan persekitaran mesra di mana individu boleh membina persahabatan.",
-                stat_label_1: "Sistem identiti terbuka yang boleh diakses semua tanpa halangan pangkat.",
-                stat_label_2: "Bersekutu dengan ekosistem komuniti BLACKLIGHTDOMINIONS.",
-                stat_label_3: "Dibina atas dasar saling menghormati, nilai bersama, dan solidariti.",
-                vision_tag: "02 / Matlamat & Tujuan",
-                vision_title: "Visi & Misi",
-                vision_card_title: "Visi Kami",
-                vision_card_text: "“Menjadikan DOMS sebagai identiti inklusif dan bermakna yang menghubungkan individu melalui nilai bersama dan rasa kekitaan yang kuat.<br><br>DOMS bertujuan menjadi lebih daripada tag komuniti. Ia mewakili hubungan abadi antara individu yang percaya kepada perpaduan, persahabatan, integriti, dan interaksi positif.<br><br>Dengan menyatukan pelbagai latar belakang, DOMS mewujudkan persekitaran untuk semua orang mengambil bahagian, membina hubungan, dan berkembang bersama.<br><br>Melalui nilai yang konsisten dan penyertaan aktif, DOMS berhasrat menjadi identiti kukuh yang mewakili solidariti dalam BLACKLIGHTDOMINIONS.”",
-                mission_card_title: "Misi Kami",
-                mission_1: "Menetapkan DOMS sebagai identiti inklusif yang boleh menyertai sesiapa sahaja.",
-                mission_2: "Memperkukuh hubungan dan koneksi antara individu melalui penyertaan komuniti.",
-                mission_3: "Menggalakkan rasa saling menghormati, tanggungjawab, kejujuran, dan tingkah laku positif.",
-                mission_4: "Membangunkan persekitaran mesra di mana ahli boleh berinteraksi dan membina persahabatan.",
-                mission_5: "Menjaga reputasi dan nilai yang dikaitkan dengan BLACKLIGHTDOMINIONS.",
-                mission_6: "Menggalakkan perpaduan dan kerjasama dalam kalangan pengguna DOMS tanpa mengira latar belakang.",
-                mission_7: "Membangunkan sistem identiti mampan yang berkembang seiring BLACKLIGHTDOMINIONS.",
-                identity_tag: "03 / Piawaian Nama Samaran",
-                identity_title: "Identiti Anda",
-                accepted_badge: "Diterima",
-                identity_info_title: "Format Rasmi",
-                identity_info_desc: "Ketiga-tiga format nama samaran diterima secara rasmi. Tag DOMS mesti sentiasa berada di bahagian akhir nama samaran anda. Anda bebas mempersonalisasi nama utama sebelum tag.",
-                chip_1: "Tiada Peniruan",
-                chip_2: "Tag di Hujung",
-                chip_3: "Saling Menghormati",
-                chip_4: "Terbuka kepada Umum",
-                community_tag: "04 / Sambungan Ekosistem",
-                community_title: "Sertai Komuniti",
-                wa_card_desc: "Berhubung serta-merta dengan ahli DOMS dan peserta BLDS melalui kumpulan komuniti WhatsApp kami yang aktif.",
-                discord_card_desc: "Sertai pelayan Discord rasmi kami untuk saluran suara, acara komuniti, pengumuman, dan perbincangan berstruktur.",
-                btn_join_whatsapp: "Sertai WhatsApp",
-                btn_join_discord: "Sertai Discord",
-                community_note_text: "💡 <strong>Nota:</strong> Menyertai sekurang-kurangnya <strong>SATU</strong> platform komuniti BLDS rasmi adalah wajib. Menyertai kedua-duanya amat digalakkan.",
-                rules_tag: "05 / Kod Etika",
-                rules_title: "Peraturan & Regulasi DOMS",
-                rule_cat_1_title: "Peraturan Identiti",
-                rule_1_1: "Setiap pengguna DOMS mesti menggunakan salah satu format nama samaran yang diterima: Nama X DOMS, Nama x DOMS, atau Nama × DOMS.",
-                rule_1_2: "Tag DOMS mesti kekal di hujung nama samaran.",
-                rule_1_3: "Pengguna bertanggungjawab mengekalkan identiti mereka sendiri.",
-                rule_1_4: "Menyamar sebagai pengguna DOMS atau wakil BLDS lain dilarang sama sekali.",
-                rule_cat_2_title: "Keperluan Komuniti",
-                rule_2_1: "Setiap pengguna DOMS mesti menyertai sekurang-kurangnya satu platform komuniti BLDS rasmi (WhatsApp atau Discord).",
-                rule_2_2: "Pengguna mesti menghormati peraturan komuniti WhatsApp atau Discord yang disertai.",
-                rule_2_3: "Pengguna digalakkan menyertai aktiviti komuniti secara positif.",
-                rule_2_4: "Pengguna tidak boleh menggunakan DOMS untuk mencetuskan konflik yang tidak perlu.",
-                rule_cat_3_title: "Tingkah Laku",
-                rule_3_1: "Menghormati individu lain tanpa mengira latar belakang.",
-                rule_3_2: "Gangguan, pembuli, intimidasi, dan penderaan sasaran dilarang sama sekali.",
-                rule_3_3: "Spam dan tingkah laku mengganggu tidak dibenarkan.",
-                rule_3_4: "Tingkah laku penipuan dan penyamaran adalah dilarang.",
-                rule_3_5: "Jangan gunakan identiti DOMS untuk merosakkan reputasi orang lain atau komuniti.",
-                rule_cat_4_title: "Penyalahgunaan Identiti",
-                rule_4_1: "Jangan mengaku secara palsu mewakili pentadbiran rasmi BLDS.",
-                rule_4_2: "Jangan menyalahgunakan identiti DOMS untuk penipuan atau aktiviti menyesatkan.",
-                rule_4_3: "Jangan sebarkan pengumuman palsu bagi pihak DOMS atau BLDS.",
-                rule_4_4: "Jangan gunakan identiti DOMS untuk terlibat dalam aktiviti berbahaya.",
-                rule_cat_5_title: "Penguatkuasaan",
-                rule_5_1: "Pelanggaran boleh mengakibatkan teguran lisan, amaran rasmi, sekatan sementara, atau pembatalan izin menggunakan identiti DOMS.",
-                rule_5_2: "Tindakan bergantung kepada keseriusan dan keadaan pelanggaran.",
-                rule_5_3: "Pelanggaran berat boleh menerima tindakan lebih tegas. Nota: Menggunakan DOMS tidak menjadikan seseorang ahli rasmi skuad MLBB BLDS secara automatik.",
-                faq_tag: "06 / Soalan Lazim",
-                faq_title: "Soalan Lazim",
-                faq_q1: "Apakah itu DOMS?",
-                faq_a1: "DOMS adalah sistem identiti marga terbuka yang bersekutu dengan BLACKLIGHTDOMINIONS, direka untuk menyatukan individu melalui nilai bersama.",
-                faq_q2: "Siapa yang boleh menggunakan identiti DOMS?",
-                faq_a2: "Sesiapa sahaja boleh menggunakan identiti DOMS selagi mereka mematuhi format nama samaran dan peraturan komuniti.",
-                faq_q3: "Adakah DOMS terbuka kepada umum?",
-                faq_a3: "Ya, DOMS terbuka sepenuhnya kepada umum tanpa mengira pangkat permainan, latar belakang, atau status keahlian sebelum ini.",
-                faq_q4: "Format nama samaran apakah yang mesti saya gunakan?",
-                faq_a4: "Anda mesti menggunakan salah satu daripada tiga format: Nama X DOMS, Nama x DOMS, atau Nama × DOMS, dengan tag di bahagian hujung.",
-                faq_q5: "Adakah saya perlu menyertai komuniti BLDS?",
-                faq_a5: "Ya, setiap pengguna DOMS diwajibkan menyertai sekurang-kurangnya satu platform komuniti rasmi BLDS (WhatsApp atau Discord).",
-                faq_q6: "Adakah saya perlu menyertai WhatsApp dan Discord?",
-                faq_a6: "Menyertai kedua-duanya sangat digalakkan, tetapi menyertai sekurang-kurangnya satu platform adalah keperluan minimum.",
-                faq_q7: "Adakah menggunakan DOMS menjadikan saya ahli rasmi skuad MLBB BLDS?",
-                faq_a7: "Tidak. Menggunakan tag DOMS tidak secara automatik menjadikan seseorang ahli rasmi yang berdaftar dalam skuad MLBB BLDS.",
-                faq_q8: "Apakah yang berlaku jika saya melanggar peraturan?",
-                faq_a8: "Pelanggaran boleh mengakibatkan teguran, amaran, sekatan sementara, atau penarikan kebenaran menggunakan DOMS bergantung kepada keseriusan.",
-                faq_q9: "Di manakah saya boleh menghubungi pentadbiran DOMS?",
-                faq_a9: "Anda boleh menghubungi pentadbiran secara terus melalui WhatsApp di 085591006359 atau melalui platform komuniti rasmi.",
-                cta_title: "Bersedia Menyertai DOMS?",
-                cta_desc: "Jadilah sebahagian daripada identiti yang berkembang atas dasar perpaduan, nilai bersama, dan hubungan bermakna.",
-                contact_tag: "07 / Sokongan & Pertanyaan",
-                contact_title: "Hubungi Kami",
-                contact_desc: "Ada soalan, cadangan, atau kebimbangan mengenai DOMS? Jangan teragak-agak untuk menghubungi pihak pentadbiran.",
-                contact_wa_btn: "Hubungi melalui WhatsApp",
-                contact_copy_btn: "Salin Nombor",
-                footer_desc: "DOMS adalah sistem identiti terbuka yang dibina di sekitar perpaduan, nilai bersama, dan hubungan bermakna dalam komuniti BLACKLIGHTDOMINIONS.",
-                footer_nav_heading: "Navigasi Pantas",
-                footer_community_heading: "Komuniti",
-                footer_contact_heading: "Hubungi"
-            }
-        };
-
-        let currentLang = localStorage.getItem('doms_lang') || 'id';
-
-        function applyLanguage(lang) {
-            currentLang = lang;
-            localStorage.setItem('doms_lang', lang);
-            document.getElementById('currentLangLabel').innerText = lang.toUpperCase();
-
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (translations[lang] && translations[lang][key]) {
-                    el.innerHTML = translations[lang][key];
+        // Load Settings & Dynamic Data from RTDB
+        async function loadSiteData() {
+            try {
+                // 1. Settings
+                const settingsSnap = await get(ref(db, 'settings'));
+                if (settingsSnap.exists()) {
+                    const s = settingsSnap.val();
+                    if (s.websiteName) {
+                        document.querySelectorAll('.nav-title, #brandNavTitle, #footerBrandTitle').forEach(el => el.innerText = s.websiteName);
+                        document.getElementById('footerCopyrightTitle').innerText = `${s.websiteName} — BLACKLIGHTDOMINIONS`;
+                    }
+                    if (s.description) {
+                        document.getElementById('heroSubtitleText').innerText = s.description;
+                        document.getElementById('footerDescText').innerText = s.description;
+                    }
+                    if (s.phone) {
+                        document.getElementById('contactPhoneText').innerText = s.phone;
+                        document.getElementById('footerPhoneText').innerText = s.phone;
+                        document.getElementById('contactWhatsAppBtn').href = `https://wa.me/${s.phone.replace(/[^0-9]/g, '')}`;
+                    }
+                    if (s.whatsappGroup) {
+                        document.getElementById('waCommunityLink').href = s.whatsappGroup;
+                        document.getElementById('footerWaLink').href = s.whatsappGroup;
+                    }
+                    if (s.discordServer) {
+                        document.getElementById('discordCommunityLink').href = s.discordServer;
+                        document.getElementById('footerDiscordLink').href = s.discordServer;
+                    }
+                    if (s.announcementBanner) {
+                        const bannerEl = document.getElementById('announcementBannerContainer');
+                        bannerEl.innerHTML = `
+                            <div style="background: var(--bg-card); border: 1px solid var(--border-hover); border-radius: 14px; padding: 1.15rem 1.5rem; margin-top: 1.5rem; display: flex; align-items: center; gap: 1rem; box-shadow: var(--glow-soft);">
+                                <i data-lucide="megaphone" size="22" style="flex-shrink: 0; color: var(--text-main);"></i>
+                                <span style="font-size: 0.95rem; color: var(--text-main); font-weight: 500;">${s.announcementBanner}</span>
+                            </div>
+                        `;
+                        if (window.lucide) lucide.createIcons();
+                    }
                 }
-            });
 
-            document.querySelectorAll('.lang-item').forEach(item => {
-                item.classList.toggle('active', item.getAttribute('data-lang') === lang);
-            });
-        }
+                // 2. Verified Members Directory (Zero data loss: support both new schema and legacy schema)
+                const membersSnap = await get(ref(db, 'members'));
+                const memberGrid = document.getElementById('publicMemberGrid');
+                memberGrid.innerHTML = '';
+                if (membersSnap.exists()) {
+                    let html = '';
+                    membersSnap.forEach(child => {
+                        const m = child.val();
+                        const name = m.mlbbNickname || m.nama || 'Anggota DOMS';
+                        const idml = m.userId ? `${m.userId} (${m.serverId || ''})` : (m.idml || '-');
+                        const statusBadge = m.status ? `<span style="font-family: var(--font-mono); font-size: 0.68rem; padding: 2px 8px; background: rgba(255,255,255,0.1); border-radius: 4px;">${m.status}</span>` : '';
+                        
+                        html += `
+                            <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; box-shadow: var(--shadow);">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted);">${m.regId || '#DOMS-MEMBER'}</span>
+                                    ${statusBadge}
+                                </div>
+                                <h4 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700; color: var(--text-main);">${name}</h4>
+                                <span style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--text-muted);">MLBB ID: ${idml}</span>
+                            </div>
+                        `;
+                    });
+                    memberGrid.innerHTML = html || '<p style="color: var(--text-muted);">Belum ada anggota terverifikasi.</p>';
+                } else {
+                    memberGrid.innerHTML = '<p style="color: var(--text-muted);">Belum ada anggota terverifikasi.</p>';
+                }
 
-        /* ==========================================================================
-           3. CANVAS BACKGROUND PARTICLES
-           ========================================================================== */
-        const canvas = document.getElementById('bg-canvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', () => {
-            resizeCanvas();
-            initParticles();
-        });
-        resizeCanvas();
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 1.8 + 0.5;
-                this.speedX = (Math.random() - 0.5) * 0.35;
-                this.speedY = (Math.random() - 0.5) * 0.35;
-                this.opacity = Math.random() * 0.5 + 0.15;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.x < 0) this.x = canvas.width;
-                if (this.x > canvas.width) this.x = 0;
-                if (this.y < 0) this.y = canvas.height;
-                if (this.y > canvas.height) this.y = 0;
-            }
-            draw() {
-                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-                ctx.fillStyle = isDark ? `rgba(255, 255, 255, ${this.opacity})` : `rgba(0, 0, 0, ${this.opacity})`;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        function initParticles() {
-            particles = [];
-            const isMobile = window.innerWidth < 768;
-            const maxParticles = isMobile ? 35 : 75;
-            const count = Math.min(Math.floor((canvas.width * canvas.height) / 16000), maxParticles);
-            for (let i = 0; i < count; i++) {
-                particles.push(new Particle());
-            }
-        }
-        initParticles();
-
-        function animateCanvas() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-            requestAnimationFrame(animateCanvas);
-        }
-        animateCanvas();
-
-        /* ==========================================================================
-           4. LOGO BLDS CLICK -> ECLIPSE THEME INVERSION
-           ========================================================================== */
-        let isAnimatingEclipse = false;
-
-        function triggerEclipseInversion(e) {
-            if (isAnimatingEclipse) return;
-            isAnimatingEclipse = true;
-
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-            const logoWrapper = document.querySelector('#themeToggleBtn .logo-wrapper');
-            logoWrapper.classList.add('logo-shake');
-
-            const rect = logoWrapper.getBoundingClientRect();
-            const burstX = e && e.clientX ? e.clientX : rect.left + rect.width / 2;
-            const burstY = e && e.clientY ? e.clientY : rect.top + rect.height / 2;
-            createParticleBurst(burstX, burstY);
-
-            setTimeout(() => {
-                document.documentElement.setAttribute('data-theme', newTheme);
-                localStorage.setItem('doms_theme', newTheme);
-            }, 220);
-
-            setTimeout(() => {
-                logoWrapper.classList.remove('logo-shake');
-                isAnimatingEclipse = false;
-            }, 550);
-        }
-
-        function createParticleBurst(x, y) {
-            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-            const burstContainer = document.createElement('div');
-            burstContainer.style.position = 'fixed';
-            burstContainer.style.left = `${x}px`;
-            burstContainer.style.top = `${y}px`;
-            burstContainer.style.pointerEvents = 'none';
-            burstContainer.style.zIndex = '9999';
-            document.body.appendChild(burstContainer);
-
-            for (let i = 0; i < 16; i++) {
-                const p = document.createElement('div');
-                const angle = (Math.PI * 2 / 16) * i;
-                const distance = Math.random() * 75 + 35;
-                const destX = Math.cos(angle) * distance;
-                const destY = Math.sin(angle) * distance;
-
-                p.style.position = 'absolute';
-                p.style.width = '5px';
-                p.style.height = '5px';
-                p.style.backgroundColor = isDark ? '#ffffff' : '#09090b';
-                p.style.boxShadow = isDark ? '0 0 8px #ffffff' : '0 0 8px #09090b';
-                p.style.borderRadius = '50%';
-                p.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease';
-                burstContainer.appendChild(p);
-
-                requestAnimationFrame(() => {
-                    p.style.transform = `translate(${destX}px, ${destY}px) scale(0)`;
-                    p.style.opacity = '0';
-                });
-            }
-
-            setTimeout(() => burstContainer.remove(), 550);
-        }
-
-        /* ==========================================================================
-           5. DOM READY, FIREBASE SUBMISSION & CARD GENERATION
-           ========================================================================== */
-        document.addEventListener('DOMContentLoaded', () => {
-            const savedTheme = localStorage.getItem('doms_theme') || 'dark';
-            document.documentElement.setAttribute('data-theme', savedTheme);
-
-            applyLanguage(currentLang);
-            document.getElementById('currentYear').innerText = new Date().getFullYear();
-
-            if (window.lucide) {
-                lucide.createIcons();
-            }
-
-            document.getElementById('themeToggleBtn').addEventListener('click', (e) => {
-                triggerEclipseInversion(e);
-            });
-
-            const langBtn = document.getElementById('langDropdownBtn');
-            const langMenu = document.getElementById('langMenu');
-
-            langBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                langMenu.classList.toggle('open');
-            });
-
-            document.addEventListener('click', () => {
-                langMenu.classList.remove('open');
-            });
-
-            document.querySelectorAll('.lang-item').forEach(item => {
-                item.addEventListener('click', () => {
-                    applyLanguage(item.getAttribute('data-lang'));
-                    langMenu.classList.remove('open');
-                });
-            });
-
-            const hamburgerBtn = document.getElementById('hamburgerBtn');
-            const mobileMenu = document.getElementById('mobileMenu');
-
-            hamburgerBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('open');
-            });
-
-            document.querySelectorAll('.mobile-nav-link').forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.remove('open');
-                });
-            });
-
-            document.querySelectorAll('.rule-category-header').forEach(header => {
-                header.addEventListener('click', () => {
-                    header.parentElement.classList.toggle('active');
-                });
-            });
-
-            document.querySelectorAll('.faq-card').forEach(card => {
-                card.addEventListener('click', () => {
-                    const isActive = card.classList.contains('active');
-                    document.querySelectorAll('.faq-card').forEach(c => c.classList.remove('active'));
-                    if (!isActive) card.classList.add('active');
-                });
-            });
-
-            const joinModal = document.getElementById('joinModal');
-            const modalFormView = document.getElementById('modalFormView');
-            const modalCardResultView = document.getElementById('modalCardResultView');
-            const domsRegForm = document.getElementById('domsRegForm');
-
-            [
-                document.getElementById('joinDomsNavBtn'),
-                document.getElementById('joinDomsMobileBtn'),
-                document.getElementById('joinHeroBtn'),
-                document.getElementById('ctaJoinBtn')
-            ].forEach(btn => {
-                if (btn) {
-                    btn.addEventListener('click', () => {
-                        mobileMenu.classList.remove('open');
-                        modalFormView.style.display = 'block';
-                        modalCardResultView.style.display = 'none';
-                        domsRegForm.reset();
-                        joinModal.classList.add('open');
+                // 3. News & Announcements
+                const newsSnap = await get(ref(db, 'news'));
+                const newsGrid = document.getElementById('publicNewsGrid');
+                newsGrid.innerHTML = '';
+                let newsHtml = '';
+                if (newsSnap.exists()) {
+                    newsSnap.forEach(child => {
+                        const n = child.val();
+                        if (n.status === 'Published') {
+                            newsHtml += `
+                                <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 18px; padding: 1.75rem; display: flex; flex-direction: column; gap: 1rem; box-shadow: var(--shadow);">
+                                    <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">${n.category || 'Berita'} • ${new Date(n.date || Date.now()).toLocaleDateString('id-ID')}</span>
+                                    <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 700;">${n.title}</h3>
+                                    <p style="color: var(--text-muted); font-size: 0.92rem; line-height: 1.6;">${n.content ? n.content.substring(0, 120) + '...' : ''}</p>
+                                </div>
+                            `;
+                        }
                     });
                 }
-            });
+                newsGrid.innerHTML = newsHtml || '<p style="color: var(--text-muted);">Belum ada berita dipublikasikan.</p>';
 
-            document.getElementById('modalCloseBtn').addEventListener('click', () => {
-                joinModal.classList.remove('open');
-            });
+            } catch (e) {
+                console.error("Error loading RTDB data:", e);
+            }
+        }
 
-            document.getElementById('finishRegBtn').addEventListener('click', () => {
-                joinModal.classList.remove('open');
-                showToast('DOMS Card Berhasil Disimpan & Diterbitkan!');
-            });
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSiteData();
+            if (window.lucide) lucide.createIcons();
 
-            joinModal.addEventListener('click', (e) => {
-                if (e.target === joinModal) joinModal.classList.remove('open');
-            });
-
-            domsRegForm.addEventListener('submit', async (e) => {
+            // Registration Form Submission -> /memberRequests (Pending)
+            const regForm = document.getElementById('domsRegForm');
+            regForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                const nama = document.getElementById('regNama').value.trim();
-                const idml = document.getElementById('regIdMl').value.trim();
-                const sosmed = document.getElementById('regSosmed').value.trim() || '@blacklightdominions';
-                const regIdNumber = '#DOMS-' + Math.floor(1000 + Math.random() * 9000);
-                const timestamp = new Date().toISOString();
+                const mlbbNickname = document.getElementById('regMlbbNickname').value.trim();
+                const realName = document.getElementById('regRealName').value.trim();
+                const userId = document.getElementById('regUserId').value.trim();
+                const serverId = document.getElementById('regServerId').value.trim();
 
-                const memberData = {
-                    nama: nama,
-                    idml: idml,
-                    sosmed: sosmed,
-                    regId: regIdNumber,
-                    createdAt: timestamp
-                };
-
-                const submitBtn = document.getElementById('submitCardBtn');
-                submitBtn.disabled = true;
-                submitBtn.innerText = 'Menyimpan ke Firebase...';
+                const btn = document.getElementById('submitCardBtn');
+                btn.disabled = true;
+                btn.innerText = 'Mengirim pengajuan...';
 
                 try {
-                    const firebaseURL = 'https://blds-8975d-default-rtdb.asia-southeast1.firebasedatabase.app/members.json';
-                    const response = await fetch(firebaseURL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(memberData)
+                    const reqRef = push(ref(db, 'memberRequests'));
+                    await set(reqRef, {
+                        requestId: reqRef.key,
+                        mlbbNickname,
+                        realName,
+                        userId,
+                        serverId,
+                        status: 'Pending',
+                        submittedAt: Date.now(),
+                        submittedBy: 'Public User'
                     });
 
-                    if (!response.ok) {
-                        throw new Error('Gagal menyimpan ke Firebase Database');
-                    }
-
-                    document.getElementById('cardOutNama').innerText = nama;
-                    document.getElementById('cardOutIdMl').innerText = idml;
-                    document.getElementById('cardOutSosmed').innerText = sosmed;
-                    document.getElementById('cardOutRegId').innerText = regIdNumber;
-
-                    modalFormView.style.display = 'none';
-                    modalCardResultView.style.display = 'block';
-                    if (window.lucide) lucide.createIcons();
-
-                    showToast('Data berhasil disimpan ke Firebase & DOMS Card aktif!');
+                    document.getElementById('modalFormView').style.display = 'none';
+                    document.getElementById('modalCardResultView').style.display = 'block';
+                    showToast('Pengajuan verifikasi berhasil dikirim!');
                 } catch (err) {
                     console.error(err);
-                    document.getElementById('cardOutNama').innerText = nama;
-                    document.getElementById('cardOutIdMl').innerText = idml;
-                    document.getElementById('cardOutSosmed').innerText = sosmed;
-                    document.getElementById('cardOutRegId').innerText = regIdNumber;
-
-                    modalFormView.style.display = 'none';
-                    modalCardResultView.style.display = 'block';
-                    if (window.lucide) lucide.createIcons();
-                    showToast('DOMS Card berhasil dibuat!');
+                    showToast('Gagal mengirim pengajuan. Coba lagi.');
                 } finally {
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = 'Generate DOMS Card & Simpan <i data-lucide="arrow-right" size="16"></i>';
+                    btn.disabled = false;
+                    btn.innerHTML = 'Kirim Pengajuan Verifikasi <i data-lucide="arrow-right" size="16"></i>';
+                    if (window.lucide) lucide.createIcons();
                 }
             });
-
-            document.getElementById('exploreHeroBtn').addEventListener('click', () => {
-                document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
-            });
-
-            document.getElementById('copyNumberBtn').addEventListener('click', () => {
-                navigator.clipboard.writeText('085591006359');
-                showToast('Nomor berhasil disalin ke clipboard!');
-            });
-
-            document.getElementById('backToTopBtn').addEventListener('click', () => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-
-            const revealObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, { threshold: 0.12 });
-
-            document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-            const sections = document.querySelectorAll('section[id]');
-            const navLinks = document.querySelectorAll('.nav-link');
-
-            window.addEventListener('scroll', () => {
-                const totalScroll = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                const currentScroll = window.scrollY;
-                const scrollPercentage = totalScroll > 0 ? (currentScroll / totalScroll) * 100 : 0;
-                document.getElementById('scrollProgress').style.width = `${scrollPercentage}%`;
-
-                let currentSectionId = '';
-                sections.forEach(sec => {
-                    const secTop = sec.offsetTop - 160;
-                    if (currentScroll >= secTop) {
-                        currentSectionId = sec.getAttribute('id');
-                    }
-                });
-
-                navLinks.forEach(link => {
-                    link.classList.toggle('active', link.getAttribute('href') === `#${currentSectionId}`);
-                });
-            }, { passive: true });
         });
-
-        function showToast(message) {
-            const toast = document.getElementById('toastNotification');
-            document.getElementById('toastMessage').innerText = message;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 3400);
-        }
     </script>
 </body>
 </html>
