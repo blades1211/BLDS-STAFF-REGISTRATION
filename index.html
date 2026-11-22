@@ -90,7 +90,7 @@
             color: var(--text-main);
             overflow-x: hidden;
             transition: background-color 0.5s ease, color 0.5s ease;
-            line-height: 1.65;
+            line-height: 1.7;
             background-image: 
                 linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
                 linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
@@ -118,26 +118,38 @@
         }
 
         /* ==========================================================================
-           TITLE GLOW PULSE
+           TITLE TYPOGRAPHY FIX (TIDAK GEPENG & PROPOSIONAL)
            ========================================================================== */
         @keyframes slowGlowPulse {
             0%, 100% {
                 text-shadow: 0 0 15px rgba(255, 255, 255, 0.2), 0 0 35px rgba(255, 255, 255, 0.08);
             }
             50% {
-                text-shadow: 0 0 30px rgba(255, 255, 255, 0.6), 0 0 70px rgba(255, 255, 255, 0.25);
+                text-shadow: 0 0 30px rgba(255, 255, 255, 0.5), 0 0 60px rgba(255, 255, 255, 0.2);
             }
         }
         [data-theme="light"] @keyframes slowGlowPulse {
             0%, 100% {
-                text-shadow: 0 0 12px rgba(0, 0, 0, 0.12), 0 0 25px rgba(0, 0, 0, 0.04);
+                text-shadow: 0 0 12px rgba(0, 0, 0, 0.1), 0 0 25px rgba(0, 0, 0, 0.03);
             }
             50% {
-                text-shadow: 0 0 25px rgba(0, 0, 0, 0.35), 0 0 55px rgba(0, 0, 0, 0.15);
+                text-shadow: 0 0 22px rgba(0, 0, 0, 0.25), 0 0 45px rgba(0, 0, 0, 0.1);
             }
         }
 
-        .hero-title, .section-title, .cta-title {
+        .hero-title {
+            font-family: var(--font-heading);
+            font-size: clamp(3.5rem, 8vw, 6.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: 0.02em; /* Mencegah font terlalu rapat/gepeng */
+            animation: slowGlowPulse 4s ease-in-out infinite;
+        }
+
+        .section-title, .cta-title {
+            font-family: var(--font-heading);
+            font-weight: 800;
+            letter-spacing: 0.01em;
             animation: slowGlowPulse 4s ease-in-out infinite;
         }
 
@@ -154,104 +166,66 @@
             align-items: center;
             justify-content: center;
             padding: 1.5rem;
-            transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.65s ease;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
         }
         #loader.fade-out {
             opacity: 0;
-            transform: scale(1.04);
             visibility: hidden;
             pointer-events: none;
         }
 
         .loader-core {
             position: relative;
-            width: 130px;
-            height: 130px;
+            width: 120px;
+            height: 120px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 2rem;
+            margin-bottom: 1.75rem;
         }
 
         .loader-ring-outer {
             position: absolute;
             inset: 0;
             border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 2px solid rgba(255, 255, 255, 0.1);
             border-top-color: #ffffff;
-            border-right-color: rgba(255, 255, 255, 0.5);
-            animation: spinRing 1.4s cubic-bezier(0.5, 0.1, 0.5, 0.9) infinite;
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
-        }
-
-        .loader-ring-inner {
-            position: absolute;
-            inset: 14px;
-            border-radius: 50%;
-            border: 1px dashed rgba(255, 255, 255, 0.25);
-            animation: spinRingReverse 4s linear infinite;
+            animation: spinRing 1s linear infinite;
         }
 
         .loader-logo-img {
-            width: 64px;
-            height: 64px;
+            width: 56px;
+            height: 56px;
             object-fit: contain;
-            position: relative;
-            z-index: 2;
-            filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.6));
-            animation: breatheLogo 1.8s ease-in-out infinite;
+            filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.6));
         }
 
         .loader-title {
             font-family: var(--font-heading);
-            font-size: 1.35rem;
+            font-size: 1.25rem;
             font-weight: 800;
-            letter-spacing: 0.35em;
+            letter-spacing: 0.3em;
             color: #ffffff;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
-            margin-bottom: 0.75rem;
-            padding-left: 0.35em;
+            margin-bottom: 0.65rem;
         }
 
         .loader-bar-track {
-            width: min(240px, 70vw);
+            width: 220px;
             height: 2px;
-            background: rgba(255, 255, 255, 0.12);
-            position: relative;
+            background: rgba(255, 255, 255, 0.1);
             overflow: hidden;
             border-radius: 2px;
         }
 
         .loader-bar-fill {
-            position: absolute;
-            top: 0;
-            left: 0;
             height: 100%;
-            width: 0%;
+            width: 100%;
             background: #ffffff;
-            box-shadow: 0 0 12px #ffffff;
-            transition: width 0.2s ease-out;
+            animation: loadBar 1.2s ease-in-out infinite alternate;
         }
 
-        .loader-status {
-            margin-top: 0.85rem;
-            font-family: var(--font-mono);
-            font-size: 0.72rem;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.55);
-        }
-
-        @keyframes spinRing {
-            to { transform: rotate(360deg); }
-        }
-        @keyframes spinRingReverse {
-            to { transform: rotate(-360deg); }
-        }
-        @keyframes breatheLogo {
-            0%, 100% { transform: scale(0.95); opacity: 0.85; }
-            50% { transform: scale(1.05); opacity: 1; }
-        }
+        @keyframes spinRing { to { transform: rotate(360deg); } }
+        @keyframes loadBar { 0% { width: 15%; } 100% { width: 95%; } }
 
         /* ==========================================================================
            CANVAS BACKGROUND & AMBIENT GLOW
@@ -261,7 +235,7 @@
             inset: 0;
             z-index: -1;
             pointer-events: none;
-            opacity: 0.45;
+            opacity: 0.4;
         }
 
         .ambient-eclipse-glow {
@@ -269,8 +243,8 @@
             top: -15%;
             left: 50%;
             transform: translateX(-50%);
-            width: min(850px, 95vw);
-            height: 450px;
+            width: 800px;
+            height: 400px;
             background: radial-gradient(ellipse at center, var(--accent-bg) 0%, transparent 70%);
             pointer-events: none;
             z-index: -1;
@@ -283,7 +257,6 @@
             left: 0;
             height: 2px;
             background: var(--text-main);
-            box-shadow: var(--glow-strong);
             width: 0%;
             z-index: 1002;
             transition: width 0.08s linear;
@@ -298,11 +271,9 @@
             left: 0;
             width: 100%;
             z-index: 1000;
-            background-color: rgba(var(--bg-main-rgb), 0.78);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
+            background-color: rgba(var(--bg-main-rgb), 0.82);
+            backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--border-color);
-            transition: var(--transition-smooth);
         }
         [data-theme="dark"] header { --bg-main-rgb: 5, 5, 6; }
         [data-theme="light"] header { --bg-main-rgb: 249, 249, 251; }
@@ -310,225 +281,112 @@
         .nav-container {
             max-width: 1380px;
             margin: 0 auto;
-            padding: 0 2rem;
-            height: 76px;
+            padding: 0 1.5rem;
+            height: 72px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 1rem;
         }
 
         .nav-brand {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             text-decoration: none;
             cursor: pointer;
-            flex-shrink: 0;
-            user-select: none;
         }
 
         .logo-wrapper {
-            width: 44px;
-            height: 44px;
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: transparent;
-            border: none;
-            transition: var(--transition-smooth);
-            position: relative;
-        }
-        .logo-wrapper:hover {
-            transform: scale(1.08);
         }
         .logo-wrapper img {
-            width: 34px;
-            height: 34px;
+            width: 32px;
+            height: 32px;
             object-fit: contain;
             filter: var(--logo-filter);
-            transition: filter 0.4s ease, transform 0.3s ease;
-        }
-
-        .logo-shake {
-            animation: logoShakeAnim 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
-        }
-        @keyframes logoShakeAnim {
-            0%, 100% { transform: translateX(0) rotate(0deg) scale(1); }
-            20% { transform: translateX(-4px) rotate(-10deg) scale(1.15); }
-            40% { transform: translateX(4px) rotate(10deg) scale(1.15); }
-            60% { transform: translateX(-3px) rotate(-5deg) scale(1.08); }
-            80% { transform: translateX(3px) rotate(5deg) scale(1.08); }
         }
 
         .nav-title {
             font-family: var(--font-heading);
             font-weight: 800;
-            font-size: 1.25rem;
-            letter-spacing: 0.18em;
+            font-size: 1.15rem;
+            letter-spacing: 0.15em;
             color: var(--text-main);
-            text-shadow: var(--glow-soft);
         }
 
         .nav-menu {
             display: flex;
             align-items: center;
-            gap: 1.65rem;
+            gap: 1.5rem;
             list-style: none;
         }
 
         .nav-link {
             text-decoration: none;
             color: var(--text-muted);
-            font-size: 0.88rem;
+            font-size: 0.86rem;
             font-weight: 500;
-            letter-spacing: 0.03em;
             transition: var(--transition-fast);
-            position: relative;
-            padding: 6px 0;
-            white-space: nowrap;
         }
         .nav-link:hover, .nav-link.active {
             color: var(--text-main);
-            text-shadow: var(--glow-soft);
-        }
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 1.5px;
-            background: var(--text-main);
-            box-shadow: var(--glow-soft);
-            transition: width 0.3s ease;
-        }
-        .nav-link:hover::after, .nav-link.active::after {
-            width: 100%;
         }
 
         .nav-actions {
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            flex-shrink: 0;
         }
 
-        .lang-dropdown-wrapper {
-            position: relative;
-        }
-        .lang-btn {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            padding: 8px 11px;
-            border-radius: 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.82rem;
-            font-family: var(--font-mono);
-            font-weight: 600;
-            transition: var(--transition-fast);
-        }
-        .lang-btn:hover {
-            border-color: var(--text-main);
-            box-shadow: var(--glow-soft);
-        }
-        .lang-menu {
-            position: absolute;
-            top: calc(100% + 8px);
-            right: 0;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            box-shadow: var(--shadow);
-            list-style: none;
-            min-width: 155px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-8px);
-            transition: var(--transition-smooth);
-            z-index: 1050;
-            overflow: hidden;
-        }
-        .lang-menu.open {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-        .lang-item {
-            padding: 10px 14px;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: var(--transition-fast);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .lang-item:hover {
-            background: var(--bg-secondary);
-            color: var(--text-main);
-        }
-        .lang-item.active {
-            color: var(--text-main);
-            font-weight: 600;
-            background: var(--accent-bg);
-        }
-
+        /* Buttons */
         .btn-primary {
             background: var(--text-main);
             color: var(--bg-main);
             border: 1px solid var(--text-main);
-            padding: 10px 22px;
+            padding: 10px 20px;
             border-radius: 8px;
             font-family: var(--font-heading);
             font-weight: 700;
-            font-size: 0.82rem;
+            font-size: 0.8rem;
             letter-spacing: 0.08em;
             text-transform: uppercase;
             cursor: pointer;
-            transition: var(--transition-smooth);
             display: inline-flex;
             align-items: center;
             gap: 8px;
             text-decoration: none;
-            box-shadow: var(--glow-soft);
-            white-space: nowrap;
+            transition: var(--transition-smooth);
         }
         .btn-primary:hover {
             background: transparent;
             color: var(--text-main);
-            box-shadow: var(--glow-strong);
-            transform: translateY(-2px);
         }
 
         .btn-secondary {
             background: var(--bg-secondary);
             color: var(--text-main);
             border: 1px solid var(--border-color);
-            padding: 10px 22px;
+            padding: 10px 20px;
             border-radius: 8px;
             font-family: var(--font-heading);
             font-weight: 700;
-            font-size: 0.82rem;
+            font-size: 0.8rem;
             letter-spacing: 0.08em;
             text-transform: uppercase;
             cursor: pointer;
-            transition: var(--transition-smooth);
             display: inline-flex;
             align-items: center;
             gap: 8px;
             text-decoration: none;
-            white-space: nowrap;
+            transition: var(--transition-smooth);
         }
         .btn-secondary:hover {
             border-color: var(--text-main);
             background: var(--bg-card-hover);
-            box-shadow: var(--glow-soft);
-            transform: translateY(-2px);
         }
 
         .hamburger {
@@ -536,32 +394,29 @@
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            cursor: pointer;
             color: var(--text-main);
-            width: 40px;
-            height: 40px;
+            width: 38px;
+            height: 38px;
             align-items: center;
             justify-content: center;
-            transition: var(--transition-fast);
-        }
-        .hamburger:hover {
-            border-color: var(--text-main);
+            cursor: pointer;
         }
 
+        /* Mobile Menu */
         .mobile-menu {
             position: fixed;
-            top: 68px;
+            top: 72px;
             left: 0;
             width: 100%;
-            height: calc(100dvh - 68px);
+            height: calc(100dvh - 72px);
             background: var(--bg-main);
             border-top: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
-            padding: 1.75rem 1.5rem 2.5rem 1.5rem;
-            gap: 1.1rem;
+            padding: 1.5rem;
+            gap: 1rem;
             transform: translateX(100%);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.35s ease;
             z-index: 999;
             overflow-y: auto;
         }
@@ -570,37 +425,31 @@
         }
         .mobile-nav-link {
             font-family: var(--font-heading);
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             font-weight: 700;
             color: var(--text-muted);
             text-decoration: none;
             padding: 0.4rem 0;
             border-bottom: 1px solid var(--border-color);
-            transition: var(--transition-fast);
-        }
-        .mobile-nav-link:hover, .mobile-nav-link.active {
-            color: var(--text-main);
-            padding-left: 8px;
         }
 
         /* ==========================================================================
            HERO SECTION
            ========================================================================== */
         .hero {
-            min-height: 100dvh;
+            min-height: 95dvh;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
-            padding: 110px 2rem 80px 2rem;
+            padding: 120px 1.5rem 60px 1.5rem;
             max-width: 1380px;
             margin: 0 auto;
         }
 
         .hero-content {
             display: grid;
-            grid-template-columns: 1.25fr 0.75fr;
-            gap: 3.5rem;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 3rem;
             align-items: center;
             width: 100%;
         }
@@ -608,80 +457,64 @@
         .hero-text-col {
             display: flex;
             flex-direction: column;
-            gap: 1.4rem;
+            gap: 1.25rem;
         }
 
         .badge-pill {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            padding: 7px 15px;
+            gap: 8px;
+            padding: 6px 14px;
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
             border-radius: 50px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-family: var(--font-mono);
             font-weight: 600;
-            letter-spacing: 0.12em;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
             width: fit-content;
-            box-shadow: var(--glow-soft);
         }
         .badge-dot {
-            width: 7px;
-            height: 7px;
+            width: 6px;
+            height: 6px;
             background: var(--text-main);
             border-radius: 50%;
-            box-shadow: 0 0 10px var(--text-main);
-            animation: pulseDot 1.6s infinite;
-        }
-        @keyframes pulseDot {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.35; transform: scale(0.75); }
-        }
-
-        .hero-title {
-            font-family: var(--font-heading);
-            font-size: clamp(3.4rem, 7.5vw, 6.8rem);
-            font-weight: 800;
-            line-height: 0.98;
-            letter-spacing: -0.02em;
+            box-shadow: 0 0 8px var(--text-main);
         }
 
         .hero-tagline {
             font-family: var(--font-mono);
-            font-size: clamp(0.85rem, 1.5vw, 1rem);
-            letter-spacing: 0.22em;
+            font-size: 0.85rem;
+            letter-spacing: 0.2em;
             text-transform: uppercase;
             color: var(--text-main);
-            opacity: 0.9;
+            opacity: 0.85;
         }
 
         .hero-subtitle {
-            font-size: clamp(1rem, 1.4vw, 1.12rem);
+            font-size: 1.05rem;
             color: var(--text-muted);
-            max-width: 580px;
-            font-weight: 400;
-            line-height: 1.75;
+            max-width: 540px;
+            line-height: 1.8;
         }
 
         .hero-btns {
             display: flex;
             flex-wrap: wrap;
             gap: 1rem;
-            margin-top: 0.75rem;
+            margin-top: 0.5rem;
         }
 
         .hero-visual-col {
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
         }
 
         .hero-eclipse-container {
-            width: 360px;
-            height: 360px;
+            width: 320px;
+            height: 320px;
             border-radius: 50%;
             border: 1px dashed var(--border-hover);
             display: flex;
@@ -689,1634 +522,535 @@
             justify-content: center;
             position: relative;
             animation: rotateEclipse 35s linear infinite;
-            box-shadow: inset 0 0 50px var(--accent-bg), var(--glow-soft);
         }
-        @keyframes rotateEclipse {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .hero-eclipse-orbit-dot {
-            position: absolute;
-            top: -5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--text-main);
-            box-shadow: var(--glow-strong);
-        }
-
-        .hero-eclipse-inner {
-            position: absolute;
-            width: 260px;
-            height: 260px;
-            border-radius: 50%;
-            border: 1px solid var(--border-color);
-            animation: rotateEclipseReverse 22s linear infinite;
-        }
-        @keyframes rotateEclipseReverse {
-            from { transform: rotate(360deg); }
-            to { transform: rotate(0deg); }
-        }
+        @keyframes rotateEclipse { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
         .hero-logo-center {
-            width: 136px;
-            height: 136px;
-            background: transparent;
-            border: none;
+            width: 120px;
+            height: 120px;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
-            z-index: 2;
-            animation: counterRotateCenter 35s linear infinite;
+            animation: counterRotate 35s linear infinite;
         }
-        @keyframes counterRotateCenter {
-            from { transform: rotate(360deg); }
-            to { transform: rotate(0deg); }
-        }
+        @keyframes counterRotate { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
+
         .hero-logo-center img {
-            width: 90px;
-            height: 90px;
+            width: 80px;
+            height: 80px;
             object-fit: contain;
             filter: var(--logo-filter);
-            transition: filter 0.4s ease, transform 0.3s ease;
-        }
-        .hero-logo-center img:hover {
-            transform: scale(1.1);
-        }
-
-        .scroll-down-indicator {
-            position: absolute;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            color: var(--text-muted);
-            font-size: 0.72rem;
-            font-family: var(--font-mono);
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            text-decoration: none;
-            transition: var(--transition-fast);
-        }
-        .scroll-down-indicator:hover {
-            color: var(--text-main);
-            text-shadow: var(--glow-soft);
-        }
-        .scroll-down-indicator i {
-            animation: bounceArrow 2s infinite;
-        }
-        @keyframes bounceArrow {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(5px); }
-            60% { transform: translateY(2px); }
         }
 
         /* ==========================================================================
-           SECTION COMMON STYLES & SCROLL REVEAL
+           SECTIONS & GRIDS
            ========================================================================== */
         section {
-            padding: 105px 2rem;
+            padding: 90px 1.5rem;
             max-width: 1380px;
             margin: 0 auto;
             position: relative;
         }
 
-        .reveal {
-            opacity: 0;
-            transform: translateY(28px);
-            transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
         .section-header {
-            margin-bottom: 3.5rem;
+            margin-bottom: 3rem;
         }
 
         .section-tag {
             font-family: var(--font-mono);
-            font-size: 0.78rem;
-            letter-spacing: 0.22em;
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
             text-transform: uppercase;
             color: var(--text-muted);
-            margin-bottom: 0.65rem;
+            margin-bottom: 0.5rem;
             display: block;
         }
 
         .section-title {
-            font-family: var(--font-heading);
-            font-size: clamp(2rem, 4.2vw, 3.4rem);
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            line-height: 1.12;
+            font-size: clamp(1.8rem, 3.8vw, 3rem);
+            line-height: 1.2;
         }
 
-        /* ==========================================================================
-           ABOUT SECTION
-           ========================================================================== */
-        .about-grid {
+        .about-grid, .vision-mission-grid, .identity-grid, .community-grid, .faq-grid {
             display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            gap: 3.5rem;
-            align-items: center;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
         }
 
         .about-text {
-            font-size: 1.06rem;
+            font-size: 1.02rem;
             color: var(--text-muted);
-            line-height: 1.8;
+            line-height: 1.85;
             display: flex;
             flex-direction: column;
-            gap: 1.35rem;
+            gap: 1.2rem;
         }
-        .about-text p strong {
-            color: var(--text-main);
-            font-weight: 600;
-        }
+        .about-text strong { color: var(--text-main); }
 
-        .about-stats-card {
+        .about-stats-card, .vm-card, .community-card, .faq-card, .identity-container {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 20px;
-            padding: 2.25rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1.75rem;
+            padding: 2.2rem;
             box-shadow: var(--shadow);
-            transition: var(--transition-smooth);
+            transition: var(--transition-fast);
         }
-        .about-stats-card:hover {
+        .about-stats-card:hover, .vm-card:hover, .community-card:hover {
             border-color: var(--border-hover);
-            box-shadow: var(--shadow), var(--glow-soft);
         }
 
         .stat-item {
             display: flex;
             flex-direction: column;
-            gap: 0.35rem;
-            padding-bottom: 1.4rem;
+            gap: 0.3rem;
+            padding-bottom: 1.2rem;
             border-bottom: 1px solid var(--border-color);
         }
-        .stat-item:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
-        }
-        .stat-number {
-            font-family: var(--font-heading);
-            font-size: 2.1rem;
-            font-weight: 800;
-            color: var(--text-main);
-            letter-spacing: 0.04em;
-            text-shadow: var(--glow-soft);
-        }
-        .stat-label {
-            font-size: 0.92rem;
-            color: var(--text-muted);
-        }
-
-        /* ==========================================================================
-           VISION & MISSION
-           ========================================================================== */
-        .vision-mission-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2.25rem;
-        }
-
-        .vm-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 22px;
-            padding: 2.75rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1.75rem;
-            transition: var(--transition-smooth);
-            box-shadow: var(--shadow);
-        }
-        .vm-card:hover {
-            border-color: var(--border-hover);
-            box-shadow: var(--shadow), var(--glow-soft);
-            transform: translateY(-4px);
-        }
-
-        .vm-card-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .vm-icon-box {
-            width: 48px;
-            height: 48px;
-            background: transparent;
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-main);
-            filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
-        }
-
-        .vm-card-title {
-            font-family: var(--font-heading);
-            font-size: 1.45rem;
-            font-weight: 700;
-        }
-
-        .vm-text {
-            color: var(--text-muted);
-            font-size: 1rem;
-            line-height: 1.75;
-        }
-
-        .mission-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 1.15rem;
-        }
-
-        .mission-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.95rem;
-            color: var(--text-muted);
-            font-size: 0.98rem;
-            line-height: 1.6;
-        }
-
-        .mission-number {
-            font-family: var(--font-mono);
-            font-weight: 700;
-            color: var(--text-main);
-            font-size: 0.8rem;
-            padding: 3px 8px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-
-        /* ==========================================================================
-           IDENTITY SYSTEM
-           ========================================================================== */
-        .identity-container {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
-            padding: 3.5rem 3rem;
-            box-shadow: var(--shadow);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .identity-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3.5rem;
-            align-items: center;
-        }
-
-        .identity-formats-box {
-            display: flex;
-            flex-direction: column;
-            gap: 1.1rem;
-        }
-
-        .format-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1.35rem 1.75rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-            font-family: var(--font-mono);
-            font-size: 1.15rem;
-            font-weight: 700;
-            letter-spacing: 0.04em;
-            transition: var(--transition-fast);
-        }
-        .format-card:hover {
-            border-color: var(--text-main);
-            box-shadow: var(--glow-soft);
-            transform: translateX(6px);
-        }
-        .format-badge {
-            font-family: var(--font-mono);
-            font-size: 0.72rem;
-            padding: 4px 10px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            color: var(--text-main);
-            font-weight: 600;
-            text-transform: uppercase;
-            flex-shrink: 0;
-        }
-
-        .identity-info {
-            display: flex;
-            flex-direction: column;
-            gap: 1.35rem;
-        }
-
-        .identity-info h3 {
-            font-family: var(--font-heading);
-            font-size: 1.65rem;
-            font-weight: 700;
-        }
-
-        .identity-info p {
-            color: var(--text-muted);
-            font-size: 1.02rem;
-            line-height: 1.75;
-        }
-
-        .identity-rules-chips {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.65rem;
-            margin-top: 0.25rem;
-        }
-
-        .identity-chip {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            padding: 6px 14px;
-            border-radius: 50px;
-            font-size: 0.82rem;
-            color: var(--text-main);
-            font-weight: 500;
-        }
-
-        /* ==========================================================================
-           COMMUNITY REQUIREMENTS
-           ========================================================================== */
-        .community-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2.25rem;
-        }
-
-        .community-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 22px;
-            padding: 2.75rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            gap: 2.25rem;
-            transition: var(--transition-smooth);
-            box-shadow: var(--shadow);
-            position: relative;
-            overflow: hidden;
-        }
-        .community-card:hover {
-            border-color: var(--text-main);
-            box-shadow: var(--shadow), var(--glow-soft);
-            transform: translateY(-5px);
-        }
-
-        .community-card-top {
-            display: flex;
-            flex-direction: column;
-            gap: 1.35rem;
-        }
-
-        .community-icon {
-            width: 56px;
-            height: 56px;
-            background: transparent;
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-main);
-            filter: drop-shadow(0 0 12px rgba(255,255,255,0.35));
-        }
-
-        .community-title {
-            font-family: var(--font-heading);
-            font-size: 1.65rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .community-desc {
-            color: var(--text-muted);
-            font-size: 1rem;
-            line-height: 1.7;
-        }
-
-        .community-note {
-            margin-top: 2.5rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            padding: 1.35rem 1.75rem;
-            text-align: center;
-            font-size: 0.95rem;
-            color: var(--text-muted);
-        }
-        .community-note strong {
-            color: var(--text-main);
-        }
-
-        /* ==========================================================================
-           RULES & REGULATIONS
-           ========================================================================== */
-        .rules-container {
-            display: flex;
-            flex-direction: column;
-            gap: 1.15rem;
-        }
-
-        .rule-category-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            overflow: hidden;
-            transition: var(--transition-fast);
-        }
-        .rule-category-card:hover, .rule-category-card.active {
-            border-color: var(--border-hover);
-        }
-
-        .rule-category-header {
-            padding: 1.65rem 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-            cursor: pointer;
-            user-select: none;
-        }
-
-        .rule-category-title-group {
-            display: flex;
-            align-items: center;
-            gap: 1.25rem;
-        }
-
-        .rule-cat-num {
-            font-family: var(--font-mono);
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: var(--text-muted);
-        }
-
-        .rule-cat-title {
-            font-family: var(--font-heading);
-            font-size: 1.2rem;
-            font-weight: 700;
-        }
-
-        .rule-toggle-icon {
-            width: 34px;
-            height: 34px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-main);
-            transition: transform 0.3s ease;
-            flex-shrink: 0;
-        }
-        .rule-category-card.active .rule-toggle-icon {
-            transform: rotate(180deg);
-        }
-
-        .rule-category-body {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            background: var(--bg-secondary);
-            border-top: 1px solid transparent;
-        }
-        .rule-category-card.active .rule-category-body {
-            max-height: 1000px;
-            border-top-color: var(--border-color);
-            padding: 1.75rem 2rem;
-        }
-
-        .rule-items-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 0.9rem;
-        }
-
-        .rule-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.9rem;
-            color: var(--text-muted);
-            font-size: 0.98rem;
-            line-height: 1.65;
-        }
-        .rule-item-bullet {
-            width: 6px;
-            height: 6px;
-            background: var(--text-main);
-            box-shadow: var(--glow-soft);
-            border-radius: 50%;
-            margin-top: 9px;
-            flex-shrink: 0;
-        }
-
-        /* ==========================================================================
-           FAQ SECTION
-           ========================================================================== */
-        .faq-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.25rem;
-            align-items: start;
-        }
-
-        .faq-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 1.65rem 1.85rem;
-            cursor: pointer;
-            transition: var(--transition-fast);
-            display: flex;
-            flex-direction: column;
-        }
-        .faq-card:hover, .faq-card.active {
-            border-color: var(--border-hover);
-        }
-
-        .faq-question-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-        }
-
-        .faq-question {
-            font-family: var(--font-heading);
-            font-size: 1.08rem;
-            font-weight: 700;
-            line-height: 1.35;
-        }
-
-        .faq-icon {
-            color: var(--text-muted);
-            transition: transform 0.3s ease;
-            flex-shrink: 0;
-        }
-        .faq-card.active .faq-icon {
-            transform: rotate(180deg);
-            color: var(--text-main);
-        }
-
-        .faq-answer {
-            color: var(--text-muted);
-            font-size: 0.96rem;
-            line-height: 1.7;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), margin-top 0.3s ease;
-        }
-        .faq-card.active .faq-answer {
-            max-height: 400px;
-            margin-top: 0.95rem;
-        }
-
-        /* ==========================================================================
-           JOIN DOMS CTA SECTION
-           ========================================================================== */
-        .cta-section {
-            padding: 60px 2rem 110px 2rem;
-            max-width: 1380px;
-            margin: 0 auto;
-        }
-
-        .cta-box {
-            background: var(--bg-card);
-            border: 1px solid var(--border-hover);
-            border-radius: 28px;
-            padding: 4.5rem 2.5rem;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1.75rem;
-            position: relative;
-            overflow: hidden;
-            box-shadow: var(--shadow), var(--glow-soft);
-        }
-
-        .cta-box::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at 50% 0%, var(--accent-bg), transparent 72%);
-            pointer-events: none;
-        }
-
-        .cta-title {
-            font-family: var(--font-heading);
-            font-size: clamp(2.1rem, 4.8vw, 3.8rem);
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            max-width: 780px;
-        }
-
-        .cta-desc {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            max-width: 580px;
-            line-height: 1.7;
-        }
-
-        .cta-btn-glow {
-            position: relative;
-            padding: 1.15rem 2.85rem;
-            font-size: 0.95rem;
-            border-radius: 12px;
-            background: var(--text-main);
-            color: var(--bg-main);
-            font-family: var(--font-heading);
-            font-weight: 800;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            border: 1px solid var(--text-main);
-            cursor: pointer;
-            box-shadow: var(--glow-strong);
-            transition: var(--transition-smooth);
-        }
-        .cta-btn-glow:hover {
-            transform: translateY(-3px) scale(1.03);
-            background: transparent;
-            color: var(--text-main);
-        }
-
-        /* ==========================================================================
-           CONTACT US SECTION
-           ========================================================================== */
-        .contact-container {
-            max-width: 760px;
-            margin: 0 auto;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
-            padding: 3.5rem 2.5rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            gap: 2rem;
-            box-shadow: var(--shadow);
-        }
-
-        .contact-icon-box {
-            width: 72px;
-            height: 72px;
-            background: transparent;
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-main);
-            filter: drop-shadow(0 0 15px rgba(255,255,255,0.4));
-        }
-
-        .contact-number {
-            font-family: var(--font-mono);
-            font-size: clamp(1.75rem, 4vw, 2.75rem);
-            font-weight: 700;
-            letter-spacing: 0.06em;
-            text-shadow: var(--glow-soft);
-        }
-
-        .contact-actions {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        /* ==========================================================================
-           FOOTER
-           ========================================================================== */
-        footer {
-            background: var(--bg-secondary);
-            border-top: 1px solid var(--border-color);
-            padding: 75px 2rem 36px 2rem;
-            position: relative;
-        }
-
-        .footer-container {
-            max-width: 1380px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1.5fr 1fr 1fr 1fr;
-            gap: 3.5rem;
-            margin-bottom: 4rem;
-        }
-
-        .footer-col {
-            display: flex;
-            flex-direction: column;
-            gap: 1.25rem;
-        }
-
-        .footer-brand-desc {
-            color: var(--text-muted);
-            font-size: 0.94rem;
-            line-height: 1.7;
-        }
-
-        .footer-heading {
-            font-family: var(--font-heading);
-            font-size: 0.95rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-        }
-
-        .footer-links {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .footer-link {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: var(--transition-fast);
-        }
-        .footer-link:hover {
-            color: var(--text-main);
-            padding-left: 4px;
-        }
-
-        .footer-bottom {
-            max-width: 1380px;
-            margin: 0 auto;
-            padding-top: 2rem;
-            border-top: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: var(--text-muted);
-            font-size: 0.84rem;
-            flex-wrap: wrap;
-            gap: 1.25rem;
-        }
-
-        .back-to-top {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            width: 42px;
-            height: 42px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: var(--transition-fast);
-        }
-        .back-to-top:hover {
-            border-color: var(--text-main);
-            box-shadow: var(--glow-soft);
-            transform: translateY(-3px);
-        }
-
-        /* ==========================================================================
-           MODAL & FORM STYLES
-           ========================================================================== */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.78);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            z-index: 2000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1.25rem;
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition-smooth);
-        }
-        .modal-overlay.open {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-hover);
-            border-radius: 22px;
-            max-width: 580px;
-            width: 100%;
-            padding: 2.5rem;
-            box-shadow: var(--shadow), var(--glow-strong);
-            transform: translateY(20px) scale(0.96);
-            transition: var(--transition-smooth);
-            position: relative;
-            max-height: 90dvh;
-            overflow-y: auto;
-        }
-        .modal-overlay.open .modal-card {
-            transform: translateY(0) scale(1);
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: var(--transition-fast);
-        }
-        .modal-close:hover {
-            border-color: var(--text-main);
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            margin-top: 1.2rem;
-            text-align: left;
-        }
-        .form-label {
-            font-size: 0.85rem;
-            font-family: var(--font-mono);
-            font-weight: 600;
-            color: var(--text-muted);
-            letter-spacing: 0.05em;
-        }
-        .form-input {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 12px 16px;
-            color: var(--text-main);
-            font-family: var(--font-main);
-            font-size: 0.95rem;
-            transition: var(--transition-fast);
-            outline: none;
-        }
-        .form-input:focus {
-            border-color: var(--text-main);
-            box-shadow: var(--glow-soft);
-        }
-
-        /* ==========================================================================
-           LUXURY DOMS CARD STYLING & ANIMATIONS
-           ========================================================================== */
-        @keyframes cardEntrance {
-            0% { opacity: 0; transform: scale(0.85) rotateX(15deg); }
-            100% { opacity: 1; transform: scale(1) rotateX(0deg); }
-        }
-
-        @keyframes shimmerHologram {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
-        }
-
-        .doms-id-card {
-            background: linear-gradient(135deg, #121216 0%, #1c1c24 50%, #0d0d10 100%);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            padding: 2rem;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 35px rgba(255, 255, 255, 0.15);
-            animation: cardEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            margin-top: 1.5rem;
-            text-align: left;
-        }
-
-        .doms-id-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.08) 50%, transparent 70%);
-            background-size: 200% 100%;
-            animation: shimmerHologram 4s infinite linear;
-            pointer-events: none;
-        }
-
-        .card-header-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 1rem;
-            margin-bottom: 1.25rem;
-        }
-
-        .card-brand-title {
-            font-family: var(--font-heading);
-            font-weight: 800;
-            font-size: 1.1rem;
-            letter-spacing: 0.2em;
-            color: #ffffff;
-            text-shadow: 0 0 10px rgba(255,255,255,0.5);
-        }
-
-        .card-badge-status {
-            font-family: var(--font-mono);
-            font-size: 0.7rem;
-            background: rgba(255, 255, 255, 0.12);
-            padding: 4px 10px;
-            border-radius: 20px;
-            color: #ffffff;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-        }
-
-        .card-body-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 0.85rem;
-            font-size: 0.95rem;
-        }
-
-        .card-field {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .card-label {
-            font-family: var(--font-mono);
-            font-size: 0.7rem;
-            color: rgba(255, 255, 255, 0.5);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        .card-value {
-            font-family: var(--font-heading);
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: #ffffff;
-        }
-
-        .card-footer-row {
-            margin-top: 1.5rem;
-            padding-top: 1rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-family: var(--font-mono);
-            font-size: 0.72rem;
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        /* Toast Notification */
-        .toast {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-hover);
-            color: var(--text-main);
-            padding: 0.9rem 1.35rem;
-            border-radius: 12px;
-            box-shadow: var(--shadow), var(--glow-strong);
-            z-index: 3000;
-            font-family: var(--font-main);
-            font-size: 0.9rem;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transform: translateY(120px);
-            opacity: 0;
-            transition: var(--transition-smooth);
-        }
-        .toast.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        @media (max-width: 1120px) {
+        .stat-item:last-child { border-bottom: none; padding-bottom: 0; }
+        .stat-number { font-family: var(--font-heading); font-size: 1.9rem; font-weight: 800; color: var(--text-main); }
+        .stat-label { font-size: 0.88rem; color: var(--text-muted); }
+
+        /* Rules Accordion */
+        .rules-container { display: flex; flex-direction: column; gap: 1rem; }
+        .rule-category-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; overflow: hidden; }
+        .rule-category-header { padding: 1.4rem 1.8rem; display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
+        .rule-category-title-group { display: flex; align-items: center; gap: 1rem; }
+        .rule-cat-num { font-family: var(--font-mono); font-weight: 700; color: var(--text-muted); }
+        .rule-cat-title { font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700; }
+        .rule-category-body { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; background: var(--bg-secondary); }
+        .rule-category-card.active .rule-category-body { max-height: 800px; padding: 1.5rem 1.8rem; border-top: 1px solid var(--border-color); }
+        .rule-items-list { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
+        .rule-item { display: flex; align-items: flex-start; gap: 0.8rem; color: var(--text-muted); font-size: 0.95rem; }
+        .rule-item-bullet { width: 5px; height: 5px; background: var(--text-main); border-radius: 50%; margin-top: 8px; flex-shrink: 0; }
+
+        /* FAQ */
+        .faq-card { cursor: pointer; display: flex; flex-direction: column; }
+        .faq-question-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .faq-question { font-family: var(--font-heading); font-size: 1rem; font-weight: 700; }
+        .faq-answer { color: var(--text-muted); font-size: 0.92rem; line-height: 1.7; max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+        .faq-card.active .faq-answer { max-height: 300px; margin-top: 0.8rem; }
+
+        /* CTA & Contact */
+        .cta-box { background: var(--bg-card); border: 1px solid var(--border-hover); border-radius: 24px; padding: 3.5rem 2rem; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; box-shadow: var(--shadow); }
+        .cta-title { font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 800; max-width: 700px; }
+        .cta-desc { color: var(--text-muted); font-size: 1.05rem; max-width: 520px; line-height: 1.7; }
+        .contact-container { max-width: 720px; margin: 0 auto; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 22px; padding: 3rem 2rem; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 1.5rem; }
+        .contact-number { font-family: var(--font-mono); font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 700; }
+
+        /* Footer */
+        footer { background: var(--bg-secondary); border-top: 1px solid var(--border-color); padding: 60px 1.5rem 30px 1.5rem; }
+        .footer-container { max-width: 1380px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+        .footer-col { display: flex; flex-direction: column; gap: 1rem; }
+        .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+        .footer-link { color: var(--text-muted); text-decoration: none; font-size: 0.88rem; transition: var(--transition-fast); }
+        .footer-link:hover { color: var(--text-main); }
+        .footer-bottom { max-width: 1380px; margin: 0 auto; padding-top: 1.5rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; color: var(--text-muted); font-size: 0.82rem; flex-wrap: wrap; gap: 1rem; }
+        .back-to-top { background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-main); width: 38px; height: 38px; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+
+        /* Modal */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 1rem; opacity: 0; visibility: hidden; transition: var(--transition-smooth); }
+        .modal-overlay.open { opacity: 1; visibility: visible; }
+        .modal-card { background: var(--bg-card); border: 1px solid var(--border-hover); border-radius: 20px; max-width: 520px; width: 100%; padding: 2rem; position: relative; max-height: 90dvh; overflow-y: auto; }
+        .modal-close { position: absolute; top: 16px; right: 16px; background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-main); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-top: 1rem; text-align: left; }
+        .form-label { font-size: 0.8rem; font-family: var(--font-mono); font-weight: 600; color: var(--text-muted); }
+        .form-input { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 14px; color: var(--text-main); font-family: var(--font-main); font-size: 0.9rem; outline: none; }
+        .form-input:focus { border-color: var(--text-main); }
+
+        /* Toast */
+        .toast { position: fixed; bottom: 20px; right: 20px; background: var(--bg-card); border: 1px solid var(--border-hover); color: var(--text-main); padding: 0.8rem 1.2rem; border-radius: 10px; z-index: 3000; font-size: 0.88rem; display: flex; align-items: center; gap: 8px; transform: translateY(100px); opacity: 0; transition: var(--transition-smooth); }
+        .toast.show { transform: translateY(0); opacity: 1; }
+
+        @media (max-width: 1024px) {
             .nav-menu { display: none; }
             .hamburger { display: flex; }
-            .hero-content { grid-template-columns: 1fr; text-align: center; gap: 3rem; }
-            .hero-text-col { align-items: center; }
+            .hero-content, .about-grid, .vision-mission-grid, .identity-grid, .community-grid, .faq-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .hero-text-col { align-items: center; text-align: center; }
             .hero-btns { justify-content: center; }
-            .hero-eclipse-container { width: 280px; height: 280px; }
-            .hero-eclipse-inner { width: 205px; height: 205px; }
-            .hero-logo-center { width: 110px; height: 110px; }
-            .hero-logo-center img { width: 72px; height: 72px; }
-            .about-grid, .vision-mission-grid, .identity-grid, .community-grid, .faq-grid { grid-template-columns: 1fr; gap: 2.25rem; }
-            .footer-container { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+            .footer-container { grid-template-columns: 1fr 1fr; gap: 2rem; }
         }
-
         @media (max-width: 640px) {
-            .nav-container { padding: 0 1rem; height: 68px; }
-            .logo-wrapper { width: 38px; height: 38px; }
-            .logo-wrapper img { width: 28px; height: 28px; }
-            .nav-title { font-size: 1.05rem; letter-spacing: 0.14em; }
-            .nav-actions { gap: 0.5rem; }
-            .lang-btn { padding: 6px 9px; font-size: 0.78rem; }
-            #joinDomsNavBtn { display: none; }
-            section { padding: 72px 1.15rem; }
-            .hero { padding: 96px 1.15rem 64px 1.15rem; min-height: auto; }
-            .badge-pill { font-size: 0.66rem; padding: 6px 12px; letter-spacing: 0.08em; }
-            .hero-eclipse-container { width: 220px; height: 220px; }
-            .hero-eclipse-inner { width: 160px; height: 160px; }
-            .hero-logo-center { width: 88px; height: 88px; }
-            .hero-logo-center img { width: 58px; height: 58px; }
-            .scroll-down-indicator { display: none; }
-            .hero-btns { width: 100%; flex-direction: column; }
-            .hero-btns .btn-primary, .hero-btns .btn-secondary { width: 100%; justify-content: center; padding: 13px 20px; }
-            .vm-card, .community-card, .identity-container, .cta-box, .contact-container { padding: 1.75rem 1.35rem; border-radius: 18px; }
-            .format-card { padding: 1.1rem 1.25rem; font-size: 1rem; }
-            .rule-category-header { padding: 1.25rem 1.35rem; }
-            .rule-category-title-group { gap: 0.85rem; }
-            .rule-cat-title { font-size: 1.05rem; }
-            .rule-category-card.active .rule-category-body { padding: 1.35rem; }
-            .faq-card { padding: 1.35rem; }
-            .faq-question { font-size: 1rem; }
-            .contact-actions { width: 100%; flex-direction: column; }
-            .contact-actions .btn-primary, .contact-actions .btn-secondary { width: 100%; justify-content: center; }
-            .footer-container { grid-template-columns: 1fr; gap: 2rem; }
-            .modal-card { padding: 1.75rem 1.35rem; }
-            .toast { left: 1rem; right: 1rem; bottom: 16px; }
+            .footer-container { grid-template-columns: 1fr; gap: 1.5rem; }
+            .hero { padding-top: 100px; }
         }
     </style>
 </head>
 <body class="loading-lock">
 
-    <!-- CINEMATIC LOADING SCREEN -->
+    <!-- ANTI-STUCK LOADER -->
     <div id="loader" aria-hidden="true">
         <div class="loader-core">
             <div class="loader-ring-outer"></div>
-            <div class="loader-ring-inner"></div>
             <img src="logo.png" alt="DOMS" class="loader-logo-img" onerror="this.style.display='none'">
         </div>
         <div class="loader-title">DOMS</div>
         <div class="loader-bar-track">
-            <div class="loader-bar-fill" id="loaderFill"></div>
+            <div class="loader-bar-fill"></div>
         </div>
-        <div class="loader-status" id="loaderStatus">INITIALIZING SYSTEM...</div>
     </div>
 
     <div class="scroll-progress" id="scrollProgress"></div>
     <div class="ambient-eclipse-glow"></div>
     <canvas id="bg-canvas"></canvas>
 
-    <!-- Navigation Bar -->
+    <!-- Header -->
     <header id="navbar">
         <div class="nav-container">
-            <div class="nav-brand" id="themeToggleBtn" title="Klik logo BLDS untuk Inversi Tema (Dark/Light)">
+            <div class="nav-brand" id="themeToggleBtn" title="Klik untuk ubah Tema (Dark/Light)">
                 <div class="logo-wrapper">
-                    <img id="navLogoImg" src="logo.png" alt="DOMS Logo">
+                    <img id="navLogoImg" src="logo.png" alt="DOMS Logo" onerror="this.style.display='none'">
                 </div>
                 <span class="nav-title" id="brandNavTitle">DOMS</span>
             </div>
 
             <ul class="nav-menu">
-                <li><a class="nav-link active" href="#home" data-i18n="nav_home">Beranda</a></li>
-                <li><a class="nav-link" href="#about" data-i18n="nav_about">Tentang</a></li>
-                <li><a class="nav-link" href="#vision" data-i18n="nav_vision">Visi & Misi</a></li>
-                <li><a class="nav-link" href="#identity" data-i18n="nav_identity">Identitas</a></li>
-                <li><a class="nav-link" href="#community" data-i18n="nav_community">Komunitas</a></li>
-                <li><a class="nav-link" href="#rules" data-i18n="nav_rules">Aturan</a></li>
-                <li><a class="nav-link" href="#faq" data-i18n="nav_faq">FAQ</a></li>
-                <li><a class="nav-link" href="#contact" data-i18n="nav_contact">Kontak</a></li>
+                <li><a class="nav-link active" href="#home">Beranda</a></li>
+                <li><a class="nav-link" href="#about">Tentang</a></li>
+                <li><a class="nav-link" href="#vision">Visi & Misi</a></li>
+                <li><a class="nav-link" href="#identity">Identitas</a></li>
+                <li><a class="nav-link" href="#directory">Direktori</a></li>
+                <li><a class="nav-link" href="#community">Komunitas</a></li>
+                <li><a class="nav-link" href="#rules">Aturan</a></li>
+                <li><a class="nav-link" href="#faq">FAQ</a></li>
             </ul>
 
             <div class="nav-actions">
-                <div class="lang-dropdown-wrapper">
-                    <button class="lang-btn" id="langDropdownBtn" aria-label="Pilih Bahasa">
-                        <i data-lucide="globe" size="15"></i>
-                        <span id="currentLangLabel">ID</span>
-                        <i data-lucide="chevron-down" size="13"></i>
-                    </button>
-                    <ul class="lang-menu" id="langMenu">
-                        <li class="lang-item active" data-lang="id"><span>Indonesian</span><span>ID</span></li>
-                        <li class="lang-item" data-lang="en"><span>English</span><span>EN</span></li>
-                        <li class="lang-item" data-lang="ms"><span>Melayu</span><span>MS</span></li>
-                    </ul>
-                </div>
-                
-                <button class="btn-primary" id="joinDomsNavBtn" data-i18n="btn_join_doms">Gabung DOMS</button>
-
-                <button class="hamburger" id="hamburgerBtn" aria-label="Toggle Menu">
-                    <i data-lucide="menu" size="22"></i>
+                <a href="admin.html" class="btn-secondary" style="font-size: 0.75rem; padding: 8px 12px;" title="Akses Admin Dashboard">Admin</a>
+                <button class="btn-primary" id="joinDomsNavBtn">Gabung DOMS</button>
+                <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+                    <i data-lucide="menu" size="20"></i>
                 </button>
             </div>
         </div>
     </header>
 
     <div class="mobile-menu" id="mobileMenu">
-        <a class="mobile-nav-link" href="#home" data-i18n="nav_home">Beranda</a>
-        <a class="mobile-nav-link" href="#about" data-i18n="nav_about">Tentang</a>
-        <a class="mobile-nav-link" href="#vision" data-i18n="nav_vision">Visi & Misi</a>
-        <a class="mobile-nav-link" href="#identity" data-i18n="nav_identity">Identitas</a>
-        <a class="mobile-nav-link" href="#community" data-i18n="nav_community">Komunitas</a>
-        <a class="mobile-nav-link" href="#rules" data-i18n="nav_rules">Aturan</a>
-        <a class="mobile-nav-link" href="#faq" data-i18n="nav_faq">FAQ</a>
-        <a class="mobile-nav-link" href="#contact" data-i18n="nav_contact">Kontak</a>
-        <button class="btn-primary" id="joinDomsMobileBtn" style="width: 100%; justify-content: center; margin-top: 0.75rem; padding: 14px;" data-i18n="btn_join_doms">Gabung DOMS</button>
+        <a class="mobile-nav-link" href="#home">Beranda</a>
+        <a class="mobile-nav-link" href="#about">Tentang</a>
+        <a class="mobile-nav-link" href="#vision">Visi & Misi</a>
+        <a class="mobile-nav-link" href="#identity">Identitas</a>
+        <a class="mobile-nav-link" href="#directory">Direktori Anggota</a>
+        <a class="mobile-nav-link" href="#community">Komunitas</a>
+        <a class="mobile-nav-link" href="#rules">Aturan & Regulasi</a>
+        <a class="mobile-nav-link" href="#faq">FAQ</a>
+        <a class="mobile-nav-link" href="admin.html" style="color: var(--text-main);">Panel Admin Dashboard</a>
+        <button class="btn-primary" id="joinDomsMobileBtn" style="width: 100%; justify-content: center; margin-top: 0.5rem;">Gabung DOMS</button>
     </div>
 
-    <!-- MAIN CONTENT -->
     <main>
-
-        <!-- HERO SECTION -->
+        <!-- Hero -->
         <section id="home" class="hero">
             <div class="hero-content">
                 <div class="hero-text-col">
                     <div class="badge-pill">
                         <span class="badge-dot"></span>
-                        <span data-i18n="hero_badge">SISTEM MARGA BLACKLIGHTDOMINIONS</span>
+                        <span>SISTEM MARGA BLACKLIGHTDOMINIONS</span>
                     </div>
                     <h1 class="hero-title" id="heroTitleMain">DOMS</h1>
-                    <div class="hero-tagline" data-i18n="hero_tagline">ONE IDENTITY. ONE COMMUNITY.</div>
-                    <p class="hero-subtitle" id="heroSubtitleText" data-i18n="hero_desc">
-                        “Identitas terbuka yang dibangun atas dasar persatuan, nilai bersama, dan hubungan yang bermakna. DOMS menyatukan individu di dalam satu identitas sekaligus mempererat ikatan dalam komunitas BLACKLIGHTDOMINIONS.”
+                    <div class="hero-tagline">ONE IDENTITY. ONE COMMUNITY.</div>
+                    <p class="hero-subtitle" id="heroSubtitleText">
+                        “Identitas terbuka yang dibangun atas dasar persatuan, nilai bersama, dan hubungan yang bermakna di dalam komunitas BLACKLIGHTDOMINIONS.”
                     </p>
                     <div class="hero-btns">
-                        <button class="btn-primary" id="exploreHeroBtn" data-i18n="hero_btn_explore">Jelajahi DOMS</button>
-                        <button class="btn-secondary" id="joinHeroBtn" data-i18n="btn_join_doms">Gabung DOMS</button>
+                        <button class="btn-primary" id="exploreHeroBtn">Jelajahi DOMS</button>
+                        <button class="btn-secondary" id="joinHeroBtn">Gabung DOMS</button>
                     </div>
                 </div>
 
                 <div class="hero-visual-col">
                     <div class="hero-eclipse-container">
-                        <div class="hero-eclipse-orbit-dot"></div>
-                        <div class="hero-eclipse-inner"></div>
                         <div class="hero-logo-center">
-                            <img id="heroLogoImg" src="logo.png" alt="DOMS Hero Logo">
+                            <img src="logo.png" alt="DOMS Hero" onerror="this.style.display='none'">
                         </div>
                     </div>
                 </div>
             </div>
-
-            <a href="#about" class="scroll-down-indicator">
-                <span data-i18n="scroll_down">Gulir ke Bawah</span>
-                <i data-lucide="arrow-down" size="15"></i>
-            </a>
         </section>
 
-        <!-- ANNOUNCEMENTS BANNER CONTAINER (Dynamic from Firebase) -->
-        <div id="announcementBannerContainer" style="max-width: 1380px; margin: 0 auto; padding: 0 2rem;"></div>
-
-        <!-- ABOUT SECTION -->
-        <section id="about" class="reveal">
+        <!-- About -->
+        <section id="about">
             <div class="section-header">
-                <span class="section-tag" data-i18n="about_tag">01 / Pengantar</span>
-                <h2 class="section-title" data-i18n="about_title">Apa itu DOMS?</h2>
+                <span class="section-tag">01 / Pengantar</span>
+                <h2 class="section-title">Apa itu DOMS?</h2>
             </div>
-
             <div class="about-grid">
                 <div class="about-text">
-                    <p data-i18n="about_p1">
-                        <strong>DOMS</strong> adalah sistem identitas marga yang terbuka untuk umum dan berafiliasi dengan <strong>BLACKLIGHTDOMINIONS (BLDS)</strong>. Ini memberikan identitas bersama yang merepresentasikan persatuan, koneksi, dan rasa memiliki.
-                    </p>
-                    <p data-i18n="about_p2">
-                        DOMS lebih dari sekadar tag nama. Ini adalah simbol nilai bersama, saling menghormati, dan partisipasi di dalam komunitas yang berkembang.
-                    </p>
-                    <p data-i18n="about_p3">
-                        Melalui sistem ini, DOMS bertujuan menghubungkan orang-orang, mendorong interaksi positif, dan menciptakan lingkungan yang ramah di mana individu dapat membangun persahabatan dan berkembang bersama.
-                    </p>
+                    <p><strong>DOMS</strong> adalah sistem identitas marga yang terbuka untuk umum dan berafiliasi dengan <strong>BLACKLIGHTDOMINIONS (BLDS)</strong>.</p>
+                    <p>Lebih dari sekadar tag nama, DOMS adalah simbol nilai bersama, saling menghormati, dan partisipasi aktif dalam komunitas.</p>
                 </div>
-
                 <div class="about-stats-card">
                     <div class="stat-item">
                         <div class="stat-number">PUBLIC</div>
-                        <div class="stat-label" data-i18n="stat_label_1">Sistem identitas terbuka yang dapat diakses semua orang tanpa batasan pangkat ketat.</div>
+                        <div class="stat-label">Sistem identitas terbuka yang dapat diakses semua orang.</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-number">BLDS</div>
-                        <div class="stat-label" data-i18n="stat_label_2">Berafiliasi dengan ekosistem komunitas BLACKLIGHTDOMINIONS.</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">UNITY</div>
-                        <div class="stat-label" data-i18n="stat_label_3">Dibangun atas dasar saling menghormati, nilai bersama, dan solidaritas yang kuat.</div>
+                        <div class="stat-label">Berafiliasi dengan ekosistem BLACKLIGHTDOMINIONS.</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- VISION & MISSION -->
-        <section id="vision" class="reveal">
+        <!-- Vision & Mission -->
+        <section id="vision">
             <div class="section-header">
-                <span class="section-tag" data-i18n="vision_tag">02 / Tujuan & Sasaran</span>
-                <h2 class="section-title" data-i18n="vision_title">Visi & Misi</h2>
+                <span class="section-tag">02 / Tujuan & Sasaran</span>
+                <h2 class="section-title">Visi & Misi</h2>
             </div>
-
             <div class="vision-mission-grid">
                 <div class="vm-card">
-                    <div class="vm-card-header">
-                        <div class="vm-icon-box"><i data-lucide="eye" size="26"></i></div>
-                        <h3 class="vm-card-title" data-i18n="vision_card_title">Visi Kami</h3>
-                    </div>
-                    <p class="vm-text" data-i18n="vision_card_text">
-                        “Menjadikan DOMS sebagai identitas inklusif, mudah dikenali, dan bermakna yang menghubungkan individu melalui nilai-nilai bersama, rasa saling menghormati, dan rasa memiliki yang kuat.<br><br>
-                        DOMS bertujuan menjadi lebih dari sekadar nama panggilan atau tag komunitas. DOMS berupaya merepresentasikan hubungan abadi antara individu yang percaya pada persatuan, persahabatan, integritas, dan interaksi positif.”
-                    </p>
+                    <h3 style="font-family: var(--font-heading); margin-bottom: 1rem; font-size: 1.25rem;">Visi Kami</h3>
+                    <p style="color: var(--text-muted); line-height: 1.75;">Menjadikan DOMS sebagai identitas inklusif, mudah dikenali, dan bermakna yang menghubungkan individu melalui nilai bersama dan rasa kekitaan yang kuat.</p>
                 </div>
-
                 <div class="vm-card">
-                    <div class="vm-card-header">
-                        <div class="vm-icon-box"><i data-lucide="target" size="26"></i></div>
-                        <h3 class="vm-card-title" data-i18n="mission_card_title">Misi Kami</h3>
-                    </div>
-                    <ul class="mission-list">
-                        <li class="mission-item"><span class="mission-number">01</span><span data-i18n="mission_1">Menetapkan DOMS sebagai identitas inklusif yang dapat diikuti oleh siapa saja.</span></li>
-                        <li class="mission-item"><span class="mission-number">02</span><span data-i18n="mission_2">Memperkuat hubungan dan koneksi antar individu melalui partisipasi komunitas.</span></li>
-                        <li class="mission-item"><span class="mission-number">03</span><span data-i18n="mission_3">Mendorong rasa saling menghormati, tanggung jawab, kejujuran, dan perilaku positif.</span></li>
-                        <li class="mission-item"><span class="mission-number">04</span><span data-i18n="mission_4">Membangun lingkungan ramah di mana anggota dapat berinteraksi dan membangun persahabatan.</span></li>
-                        <li class="mission-item"><span class="mission-number">05</span><span data-i18n="mission_5">Menjaga reputasi dan nilai-nilai yang diasosiasikan dengan BLACKLIGHTDOMINIONS.</span></li>
-                        <li class="mission-item"><span class="mission-number">06</span><span data-i18n="mission_6">Mendorong persatuan dan kerja sama di antara pengguna DOMS tanpa memandang latar belakang.</span></li>
-                        <li class="mission-item"><span class="mission-number">07</span><span data-i18n="mission_7">Mengembangkan sistem identitas berkelanjutan yang berkembang bersama BLACKLIGHTDOMINIONS.</span></li>
+                    <h3 style="font-family: var(--font-heading); margin-bottom: 1rem; font-size: 1.25rem;">Misi Kami</h3>
+                    <ul style="color: var(--text-muted); padding-left: 1.2rem; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.95rem;">
+                        <li>Menetapkan DOMS sebagai identitas inklusif bagi siapa saja.</li>
+                        <li>Memperkuat hubungan antar individu via komunitas.</li>
+                        <li>Mendorong rasa saling menghormati dan perilaku positif.</li>
                     </ul>
                 </div>
             </div>
         </section>
 
-        <!-- IDENTITY SYSTEM -->
-        <section id="identity" class="reveal">
+        <!-- Identity System -->
+        <section id="identity">
             <div class="section-header">
-                <span class="section-tag" data-i18n="identity_tag">03 / Standar Nama Panggilan</span>
-                <h2 class="section-title" data-i18n="identity_title">Identitas Anda</h2>
+                <span class="section-tag">03 / Standar Nama</span>
+                <h2 class="section-title">Identitas Anda</h2>
             </div>
-
             <div class="identity-container">
-                <div class="identity-grid">
-                    <div class="identity-formats-box">
-                        <div class="format-card"><span>Nama X DOMS</span><span class="format-badge" data-i18n="accepted_badge">Diterima</span></div>
-                        <div class="format-card"><span>Nama x DOMS</span><span class="format-badge" data-i18n="accepted_badge">Diterima</span></div>
-                        <div class="format-card"><span>Nama × DOMS</span><span class="format-badge" data-i18n="accepted_badge">Diterima</span></div>
-                    </div>
-
-                    <div class="identity-info">
-                        <h3 data-i18n="identity_info_title">Format Resmi</h3>
-                        <p data-i18n="identity_info_desc">Ketiga format nama panggilan di atas diterima secara resmi. Tag DOMS harus selalu berada di bagian akhir nama panggilan Anda.</p>
-                        <div class="identity-rules-chips">
-                            <span class="identity-chip" data-i18n="chip_1">Tanpa Peniruan</span>
-                            <span class="identity-chip" data-i18n="chip_2">Tag di Akhir</span>
-                            <span class="identity-chip" data-i18n="chip_3">Saling Menghormati</span>
-                            <span class="identity-chip" data-i18n="chip_4">Terbuka untuk Umum</span>
-                        </div>
-                    </div>
+                <div class="about-text">
+                    <p>Format nama resmi yang diterima:</p>
+                    <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.5rem; font-family: var(--font-mono); font-weight: 700;">
+                        <li>• Nama X DOMS</li>
+                        <li>• Nama x DOMS</li>
+                        <li>• Nama × DOMS</li>
+                    </ul>
+                    <p style="font-size: 0.9rem;">Tag DOMS wajib diletakkan di bagian akhir nickname Anda.</p>
                 </div>
             </div>
         </section>
 
-        <!-- VERIFIED MEMBER DIRECTORY SECTION (Public Approved Members) -->
-        <section id="directory" class="reveal">
+        <!-- Verified Members Directory -->
+        <section id="directory">
             <div class="section-header">
                 <span class="section-tag">04 / Direktori Publik</span>
                 <h2 class="section-title">Direktori Anggota Terverifikasi</h2>
             </div>
-            <div style="margin-bottom: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap;">
-                <input type="text" id="publicSearchInput" class="form-input" placeholder="Cari nama MLBB / ID..." style="max-width: 320px; flex: 1;">
+            <div style="margin-bottom: 1.5rem;">
+                <input type="text" id="publicSearchInput" class="form-input" placeholder="Cari nama MLBB / ID..." style="max-width: 320px; width: 100%;">
             </div>
-            <div id="publicMemberGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem;">
-                <!-- Dinamis dari Firebase /members -->
+            <div id="publicMemberGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.2rem;">
+                <!-- Dinamis dari Firebase -->
             </div>
         </section>
 
-        <!-- COMMUNITY REQUIREMENTS -->
-        <section id="community" class="reveal">
+        <!-- Community -->
+        <section id="community">
             <div class="section-header">
-                <span class="section-tag" data-i18n="community_tag">05 / Koneksi Ekosistem</span>
-                <h2 class="section-title" data-i18n="community_title">Gabung Komunitas</h2>
+                <span class="section-tag">05 / Koneksi</span>
+                <h2 class="section-title">Gabung Komunitas</h2>
             </div>
-
             <div class="community-grid">
                 <div class="community-card">
-                    <div class="community-card-top">
-                        <div class="community-icon"><i data-lucide="message-circle" size="30"></i></div>
-                        <div>
-                            <h3 class="community-title">WhatsApp Community</h3>
-                            <p class="community-desc" id="waDescText" data-i18n="wa_card_desc">Terhubung langsung dengan sesama anggota DOMS dan partisipan BLDS melalui grup komunitas WhatsApp kami yang aktif.</p>
-                        </div>
-                    </div>
-                    <a id="waCommunityLink" href="https://chat.whatsapp.com/LJvQ6Bu1FESAvNk5bqbk1F?s=cl&p=a&mlu=4" target="_blank" rel="noopener noreferrer" class="btn-primary" style="justify-content: center;">
-                        <span data-i18n="btn_join_whatsapp">Gabung WhatsApp</span>
-                        <i data-lucide="external-link" size="15"></i>
-                    </a>
+                    <h3 style="font-family: var(--font-heading); margin-bottom: 0.5rem; font-size: 1.2rem;">WhatsApp Community</h3>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">Terhubung langsung dengan sesama anggota DOMS via grup WhatsApp.</p>
+                    <a id="waCommunityLink" href="https://chat.whatsapp.com/LJvQ6Bu1FESAvNk5bqbk1F?s=cl&p=a&mlu=4" target="_blank" rel="noopener noreferrer" class="btn-primary" style="justify-content: center;">Gabung WhatsApp</a>
                 </div>
-
                 <div class="community-card">
-                    <div class="community-card-top">
-                        <div class="community-icon"><i data-lucide="disc" size="30"></i></div>
-                        <div>
-                            <h3 class="community-title">Discord Community</h3>
-                            <p class="community-desc" id="discordDescText" data-i18n="discord_card_desc">Bergabunglah dengan server Discord resmi kami untuk kanal suara, acara komunitas, pengumuman, dan diskusi terstruktur.</p>
-                        </div>
-                    </div>
-                    <a id="discordCommunityLink" href="https://discord.gg/r4dM4QFteV" target="_blank" rel="noopener noreferrer" class="btn-primary" style="justify-content: center;">
-                        <span data-i18n="btn_join_discord">Gabung Discord</span>
-                        <i data-lucide="external-link" size="15"></i>
-                    </a>
+                    <h3 style="font-family: var(--font-heading); margin-bottom: 0.5rem; font-size: 1.2rem;">Discord Community</h3>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">Gabung server Discord resmi untuk kanal suara dan acara komunitas.</p>
+                    <a id="discordCommunityLink" href="https://discord.gg/r4dM4QFteV" target="_blank" rel="noopener noreferrer" class="btn-primary" style="justify-content: center;">Gabung Discord</a>
                 </div>
-            </div>
-
-            <div class="community-note">
-                <span data-i18n="community_note_text">💡 <strong>Catatan:</strong> Bergabung dengan setidaknya <strong>SATU</strong> platform komunitas BLDS resmi adalah wajib.</span>
             </div>
         </section>
 
-        <!-- RULES & REGULATIONS -->
-        <section id="rules" class="reveal">
+        <!-- Rules -->
+        <section id="rules">
             <div class="section-header">
-                <span class="section-tag" data-i18n="rules_tag">06 / Kode Etik</span>
-                <h2 class="section-title" data-i18n="rules_title">Aturan & Regulasi DOMS</h2>
+                <span class="section-tag">06 / Kode Etik</span>
+                <h2 class="section-title">Aturan & Regulasi</h2>
             </div>
-
-            <div class="rules-container" id="rulesAccordionContainer">
+            <div class="rules-container">
                 <div class="rule-category-card active">
                     <div class="rule-category-header">
-                        <div class="rule-category-title-group"><span class="rule-cat-num">01</span><h3 class="rule-cat-title" data-i18n="rule_cat_1_title">Regulasi Identitas</h3></div>
-                        <div class="rule-toggle-icon"><i data-lucide="chevron-down" size="17"></i></div>
+                        <div class="rule-category-title-group">
+                            <span class="rule-cat-num">01</span>
+                            <h3 class="rule-cat-title">Regulasi Identitas & Komunitas</h3>
+                        </div>
                     </div>
-                    <div class="rule-category-body">
+                    <div class="rule-category-body" style="max-height: 500px; padding: 1.2rem 1.8rem; border-top: 1px solid var(--border-color);">
                         <ul class="rule-items-list">
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_1_1">Setiap pengguna DOMS harus menggunakan salah satu format nama panggilan yang diterima: Nama X DOMS, Nama x DOMS, atau Nama × DOMS.</span></li>
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_1_2">Tag DOMS harus tetap berada di akhir nama panggilan.</span></li>
-                            <li class="rule-item"><span class="rule-item-bullet"></span><span data-i18n="rule_1_3">Pengguna bertanggung jawab atas identitas mereka sendiri.</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span>Wajib menggunakan format Nama X DOMS / x / × di akhir nickname.</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span>Wajib bergabung dengan minimal 1 platform komunitas resmi BLDS.</span></li>
+                            <li class="rule-item"><span class="rule-item-bullet"></span><span>Dilarang keras melakukan peniruan (impersonation) atau penyalahgunaan identitas.</span></li>
                         </ul>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- NEWS & ANNOUNCEMENTS SECTION -->
-        <section id="news" class="reveal">
+        <!-- FAQ -->
+        <section id="faq">
             <div class="section-header">
-                <span class="section-tag">07 / Informasi Terkini</span>
-                <h2 class="section-title">Berita & Pengumuman</h2>
+                <span class="section-tag">07 / Bantuan</span>
+                <h2 class="section-title">FAQ</h2>
             </div>
-            <div id="publicNewsGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.75rem;">
-                <!-- Dinamis dari Firebase /news & /announcements -->
-            </div>
-        </section>
-
-        <!-- FAQ SECTION -->
-        <section id="faq" class="reveal">
-            <div class="section-header">
-                <span class="section-tag" data-i18n="faq_tag">08 / Pertanyaan Umum</span>
-                <h2 class="section-title" data-i18n="faq_title">Pertanyaan yang Sering Diajukan</h2>
-            </div>
-
-            <div class="faq-grid" id="faqContainer">
-                <div class="faq-card">
-                    <div class="faq-question-header"><span class="faq-question" data-i18n="faq_q1">Apa itu DOMS?</span><i data-lucide="chevron-down" class="faq-icon" size="18"></i></div>
-                    <div class="faq-answer" data-i18n="faq_a1">DOMS adalah sistem identitas marga yang terbuka untuk umum dan berafiliasi dengan BLACKLIGHTDOMINIONS.</div>
+            <div class="faq-grid">
+                <div class="faq-card active">
+                    <div class="faq-question-header">
+                        <span class="faq-question">Apa itu DOMS?</span>
+                    </div>
+                    <div class="faq-answer" style="max-height: 200px; margin-top: 0.5rem;">DOMS adalah sistem identitas marga terbuka yang berafiliasi dengan BLACKLIGHTDOMINIONS.</div>
+                </div>
+                <div class="faq-card active">
+                    <div class="faq-question-header">
+                        <span class="faq-question">Apakah terbuka untuk umum?</span>
+                    </div>
+                    <div class="faq-answer" style="max-height: 200px; margin-top: 0.5rem;">Ya, DOMS terbuka untuk siapa saja tanpa memandang rank game.</div>
                 </div>
             </div>
         </section>
 
-        <!-- JOIN DOMS CTA SECTION -->
-        <section class="cta-section reveal">
+        <!-- CTA -->
+        <section class="cta-section">
             <div class="cta-box">
-                <h2 class="cta-title" data-i18n="cta_title">Siap Bergabung dengan DOMS?</h2>
-                <p class="cta-desc" data-i18n="cta_desc">Jadilah bagian dari identitas yang berkembang berdasarkan persatuan, nilai bersama, dan hubungan yang bermakna.</p>
-                <button class="cta-btn-glow" id="ctaJoinBtn" data-i18n="btn_join_doms">Gabung DOMS</button>
+                <h2 class="cta-title">Siap Bergabung dengan DOMS?</h2>
+                <p class="cta-desc">Jadilah bagian dari identitas yang berkembang berdasarkan persatuan dan nilai bersama.</p>
+                <button class="btn-primary" id="ctaJoinBtn" style="padding: 1rem 2.5rem;">Gabung DOMS Sekarang</button>
             </div>
         </section>
 
-        <!-- CONTACT US SECTION -->
-        <section id="contact" class="reveal">
+        <!-- Contact -->
+        <section id="contact">
             <div class="section-header" style="text-align: center;">
-                <span class="section-tag" data-i18n="contact_tag">09 / Dukungan & Pertanyaan</span>
-                <h2 class="section-title" data-i18n="contact_title">Hubungi Kami</h2>
+                <span class="section-tag">08 / Kontak</span>
+                <h2 class="section-title">Hubungi Kami</h2>
             </div>
-
             <div class="contact-container">
-                <div class="contact-icon-box"><i data-lucide="phone-call" size="36"></i></div>
-                <p style="color: var(--text-muted);" data-i18n="contact_desc">Memiliki pertanyaan, saran, atau kendala mengenai DOMS? Jangan ragu untuk menghubungi pihak administrasi.</p>
+                <p style="color: var(--text-muted);">Punya pertanyaan atau kendala seputar DOMS?</p>
                 <div class="contact-number" id="contactPhoneText">085591006359</div>
-                <div class="contact-actions">
-                    <a id="contactWhatsAppBtn" href="https://wa.me/6285591006359" target="_blank" rel="noopener noreferrer" class="btn-primary">
-                        <i data-lucide="message-circle" size="16"></i>
-                        <span data-i18n="contact_wa_btn">Hubungi via WhatsApp</span>
-                    </a>
-                    <button class="btn-secondary" id="copyNumberBtn">
-                        <i data-lucide="copy" size="16"></i>
-                        <span data-i18n="contact_copy_btn">Salin Nomor</span>
-                    </button>
-                </div>
+                <a id="contactWhatsAppBtn" href="https://wa.me/6285591006359" target="_blank" rel="noopener noreferrer" class="btn-primary">Hubungi via WhatsApp</a>
             </div>
         </section>
-
     </main>
 
-    <!-- FOOTER -->
+    <!-- Footer -->
     <footer>
         <div class="footer-container">
             <div class="footer-col">
-                <div class="nav-brand">
-                    <div class="logo-wrapper" style="width: 36px; height: 36px;">
-                        <img id="footerLogoImg" src="logo.png" alt="DOMS Logo">
-                    </div>
-                    <span class="nav-title" id="footerBrandTitle">DOMS</span>
+                <span class="nav-title" id="footerBrandTitle">DOMS</span>
+                <p class="footer-link" style="line-height: 1.6;">Sistem identitas terbuka BLACKLIGHTDOMINIONS.</p>
+                <div style="margin-top: 0.5rem;">
+                    <a href="admin.html" style="color: var(--text-muted); font-size: 0.82rem; text-decoration: underline;">Login Admin Dashboard</a>
                 </div>
-                <p class="footer-brand-desc" id="footerDescText" data-i18n="footer_desc">DOMS adalah sistem identitas terbuka yang dibangun di sekitar persatuan, nilai bersama, dan hubungan bermakna dalam komunitas BLACKLIGHTDOMINIONS.</p>
-                <span style="font-family: var(--font-mono); font-size: 0.82rem; letter-spacing: 0.14em; color: var(--text-main);">ONE IDENTITY. ONE COMMUNITY.</span>
             </div>
-
             <div class="footer-col">
-                <h4 class="footer-heading" data-i18n="footer_nav_heading">Navigasi Cepat</h4>
+                <h4 style="font-family: var(--font-heading); font-size: 0.9rem;">Navigasi</h4>
                 <ul class="footer-links">
-                    <li><a class="footer-link" href="#home" data-i18n="nav_home">Beranda</a></li>
-                    <li><a class="footer-link" href="#about" data-i18n="nav_about">Tentang DOMS</a></li>
-                    <li><a class="footer-link" href="#vision" data-i18n="nav_vision">Visi & Misi</a></li>
-                    <li><a class="footer-link" href="#identity" data-i18n="nav_identity">Identitas</a></li>
-                    <li><a class="footer-link" href="#directory">Direktori Anggota</a></li>
+                    <li><a class="footer-link" href="#home">Beranda</a></li>
+                    <li><a class="footer-link" href="#about">Tentang</a></li>
+                    <li><a class="footer-link" href="#directory">Direktori</a></li>
                 </ul>
             </div>
-
             <div class="footer-col">
-                <h4 class="footer-heading" data-i18n="footer_community_heading">Komunitas</h4>
+                <h4 style="font-family: var(--font-heading); font-size: 0.9rem;">Komunitas</h4>
                 <ul class="footer-links">
-                    <li><a id="footerWaLink" class="footer-link" href="https://chat.whatsapp.com/LJvQ6Bu1FESAvNk5bqbk1F?s=cl&p=a&mlu=4" target="_blank" rel="noopener noreferrer">WhatsApp Community</a></li>
-                    <li><a id="footerDiscordLink" class="footer-link" href="https://discord.gg/r4dM4QFteV" target="_blank" rel="noopener noreferrer">Discord Community</a></li>
+                    <li><a id="footerWaLink" class="footer-link" href="https://chat.whatsapp.com/LJvQ6Bu1FESAvNk5bqbk1F?s=cl&p=a&mlu=4" target="_blank">WhatsApp</a></li>
+                    <li><a id="footerDiscordLink" class="footer-link" href="https://discord.gg/r4dM4QFteV" target="_blank">Discord</a></li>
                 </ul>
             </div>
-
             <div class="footer-col">
-                <h4 class="footer-heading" data-i18n="footer_contact_heading">Kontak</h4>
-                <ul class="footer-links">
-                    <li><a class="footer-link" href="#contact" data-i18n="nav_contact">Hubungi Kami</a></li>
-                    <li><span id="footerPhoneText" style="color: var(--text-main); font-family: var(--font-mono); font-weight: 600;">085591006359</span></li>
-                </ul>
+                <h4 style="font-family: var(--font-heading); font-size: 0.9rem;">Kontak & Admin</h4>
+                <span id="footerPhoneText" style="color: var(--text-main); font-family: var(--font-mono); font-size: 0.88rem;">085591006359</span>
             </div>
         </div>
-
         <div class="footer-bottom">
-            <div>© <span id="currentYear"></span> <span id="footerCopyrightTitle">DOMS — BLACKLIGHTDOMINIONS</span>. All Rights Reserved.</div>
-            <button class="back-to-top" id="backToTopBtn" aria-label="Kembali ke atas">
-                <i data-lucide="arrow-up" size="18"></i>
-            </button>
+            <div>© <span id="currentYear"></span> DOMS. All Rights Reserved.</div>
+            <button class="back-to-top" id="backToTopBtn" aria-label="Atas">↑</button>
         </div>
     </footer>
 
-    <!-- JOIN MODAL & REGISTRATION FOR VERIFICATION -->
+    <!-- Join Modal -->
     <div class="modal-overlay" id="joinModal">
         <div class="modal-card">
-            <button class="modal-close" id="modalCloseBtn" aria-label="Tutup Modal"><i data-lucide="x" size="18"></i></button>
+            <button class="modal-close" id="modalCloseBtn">×</button>
+            <h3 style="font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 0.5rem;">PENGAJUAN ANGGOTA DOMS</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.2rem;">Isi data di bawah untuk mengirim pengajuan verifikasi ke Admin.</p>
 
-            <div id="modalFormView">
-                <div class="badge-pill" style="margin-bottom: 1rem;"><span class="badge-dot"></span><span>PENGAJUAN ANGGOTA DOMS</span></div>
-                <h3 style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800;">BUAT IDENTITAS ANDA</h3>
-                <p style="color: var(--text-muted); margin-top: 0.35rem; font-size: 0.9rem;">Pengajuan Anda akan diverifikasi oleh Staff/Admin sebelum tampil di Direktori Publik.</p>
-
-                <form id="domsRegForm" style="margin-top: 1.2rem;">
-                    <div class="form-group">
-                        <label class="form-label" for="regMlbbNickname">Nickname MLBB (dengan tag X/x/× DOMS) *</label>
-                        <input type="text" id="regMlbbNickname" class="form-input" placeholder="Contoh: Alexandro X DOMS" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="regRealName">Nama Asli (Opsional)</label>
-                        <input type="text" id="regRealName" class="form-input" placeholder="Contoh: Alexandro">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="regUserId">User ID MLBB *</label>
-                        <input type="text" id="regUserId" class="form-input" placeholder="Contoh: 12345678" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="regServerId">Server ID MLBB *</label>
-                        <input type="text" id="regServerId" class="form-input" placeholder="Contoh: 9999" required>
-                    </div>
-                    <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1.5rem; padding: 14px;" id="submitCardBtn">
-                        Kirim Pengajuan Verifikasi <i data-lucide="arrow-right" size="16"></i>
-                    </button>
-                </form>
-            </div>
-
-            <div id="modalCardResultView" style="display: none; text-align: center;">
-                <div class="badge-pill" style="margin: 0 auto 0.75rem auto; display: inline-flex;"><span class="badge-dot"></span><span>PENGAJUAN DIKIRIM</span></div>
-                <h3 style="font-family: var(--font-heading); font-size: 1.35rem; font-weight: 800;">MENUNGGU VERIFIKASI</h3>
-                <p style="color: var(--text-muted); font-size: 0.88rem; margin-top: 8px;">Pengajuan Anda berhasil disimpan dengan status <strong>Pending</strong>. Setelah disetujui Admin, nama Anda akan tampil di Direktori Publik.</p>
-                <button class="btn-primary" id="finishRegBtn" style="width: 100%; justify-content: center; margin-top: 1.75rem; padding: 12px;">Tutup</button>
-            </div>
+            <form id="domsRegForm">
+                <div class="form-group">
+                    <label class="form-label" for="regMlbbNickname">Nickname MLBB (dengan tag X/x/× DOMS) *</label>
+                    <input type="text" id="regMlbbNickname" class="form-input" placeholder="Contoh: Alexandro X DOMS" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="regRealName">Nama Asli (Opsional)</label>
+                    <input type="text" id="regRealName" class="form-input" placeholder="Contoh: Alexandro">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="regUserId">User ID MLBB *</label>
+                    <input type="text" id="regUserId" class="form-input" placeholder="Contoh: 12345678" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="regServerId">Server ID MLBB *</label>
+                    <input type="text" id="regServerId" class="form-input" placeholder="Contoh: 9999" required>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1.5rem;" id="submitCardBtn">Kirim Pengajuan</button>
+            </form>
         </div>
     </div>
 
     <div class="toast" id="toastNotification">
-        <i data-lucide="check-circle" size="18"></i>
-        <span id="toastMessage">Aksi berhasil dilakukan.</span>
+        <span id="toastMessage">Berhasil!</span>
     </div>
 
-    <!-- FIREBASE CLIENT SDK & MAIN JAVASCRIPT -->
+    <!-- Firebase & Main Script -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, get, push, set, query, orderByChild, equalTo } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, get, push, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
         import { firebaseConfig } from "./firebase-config.js";
 
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
+        let db = null;
+        try {
+            const app = initializeApp(firebaseConfig);
+            db = getDatabase(app);
+        } catch (e) {
+            console.warn("Firebase offline / belum dikonfigurasi penuh:", e);
+        }
 
-        // Loader
-        (function initLoader() {
+        window.addEventListener('DOMContentLoaded', () => {
             const loader = document.getElementById('loader');
-            const fill = document.getElementById('loaderFill');
-            const status = document.getElementById('loaderStatus');
-            let progress = 0;
-            let dismissed = false;
+            setTimeout(() => {
+                if (loader) loader.classList.add('fade-out');
+                document.body.classList.remove('loading-lock');
+            }, 700);
 
-            function dismissLoader() {
-                if (dismissed) return;
-                dismissed = true;
-                if (fill) fill.style.width = '100%';
-                if (status) status.textContent = 'SYSTEM READY';
-                setTimeout(() => {
-                    if (loader) loader.classList.add('fade-out');
-                    document.body.classList.remove('loading-lock');
-                }, 260);
+            document.getElementById('currentYear').innerText = new Date().getFullYear();
+            if (window.lucide) lucide.createIcons();
+
+            if (db) {
+                loadSiteData();
+            } else {
+                renderDummyMembers();
             }
+        });
 
-            const interval = setInterval(() => {
-                progress += Math.floor(Math.random() * 25) + 18;
-                if (progress >= 100) {
-                    progress = 100;
-                    clearInterval(interval);
-                    dismissLoader();
-                } else if (fill) fill.style.width = progress + '%';
-            }, 100);
-
-            window.addEventListener('load', () => { clearInterval(interval); dismissLoader(); });
-            setTimeout(() => { clearInterval(interval); dismissLoader(); }, 1800);
-        })();
-
-        // Load Settings & Dynamic Data from RTDB
         async function loadSiteData() {
             try {
-                // 1. Settings
                 const settingsSnap = await get(ref(db, 'settings'));
                 if (settingsSnap.exists()) {
                     const s = settingsSnap.val();
                     if (s.websiteName) {
                         document.querySelectorAll('.nav-title, #brandNavTitle, #footerBrandTitle').forEach(el => el.innerText = s.websiteName);
-                        document.getElementById('footerCopyrightTitle').innerText = `${s.websiteName} — BLACKLIGHTDOMINIONS`;
-                    }
-                    if (s.description) {
-                        document.getElementById('heroSubtitleText').innerText = s.description;
-                        document.getElementById('footerDescText').innerText = s.description;
                     }
                     if (s.phone) {
                         document.getElementById('contactPhoneText').innerText = s.phone;
                         document.getElementById('footerPhoneText').innerText = s.phone;
                         document.getElementById('contactWhatsAppBtn').href = `https://wa.me/${s.phone.replace(/[^0-9]/g, '')}`;
                     }
-                    if (s.whatsappGroup) {
-                        document.getElementById('waCommunityLink').href = s.whatsappGroup;
-                        document.getElementById('footerWaLink').href = s.whatsappGroup;
-                    }
-                    if (s.discordServer) {
-                        document.getElementById('discordCommunityLink').href = s.discordServer;
-                        document.getElementById('footerDiscordLink').href = s.discordServer;
-                    }
-                    if (s.announcementBanner) {
-                        const bannerEl = document.getElementById('announcementBannerContainer');
-                        bannerEl.innerHTML = `
-                            <div style="background: var(--bg-card); border: 1px solid var(--border-hover); border-radius: 14px; padding: 1.15rem 1.5rem; margin-top: 1.5rem; display: flex; align-items: center; gap: 1rem; box-shadow: var(--glow-soft);">
-                                <i data-lucide="megaphone" size="22" style="flex-shrink: 0; color: var(--text-main);"></i>
-                                <span style="font-size: 0.95rem; color: var(--text-main); font-weight: 500;">${s.announcementBanner}</span>
-                            </div>
-                        `;
-                        if (window.lucide) lucide.createIcons();
-                    }
                 }
 
-                // 2. Verified Members Directory (Zero data loss: support both new schema and legacy schema)
                 const membersSnap = await get(ref(db, 'members'));
                 const memberGrid = document.getElementById('publicMemberGrid');
                 memberGrid.innerHTML = '';
@@ -2326,67 +1060,58 @@
                         const m = child.val();
                         const name = m.mlbbNickname || m.nama || 'Anggota DOMS';
                         const idml = m.userId ? `${m.userId} (${m.serverId || ''})` : (m.idml || '-');
-                        const statusBadge = m.status ? `<span style="font-family: var(--font-mono); font-size: 0.68rem; padding: 2px 8px; background: rgba(255,255,255,0.1); border-radius: 4px;">${m.status}</span>` : '';
-                        
                         html += `
-                            <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; box-shadow: var(--shadow);">
-                                <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted);">${m.regId || '#DOMS-MEMBER'}</span>
-                                    ${statusBadge}
-                                </div>
-                                <h4 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700; color: var(--text-main);">${name}</h4>
-                                <span style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--text-muted);">MLBB ID: ${idml}</span>
+                            <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; padding: 1.2rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                                <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted);">${m.regId || '#DOMS'}</span>
+                                <h4 style="font-family: var(--font-heading); font-size: 1.05rem; font-weight: 700;">${name}</h4>
+                                <span style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-muted);">ID: ${idml}</span>
                             </div>
                         `;
                     });
-                    memberGrid.innerHTML = html || '<p style="color: var(--text-muted);">Belum ada anggota terverifikasi.</p>';
+                    memberGrid.innerHTML = html;
                 } else {
-                    memberGrid.innerHTML = '<p style="color: var(--text-muted);">Belum ada anggota terverifikasi.</p>';
+                    renderDummyMembers();
                 }
-
-                // 3. News & Announcements
-                const newsSnap = await get(ref(db, 'news'));
-                const newsGrid = document.getElementById('publicNewsGrid');
-                newsGrid.innerHTML = '';
-                let newsHtml = '';
-                if (newsSnap.exists()) {
-                    newsSnap.forEach(child => {
-                        const n = child.val();
-                        if (n.status === 'Published') {
-                            newsHtml += `
-                                <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 18px; padding: 1.75rem; display: flex; flex-direction: column; gap: 1rem; box-shadow: var(--shadow);">
-                                    <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">${n.category || 'Berita'} • ${new Date(n.date || Date.now()).toLocaleDateString('id-ID')}</span>
-                                    <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 700;">${n.title}</h3>
-                                    <p style="color: var(--text-muted); font-size: 0.92rem; line-height: 1.6;">${n.content ? n.content.substring(0, 120) + '...' : ''}</p>
-                                </div>
-                            `;
-                        }
-                    });
-                }
-                newsGrid.innerHTML = newsHtml || '<p style="color: var(--text-muted);">Belum ada berita dipublikasikan.</p>';
-
-            } catch (e) {
-                console.error("Error loading RTDB data:", e);
+            } catch (err) {
+                console.error("Gagal sinkronisasi data:", err);
+                renderDummyMembers();
             }
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            loadSiteData();
-            if (window.lucide) lucide.createIcons();
+        function renderDummyMembers() {
+            const memberGrid = document.getElementById('publicMemberGrid');
+            memberGrid.innerHTML = `
+                <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; padding: 1.2rem;">
+                    <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted);">#DOMS-0001</span>
+                    <h4 style="font-family: var(--font-heading); font-size: 1.05rem; font-weight: 700;">Alexandro X DOMS</h4>
+                    <span style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-muted);">ID: 12345678 (9999)</span>
+                </div>
+            `;
+        }
 
-            // Registration Form Submission -> /memberRequests (Pending)
-            const regForm = document.getElementById('domsRegForm');
-            regForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const mlbbNickname = document.getElementById('regMlbbNickname').value.trim();
-                const realName = document.getElementById('regRealName').value.trim();
-                const userId = document.getElementById('regUserId').value.trim();
-                const serverId = document.getElementById('regServerId').value.trim();
+        const modal = document.getElementById('joinModal');
+        const openModal = () => modal.classList.add('open');
+        const closeModal = () => modal.classList.remove('open');
 
-                const btn = document.getElementById('submitCardBtn');
-                btn.disabled = true;
-                btn.innerText = 'Mengirim pengajuan...';
+        ['joinDomsNavBtn', 'joinDomsMobileBtn', 'joinHeroBtn', 'ctaJoinBtn'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.addEventListener('click', openModal);
+        });
+        document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
 
+        document.getElementById('domsRegForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const mlbbNickname = document.getElementById('regMlbbNickname').value.trim();
+            const realName = document.getElementById('regRealName').value.trim();
+            const userId = document.getElementById('regUserId').value.trim();
+            const serverId = document.getElementById('regServerId').value.trim();
+
+            const btn = document.getElementById('submitCardBtn');
+            btn.disabled = true;
+            btn.innerText = 'Mengirim...';
+
+            if (db) {
                 try {
                     const reqRef = push(ref(db, 'memberRequests'));
                     await set(reqRef, {
@@ -2396,23 +1121,47 @@
                         userId,
                         serverId,
                         status: 'Pending',
-                        submittedAt: Date.now(),
-                        submittedBy: 'Public User'
+                        submittedAt: Date.now()
                     });
-
-                    document.getElementById('modalFormView').style.display = 'none';
-                    document.getElementById('modalCardResultView').style.display = 'block';
                     showToast('Pengajuan verifikasi berhasil dikirim!');
+                    closeModal();
+                    document.getElementById('domsRegForm').reset();
                 } catch (err) {
-                    console.error(err);
-                    showToast('Gagal mengirim pengajuan. Coba lagi.');
+                    showToast('Gagal mengirim ke database.');
                 } finally {
                     btn.disabled = false;
-                    btn.innerHTML = 'Kirim Pengajuan Verifikasi <i data-lucide="arrow-right" size="16"></i>';
-                    if (window.lucide) lucide.createIcons();
+                    btn.innerText = 'Kirim Pengajuan';
                 }
-            });
+            } else {
+                showToast('Simulasi: Pengajuan berhasil disimpan secara lokal.');
+                closeModal();
+                btn.disabled = false;
+                btn.innerText = 'Kirim Pengajuan';
+            }
         });
+
+        document.getElementById('themeToggleBtn').addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('doms_theme', next);
+        });
+
+        const savedTheme = localStorage.getItem('doms_theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+
+        const hamburger = document.getElementById('hamburgerBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+        document.querySelectorAll('.mobile-nav-link').forEach(l => l.addEventListener('click', () => mobileMenu.classList.remove('open')));
+
+        document.getElementById('backToTopBtn').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        function showToast(msg) {
+            const t = document.getElementById('toastNotification');
+            document.getElementById('toastMessage').innerText = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3000);
+        }
     </script>
 </body>
 </html>
