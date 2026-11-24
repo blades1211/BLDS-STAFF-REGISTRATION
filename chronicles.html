@@ -38,23 +38,33 @@ main{position:relative;z-index:2;max-width:760px;margin:auto;padding:0 1.1rem 36
 .pg.t .f::after{opacity:1}
 .f.cv{background:#030304;border-color:rgba(255,255,255,.22);box-shadow:inset 0 0 0 9px #030304,inset 0 0 0 10px rgba(255,255,255,.2)}
 .in{position:absolute;inset:0;padding:1.6rem 1.3rem 2.6rem 1.8rem;overflow:auto;font-size:clamp(.82rem,3.5vw,.95rem);scrollbar-width:thin}
-.no{position:absolute;left:0;right:0;bottom:.8rem;text-align:center;font-size:.7rem;letter-spacing:.3em;color:var(--mu);z-index:1}
 .kk{font-size:.68rem;letter-spacing:.2em;color:var(--mu);font-weight:600;text-transform:uppercase}
-.in h2{font-size:clamp(1.35rem,6vw,1.85rem);font-weight:800;line-height:1.15;margin:.5rem 0 .9rem;text-shadow:var(--tg)}
 .in p{color:var(--mu);margin-bottom:.8rem}
 .in p.dt{color:var(--tx)}
 .ph{margin-top:1rem;font-size:.62rem;letter-spacing:.16em;color:var(--mu)}
-.cov{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:.9rem;padding:2rem 1.6rem}
-.cov svg{width:34%;filter:drop-shadow(0 0 12px rgba(255,255,255,.45))}
-.cov h1{font-size:clamp(1.5rem,7.4vw,2.2rem);font-weight:800;letter-spacing:.2em;text-shadow:var(--tg)}
-.cov .sub{font-size:.7rem;letter-spacing:.3em;color:var(--mu)}
-.cov .op{font-size:.68rem;letter-spacing:.2em;color:var(--mu);margin-top:1.2rem;border-top:1px solid var(--bd);padding-top:.8rem}
-.tcs{display:flex;flex-direction:column;gap:.45rem}
-.tc{display:flex;align-items:baseline;gap:.7rem;width:100%;text-align:left;background:transparent;border:0;border-bottom:1px solid var(--bd);padding:.65rem .2rem;cursor:pointer;transition:background .3s}
+.tcs{display:flex;flex-direction:column;gap:.1rem}
+.in h2{font-size:clamp(1.2rem,5.4vw,1.6rem);font-weight:800;line-height:1.15;margin:.5rem 0 .8rem;text-shadow:var(--tg);text-transform:uppercase;letter-spacing:.02em}
+.in h2.sm{font-size:1rem;margin:.4rem 0 .7rem}
+.no{position:absolute;left:0;right:0;bottom:.6rem;text-align:center;font-size:.7rem;letter-spacing:.3em;color:var(--mu);line-height:1.35;z-index:1}
+.no small{display:block;font-size:.52rem;letter-spacing:.22em;opacity:.8}
+.cov{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:.5rem;padding:1.4rem 1.3rem}
+.cov svg{width:22%;filter:drop-shadow(0 0 12px rgba(255,255,255,.45))}
+.cov h1{font-size:clamp(1.3rem,6vw,1.8rem);font-weight:800;letter-spacing:.14em;text-shadow:var(--tg);line-height:1.15}
+.cov .sub2{font-size:.72rem;letter-spacing:.2em;font-weight:600}
+.cov .rule{width:36%;border-top:1px solid var(--bh);margin:.3rem 0}
+.cov .desc{font-size:.64rem;letter-spacing:.2em;color:var(--mu);line-height:1.6}
+.cov .pub,.cov .sub{font-size:.6rem;letter-spacing:.24em;color:var(--mu)}
+.cov .op{font-size:.62rem;letter-spacing:.2em;color:var(--mu);margin-top:.5rem;border-top:1px solid var(--bd);padding-top:.6rem}
+.sub3{font-size:.82rem;font-style:italic;margin-bottom:.2rem}
+.dd{font-size:.66rem;letter-spacing:.16em;color:var(--mu);text-transform:uppercase;margin-bottom:.8rem}
+.in p.li{margin-bottom:.45rem}.li b{color:var(--tx)}
+.tc{display:flex;align-items:baseline;gap:.6rem;width:100%;text-align:left;background:transparent;border:0;border-bottom:1px solid var(--bd);padding:.4rem .2rem;cursor:pointer;font-size:.84rem;transition:background .3s}
 .tc:hover{background:rgba(255,255,255,.05)}
-.tc b{font-size:.74rem;letter-spacing:.14em;color:var(--mu);min-width:1.8rem}
+.tc b{font-size:.7rem;letter-spacing:.12em;color:var(--mu);min-width:1.5rem}
 .tc span{flex:1;font-weight:600}
-.tc small{font-size:.66rem;color:var(--mu);letter-spacing:.06em}
+.tc small{font-size:.68rem;color:var(--mu)}
+.tc.sec{margin-top:.45rem;border-bottom:0;padding-bottom:.1rem}
+.tc.sec span{font-size:.64rem;letter-spacing:.18em;color:var(--mu);text-transform:uppercase;font-weight:600}
 .acts{display:flex;flex-direction:column;gap:.6rem;margin-top:1rem}
 span.w{display:inline-block}
 .pg:not(.cur) .w{opacity:0}
@@ -90,40 +100,260 @@ span.w{display:inline-block}
 
 <script>
 /* ============ DATA — EDIT DI SINI ============
-   Satu objek = satu bab (satu halaman). Urutan array = urutan di buku dan di daftar isi.
-   date  : tanggal yang tampil
-   cat   : kategori
-   detail: isi lengkap (opsional)
-   ph:true menandai placeholder; hapus ph untuk catatan resmi. */
-const CHRONICLES=[
-{date:'3 Mei 2023',cat:'Komunitas',title:'BLDS Berdiri',text:'BLACKLIGHTDOMINIONS (BLDS) berdiri sebagai tempat ngobrol, mabar, bercerita, belajar, dan nongkrong.',detail:''},
-{date:'[Tanggal]',cat:'Komunitas',title:'[Judul Bab]',text:'[Ringkasan catatan — placeholder, ganti dengan catatan resmi.]',detail:'[Isi lengkap — placeholder.]',ph:true},
-{date:'[Tanggal]',cat:'Event',title:'[Judul Bab]',text:'[Ringkasan catatan — placeholder, ganti dengan catatan resmi.]',detail:'',ph:true},
-{date:'[Tanggal]',cat:'Update',title:'[Judul Bab]',text:'[Ringkasan catatan — placeholder, ganti dengan catatan resmi.]',detail:'',ph:true}
+   FRONT = halaman identitas/hak cipta. BUKU = bagian (sec) → bab (t = judul, sub = keterangan, d = tanggal/periode, b = paragraf).
+   Paragraf biasa = teks. Awali dengan § untuk butir: "§Judul|Keterangan" (bagian sebelum | ditebalkan).
+   Bab bertanggal hanya jika tanggalnya ada. Teks panjang dipecah otomatis ke beberapa lembar; nomor halaman dihitung otomatis. */
+const FRONT={t:"Publication Details",b:[
+"BLDS CHRONICLES",
+"The Story Beyond the Eclipse",
+"An Official Historical Archive of BLACKLIGHTDOMINIONS.",
+"§§Type|Official Digital Historical Archive",
+"§§Category|Community History • Documentation • Legacy",
+"§§Established|03 March 2023",
+"§§Initiated by|Michael Lorenzo (BladeS)",
+"§§Position|Owner",
+"§§Publisher|BLACKLIGHTDOMINIONS ARCHIVE",
+"§§Edition|The First Chronicles Edition",
+"Copyright © 2026 BLACKLIGHTDOMINIONS. All rights reserved.",
+"This archive is dedicated to preserving the history, development, experiences, and memories of BLACKLIGHTDOMINIONS."]};
+const BUKU=[
+{sec:"PROLOGUE",p:[
+{t:"A Story Beyond the Eclipse",d:"03 March 2023 — Present",b:[
+"A journey built through time, shaped by people, and remembered beyond the eclipse.",
+"Tidak semua perjalanan dimulai dengan rencana besar. Sebagian justru berawal dari rasa penasaran, keinginan sederhana, dan keberanian untuk mencoba sesuatu yang belum pernah dilakukan sebelumnya.",
+"BLACKLIGHTDOMINIONS adalah salah satu perjalanan tersebut.",
+"Apa yang awalnya merupakan sebuah komunitas kecil perlahan berkembang menjadi ruang yang memiliki identitas, anggota, sistem, proyek, dan sejarahnya sendiri.",
+"Di balik nama BLACKLIGHTDOMINIONS terdapat cerita tentang perubahan, kebersamaan, pencapaian, serta berbagai tantangan yang tidak selalu terlihat oleh orang lain.",
+"Buku ini bukan hanya tentang bagaimana BLDS terbentuk. Ini adalah catatan mengenai perjalanan yang telah dilalui dan orang-orang yang pernah menjadi bagian darinya."]},
+{t:"A Message from the Owner",sub:"Michael Lorenzo (BladeS) · Owner",b:[
+"Untuk setiap Dominioner yang pernah menjadi bagian dari perjalanan ini,",
+"BLDS tidak pernah terbentuk hanya karena sebuah nama. Ada keinginan untuk menciptakan tempat di mana orang-orang dapat saling mengenal, berinteraksi, dan membangun kebersamaan.",
+"Sepanjang perjalanan, banyak hal telah berubah. Ada masa ketika komunitas berkembang, ada masa ketika aktivitas mulai menurun, dan ada berbagai hal yang harus diperbaiki.",
+"Tidak semua usaha menghasilkan sesuatu seperti yang diharapkan. Namun, setiap proses memberikan pelajaran yang berharga.",
+"Melalui Chronicles ini, aku ingin mengabadikan perjalanan BLDS: bukan hanya keberhasilannya, tetapi juga tantangan, perubahan, dan orang-orang yang pernah menjadi bagian darinya.",
+"Terima kasih kepada setiap orang yang pernah hadir, berkontribusi, membantu, atau sekadar menjadi bagian dari cerita ini.",
+"BLDS memiliki sejarah karena ada orang-orang yang pernah berjalan bersamanya.",
+"§— BladeS|Owner of BLACKLIGHTDOMINIONS"]}]},
+{sec:"BOOK I — THE BEGINNING",p:[
+{t:"The Birth of BLDS",d:"03 March 2023",sub:"Pemrakarsa: Michael Lorenzo (BladeS)",b:[
+"Pada 3 Maret 2023, sebuah perjalanan bernama BLDS dimulai.",
+"Pada awalnya, BLDS bukanlah proyek besar dengan sistem yang matang atau tujuan yang sepenuhnya terencana. Semuanya berawal dari rasa penasaran dan keinginan Michael Lorenzo untuk mencoba membangun sesuatu.",
+"Saat itu, ia merasa memiliki sedikit teman online. Dari keadaan tersebut muncul keinginan untuk menciptakan sebuah ruang baru, tempat orang-orang dapat berkumpul dan berinteraksi.",
+"Dari sebuah gagasan sederhana, BLDS mulai dibentuk.",
+"Tidak ada jaminan bahwa komunitas ini akan berkembang. Tidak ada kepastian mengenai berapa banyak orang yang akan bergabung atau seberapa jauh perjalanan ini akan berlangsung.",
+"Namun, satu hal menjadi awal dari semuanya: mencoba membangun sesuatu yang sebelumnya belum pernah ada.",
+"Tanggal 3 Maret 2023 menjadi titik awal sejarah BLACKLIGHTDOMINIONS."]},
+{t:"The Person Behind the Beginning",sub:"Michael Lorenzo · BladeS · Owner",b:[
+"Di balik awal perjalanan BLDS terdapat Michael Lorenzo, yang dikenal menggunakan identitas BladeS.",
+"BladeS merupakan sosok yang memulai dan mengembangkan BLDS sejak awal. Seiring berjalannya waktu, perannya berkembang dari sekadar seseorang yang membentuk komunitas menjadi Owner yang bertanggung jawab atas arah, identitas, dan pengelolaannya.",
+"Membangun komunitas bukan hanya tentang membuat grup dan mengundang orang. Ada proses untuk menentukan identitas, menjaga komunikasi, mengembangkan sistem, serta mengambil keputusan ketika menghadapi masalah.",
+"Perjalanan tersebut menjadi bagian dari pengalaman BladeS dalam mengembangkan BLDS.",
+"Nama BladeS menjadi salah satu identitas yang melekat pada perjalanan komunitas ini sejak awal."]},
+{t:"The Purpose",b:[
+"BLDS dibentuk dengan sebuah tujuan sederhana: menyatukan orang-orang agar dapat saling berinteraksi dan membangun hubungan yang positif.",
+"Lebih dari sekadar membuat grup komunitas, BLDS ingin menjadi ruang yang mengutamakan solidaritas, respect, kebersamaan, dan sikap saling menghargai.",
+"Setiap anggota datang dengan latar belakang, karakter, dan pengalaman yang berbeda. Perbedaan tersebut seharusnya bukan menjadi penghalang untuk membangun hubungan yang baik.",
+"Salah satu harapan terbesar dari BLDS adalah menjadi tempat yang terasa nyaman bagi para anggotanya, sebuah tempat untuk berbagi, bermain bersama, belajar, berdiskusi, dan saling mendukung.",
+"Tujuan tersebut menjadi dasar yang ingin terus dijaga seiring perkembangan BLDS."]}]},
+{sec:"BOOK II — THE EVOLUTION",p:[
+{t:"The Names We Carried",b:[
+"Identitas BLDS tidak terbentuk dalam satu langkah.",
+"Sepanjang perjalanannya, nama komunitas mengalami beberapa perubahan. Setiap nama menjadi bagian dari proses pencarian identitas hingga akhirnya terbentuk nama yang digunakan sekarang.",
+"Urutan perubahan nama:",
+"§1. BLADESSQUAD","§2. BELIKEDESTROYER","§3. BLACKLIGHTDOMINIONSQUAD","§4. BLACKLIGHTDOMINIONS",
+"Dari BLADESSQUAD hingga BLACKLIGHTDOMINIONS, perjalanan nama tersebut mencerminkan perubahan identitas dan arah komunitas. Alasan spesifik di balik setiap perubahan belum didokumentasikan dalam arsip ini dan menunggu dokumentasi tambahan.",
+"Nama BLACKLIGHTDOMINIONS kemudian menjadi identitas utama yang dikenal sebagai BLDS.",
+"Nama dapat berubah, tetapi sejarah dari setiap tahap tetap menjadi bagian dari perjalanan yang sama."]},
+{t:"The Silent Beginning",d:"Masa awal BLDS, 2023",b:[
+"Sebuah komunitas tidak langsung menjadi ramai hanya karena telah dibuat.",
+"Pada masa awal, BLDS menghadapi kenyataan bahwa aktivitas komunitas masih sepi. Mengumpulkan anggota dan membangun interaksi bukanlah sesuatu yang dapat terjadi secara instan.",
+"Diperlukan usaha, waktu, dan konsistensi untuk membuat komunitas mulai berkembang.",
+"Sekitar tiga bulan pertama menjadi salah satu periode penting dalam perjalanan awal BLDS. Masa tersebut menunjukkan bahwa membangun sebuah komunitas membutuhkan kesabaran, bahkan ketika hasilnya belum terlihat.",
+"Masa sepi bukanlah bagian yang perlu disembunyikan dari sejarah. Justru dari sinilah perjalanan BLDS mulai memiliki makna."]},
+{t:"BLDS Gold Era",sub:"Pencapaian: 97 anggota",d:"Sekitar tiga bulan pertama sejak awal perjalanan",b:[
+"Setelah melalui masa awal yang tidak mudah, BLDS berhasil mencapai 97 anggota.",
+"Pencapaian tersebut menjadi salah satu momen penting dalam sejarah awal komunitas dan dikenal sebagai BLDS GOLD ERA.",
+"Angka 97 bukan hanya sebuah jumlah anggota. Angka tersebut menjadi pengingat bahwa sebuah komunitas yang awalnya kecil dapat berkembang melalui proses dan usaha.",
+"Masa ini menjadi salah satu bagian yang dikenang dalam perjalanan BLDS.",
+"Gold Era bukan berarti semuanya sempurna. Namun, periode tersebut menjadi bukti bahwa BLDS pernah melewati masa pertumbuhan yang berarti."]},
+{t:"The Evolution of Community",sub:"Official Timeline",b:[
+"Seiring waktu, BLDS mulai berkembang melalui berbagai platform dan pembaruan.",
+"Timeline resmi yang tercatat:",
+"§03 March 2023|BLDS Established.",
+"§15 May 2024|WhatsApp Community Created.",
+"§12 September 2024|Discord Created.",
+"§20 August 2025|Massive Remake.",
+"Perkembangan tersebut menunjukkan bahwa BLDS tidak hanya bertahan dalam satu bentuk. Komunitas mulai memiliki ruang yang lebih luas untuk komunikasi, kegiatan, dan pengembangan.",
+"Setiap platform membawa fungsi dan pengalaman yang berbeda.",
+"Perjalanan ini menjadi bagian dari usaha untuk membangun komunitas yang lebih terstruktur dan memiliki identitas yang semakin kuat."]}]},
+{sec:"BOOK III — THE PEOPLE",p:[
+{t:"The People Behind BLDS",b:[
+"Setiap komunitas membutuhkan orang-orang yang bersedia membantu menjalankan berbagai tanggung jawab.",
+"Dalam perjalanan BLDS, nama dan jabatan yang tercatat dalam pengelolaan komunitas adalah:",
+"§Michael Lorenzo (BladeS)|Owner","§Anindya|HeadStaff","§Rehan|Staff","§Dien|Staff","§Fahri|Staff",
+"Masing-masing jabatan memiliki tanggung jawab yang berbeda dalam membantu pengelolaan komunitas.",
+"Halaman ini merupakan dokumentasi nama dan peran yang tercatat, bukan daftar lengkap seluruh orang yang pernah berkontribusi sepanjang sejarah BLDS."]},
+{t:"The Dominioners",b:[
+"Dominioners merupakan sebutan bagi anggota BLACKLIGHTDOMINIONS.",
+"Mereka adalah bagian dari komunitas yang membuat BLDS lebih dari sekadar sebuah nama atau identitas digital.",
+"Setiap anggota memiliki pengalaman dan perjalanan masing-masing. Ada yang datang untuk bermain bersama, mencari teman, berdiskusi, belajar, atau sekadar menemukan tempat untuk berinteraksi.",
+"Tidak semua kontribusi harus berupa jabatan atau pencapaian besar. Kehadiran, komunikasi, bantuan, dan sikap saling menghargai juga merupakan bagian dari kehidupan komunitas.",
+"BLDS bukan hanya milik satu orang. Komunitas ini juga dibentuk oleh orang-orang yang pernah menjadi bagian di dalamnya."]},
+{t:"Stories & Memories",sub:"Ruang untuk cerita Dominioners",b:[
+"Di dalam sebuah komunitas, terdapat banyak cerita yang tidak selalu tercatat dalam pengumuman atau dokumentasi resmi.",
+"Tidak semua cerita dapat dituliskan oleh satu orang. Sebagian hanya dapat diceritakan oleh mereka yang mengalaminya. Karena itu, halaman ini disediakan sebagai ruang yang nantinya dapat diisi melalui kontribusi Dominioners:",
+"§Cerita Anggota|Menunggu dokumentasi tambahan.",
+"§Pengalaman Mabar|Menunggu dokumentasi tambahan.",
+"§Kenangan Komunitas|Menunggu dokumentasi tambahan.",
+"§Pencapaian Pribadi|Menunggu dokumentasi tambahan.",
+"§Dokumentasi Kegiatan|Menunggu dokumentasi tambahan.",
+"§Cerita Perjalanan Bersama BLDS|Menunggu dokumentasi tambahan.",
+"Setiap cerita yang dibagikan dapat menjadi bagian dari sejarah bersama, selama disampaikan dengan persetujuan dan tetap menghormati privasi orang yang terlibat."]}]},
+{sec:"BOOK IV — IDENTITY & LEGACY",p:[
+{t:"Identity of BLACKLIGHTDOMINIONS",b:[
+"BLACKLIGHTDOMINIONS merupakan identitas yang terbentuk melalui perjalanan dan perkembangan komunitas.",
+"BLDS menggunakan pendekatan visual hitam dan putih sebagai bagian dari identitasnya. Kedua warna tersebut menjadi dasar tampilan yang sederhana, tegas, dan mudah dikenali.",
+"Konsep eclipse hadir sebagai bagian dari identitas BLDS, antara lain melalui tagline United Beyond the Eclipse. Makna filosofis resmi dari simbol eclipse belum ditetapkan dalam arsip ini dan menunggu konfirmasi dari Owner.",
+"Identitas komunitas tidak berhenti pada nama, logo, atau warna. Identitas juga tercermin melalui cara anggota berinteraksi, nilai yang dijaga, serta bagaimana komunitas berkembang.",
+"BLACKLIGHTDOMINIONS adalah nama yang membawa seluruh perjalanan tersebut."]},
+{t:"Philosophy & Principles",b:[
+"Sebuah komunitas yang bertahan membutuhkan lebih dari sekadar jumlah anggota.",
+"BLDS memiliki nilai-nilai yang menjadi dasar hubungan antaranggotanya:",
+"§SOLIDARITY|Membangun kepedulian dan saling membantu dalam komunitas.",
+"§RESPECT|Menghargai setiap anggota, perbedaan pendapat, serta batasan pribadi.",
+"§UNITY|Menjaga kebersamaan tanpa mengharuskan semua orang memiliki karakter yang sama.",
+"§RESPONSIBILITY|Memahami bahwa setiap tindakan dan tanggung jawab memiliki dampak terhadap komunitas.",
+"§GROWTH|Mendorong setiap individu untuk terus belajar dan berkembang.",
+"Nilai-nilai tersebut bukan sekadar tulisan. Nilainya akan berarti apabila diterapkan dalam kehidupan komunitas sehari-hari."]},
+{t:"Projects & Achievements",b:[
+"Perjalanan BLDS juga diwarnai oleh berbagai proyek dan pengembangan. Arsip ini mencatat tujuan umum setiap proyek:",
+"§Website BLDS|Sarana untuk menampilkan identitas, informasi, dokumentasi, dan berbagai kebutuhan komunitas.",
+"§DOMS|Pengembangan portal digital dan sistem informasi BLDS.",
+"§BLDS WhatsApp Bot|Bot WhatsApp dengan berbagai fungsi untuk membantu aktivitas dan pengelolaan komunitas.",
+"§BLDSPAR|Kegiatan kompetitif dan turnamen yang menjadi bagian dari aktivitas BLDS.",
+"§BLDS Marga|Sistem identitas dan pendataan yang dikembangkan untuk mendukung struktur keanggotaan.",
+"§Flames dan Shadow Flames|Konsep interaktif di website DOMS yang menampilkan 12 Flames dan 12 Shadow Flames beserta maknanya.",
+"Setiap proyek memiliki tujuan dan proses pengembangannya sendiri. Pencapaian terukur dari masing-masing proyek menunggu verifikasi dan dokumentasi tambahan.",
+"Tidak semua proyek selalu berjalan sempurna. Namun, semuanya menjadi bagian dari usaha untuk membangun BLDS dengan cara yang lebih luas daripada sekadar komunitas percakapan."]},
+{t:"Events & Documentation",sub:"Ruang dokumentasi kegiatan",b:[
+"Kegiatan dan event merupakan salah satu cara untuk membangun interaksi antaranggotanya.",
+"Melalui kegiatan bersama, anggota memiliki kesempatan untuk berpartisipasi, bekerja sama, dan menciptakan pengalaman baru.",
+"Halaman ini disediakan untuk mengumpulkan dokumentasi kegiatan komunitas:",
+"§Event|Menunggu dokumentasi tambahan.",
+"§Turnamen|Menunggu dokumentasi tambahan.",
+"§Poster|Menunggu dokumentasi tambahan.",
+"§Hasil Pertandingan|Menunggu dokumentasi tambahan.",
+"§Aktivitas Komunitas|Menunggu dokumentasi tambahan.",
+"Dokumentasi yang baik membantu menjaga ingatan tentang apa yang pernah dilakukan dan dicapai bersama."]}]},
+{sec:"BOOK V — THE UNSEEN STRUGGLE",p:[
+{t:"Behind the Scenes",b:[
+"Tidak semua bagian dari perjalanan komunitas dapat dilihat oleh anggotanya.",
+"Di balik aktivitas yang terlihat, terdapat pekerjaan pengelolaan komunitas, perencanaan, pengembangan website, bot, dan sistem, penyelenggaraan event, serta pembagian tanggung jawab di antara pengelola.",
+"Pekerjaan tersebut membutuhkan waktu serta proses yang tidak selalu terlihat.",
+"Ada hal-hal yang berjalan sesuai rencana dan ada pula yang harus diperbaiki berkali-kali.",
+"Bagian ini mengabadikan sisi pengelolaan BLDS yang sering kali tidak terlihat dari luar."]},
+{t:"The Challenges We Faced",b:[
+"Perjalanan BLDS tidak selalu berada dalam keadaan yang ramai dan berkembang.",
+"Beberapa tantangan yang dihadapi tercatat sebagai berikut:",
+"§Komunitas yang sempat sepi|Masa ketika suasana komunitas sunyi dan membutuhkan waktu untuk bangkit.",
+"§Aktivitas anggota yang menurun|Interaksi menjadi lebih sedikit dan usaha menghidupkan suasana tidak selalu membuahkan perubahan.",
+"§Sulitnya membangun interaksi|Kehadiran anggota saja tidak otomatis menciptakan percakapan dan keterlibatan.",
+"§Event yang tidak selalu berhasil|Tidak semua kegiatan meningkatkan aktivitas seperti yang diharapkan.",
+"§Pengelolaan staff|Membangun pembagian tanggung jawab yang jelas merupakan tantangan tersendiri.",
+"§Banyaknya proyek|Berbagai proyek membutuhkan perhatian pada waktu yang bersamaan.",
+"Semua hal tersebut merupakan bagian dari evaluasi perjalanan BLDS.",
+"Sejarah yang jujur tidak hanya mencatat apa yang berhasil, tetapi juga mengakui hal-hal yang masih perlu diperbaiki."]},
+{t:"Beyond the Struggle",b:[
+"Tidak setiap rencana dapat berjalan sesuai harapan.",
+"Ada proyek yang membutuhkan banyak revisi, kegiatan yang tidak mendapatkan respons seperti yang diharapkan, dan berbagai hal yang harus dievaluasi kembali.",
+"Namun, tantangan tidak harus menjadi akhir dari sebuah perjalanan. Setiap pengalaman memberikan kesempatan untuk memahami apa yang perlu dipertahankan dan apa yang perlu diubah.",
+"Salah satu pelajarannya adalah pentingnya membangun komunitas yang tidak hanya bergantung pada satu orang. Pembagian peran, sistem yang jelas, dan keterlibatan banyak pihak membuat sebuah komunitas lebih kuat.",
+"BLDS masih memiliki ruang untuk berkembang. Masa depan komunitas tidak hanya ditentukan oleh apa yang pernah dicapai, tetapi juga oleh bagaimana setiap tantangan dihadapi.",
+"Perjalanan ini masih menjadi proses yang terus berjalan."]}]},
+{sec:"EPILOGUE",p:[
+{t:"Beyond the Eclipse",sub:"Visi dan harapan",b:[
+"Sebuah sejarah tidak berakhir hanya karena satu bab telah selesai.",
+"BLACKLIGHTDOMINIONS telah melewati berbagai tahap: dari awal yang sederhana, masa pertumbuhan, perubahan identitas, pengembangan proyek, hingga berbagai tantangan dalam pengelolaannya.",
+"Semua tahap tersebut merupakan bagian dari perjalanan yang sama.",
+"Masa depan BLDS belum dapat dipastikan, tetapi dapat diharapkan. Harapannya, komunitas ini terus belajar, memperbaiki diri, dan membangun sesuatu yang lebih baik daripada sebelumnya.",
+"Beyond the Eclipse bukan hanya sebuah kalimat. Ia menjadi pengingat bahwa perjalanan BLDS masih memiliki ruang untuk dilanjutkan."]},
+{t:"A Message to Every Dominioner",b:[
+"Untuk setiap Dominioner,",
+"Mungkin ada yang telah bergabung sejak awal. Mungkin ada yang baru mengenal BLDS. Ada pula yang pernah menjadi bagian dari komunitas ini dan kini menjalani perjalanan masing-masing.",
+"Apa pun waktunya, setiap orang memiliki pengalaman yang berbeda.",
+"Terima kasih kepada mereka yang pernah membantu, berpartisipasi, menjaga komunikasi, mengikuti kegiatan, dan memberikan kontribusi dengan caranya sendiri.",
+"Sebuah komunitas tidak hanya dinilai dari seberapa besar jumlah anggotanya, tetapi juga dari bagaimana orang-orang di dalamnya saling memperlakukan.",
+"Semoga BLDS selalu menjadi pengingat bahwa kebersamaan dibangun melalui tindakan, bukan hanya kata-kata.",
+"United Beyond the Eclipse."]},
+{t:"Credits & Acknowledgements",b:[
+"BLDS CHRONICLES",
+"§Initiated by|Michael Lorenzo (BladeS)",
+"§Community|BLACKLIGHTDOMINIONS",
+"§Archive|BLDS CHRONICLES",
+"Penghargaan diberikan kepada setiap Dominioner yang pernah menjadi bagian dari perjalanan ini.",
+"This archive is dedicated to preserving the history, experiences, development, and memories of BLACKLIGHTDOMINIONS.",
+"United Beyond the Eclipse."]}]}
 ];
 
 /* ============ BUKU ============ */
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const RM=matchMedia('(prefers-reduced-motion:reduce)').matches,T=RM?10:1100,DL=RM?0:110;
-const pad=n=>String(n).padStart(2,'0'),clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
+const clamp=(v,a,b)=>Math.min(b,Math.max(a,v)),pad=n=>String(n).padStart(2,'0');
 let wi=0;
-const W=t=>String(t).split(/\s+/).filter(Boolean).map(w=>'<span class="w" style="--i:'+Math.min(wi++,45)+'">'+esc(w)+'</span>').join(' ');
-const blk=(c,t)=>'<div class="w '+c+'" style="--i:'+Math.min(wi++,45)+'">'+t+'</div>';
+const I=()=>Math.min(Math.floor(wi++*.6),48);
+const W=t=>String(t).split(/\s+/).filter(Boolean).map(w=>'<span class="w" style="--i:'+I()+'">'+esc(w)+'</span>').join(' ');
+const blk=(c,t)=>'<div class="w '+c+'" style="--i:'+I()+'">'+t+'</div>';
 const pg=(front,cls)=>'<div class="pg"><div class="f '+(cls||'')+'">'+front+'</div><div class="b"></div></div>';
-const n=CHRONICLES.length,P=n+3;
+const bh=b=>{if(b[0]!=='§')return '<p>'+W(b)+'</p>';const inl=b[1]==='§',q=b.slice(inl?2:1).split('|');return '<p class="li"><b>'+W(q[0])+'</b>'+(q[1]?(inl?' · ':'<br>')+W(q[1]):'')+'</p>'};
+
+/* Pemecah halaman: isi dibagi per kalimat agar tiap lembar tidak terlalu penuh di HP */
+const FIRST=440,REST=560;
+const sent=s=>s.match(/[^.!?]+[.!?]+\s*|[^.!?]+$/g)||[s];
+function split(blocks,f,r){
+  f=f||FIRST;r=r||REST;const out=[];let cur=[],used=0,cap=f;
+  const flush=()=>{if(cur.length){out.push(cur);cur=[];used=0;cap=r}};
+  for(let b of blocks){
+    while(b){
+      const c=b.length+(b[0]==='§'?30:60),room=cap-used;
+      if(c<=room){cur.push(b);used+=c;b=''}
+      else if(b[0]!=='§'&&room>160){
+        const ss=sent(b);let a='';
+        while(ss.length&&(a+ss[0]).length+60<=room)a+=ss.shift();
+        if(!a){if(cur.length)flush();else{cur.push(b);b=''}continue}
+        cur.push(a.trim());b=ss.join('').trim();flush();
+      }else if(cur.length)flush();
+      else{cur.push(b);b=''}
+    }
+  }
+  flush();return out;
+}
+const ents=[];BUKU.forEach(s=>s.p.forEach(e=>ents.push({sec:s.sec,t:e.t,sub:e.sub,d:e.d,pages:split(e.b)})));
+const front=split(FRONT.b,520,560);
+const rows=[];let lastSec='';
+ents.forEach((e,i)=>{if(e.sec!==lastSec){rows.push({sec:1,l:e.sec,e:i});lastSec=e.sec}rows.push({l:e.t,e:i})});
+const chunks=[rows.slice(0,9)];for(let i=9;i<rows.length;i+=10)chunks.push(rows.slice(i,i+10));
+const tocN=chunks.length,fN=front.length;
+let rel=0;ents.forEach(e=>{e.at=1+fN+tocN+rel;rel+=e.pages.length});
 
 const star='<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="none" stroke="#fff" stroke-width="1.2" opacity=".5"/><circle cx="50" cy="50" r="38" fill="#fff"/><path d="M50 18Q52.4 47.6 82 50Q52.4 52.4 50 82Q47.6 52.4 18 50Q47.6 47.6 50 18Z" fill="#030304"/></svg>';
 const items=[];
-wi=0;items.push(pg('<div class="in cov">'+blk('',star)+blk('sub','BLACKLIGHTDOMINIONS')+'<h1>'+W('CHRONICLES')+'</h1>'+blk('sub','Catatan perjalanan DOMS')+blk('op','Ketuk untuk membuka')+'</div>','cv'));
-wi=0;items.push(pg('<div class="in">'+blk('kk','Daftar Isi')+'<h2>'+W('Isi Buku')+'</h2><div class="tcs">'+CHRONICLES.map((e,i)=>'<button class="w tc" style="--i:'+Math.min(wi++,45)+'" data-go="'+(2+i)+'"><b>'+pad(i+1)+'</b><span>'+esc(e.title)+'</span><small>'+esc(e.date)+'</small></button>').join('')+'</div></div><div class="no">— 1 —</div>'));
-CHRONICLES.forEach((e,i)=>{wi=0;items.push(pg('<div class="in">'+blk('kk',esc(e.cat)+' · '+esc(e.date))+'<h2>'+W(e.title)+'</h2><p>'+W(e.text)+'</p>'+(e.detail?'<p class="dt">'+W(e.detail)+'</p>':'')+(e.ph?blk('ph','PLACEHOLDER — BUKAN CATATAN RESMI'):'')+'</div><div class="no">— '+(i+3)+' —</div>'))});
-wi=0;items.push(pg('<div class="in">'+blk('kk','Akhir')+'<h2>'+W('Bersambung…')+'</h2><p>'+W('Bab baru akan ditulis seiring perjalanan.')+'</p><div class="acts"><button class="btn s w" style="--i:'+(wi++)+'" data-go="0">Kembali ke Sampul</button><a class="btn s w" style="--i:'+(wi++)+'" href="/">← Ke DOMS</a><a class="btn s w" style="--i:'+(wi++)+'" href="/flames.html">Flames &amp; Shadow Flames</a></div></div><div class="no">— '+(n+3)+' —</div>'));
+const ft=()=>'<div class="no"><small>BLACKLIGHTDOMINIONS ARCHIVE</small>— '+items.length+' —</div>';
+const body=(kick,t,k,extra,html)=>'<div class="in">'+blk('kk',esc(kick)+(k?' · lanjutan':''))+'<h2'+(k?' class="sm"':'')+'>'+W(t)+'</h2>'+(k?'':extra)+html+'</div>'+ft();
+
+wi=0;items.push(pg('<div class="in cov">'+blk('',star)+'<h1>'+W('BLDS CHRONICLES')+'</h1>'+blk('sub2','THE STORY BEYOND THE ECLIPSE')+blk('rule','')+blk('desc','THE OFFICIAL HISTORY OF<br>BLACKLIGHTDOMINIONS')+blk('pub','ESTABLISHED 03 MARCH 2023')+blk('sub','THE FIRST CHRONICLES EDITION')+blk('op','Ketuk untuk membuka')+'</div>','cv'));
+front.forEach((pb,k)=>{wi=0;items.push(pg(body('BLDS CHRONICLES',FRONT.t,k,'',pb.map(bh).join(''))))});
+chunks.forEach((ch,ci)=>{wi=0;items.push(pg('<div class="in">'+blk('kk','BLDS CHRONICLES')+'<h2'+(ci?' class="sm"':'')+'>'+W('Daftar Isi')+'</h2><div class="tcs">'+ch.map(r=>'<button class="w tc'+(r.sec?' sec':'')+'" style="--i:'+I()+'" data-go="'+ents[r.e].at+'">'+(r.sec?'':'<b>'+pad(r.e+1)+'</b>')+'<span>'+esc(r.l)+'</span>'+(r.sec?'':'<small>'+ents[r.e].at+'</small>')+'</button>').join('')+'</div></div>'+ft()))});
+ents.forEach((e,ei)=>e.pages.forEach((pb,k)=>{wi=0;items.push(pg(body(pad(ei+1)+' · '+e.sec,e.t,k,(e.sub?blk('sub3',esc(e.sub)):'')+(e.d?blk('dd',esc(e.d)):''),pb.map(bh).join(''))))}));
+wi=0;items.push(pg('<div class="in">'+blk('kk','BLDS CHRONICLES')+'<h2>'+W('United Beyond the Eclipse.')+'</h2><div class="acts"><button class="btn s w" style="--i:'+I()+'" data-go="0">Kembali ke Sampul</button><a class="btn s w" style="--i:'+I()+'" href="/">← Ke DOMS</a><a class="btn s w" style="--i:'+I()+'" href="/flames.html">Flames &amp; Shadow Flames</a></div></div>'+ft()));
+const P=items.length;
 const stack=$('#stack');stack.innerHTML=items.join('');
 const pages=[...stack.children];pages.forEach((p,i)=>p.style.zIndex=P-i);
-const labels=['Sampul','Isi',...CHRONICLES.map((_,i)=>pad(i+1)),'Akhir'];
+const labels=items.map((_,i)=>i===0?'Sampul':String(i));
 $('#pager').innerHTML=labels.map((l,i)=>'<button class="chip" data-go="'+i+'" aria-pressed="false">'+l+'</button>').join('');
 const chips=[...$('#pager').children];
+document.querySelector('.top [data-go]').dataset.go=1+fN;
+
 
 let cur=0,rt=0;
 function turn(i,on,k){const p=pages[i],d=k*DL;p.style.transitionDelay=on?d+'ms,'+(d+T)+'ms':d+'ms,'+d+'ms';p.classList.toggle('t',on)}
@@ -131,7 +361,7 @@ function ui(){
   pages.forEach((p,i)=>{p.inert=i!==cur});
   chips.forEach((c,i)=>c.setAttribute('aria-pressed',i===cur));
   const c=chips[cur],pr=$('#pager');pr.scrollTo({left:c.offsetLeft-pr.clientWidth/2+c.offsetWidth/2,behavior:RM?'auto':'smooth'});
-  $('#ind').textContent=cur===0?'Sampul':cur===1?'Daftar Isi':cur===P-1?'Akhir':'Bab '+(cur-1)+' / '+n;
+  $('#ind').textContent=cur===0?'Sampul':cur<=fN?'Publikasi':cur<=fN+tocN?'Daftar Isi':'Halaman '+cur+' / '+(P-1);
   $('#prev').disabled=cur===0;$('#next').disabled=cur===P-1;
 }
 function goTo(t){
